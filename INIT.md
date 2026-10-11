@@ -12,6 +12,13 @@ nur, was am Starter-Fall besonders ist; alles
 Übrige regeln MasterPrompt §5.3 und
 [[Init-Choreografie]] (liegt nach dem Kopier-Schritt
 als `wiki/Init-Choreografie.md` in deinem Projekt).
+Die Verweise dieses Dokuments auf
+MasterPrompt-Abschnitte und Wiki-Knoten sind
+**Lese-Anweisungen** — die genannten Abschnitte
+liest du selbstverständlich (die
+Nur-auf-Anweisung-Regel des MasterPrompts betrifft
+den regulären Sessionstart, nicht diese
+Choreografie).
 
 **Grundgesetz (gilt ab sofort, dauerhaft):** Das
 `wiki/` ist die Quelle der Wahrheit. Alles
@@ -26,7 +33,7 @@ Festlegungs-Behauptungen nennen ihre
 Register-Nummer) und **Pflege-Pflicht** (Klärungen,
 Berichte und Stände im selben Zug ablegen —
 Berichte **vor** der Chat-Zusammenfassung). Diese
-Regel übernimmst du in Schritt 5 in deine
+Regel übernimmst du in Schritt 4 in deine
 Instruktionsdatei.
 
 **Nur-Lese-Regel:** `_template/` (bzw. die
@@ -61,7 +68,7 @@ Implementierung:
 | `Styleguide-wiki.md` | `Styleguide-wiki.md` | Styleguide |
 | `.gitignore` | `.gitignore` | nur wenn im Projekt keine existiert |
 | `referenzprozesse/` (komplett) | `referenzprozesse/` | Nur-Lese-Vorlage inkl. aller `bootstrap/`-Ordner |
-| `wiki/` (komplett, inkl. `templates/`) | `wiki/` | vorbefülltes Frisch-wiki |
+| `wiki/` (komplett, inkl. `templates/`) | `wiki/` | vorbefülltes Frisch-wiki, inkl. deaktivierter Fassaden (z.B. `Mission Statement Long` — Reaktivierung per Zuruf) |
 | `devstate_active.md` | `devstate_active.md` | Frisch-Fassung |
 
 **Nie kopiert werden:** `README.md`, `INIT.md`,

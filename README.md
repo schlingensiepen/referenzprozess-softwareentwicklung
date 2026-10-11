@@ -79,12 +79,18 @@ Update-Verbindung.
 
 ## Regelwerks-Einstieg
 
-**`MasterPrompt.md`** — das zentrale Regelwerk. Wird
-nur auf ausdrückliche Anweisung des Users gelesen
-(beim Sessionstart lädt der Agent stattdessen seine
-agent-spezifische Instruktionsdatei, z.B.
-`CLAUDE.md`). Der Agenten-Einstieg in dein Projekt
-ist `_template/INIT.md` (neu) bzw.
+**`MasterPrompt.md`** — das zentrale Regelwerk. Du
+als Mensch musst es nicht lesen — die Erklär-Doku in
+`docs/` genügt. Für den Agenten gilt: Im regulären
+Betrieb lädt er beim Sessionstart seine
+agent-spezifische Instruktionsdatei (z.B.
+`CLAUDE.md`) und liest den MasterPrompt nur auf
+Anweisung — **die Choreografien `INIT.md` und
+`migration/MIGRATION.md` samt ihren
+Abschnitts-Verweisen sind eine solche Anweisung**:
+die dort referenzierten Regelwerks-Abschnitte liest
+der Agent selbstverständlich. Der Agenten-Einstieg
+in dein Projekt ist `_template/INIT.md` (neu) bzw.
 `_template/migration/MIGRATION.md` (Migration); die
 Erklär-Doku in `docs/` ist für Menschen gedacht und
 für Agenten nie Pflichtlektüre.

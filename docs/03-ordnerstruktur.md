@@ -17,16 +17,19 @@ Im Projekt-Root liegen die Regelwerks-Dokumente —
 `MasterPrompt.md` als Zentrale, dazu die Teildateien
 `Wiki.md`, `Vorgehen.md`, `Reviewmuster.md`,
 `Outgoing.md` und die Styleguides — sowie
-Steuerdateien wie `TODO.md` (deine offenen Punkte),
-`Offene Fragen.md` (gesammelte Rückfragen des
-Agenten), `Tools.md` (installierte Werkzeuge),
+Steuerdateien. Mitgeliefert ist davon
 `devstate_active.md` (aktueller Arbeitsstand und
-nächste Schritte) und die Instruktionsdatei deines
-Agenten (z.B. `CLAUDE.md`), die er beim Start
-automatisch lädt. Das Regelwerk selbst liest der
-Agent nur auf deine ausdrückliche Anweisung — im
-Alltag genügt ihm die daraus abgeleitete
-Instruktionsdatei.
+nächste Schritte); **die übrigen Steuerdateien
+entstehen erst im Projekt** und liegen deshalb nicht
+in dieser Vorlage: die Instruktionsdatei deines
+Agenten (z.B. `CLAUDE.md`, beim Start automatisch
+geladen) und `Tools.md` (installierte Werkzeuge)
+legt der Agent beim Projektstart an, `TODO.md`
+(deine offenen Punkte) und `Offene Fragen.md`
+(gesammelte Rückfragen des Agenten) bei erstem
+Bedarf. Das Regelwerk selbst liest der Agent nur auf
+deine ausdrückliche Anweisung — im Alltag genügt ihm
+die daraus abgeleitete Instruktionsdatei.
 
 ## Eingang: raw/ und input/ (unveränderlich)
 

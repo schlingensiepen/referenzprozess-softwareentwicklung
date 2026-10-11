@@ -10,6 +10,9 @@
 # (Phase 0) — dieses Skript implementiert sie. Kollisionsregel:
 # nie eine vorhandene Bestands-Datei überschreiben; Kollisionen
 # werden gelistet und gehören in den Phase-1-Fragen-Block.
+# Varianten werden nur gegen Dateien getauscht, die dieser Lauf
+# selbst kopiert hat. Das Skript braucht kein Temp-Verzeichnis
+# und schreibt nur in den Projektordner.
 #
 # Copyright 2026 Jörn Schlingensiepen
 #
@@ -36,82 +39,78 @@ if [ "$SRC" = "$DST" ]; then
     exit 1
 fi
 
-TMPDIRBASE=${TMPDIR:-/tmp}
-COLL="$TMPDIRBASE/starter-migration-kollisionen.$$"
-DONE="$TMPDIRBASE/starter-migration-kopiert.$$"
-: > "$COLL"
-: > "$DONE"
-COPIED=0
-SKIPPED=0
-SWAPPED=0
+# Datei-Liste (Kopier-Liste MIGRATION.md Phase 0) erzeugen und in
+# EINEM Block verarbeiten — Zähler, Kollisions-Liste und der
+# Varianten-Eintausch leben im selben Subshell-Kontext, keine
+# Temp-Dateien nötig.
+{
+    for f in MasterPrompt.md Wiki.md Vorgehen.md Reviewmuster.md \
+             Outgoing.md Styleguide.md Styleguide-md.md \
+             Styleguide-wiki.md devstate_active.md; do
+        printf '%s\n' "$f"
+    done
+    ( cd "$SRC" && find referenzprozesse wiki -type f | sort )
+} | {
+    COPIED=0
+    SKIPPED=0
+    SWAPPED=0
+    COLLREL=""
 
-# kopiert eine Datei (Pfad relativ zum Starter-Root), nie überschreibend
-copy_file() {
-    rel=$1
-    if [ -e "$DST/$rel" ]; then
-        printf '%s\n' "$rel" >> "$COLL"
-        SKIPPED=$((SKIPPED + 1))
-        return 0
-    fi
-    dir=$(dirname -- "$rel")
-    [ "$dir" = "." ] || mkdir -p "$DST/$dir"
-    cp -- "$SRC/$rel" "$DST/$rel"
-    printf '%s\n' "$rel" >> "$DONE"
-    COPIED=$((COPIED + 1))
-}
-
-# tauscht eine eben kopierte Datei gegen ihre Migrations-Variante;
-# Bestands-Dateien (Kollisionen) bleiben unangetastet
-swap_variant() {
-    variant_rel=$1   # Pfad der Variante relativ zum Starter-Root
-    target_rel=$2    # Ziel-Pfad relativ zum Projekt-Root
-    if grep -Fqx -- "$target_rel" "$DONE"; then
-        cp -f -- "$SRC/$variant_rel" "$DST/$target_rel"
-        SWAPPED=$((SWAPPED + 1))
-    fi
-}
-
-# --- Wurzel-Dokumente (Kopier-Liste MIGRATION.md Phase 0) ---
-for f in MasterPrompt.md Wiki.md Vorgehen.md Reviewmuster.md \
-         Outgoing.md Styleguide.md Styleguide-md.md Styleguide-wiki.md \
-         devstate_active.md; do
-    copy_file "$f"
-done
-
-# .gitignore nur, wenn im Projekt keine existiert (zählt nicht als Kollision)
-if [ ! -e "$DST/.gitignore" ] && [ -e "$SRC/.gitignore" ]; then
-    cp -- "$SRC/.gitignore" "$DST/.gitignore"
-    COPIED=$((COPIED + 1))
-fi
-
-# --- referenzprozesse/ und wiki/ (komplett, Datei für Datei) ---
-for tree in referenzprozesse wiki; do
-    ( cd "$SRC" && find "$tree" -type f ) | sort > "$TMPDIRBASE/starter-migration-dateien.$$"
     while IFS= read -r rel; do
-        copy_file "$rel"
-    done < "$TMPDIRBASE/starter-migration-dateien.$$"
-    rm -f "$TMPDIRBASE/starter-migration-dateien.$$"
-done
+        if [ -e "$DST/$rel" ]; then
+            COLLREL="${COLLREL}${rel}
+"
+            SKIPPED=$((SKIPPED + 1))
+        else
+            case $rel in
+                */*) mkdir -p "$DST/${rel%/*}" ;;
+            esac
+            cp -- "$SRC/$rel" "$DST/$rel"
+            COPIED=$((COPIED + 1))
+        fi
+    done
 
-# --- Varianten-Eintausch (migration/ ersetzt Frisch-Pendants) ---
-swap_variant "migration/devstate_active.md"              "devstate_active.md"
-swap_variant "migration/wiki/Zielmarken.md"              "wiki/Zielmarken.md"
-swap_variant "migration/wiki/Aktivierter-Prozess.md"     "wiki/Aktivierter-Prozess.md"
-swap_variant "migration/wiki/Commit-Sprache.md"          "wiki/Commit-Sprache.md"
-swap_variant "migration/wiki/WorkspaceManager-Kontrakt.md" "wiki/WorkspaceManager-Kontrakt.md"
-swap_variant "migration/wiki/InterneMechanik.md"         "wiki/InterneMechanik.md"
+    # .gitignore nur, wenn im Projekt keine existiert
+    # (Sonderfall, zählt nicht als Kollision)
+    if [ ! -e "$DST/.gitignore" ] && [ -e "$SRC/.gitignore" ]; then
+        cp -- "$SRC/.gitignore" "$DST/.gitignore"
+        COPIED=$((COPIED + 1))
+    fi
 
-# --- Abschluss-Meldung ---
-echo "Starter-Ausstattung (Migration) kopiert: $COPIED Datei(en), $SWAPPED Variante(n) eingetauscht."
-if [ -s "$COLL" ]; then
+    # war $1 eine Kollision (Bestands-Datei)?
+    collided() {
+        printf '%s' "$COLLREL" | grep -Fxq -- "$1"
+    }
+
+    # tauscht eine eben kopierte Datei gegen ihre
+    # Migrations-Variante; Bestands-Dateien (Kollisionen)
+    # bleiben unangetastet — Fallback: MIGRATION.md Phase 0
+    swap_variant() {
+        variant_rel=$1   # Pfad der Variante relativ zum Starter-Root
+        target_rel=$2    # Ziel-Pfad relativ zum Projekt-Root
+        if [ -e "$DST/$target_rel" ] && ! collided "$target_rel"; then
+            cp -f -- "$SRC/$variant_rel" "$DST/$target_rel"
+            SWAPPED=$((SWAPPED + 1))
+        fi
+    }
+
+    swap_variant "migration/devstate_active.md"                "devstate_active.md"
+    swap_variant "migration/wiki/Zielmarken.md"                "wiki/Zielmarken.md"
+    swap_variant "migration/wiki/Aktivierter-Prozess.md"       "wiki/Aktivierter-Prozess.md"
+    swap_variant "migration/wiki/Commit-Sprache.md"            "wiki/Commit-Sprache.md"
+    swap_variant "migration/wiki/WorkspaceManager-Kontrakt.md" "wiki/WorkspaceManager-Kontrakt.md"
+    swap_variant "migration/wiki/InterneMechanik.md"           "wiki/InterneMechanik.md"
+
+    echo "Starter-Ausstattung (Migration) kopiert: $COPIED Datei(en), $SWAPPED Variante(n) eingetauscht."
+    if [ -n "$COLLREL" ]; then
+        echo ""
+        echo "ACHTUNG — $SKIPPED Kollision(en), Bestands-Dateien wurden NICHT überschrieben:"
+        printf '%s' "$COLLREL" | while IFS= read -r rel; do
+            echo "  - $rel"
+        done
+        echo "Diese Liste gehört in den Phase-1-Fragen-Block von migration/MIGRATION.md."
+    fi
     echo ""
-    echo "ACHTUNG — $SKIPPED Kollision(en), Bestands-Dateien wurden NICHT überschrieben:"
-    while IFS= read -r rel; do
-        echo "  - $rel"
-    done < "$COLL"
-    echo "Diese Liste gehört in den Phase-1-Fragen-Block von migration/MIGRATION.md."
-fi
-rm -f "$COLL" "$DONE"
-echo ""
-echo "Nächster Schritt: den Agenten '$SRC/migration/MIGRATION.md' abarbeiten lassen."
+    echo "Nächster Schritt: den Agenten '$SRC/migration/MIGRATION.md' abarbeiten lassen."
+}
 exit 0

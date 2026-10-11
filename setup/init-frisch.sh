@@ -8,7 +8,8 @@
 # Führender Ort der Kopier-Liste ist INIT.md (§1) — dieses Skript
 # implementiert sie. Kollisionsregel: nie eine vorhandene
 # Projekt-Datei überschreiben; Kollisionen werden gelistet und
-# gehören in den Fragen-Block von INIT.md.
+# gehören in den Fragen-Block von INIT.md. Das Skript braucht
+# kein Temp-Verzeichnis und schreibt nur in den Projektordner.
 #
 # Copyright 2026 Jörn Schlingensiepen
 #
@@ -35,59 +36,52 @@ if [ "$SRC" = "$DST" ]; then
     exit 1
 fi
 
-TMPDIRBASE=${TMPDIR:-/tmp}
-COLL="$TMPDIRBASE/starter-init-kollisionen.$$"
-: > "$COLL"
-COPIED=0
-SKIPPED=0
+# Datei-Liste (Kopier-Liste INIT.md §1) erzeugen und in EINEM
+# Block verarbeiten — Zähler und Kollisions-Liste leben im
+# selben Subshell-Kontext, keine Temp-Dateien nötig.
+{
+    for f in MasterPrompt.md Wiki.md Vorgehen.md Reviewmuster.md \
+             Outgoing.md Styleguide.md Styleguide-md.md \
+             Styleguide-wiki.md devstate_active.md; do
+        printf '%s\n' "$f"
+    done
+    ( cd "$SRC" && find referenzprozesse wiki -type f | sort )
+} | {
+    COPIED=0
+    SKIPPED=0
+    COLLREL=""
 
-# kopiert eine Datei (Pfad relativ zum Starter-Root), nie überschreibend
-copy_file() {
-    rel=$1
-    if [ -e "$DST/$rel" ]; then
-        printf '%s\n' "$rel" >> "$COLL"
-        SKIPPED=$((SKIPPED + 1))
-        return 0
+    while IFS= read -r rel; do
+        if [ -e "$DST/$rel" ]; then
+            COLLREL="${COLLREL}${rel}
+"
+            SKIPPED=$((SKIPPED + 1))
+        else
+            case $rel in
+                */*) mkdir -p "$DST/${rel%/*}" ;;
+            esac
+            cp -- "$SRC/$rel" "$DST/$rel"
+            COPIED=$((COPIED + 1))
+        fi
+    done
+
+    # .gitignore nur, wenn im Projekt keine existiert
+    # (Sonderfall, zählt nicht als Kollision)
+    if [ ! -e "$DST/.gitignore" ] && [ -e "$SRC/.gitignore" ]; then
+        cp -- "$SRC/.gitignore" "$DST/.gitignore"
+        COPIED=$((COPIED + 1))
     fi
-    dir=$(dirname -- "$rel")
-    [ "$dir" = "." ] || mkdir -p "$DST/$dir"
-    cp -- "$SRC/$rel" "$DST/$rel"
-    COPIED=$((COPIED + 1))
-}
 
-# --- Wurzel-Dokumente (Kopier-Liste INIT.md §1) ---
-for f in MasterPrompt.md Wiki.md Vorgehen.md Reviewmuster.md \
-         Outgoing.md Styleguide.md Styleguide-md.md Styleguide-wiki.md \
-         devstate_active.md; do
-    copy_file "$f"
-done
-
-# .gitignore nur, wenn im Projekt keine existiert (zählt nicht als Kollision)
-if [ ! -e "$DST/.gitignore" ] && [ -e "$SRC/.gitignore" ]; then
-    cp -- "$SRC/.gitignore" "$DST/.gitignore"
-    COPIED=$((COPIED + 1))
-fi
-
-# --- referenzprozesse/ und wiki/ (komplett, Datei für Datei) ---
-for tree in referenzprozesse wiki; do
-    ( cd "$SRC" && find "$tree" -type f ) | sort > "$TMPDIRBASE/starter-init-dateien.$$"
-    while IFS= read -r rel; do
-        copy_file "$rel"
-    done < "$TMPDIRBASE/starter-init-dateien.$$"
-    rm -f "$TMPDIRBASE/starter-init-dateien.$$"
-done
-
-# --- Abschluss-Meldung ---
-echo "Starter-Startausstattung (frisch) kopiert: $COPIED Datei(en)."
-if [ -s "$COLL" ]; then
+    echo "Starter-Startausstattung (frisch) kopiert: $COPIED Datei(en)."
+    if [ -n "$COLLREL" ]; then
+        echo ""
+        echo "ACHTUNG — $SKIPPED Kollision(en), vorhandene Dateien wurden NICHT überschrieben:"
+        printf '%s' "$COLLREL" | while IFS= read -r rel; do
+            echo "  - $rel"
+        done
+        echo "Diese Liste gehört in den Fragen-Block von INIT.md."
+    fi
     echo ""
-    echo "ACHTUNG — $SKIPPED Kollision(en), vorhandene Dateien wurden NICHT überschrieben:"
-    while IFS= read -r rel; do
-        echo "  - $rel"
-    done < "$COLL"
-    echo "Diese Liste gehört in den Fragen-Block von INIT.md."
-fi
-rm -f "$COLL"
-echo ""
-echo "Nächster Schritt: den Agenten '$SRC/INIT.md' abarbeiten lassen."
+    echo "Nächster Schritt: den Agenten '$SRC/INIT.md' abarbeiten lassen."
+}
 exit 0

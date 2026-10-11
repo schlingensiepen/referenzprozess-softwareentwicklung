@@ -62,7 +62,11 @@ wiki — du füllst eines.** Offen sind nur: die
 Bootstraps von `Mission Statement` und `Facts`
 (Projekt-Identität — füllst du in Phase 3 aus deinem
 Wissen), die Fragen aus Phase 1 und die Restfragen
-in Phase 5.
+in Phase 5. Bootstraps **deaktivierter** Fassaden
+(z.B. `Mission Statement Long` in
+`referenzprozesse/base/bootstrap/`) bleiben bewusst
+liegen — sie werden erst bei einer Reaktivierung
+per Zuruf abgearbeitet.
 
 Die eingetauschten **Varianten-Dateien** (je mit
 Grund):
@@ -93,14 +97,25 @@ Grund):
 
 ## Phase 0 — Sicherung und Starter-Aufnahme (sofort, vor allem anderen)
 
-1. **Einbindung prüfen:** Ist der Starter als
-   Submodul `_template/` eingebunden (Modus B) oder
-   als Einmal-Kopie erreichbar (Modus A)? Wenn
-   nein: dem Anwender die Modus-Wahl anbieten
-   (MasterPrompt §1 Anbindungs-Modi) und einbinden.
-2. **Ist die Kopie noch nicht erfolgt:** erst den
+Die Reihenfolge ist fest: **(a) Sicherungs-Commit
+des Alt-Zustands → (b) Einbindung → (c) Skript-Lauf
+→ (d) Aufnahme-Commit.** Einbindung und Kopie liegen
+beide zwischen den zwei Commits — so trennt die
+Historie sauber „vorher" von „Starter da".
+
+1. **Sicherung zuerst:** den unveränderten
    Alt-Zustand committen („Sicherung vor
-   Wissens-Migration"), **dann**
+   Wissens-Migration") — **vor** der Einbindung.
+   Kein git vorhanden → `git init`, dann
+   Sicherungs-Commit.
+2. **Einbindung prüfen/herstellen:** Ist der Starter
+   als Submodul `_template/` eingebunden (Modus B)
+   oder als Einmal-Kopie erreichbar (Modus A)? Wenn
+   nein: dem Anwender die Modus-Wahl anbieten
+   (MasterPrompt §1 Anbindungs-Modi) und einbinden —
+   nach dem Sicherungs-Commit, vor dem
+   Aufnahme-Commit.
+3. **Skript-Lauf prüfen/nachholen:**
    `setup/init-migration.sh` aus dem Projektordner
    ausführen. Ist das Skript nicht lauffähig (keine
    sh, Rechte, exotische Umgebung), kopierst du
@@ -108,15 +123,20 @@ Grund):
    der führende Ort, das Skript ihre
    Implementierung. **Kollisionsregel:** eine
    Starter-Datei überschreibt **nie** eine
-   gleichnamige Bestands-Datei (typisch: README.md,
-   .gitignore, CLAUDE.md) — bei Namensgleichheit die
+   gleichnamige Bestands-Datei (typische Kandidaten
+   aus der Kopier-Liste: `wiki/index.md`,
+   `devstate_active.md`, `MasterPrompt.md`;
+   `.gitignore` ist Sonderfall ohne
+   Kollisionsmeldung) — bei Namensgleichheit die
    Starter-Datei auslassen und die Kollisions-Liste
-   im Fragen-Block (Phase 1) vorlegen. Danach
-   zweiter Commit („Starter aufgenommen",
-   Aufnahme-Commit). **Ist die Kopie schon erfolgt**
-   (z.B. durch den Start-Auftrag): beides in einem
-   Commit sichern. Kein git vorhanden → `git init`,
-   dann wie beschrieben.
+   im Fragen-Block (Phase 1) vorlegen. Danach der
+   **Aufnahme-Commit** („Starter aufgenommen" —
+   umfasst Einbindung und Kopie). **Sind Einbindung
+   und Kopie schon erfolgt** (z.B. durch den
+   Start-Auftrag): prüfen, ob der Alt-Zustand noch
+   ungesichert ist; wenn ja, alles in einem Commit
+   sichern und die fehlende Trennung als Vermerk in
+   die Commit-Message aufnehmen.
 
    **Kopier-Liste** (Quelle: Starter-Root):
 
@@ -132,7 +152,7 @@ Grund):
    | `Styleguide-wiki.md` | `Styleguide-wiki.md` | Styleguide |
    | `.gitignore` | `.gitignore` | nur wenn im Projekt keine existiert |
    | `referenzprozesse/` (komplett) | `referenzprozesse/` | Nur-Lese-Vorlage inkl. aller `bootstrap/`-Ordner |
-   | `wiki/` (komplett, inkl. `templates/`) | `wiki/` | Frisch-Vorlage |
+   | `wiki/` (komplett, inkl. `templates/`) | `wiki/` | Frisch-Vorlage, inkl. deaktivierter Fassaden (z.B. `Mission Statement Long` — Reaktivierung per Zuruf) |
    | `devstate_active.md` | `devstate_active.md` | wird gleich ersetzt (s.u.) |
 
    **Danach eintauschen** (Variante ersetzt das eben
@@ -148,6 +168,24 @@ Grund):
    | `migration/wiki/WorkspaceManager-Kontrakt.md` | `wiki/WorkspaceManager-Kontrakt.md` |
    | `migration/wiki/InterneMechanik.md` | `wiki/InterneMechanik.md` |
 
+   **Kollisions-Fallback für Varianten:** Kollidiert
+   ein Varianten-Ziel mit einer Bestands-Datei
+   (z.B. ein vorhandenes `wiki/Zielmarken.md` oder
+   `devstate_active.md`), tauscht das Skript dort
+   **nicht** ein — die Bestands-Datei bleibt. Stelle
+   die Migrations-Vorbelegung dann manuell im
+   Bestands-Dokument her, mit der jeweiligen
+   Variante als Muster: die Marken „0 — Alt-Bestand"
+   (current) und „1 — Migriert" (in-progress) nach
+   `_template/migration/wiki/Zielmarken.md` in das
+   Bestands-Zielmarken-Dokument eintragen bzw. den
+   Stand/Nächste-Schritte-Block nach
+   `_template/migration/devstate_active.md`
+   nachziehen; wie der übrige Bestands-Inhalt
+   solcher Dateien mit der Starter-Fassung
+   zusammengeführt wird, entscheidet der Anwender im
+   Phase-1-Fragen-Block (Kollisions-Liste, Frage 6).
+
    **Nie kopiert werden:** `README.md`, `INIT.md`,
    `migration/` selbst, `docs/`, `setup/`, `LICENSE`,
    `.git/` — alles in `_template/` lesbar; ein
@@ -156,11 +194,11 @@ Grund):
    kopiert** — du liest sie aus
    `_template/migration/`.
 
-3. Commit-Texte hier und im Folgenden sind
+4. Commit-Texte hier und im Folgenden sind
    **sinngemäß in der bisherigen Projektsprache**
    zulässig — die Sprach-Frage kommt erst in
    Phase 1/5.
-4. Ab jetzt gilt Commit-Disziplin: jede
+5. Ab jetzt gilt Commit-Disziplin: jede
    abgeschlossene Phase endet mit einem Commit.
 
 ## Phase 1 — Fragen-Block (gesammelt, ein einziger Turn)
@@ -174,8 +212,10 @@ ist (siehe [[Aktivierter-Prozess]]).
 1. **Wissensbasis-Dateien bestätigen:** Liste alle
    Dateien/Ordner auf, die du als bisherige
    Wissensträger identifizierst (lies dazu nur
-   Datei-Namen und Kopfzeilen, nicht die
-   Volltexte!). Der Anwender streicht/ergänzt.
+   Datei-Namen und Kopfzeilen — bei Dateien ohne
+   Überschrift ersatzweise die ersten zwei, drei
+   Zeilen —, nicht die Volltexte!). Der Anwender
+   streicht/ergänzt.
 2. **Eigenes Modell + Gegen-Modell:** Nenne, welches
    Modell du selbst bist, und schlage ein
    **anderes** Modell für das Absicherungs-Review
@@ -280,7 +320,7 @@ Sektionen (funktional / nicht-funktional):
 | Ideen, Vielleicht-später | [[Ideen]] (IDEA-Zeile) |
 | Nutzer-Rollen | [[Verwendungs-Rollen]] |
 | Projekt-Identität, Stolpersteine, Einstieg | [[Mission Statement]] + [[Facts]] (dabei deren Bootstrap-Dateien aus `referenzprozesse/base/bootstrap/` abarbeiten — die Quelle ist Nur-Lese, nichts löschen) |
-| **Nicht mehr sicher Rekonstruierbares — und alles, was in keine Zeile passt** (Auffangregel: nie verwerfen!) | `wiki/Migrations-Grundlagen.md` — Aufbau: Frontmatter `type: decision`, `id: DEC-NNN` (Nummer der zugehörigen Sammel-Zeile), Sektionen `## Festlegungen` / `## Ungeklärt` / `## Herkunft` / `## Vermerke`; im DEC-Register mit **einer** Zeile `### DEC-NNN — Migrations-Grundlagen als Gesamtpaket angenommen` verankert (die Datei ist deren Detail-Knoten). Einzelpunkte können später zu eigenen DECs befördert werden |
+| **Nicht mehr sicher Rekonstruierbares — und alles, was in keine Zeile passt** (Auffangregel: nie verwerfen!) | `wiki/Migrations-Grundlagen.md` — die Datei gibt es **nicht als Vorlage**; du legst sie bei erstem Bedarf im Projekt-wiki nach dieser Aufbau-Beschreibung an: Frontmatter `type: decision`, `id: DEC-NNN` (Nummer der zugehörigen Sammel-Zeile), Sektionen `## Festlegungen` / `## Ungeklärt` / `## Herkunft` / `## Vermerke`; im DEC-Register mit **einer** Zeile `### DEC-NNN — Migrations-Grundlagen als Gesamtpaket angenommen` verankert (die Datei ist deren Detail-Knoten). Einzelpunkte können später zu eigenen DECs befördert werden |
 
 **Vorgehen:** Pro Wissensbasis-Datei ein Durchgang
 (bei vielen Dateien: Subagenten, einer je Datei oder
