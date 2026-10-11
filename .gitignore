@@ -1,0 +1,32 @@
+# Microsoft Office temporäre Dateien
+~$*.docx
+~$*.doc
+~$*.xlsx
+~$*.xls
+~$*.pptx
+~$*.ppt
+
+# Office Lock-Dateien
+*.~lock.*
+.~lock.*
+
+
+# Word Auto-Recovery
+*.asd
+
+# Excel temporäre Dateien
+*.xlk
+*.tmp
+
+# PowerPoint temporäre Dateien
+*.ppt~
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS (falls jemand im Team Mac nutzt)
+.DS_Store
+._*
