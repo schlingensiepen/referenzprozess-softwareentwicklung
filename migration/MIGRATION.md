@@ -29,12 +29,15 @@ Ab der Einbindung (Phase 0) liest du aus
 Einbindung und Kopier-Skript in Phase 0 sind
 Angebote an den Anwender — du nennst, was du tun
 willst (bei Kommandos: das exakte Kommando), und
-handelst erst nach seiner Antwort. Einzige Ausnahme
-ist der Sicherungs-Commit in einem **bestehenden**
-Repo (Phase 0 Schritt 1), den diese Anleitung als
-ersten Schritt festlegt — er verändert keine
-Bestands-Datei; du kündigst ihn in einem Satz an und
-führst ihn aus. `git init` gehört nicht zu dieser
+handelst erst nach seiner Antwort. Ausgenommen sind
+genau zwei Commits, die du in einem Satz ankündigst
+und ausführst: der Sicherungs-Commit in einem
+**bestehenden** Repo (Phase 0 Schritt 1) — er
+verändert keine Bestands-Datei — und der
+Aufnahme-Commit (Phase 0 Schritt 3), der nur
+aufnimmt, was der Anwender in Schritt 2 und 3
+freigegeben hat. Für beide gelten dieselben
+Schutzregeln aus Schritt 1. `git init` gehört nicht zu dieser
 Ausnahme (MasterPrompt §5.3 A1: keine automatische
 `git init` in einem gefüllten Ordner).
 
@@ -299,8 +302,15 @@ Historie sauber „vorher" von „Starter da".
    im Fragen-Block (Phase 1) vorlegen. Danach der
    **Aufnahme-Commit** — umfasst Einbindung (bei
    Modus A die komplette Kopie unter `_template/`)
-   und Kopie:
+   und Kopie; angekündigt, nicht erfragt:
    `git add -A && git commit -m "Starter aufgenommen"`.
+   Es gelten die Schutzregeln aus Schritt 1:
+   ignorierte Dateien nie mit `-f`, sensible oder
+   sehr große Dateien auslassen und nennen,
+   git-Identität erfragen statt setzen, bei
+   abweisendem Hook, verlangter Signatur oder
+   laufendem Merge anhalten und die Lage
+   beschreiben — nie `--no-verify`.
    **Sind Einbindung und Kopie schon erfolgt** (z.B.
    vom Anwender von Hand, README „Oder von Hand
    einrichten"): prüfen, ob der Alt-Zustand noch
