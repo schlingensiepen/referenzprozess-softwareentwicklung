@@ -630,7 +630,7 @@ Artefakte, nicht Commits.
 - SP-1-Vorgehen (direkte Erbschaft):
   [[Vorgehen-SP-1]].
 - Prozess-Definition: [[Steckbrief]] und index
-  (`referenzprozesse/RP-1-Systementwicklung/index.md`).
+  (`_template/referenzprozesse/RP-1-Systementwicklung/index.md`).
 - Commit-Kadenz, Werkzeug-Kadenz-Bericht,
   Präfix-Tabelle: MasterPrompt §6.
 - Basis-Knoten: [[Berichten-statt-Blockieren]].

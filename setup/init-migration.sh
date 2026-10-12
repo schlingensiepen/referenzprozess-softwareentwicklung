@@ -4,7 +4,9 @@
 # und tauscht danach die Migrations-Varianten-Dateien ein.
 #
 # Aufruf: aus dem Projektordner, z.B.
-#   _template/setup/init-migration.sh
+#   sh _template/setup/init-migration.sh
+# Ein Agent führt dieses Skript nur nach Zustimmung des Anwenders
+# aus (Angebot in der Choreografie), nie ungefragt.
 #
 # Führender Ort der Kopier-Liste ist migration/MIGRATION.md
 # (Phase 0) — dieses Skript implementiert sie. Kollisionsregel:
@@ -49,7 +51,9 @@ fi
              Styleguide-wiki.md devstate_active.md; do
         printf '%s\n' "$f"
     done
-    ( cd "$SRC" && find referenzprozesse wiki -type f | sort )
+    # referenzprozesse/ wird NICHT kopiert — es bleibt in
+    # _template/referenzprozesse/ (Nur-Lese, beide Einbindungs-Modi).
+    ( cd "$SRC" && find wiki -type f | sort )
 } | {
     COPIED=0
     SKIPPED=0

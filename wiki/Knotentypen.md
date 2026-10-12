@@ -642,7 +642,7 @@ Merge kopierten landen im Anwender-wiki.)_
 - **`process-mapping`** — Prozess-Landkarten
   (Template-Quelle, nie kopiert).
 - **`facade-bootstrap`** — Einmal-Anweisungen je
-  Fassade in `referenzprozesse/<P>/bootstrap/`
+  Fassade in `_template/referenzprozesse/<P>/bootstrap/`
   (DEC-217; Template-Quelle, nie kopiert).
 
 ## Projektspezifische Erweiterungen

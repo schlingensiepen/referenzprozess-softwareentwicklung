@@ -3,7 +3,9 @@
 # referenzprozess-softwareentwicklung in ein NEUES Projekt.
 #
 # Aufruf: aus dem Projektordner, z.B.
-#   _template/setup/init-frisch.sh
+#   sh _template/setup/init-frisch.sh
+# Ein Agent führt dieses Skript nur nach Zustimmung des Anwenders
+# aus (Angebot in der Choreografie), nie ungefragt.
 #
 # Führender Ort der Kopier-Liste ist INIT.md (§1) — dieses Skript
 # implementiert sie. Kollisionsregel: nie eine vorhandene
@@ -45,7 +47,9 @@ fi
              Styleguide-wiki.md devstate_active.md; do
         printf '%s\n' "$f"
     done
-    ( cd "$SRC" && find referenzprozesse wiki -type f | sort )
+    # referenzprozesse/ wird NICHT kopiert — es bleibt in
+    # _template/referenzprozesse/ (Nur-Lese, beide Einbindungs-Modi).
+    ( cd "$SRC" && find wiki -type f | sort )
 } | {
     COPIED=0
     SKIPPED=0

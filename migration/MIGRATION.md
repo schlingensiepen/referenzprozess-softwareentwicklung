@@ -9,6 +9,41 @@ des Templates (MasterPrompt.md, Wiki.md …) ziehst du
 erst heran, wenn eine Phase dich dorthin schickt:
 **Kontext schonen geht vor Vollständigkeit.**
 
+**Start ohne lokale Kopie:** Typischerweise kommst
+du über den Start-Satz „Migriere das Projekt in
+diesem Verzeichnis nach der Anleitung unter
+https://github.com/schlingensiepen/referenzprozess-softwareentwicklung."
+hierher; das aktuelle Verzeichnis ist der
+Projektordner. Du darfst dieses Dokument **direkt
+von der Repo-URL lesen, bevor irgendetwas
+eingebunden ist** — das ist der vorgesehene Weg.
+Solange `_template/` fehlt, liest du auch jede
+Datei, auf die dieses Dokument verweist, von dort:
+Raw-Pfad
+`https://raw.githubusercontent.com/schlingensiepen/referenzprozess-softwareentwicklung/main/<pfad>`
+(Wiki-Verweise `[[Name]]` meinen `wiki/Name.md`).
+Ab der Einbindung (Phase 0) liest du aus
+`_template/`.
+
+**Keine Ausführung ohne Zustimmung:** `git init`,
+Einbindung und Kopier-Skript in Phase 0 sind
+Angebote an den Anwender — du nennst, was du tun
+willst (bei Kommandos: das exakte Kommando), und
+handelst erst nach seiner Antwort. Einzige Ausnahme
+ist der Sicherungs-Commit in einem **bestehenden**
+Repo (Phase 0 Schritt 1), den diese Anleitung als
+ersten Schritt festlegt — er verändert keine
+Bestands-Datei; du kündigst ihn in einem Satz an und
+führst ihn aus. `git init` gehört nicht zu dieser
+Ausnahme (MasterPrompt §5.3 A1: keine automatische
+`git init` in einem gefüllten Ordner).
+
+**Vorrang:** Für den Starter-Fall ersetzt Phase 0
+Schritt 2 die allgemeine Bootstrap-Init-Frage aus
+MasterPrompt §5.3 (Turn α/β); die Modus-Beschreibung
+in MasterPrompt §1 („Anbindungs-Modi") gilt
+unverändert.
+
 **Grundgesetz dieser Migration (gilt ab sofort,
 dauerhaft):** Das `wiki/` ist die Quelle der
 Wahrheit. Alles Besprochene, Entschiedene und
@@ -25,15 +60,18 @@ Chat-Zusammenfassung). Diese Regel übernimmst du in
 Phase 5 in deine Instruktionsdatei.
 
 **Quelle ist Nur-Lese:** Quelle ist der Starter —
-das Repo, aus dem du dieses Dokument liest,
-typischerweise als Submodul `_template/` eingebunden
-(Modus B) oder als Einmal-Kopie abgelegt (Modus A,
-MasterPrompt §1). Er wird **nie beschrieben** und
+das Repo, aus dem du dieses Dokument liest, nach
+Phase 0 unter `_template/` eingebunden — als
+Submodul (Modus B) oder als Einmal-Kopie, die mit
+dem Projekt committet wird (Modus A, MasterPrompt
+§1). Er wird **nie beschrieben**, nie gelöscht und
 bleibt dauerhaft nur-lese verfügbar — als
-Nachschlage- und Upgrade-Quelle. Ab der Kopie
-arbeitest du ausschließlich in deinem
-Projektverzeichnis. Ebenso Nur-Lese: dein
-mitkopierter Ordner `referenzprozesse/`.
+Nachschlage- und Upgrade-Quelle, bei Modus A
+zugleich als Ur-Versions-Archiv. Die
+Prozess-Vorlagen `referenzprozesse/` liegen **nur**
+in `_template/referenzprozesse/` und werden nicht
+ins Projekt kopiert. Ab der Kopie arbeitest du
+ausschließlich in deinem Projektverzeichnis.
 
 **Werkzeug-Adaption:** Alle hier beschriebenen
 Mechanismen (Subagenten, Reviews, Commits) sind
@@ -52,7 +90,9 @@ Dein `wiki/` ist **vorbereitet**: es kommt als Kopie
 des Starter-`wiki/` (Frisch-Vorlage) **plus
 Eintausch der Migrations-Varianten-Dateien aus
 `migration/`**, ausgeführt durch
-`setup/init-migration.sh` (Phase 0). Alle Fassaden
+`setup/init-migration.sh` oder manuell nach der
+Kopier-Liste (Phase 0 — den Weg wählt der
+Anwender). Alle Fassaden
 des RP-1-Zuschnitts liegen bereit, die
 Init-Bootstraps sind bis auf zwei bewusste Ausnahmen
 bereits abgearbeitet, der Typen-Katalog trägt die
@@ -64,7 +104,7 @@ Bootstraps von `Mission Statement` und `Facts`
 Wissen), die Fragen aus Phase 1 und die Restfragen
 in Phase 5. Bootstraps **deaktivierter** Fassaden
 (z.B. `Mission Statement Long` in
-`referenzprozesse/base/bootstrap/`) bleiben bewusst
+`_template/referenzprozesse/base/bootstrap/`) bleiben bewusst
 liegen — sie werden erst bei einer Reaktivierung
 per Zuruf abgearbeitet.
 
@@ -98,30 +138,157 @@ Grund):
 ## Phase 0 — Sicherung und Starter-Aufnahme (sofort, vor allem anderen)
 
 Die Reihenfolge ist fest: **(a) Sicherungs-Commit
-des Alt-Zustands → (b) Einbindung → (c) Skript-Lauf
+des Alt-Zustands → (b) Einbindung (mit Modus-Frage)
+→ (c) Kopie (Skript oder von Hand, als Angebot)
 → (d) Aufnahme-Commit.** Einbindung und Kopie liegen
 beide zwischen den zwei Commits — so trennt die
 Historie sauber „vorher" von „Starter da".
 
-1. **Sicherung zuerst:** den unveränderten
-   Alt-Zustand committen („Sicherung vor
-   Wissens-Migration") — **vor** der Einbindung.
-   Kein git vorhanden → `git init`, dann
-   Sicherungs-Commit.
-2. **Einbindung prüfen/herstellen:** Ist der Starter
-   als Submodul `_template/` eingebunden (Modus B)
-   oder als Einmal-Kopie erreichbar (Modus A)? Wenn
-   nein: dem Anwender die Modus-Wahl anbieten
-   (MasterPrompt §1 Anbindungs-Modi) und einbinden —
-   nach dem Sicherungs-Commit, vor dem
-   Aufnahme-Commit.
-3. **Skript-Lauf prüfen/nachholen:**
-   `setup/init-migration.sh` aus dem Projektordner
-   ausführen. Ist das Skript nicht lauffähig (keine
-   sh, Rechte, exotische Umgebung), kopierst du
-   selbst nach der **Kopier-Liste** unten — sie ist
-   der führende Ort, das Skript ihre
-   Implementierung. **Kollisionsregel:** eine
+1. **Sicherung zuerst** — den unveränderten
+   Alt-Zustand committen, **vor** der Einbindung:
+   - **Kein git-Repo** (`.git` fehlt): biete
+     `git init` an und warte auf Zustimmung — keine
+     automatische `git init` in einem gefüllten
+     Ordner (MasterPrompt §5.3 A1). Lehnt der
+     Anwender ab, gilt dort der Fail-Safe: die
+     Migration ruht, bis ein Repo da ist.
+   - **git-Identität:** sind `git config user.name`
+     und `git config user.email` leer, frage den
+     Anwender danach — setze sie nicht selbst und
+     erfinde keine Werte.
+   - **Vorab prüfen** mit `git status --porcelain`:
+     Ist nichts zu committen (sauberer Stand), gilt
+     der aktuelle `HEAD` als Sicherung — kein leerer
+     Commit. **Ignorierte Dateien**
+     (`.gitignore`) bleiben ignoriert — nie
+     `git add -f`. **Offensichtlich sensible
+     Dateien** unter den ungetrackten (z.B. `.env`,
+     `*.pem`, `*.key`, `id_rsa*`, `*.p12`,
+     `credentials*`, Dateien mit `secret`/`token` im
+     Namen) und sehr große Dateien (> 50 MB) nimmst
+     du **nicht** ungeprüft auf: du lässt sie aus
+     und nennst sie dem Anwender mit dem Hinweis,
+     sie selbst zu committen oder in `.gitignore`
+     einzutragen. Bereits gestagte Änderungen
+     gehören zum Alt-Zustand und kommen mit.
+   - **Ankündigen und ausführen** (ein Satz, keine
+     Rückfrage), exaktes Kommando:
+     `git add -A && git commit -m "Sicherung vor Wissens-Migration"`
+     — bei ausgelassenen Dateien je Datei ein
+     Ausschluss: `git add -A -- . ':!<pfad>'`, dann
+     derselbe `git commit`. Hat der Anwender eben
+     `git init` zugestimmt, gilt das auch als
+     Zustimmung zu diesem ersten Commit — keine
+     zweite Rückfrage.
+   - **Wenn der Commit nicht glatt durchläuft —
+     anhalten, nicht umgehen:** laufender Merge
+     oder Rebase (`.git/MERGE_HEAD` bzw.
+     `.git/rebase-*`), ein abweisender Hook oder
+     verlangte Signatur, eingebettete fremde Repos
+     (Unterordner mit eigenem `.git`, die `git add`
+     als Submodul-Platzhalter aufnehmen würde): du
+     committest nicht, beschreibst dem Anwender die
+     Lage und wartest auf seine Entscheidung. Nie
+     `--no-verify`, nie Signatur abschalten, nie
+     fremde `.git`-Ordner löschen.
+2. **Einbindung (Einbindungs-Frage):** **Ist die
+   Einbindung schon erfolgt?** Ja, wenn `_template/`
+   existiert und `_template/migration/MIGRATION.md`
+   sowie `_template/MasterPrompt.md` enthält — dann
+   Modus feststellen: **Modus B**, wenn
+   `.gitmodules` einen Eintrag für `_template` trägt
+   (`git submodule status _template`); **Modus A**,
+   wenn `_template/` ein gewöhnlicher Ordner ohne
+   eigenes `.git` ist; weiter mit Schritt 3.
+   Sonderfall: `_template/` leer (Submodul nicht
+   initialisiert) → `git submodule update --init`
+   anbieten. Wenn nein, stelle dem Anwender jetzt
+   die **Einbindungs-Frage** mit diesem Wortlaut
+   (Alltagssprache; Fachwörter nur in Klammern):
+
+   > Wie soll die Vorlage in dein Projekt kommen?
+   > Sie landet in beiden Fällen im Ordner
+   > `_template/` und wird dort nie verändert.
+   >
+   > - **B — verknüpfte Vorlage, die du später
+   >   gezielt aktualisieren kannst** (empfohlen;
+   >   technisch ein git-Submodul, das auf einen
+   >   festen Stand „gepinnt" ist). Braucht beim
+   >   Einrichten Internet-Zugriff auf GitHub; wer
+   >   dein Projekt später klont, holt die Vorlage
+   >   mit `git clone --recursive` mit.
+   > - **A — eingefrorene Kopie der Vorlage, die
+   >   dauerhaft im Projekt bleibt, damit du immer
+   >   siehst, womit du gestartet bist** (technisch
+   >   eine Einmal-Kopie ohne Git-Verbindung, die
+   >   mit deinem Projekt gespeichert wird, ca.
+   >   1,5 MB). Neuere Vorlagen-Stände übernimmst
+   >   du später durch bewussten Austausch der
+   >   Kopie.
+
+   **Erst nach der Antwort einbinden** — nach dem
+   Sicherungs-Commit, vor dem Aufnahme-Commit; das
+   exakte Kommando nennst du vorher:
+   - **Modus B:**
+     `git submodule add https://github.com/schlingensiepen/referenzprozess-softwareentwicklung _template`.
+     Schlägt das fehl (kein Netz, URL nicht
+     erreichbar): melden; der Anwender entscheidet —
+     erneut versuchen, andere URL, Modus A oder
+     Abbruch.
+   - **Modus A:**
+     `git clone --depth 1 https://github.com/schlingensiepen/referenzprozess-softwareentwicklung _template`,
+     dann die Herkunft ablesen
+     (`git -C _template rev-parse HEAD` und
+     `git -C _template describe --tags --always`),
+     danach `rm -rf _template/.git`. Die Kopie ist
+     ab jetzt gewöhnlicher Projekt-Inhalt:
+     Nur-Lese, wird im Aufnahme-Commit mit dem
+     Projekt committet und nie gelöscht — sie ist
+     das Ur-Versions-Archiv, gegen das der Anwender
+     jederzeit diffen kann.
+
+   **Herkunft vermerken (beide Modi):** Repo-URL und
+   Stand (Modus A: der eben abgelesene Commit/Tag;
+   Modus B: der Submodul-Pin aus
+   `git submodule status _template`) trägst du nach
+   der Kopie (Schritt 3), vor dem Aufnahme-Commit, im
+   Feld „Template-Herkunft" von
+   [[Aktivierter-Prozess]] ein (kollidierte die Datei
+   mit einem Bestands-Dokument: im Phase-1-Fragen-
+   Block nachholen).
+3. **Projektdateien anlegen (Angebot):** **Ist die
+   Kopie schon erfolgt?** Ein eigenes `wiki/` oder
+   `devstate_active.md` im Bestand beweist nichts —
+   maßgeblich ist der Vergleich mit `_template/`
+   (z.B. `cmp -s <datei> <quelle>`): erfolgt, wenn
+   `MasterPrompt.md` und `wiki/Init-Choreografie.md`
+   inhaltsgleich zu `_template/MasterPrompt.md` bzw.
+   `_template/wiki/Init-Choreografie.md` sind **und**
+   `wiki/Aktivierter-Prozess.md` inhaltsgleich zu
+   `_template/migration/wiki/Aktivierter-Prozess.md`
+   ist (bzw. dessen Herkunfts-Feld schon trägt).
+   Teilweise erfolgt (abgebrochene Kopie) → Angebot
+   wie unten; das Skript ergänzt nur Fehlendes und
+   listet Vorhandenes als Kollision — Kollisionen,
+   deren Inhalt mit der Starter-Datei identisch ist,
+   sind keine echten und entfallen aus der Liste.
+   Steht `devstate_active.md` schon auf einem
+   Migrations-Stand jenseits von Phase 0, ist
+   Phase 0 erledigt.
+
+   Fehlt die Kopie, **biete dem Anwender
+   die zwei Wege an** und kopiere erst nach seiner
+   Zustimmung — **(a)** das Kopier-Skript ausführen
+   (empfohlen: deterministisch, überschreibt nichts,
+   listet Kollisionen); das exakte Kommando, aus dem
+   Projektordner:
+   `sh _template/setup/init-migration.sh` — oder
+   **(b)** du kopierst selbst aus `_template/` nach
+   der **Kopier-Liste** unten — sie ist der führende
+   Ort, das Skript ihre Implementierung; (b) ist
+   zugleich der Fallback, wenn das Skript nicht
+   lauffähig ist (keine sh, Rechte, exotische
+   Umgebung). **Kollisionsregel:** eine
    Starter-Datei überschreibt **nie** eine
    gleichnamige Bestands-Datei (typische Kandidaten
    aus der Kopier-Liste: `wiki/index.md`,
@@ -130,13 +297,17 @@ Historie sauber „vorher" von „Starter da".
    Kollisionsmeldung) — bei Namensgleichheit die
    Starter-Datei auslassen und die Kollisions-Liste
    im Fragen-Block (Phase 1) vorlegen. Danach der
-   **Aufnahme-Commit** („Starter aufgenommen" —
-   umfasst Einbindung und Kopie). **Sind Einbindung
-   und Kopie schon erfolgt** (z.B. durch den
-   Start-Auftrag): prüfen, ob der Alt-Zustand noch
+   **Aufnahme-Commit** — umfasst Einbindung (bei
+   Modus A die komplette Kopie unter `_template/`)
+   und Kopie:
+   `git add -A && git commit -m "Starter aufgenommen"`.
+   **Sind Einbindung und Kopie schon erfolgt** (z.B.
+   vom Anwender von Hand, README „Oder von Hand
+   einrichten"): prüfen, ob der Alt-Zustand noch
    ungesichert ist; wenn ja, alles in einem Commit
-   sichern und die fehlende Trennung als Vermerk in
-   die Commit-Message aufnehmen.
+   sichern (Regeln aus Schritt 1) und die fehlende
+   Trennung als Vermerk in die Commit-Message
+   aufnehmen.
 
    **Kopier-Liste** (Quelle: Starter-Root):
 
@@ -151,7 +322,6 @@ Historie sauber „vorher" von „Starter da".
    | `Styleguide-md.md` | `Styleguide-md.md` | Styleguide |
    | `Styleguide-wiki.md` | `Styleguide-wiki.md` | Styleguide |
    | `.gitignore` | `.gitignore` | nur wenn im Projekt keine existiert |
-   | `referenzprozesse/` (komplett) | `referenzprozesse/` | Nur-Lese-Vorlage inkl. aller `bootstrap/`-Ordner |
    | `wiki/` (komplett, inkl. `templates/`) | `wiki/` | Frisch-Vorlage, inkl. deaktivierter Fassaden (z.B. `Mission Statement Long` — Reaktivierung per Zuruf) |
    | `devstate_active.md` | `devstate_active.md` | wird gleich ersetzt (s.u.) |
 
@@ -171,8 +341,8 @@ Historie sauber „vorher" von „Starter da".
    **Kollisions-Fallback für Varianten:** Kollidiert
    ein Varianten-Ziel mit einer Bestands-Datei
    (z.B. ein vorhandenes `wiki/Zielmarken.md` oder
-   `devstate_active.md`), tauscht das Skript dort
-   **nicht** ein — die Bestands-Datei bleibt. Stelle
+   `devstate_active.md`), wird dort **nicht**
+   eingetauscht (Skript wie Handkopie) — die Bestands-Datei bleibt. Stelle
    die Migrations-Vorbelegung dann manuell im
    Bestands-Dokument her, mit der jeweiligen
    Variante als Muster: die Marken „0 — Alt-Bestand"
@@ -186,9 +356,12 @@ Historie sauber „vorher" von „Starter da".
    zusammengeführt wird, entscheidet der Anwender im
    Phase-1-Fragen-Block (Kollisions-Liste, Frage 6).
 
-   **Nie kopiert werden:** `README.md`, `INIT.md`,
-   `migration/` selbst, `docs/`, `setup/`, `LICENSE`,
-   `.git/` — alles in `_template/` lesbar; ein
+   **Nie kopiert werden:** `referenzprozesse/`
+   (bleibt als Nur-Lese-Vorlage in
+   `_template/referenzprozesse/` — Steckbriefe,
+   Skelette, `bootstrap/`-Ordner), `README.md`,
+   `INIT.md`, `migration/` selbst, `docs/`, `setup/`,
+   `LICENSE`, `.git/` — alles in `_template/` lesbar; ein
    etwaiges Bestands-`docs/` bleibt unberührt.
    Diese MIGRATION.md wird ebenfalls **nicht
    kopiert** — du liest sie aus
@@ -237,8 +410,8 @@ ist (siehe [[Aktivierter-Prozess]]).
    (mehrere Komponenten-Repos unter diesem Projekt)?
    Bei **Koordinator**: kündige an, dass nach der
    Migration (a) der Contract-Index aus
-   `referenzprozesse/RP-1-Systementwicklung/wiki/`
-   (dein mitkopierter Ordner) aktiviert wird und
+   `_template/referenzprozesse/RP-1-Systementwicklung/wiki/`
+   aktiviert wird und
    (b) du das Angebot „Trennung von Werkstatt und
    Produkt" vorlegst
    ([[Two-Repo-Submodul-Muster]]; Konzept-Quelle:
@@ -319,7 +492,7 @@ Sektionen (funktional / nicht-funktional):
 | Zeitgeschehen, Meilensteine der Historie | [[Chronologie]] (grobe Epochen genügen) |
 | Ideen, Vielleicht-später | [[Ideen]] (IDEA-Zeile) |
 | Nutzer-Rollen | [[Verwendungs-Rollen]] |
-| Projekt-Identität, Stolpersteine, Einstieg | [[Mission Statement]] + [[Facts]] (dabei deren Bootstrap-Dateien aus `referenzprozesse/base/bootstrap/` abarbeiten — die Quelle ist Nur-Lese, nichts löschen) |
+| Projekt-Identität, Stolpersteine, Einstieg | [[Mission Statement]] + [[Facts]] (dabei deren Bootstrap-Dateien aus `_template/referenzprozesse/base/bootstrap/` abarbeiten — die Quelle ist Nur-Lese, nichts löschen) |
 | **Nicht mehr sicher Rekonstruierbares — und alles, was in keine Zeile passt** (Auffangregel: nie verwerfen!) | `wiki/Migrations-Grundlagen.md` — die Datei gibt es **nicht als Vorlage**; du legst sie bei erstem Bedarf im Projekt-wiki nach dieser Aufbau-Beschreibung an: Frontmatter `type: decision`, `id: DEC-NNN` (Nummer der zugehörigen Sammel-Zeile), Sektionen `## Festlegungen` / `## Ungeklärt` / `## Herkunft` / `## Vermerke`; im DEC-Register mit **einer** Zeile `### DEC-NNN — Migrations-Grundlagen als Gesamtpaket angenommen` verankert (die Datei ist deren Detail-Knoten). Einzelpunkte können später zu eigenen DECs befördert werden |
 
 **Vorgehen:** Pro Wissensbasis-Datei ein Durchgang
@@ -396,11 +569,11 @@ erneut gefragt:
    aus dem Grundgesetz oben).
 4. Bei **Koordinator-Entscheid** aus Phase 1:
    Contract-Index aktivieren (Skelett aus
-   `referenzprozesse/RP-1-Systementwicklung/wiki/`
+   `_template/referenzprozesse/RP-1-Systementwicklung/wiki/`
    kopieren, die Bootstrap-Datei aus
-   `referenzprozesse/RP-1-Systementwicklung/bootstrap/`
-   abarbeiten — beides aus deinem mitkopierten,
-   nur-lese Ordner —, [[Fassaden]] nachführen) und
+   `_template/referenzprozesse/RP-1-Systementwicklung/bootstrap/`
+   abarbeiten — beides Nur-Lese-Quelle —,
+   [[Fassaden]] nachführen) und
    das **Werkstatt/Produkt-Angebot**
    vorlegen ([[Two-Repo-Submodul-Muster]]) —
    Entscheid als DEC buchen, Umsetzung als erstes
@@ -415,13 +588,16 @@ erneut gefragt:
    MIGRATION.md liegt nicht in deinem Projekt):**
    Chronologie-Eintrag „Migration abgeschlossen" +
    DEC-Vermerk „Migration abgeschlossen
-   (Starter-Stand <Datum/Commit>)" — ihre Wahrheit
+   (Starter-Stand <Commit/Tag>, wie in
+   [[Aktivierter-Prozess]] vermerkt)" — ihre Wahrheit
    lebt ab jetzt vollständig in den Buchungen;
    diese Anleitung bleibt in `_template/migration/`
    als Nachschlage-Quelle liegen.
-7. Abschluss-Commit. `referenzprozesse/` bleibt
-   dauerhaft als Nur-Lese-Nachschlage- und
-   Upgrade-Quelle liegen (nicht löschen). Ab hier
+7. Abschluss-Commit. `_template/` (samt
+   `_template/referenzprozesse/`) bleibt dauerhaft
+   als Nur-Lese-Nachschlage- und Upgrade-Quelle
+   liegen (nicht löschen) — bei Modus A zugleich als
+   Ur-Versions-Archiv. Ab hier
    gilt der normale Betrieb nach MasterPrompt —
    beim nächsten Sessionstart läuft der reguläre
    Ablauf (§5.3).

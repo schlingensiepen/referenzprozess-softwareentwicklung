@@ -2,7 +2,7 @@
 
 > Erklär-Doku des Template-Systems, abgeleitet aus
 > dem Regelwerk (MasterPrompt.md, Wiki.md,
-> Vorgehen.md), Starter-Stand 2026-10-11; kein
+> Vorgehen.md), Starter-Stand 2026-10-12; kein
 > Wahrheits-Ort — verbindlich ist das Regelwerk.
 
 ## Was ein Prozess ist
@@ -12,7 +12,8 @@ Paket für eine Projektart: zusätzliche Fassaden
 (z.B. ein Anforderungs-Register), ein auf die
 Domäne zugeschnittenes Vorgehen, Commit-Konventionen
 und Knoten-Typen. Die Pakete liegen im Ordner
-`referenzprozesse/` — vom Rechtsfall über
+`referenzprozesse/` der Vorlage (im Projekt unter
+`_template/referenzprozesse/`) — vom Rechtsfall über
 Publikationen bis zur Hardwareentwicklung; manche
 ausgearbeitet, manche als Platzhalter.
 
@@ -76,7 +77,7 @@ Beim Start fragt dich der Agent, ob dein Projekt
 Beim Koordinator-Entscheid wird zusätzlich ein
 Contract-Register aktiviert (Schnittstellen-Verträge
 zwischen den Komponenten, Vorlage liegt in
-`referenzprozesse/RP-1-Systementwicklung/`), und der
+`_template/referenzprozesse/RP-1-Systementwicklung/`), und der
 Agent legt dir das Muster „Trennung von Werkstatt
 und Produkt" zur Entscheidung vor. Du kannst die
 Rolle auch später noch wechseln — die Vorlagen
@@ -87,5 +88,5 @@ bleiben im Projekt verfügbar.
 Die Prozess-Wahl ist nicht endgültig: Weitere
 Prozesse lassen sich per Zuruf aktivieren
 („aktiviere Prozess X"), vorhandene aktualisieren —
-`referenzprozesse/` bleibt dafür dauerhaft als
-Quelle im Projekt liegen.
+`_template/referenzprozesse/` bleibt dafür
+dauerhaft als Quelle im Projekt liegen.

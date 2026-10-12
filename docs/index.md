@@ -2,7 +2,7 @@
 
 > Erklär-Doku des Template-Systems, abgeleitet aus
 > dem Regelwerk (MasterPrompt.md, Wiki.md,
-> Vorgehen.md), Starter-Stand 2026-10-11; kein
+> Vorgehen.md), Starter-Stand 2026-10-12; kein
 > Wahrheits-Ort — verbindlich ist das Regelwerk.
 
 Dieses Dokument erklärt einem Menschen ohne
@@ -58,9 +58,10 @@ Regelwerks-Dokumente im Root, `raw/` und `input/`
 für unveränderliche Eingangsdokumente, `output/` und
 `overview/` für versionierte, eingefrorene
 Ergebnis-Stände, `outgoing/` für Versandfertiges —
-und `referenzprozesse/` als Nur-Lese-Vorlage, aus
-der sich das Projekt bedient hat und später
-bedienen kann.
+und die eingebundene Vorlage `_template/` (mit den
+Prozess-Vorlagen `referenzprozesse/`) als
+Nur-Lese-Quelle, aus der sich das Projekt bedient
+hat und später bedienen kann.
 
 → Vertiefung: [03-ordnerstruktur.md](03-ordnerstruktur.md)
 
@@ -96,21 +97,37 @@ das, das gebaut hat.
 ## Die zwei Wege in dein Projekt
 
 Dieses Repository wird nicht selbst zum Projekt — es
-wird als Vorlage **eingebunden** (empfohlen: als
-git-Submodul `_template/`). Dann gibt es zwei Wege:
+wird als Vorlage unter `_template/` in dein Projekt
+**eingebunden**. Gestartet wird mit einem einzigen
+Satz an deinen KI-Agenten, den du in deinem
+Projektordner gibst; die zwei Sätze stehen zum
+Herauskopieren ganz oben in der README. Der Agent
+liest daraufhin die passende Anleitung direkt von
+der Repo-URL und arbeitet sie mit dir ab:
 
-- **Neues Projekt:** das Skript
-  `setup/init-frisch.sh` kopiert die
-  Startausstattung, danach arbeitet der Agent
-  `INIT.md` ab — wenige Fragen, erster Commit,
-  losarbeiten.
-- **Bestehendes Projekt:** das Skript
-  `setup/init-migration.sh` kopiert dieselbe
-  Ausstattung plus Migrations-Varianten, danach
-  führt `migration/MIGRATION.md` den Agenten durch
-  die Überführung deines vorhandenen Wissens ins
-  Wiki — ohne dass Bestands-Dateien angetastet
-  werden.
+- **Neues Projekt** (Anleitung `INIT.md`): Zuerst
+  fragt dich der Agent, ob die Vorlage als
+  verknüpfte Vorlage, die du später gezielt
+  aktualisieren kannst (empfohlen; technisch ein
+  git-Submodul), oder als eingefrorene Kopie, die
+  dauerhaft im Projekt bleibt, damit du immer
+  siehst, womit du gestartet bist, eingebunden
+  wird. Dann bietet er an, die Startausstattung zu
+  kopieren — per Skript `setup/init-frisch.sh` oder
+  von Hand, du entscheidest. Danach: wenige Fragen,
+  erster Commit, losarbeiten.
+- **Bestehendes Projekt** (Anleitung
+  `migration/MIGRATION.md`): Der Agent sichert
+  zuerst deinen Alt-Zustand per Commit, stellt dann
+  dieselbe Einbindungs-Frage und bietet die Kopie
+  an (Skript `setup/init-migration.sh` oder von
+  Hand — dieselbe Ausstattung plus
+  Migrations-Varianten). Danach überführt er dein
+  vorhandenes Wissen ins Wiki — ohne dass
+  Bestands-Dateien angetastet werden.
+
+Kein Schritt, der etwas in deinem Projekt anlegt,
+läuft ungefragt.
 
 → Vertiefung: [06-start-und-migration.md](06-start-und-migration.md)
 

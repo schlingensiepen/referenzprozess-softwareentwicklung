@@ -9,7 +9,7 @@ active: false   # Default deaktiviert; nur auf User-Anweisung aktivieren
 
 - **Bootstrap/Reaktivierung (DEC-217):**
   Einmal-Anweisungen in der Template-Quelle
-  `referenzprozesse/base/bootstrap/Mission Statement Long.md` —
+  `_template/referenzprozesse/base/bootstrap/Mission Statement Long.md` —
   bei Reaktivierung von dort abarbeiten.
 
 - **Typ:** `mission-long` — Projekt-Überblick

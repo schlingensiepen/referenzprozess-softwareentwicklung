@@ -74,14 +74,14 @@ Root/                             ← Arbeitsverzeichnis
 ├── index-output.md               ← Index der Ausgangsdokumente
 ├── index-overview.md             ← Index der Übersichtsdokumente
 ├── [Arbeitsdokumente].md         ← weitere .md nach Bedarf
-├── _template/                    ← nur Modus B: Template-Submodul, Nur-Lese
-├── referenzprozesse/             ← Prozess-Vorlagen, Nur-Lese (siehe Anbindungs-Modi)
-│   ├── base/
-│   │   ├── bootstrap/            ← Einmal-Anweisungen je Fassade (DEC-217, nie kopiert)
-│   │   └── wiki/                 ← Basis-Fassaden-Skelette
-│   ├── SP-1-Standardprozess/     ← ausgearbeiteter Prozess
-│   ├── RP-1-Systementwicklung/   ← ausgearbeiteter Prozess
-│   └── <weitere>/                ← Platzhalter mit `status: geplant`
+├── _template/                    ← Template-Quelle, Nur-Lese, beide Modi (DEC-223)
+│   └── referenzprozesse/         ← Prozess-Vorlagen (siehe Anbindungs-Modi)
+│       ├── base/
+│       │   ├── bootstrap/        ← Einmal-Anweisungen je Fassade (DEC-217, nie kopiert)
+│       │   └── wiki/             ← Basis-Fassaden-Skelette
+│       ├── SP-1-Standardprozess/ ← ausgearbeiteter Prozess
+│       ├── RP-1-Systementwicklung/ ← ausgearbeiteter Prozess
+│       └── <weitere>/            ← Platzhalter mit `status: geplant`
 ├── raw/                          ← Originaldokumente (immutable)
 ├── input/                        ← Volltext-Konvertierungen (immutable)
 │   ├── raw/                      ← aus raw/ konvertiert
@@ -117,27 +117,32 @@ Anwender, wie das Template ins Projekt kommt. Es gibt
 zwei zulässige Modi und nur diese zwei — keine dritte
 Bauform, keine Mischform:
 
-- **Modus A — Lese-Referenz + einmalige Kopie.** Der
-  Agent liest die Template-Dateien aus einem
-  angegebenen Pfad und kopiert sie einmalig ins
-  Anwender-Root (inkl. `referenzprozesse/` als
-  Nur-Lese-Vorlage). Das Projekt ist danach
-  **selbsttragend** — kein aktiver Bezug zum Template
-  mehr; Updates erfordern bewusstes manuelles
-  Nachziehen.
+- **Modus A — Einmal-Kopie unter `_template/`.** Der
+  Agent kopiert die komplette Template-Quelle aus
+  einem angegebenen Pfad einmalig nach `_template/`
+  (bei einem git-Klon ohne dessen `.git`), dort
+  **Nur-Lese** und mit dem Projekt committet. Die
+  Kopie ist das **Ur-Versions-Archiv**: sichtbar,
+  mit welchem Template-Stand das Projekt aufgesetzt
+  wurde, und diff-bar. Die Herkunft (Quelle und
+  Stand, z.B. Commit/Tag) vermerkt der Agent im
+  Knoten [[Aktivierter-Prozess]]. Updates: bewusster
+  Austausch von `_template/` gegen einen neueren
+  Stand (eigener Commit), danach Delta-Nachzug der
+  lebenden Dokumente wie bei Modus B (DEC-223).
 - **Modus B — git-Submodul `_template/`.** Der Agent
   bindet das Template-Repo als Submodul unter
   `_template/` ein (Nur-Lese). Version-Pinning per
   Submodul-Commit-Hash; Template-Updates aktiv
   abrufbar per `git submodule update --remote`.
 
-`referenzprozesse/` liegt in der Template-Quelle
-(Modus B: `_template/referenzprozesse/`; Modus A: als
-kopierte Nur-Lese-Vorlage im Anwender-Root) und ist
-**Nur-Lese** — zulässige Lese-Zugriffe sind der
-Steckbrief-Scan beim Init und das Lesen als
-Merge-Quelle (Wiki.md §11.3). Der Agent schreibt dort
-nie.
+In beiden Modi ist `_template/` die Template-Quelle
+(DEC-223). `referenzprozesse/` bleibt in
+`_template/referenzprozesse/` (keine Kopie ins
+Anwender-Root) und ist **Nur-Lese** — zulässige
+Lese-Zugriffe sind der Steckbrief-Scan beim Init
+und das Lesen als Merge-Quelle (Wiki.md §11.3). Der
+Agent schreibt dort nie.
 
 ### 1.1 Root-Verzeichnis
 
@@ -146,7 +151,10 @@ Styleguides, Index-Dateien und Steuerdateien. Die
 Ordner `raw/`, `input/`, `research/`, `tools/`,
 `wiki/`, `output/`, `overview/` und `outgoing/` werden
 von der KI verwaltet und folgen den Konventionen dieses
-Dokuments und seiner Teildateien.
+Dokuments und seiner Teildateien. Daneben liegt in
+beiden Anbindungs-Modi `_template/` — die
+Template-Quelle, Nur-Lese, kein KI-verwalteter
+Arbeitsordner (DEC-223).
 
 Der User kann weitere Unterordner im Root anlegen —
 für Teilaufgaben, Zwischendokumente oder thematische
@@ -850,9 +858,12 @@ Turn α — Anbindungs-Modus:
 > Ich lese den Template-Pfad `<pfad>` als Zeiger auf
 > ein Template. Wie soll ich das Template anbinden?
 >
-> - **A** — Lese-Referenz mit einmaligem Kopieren:
->   dein Projekt trägt die relevanten Teile danach
->   selbst, keine Update-Verbindung.
+> - **A** — Einmal-Kopie unter `_template/`: ich
+>   kopiere das Template einmalig nach `_template/`
+>   und committe es mit — als Archiv des Stands, mit
+>   dem dein Projekt aufgesetzt wurde; keine
+>   Update-Verbindung, Updates durch bewussten
+>   Austausch der Kopie.
 > - **B** — git-Submodul unter `_template/`: dein
 >   Projekt pinnt einen Template-Commit-Hash und
 >   kann später Template-Updates aktiv ziehen.
@@ -895,12 +906,15 @@ Fehlende werden **ohne Rückfrage** angelegt
 
 #### Phase A0 — Setup lebende Dokumente (nur Init mit Template-Quelle)
 
-Nach der Modus-Wahl kopiert der Agent die
+Nach der Modus-Wahl steht die Template-Quelle unter
+`_template/` (Modus A: Einmal-Kopie, Modus B:
+Submodul); daraus kopiert der Agent die
 Wurzel-Dokumente und das Basis-Wiki
-(`referenzprozesse/base/wiki/`) als **lebende
-Kopien** ins Anwender-Projekt; bei Modus A wandert
-zusätzlich `referenzprozesse/` als Nur-Lese-Vorlage
-mit. Ablauf und Modus-Unterschiede:
+(`_template/referenzprozesse/base/wiki/`) als
+**lebende Kopien** ins Anwender-Projekt — in beiden
+Modi gleich; `referenzprozesse/` bleibt unter
+`_template/` (DEC-223). Ablauf und
+Modus-Unterschiede:
 [[Init-Choreografie]] §Phase A0 (beim allerersten
 Init über die Template-Quelle erreichbar).
 #### Phase B — Kontext laden
@@ -957,7 +971,7 @@ konsultieren):
   Bedarf.
 - Prozess-Steckbriefe werden bei Bedarf im Init
   (Phase D Turn 1) per Scan von
-  `referenzprozesse/*/Steckbrief.md` gelesen
+  `_template/referenzprozesse/*/Steckbrief.md` gelesen
   (Wiki.md §11.2); Phase B lädt sie nicht vorab.
 
 **Nicht auto-gelesen** (für Menschen und externe
@@ -1114,8 +1128,11 @@ abgeschlossenem Init):
   Freigabe-Buchung im Entscheidungs-Register (§1.1)
   — sonst Meldung im Erledigt-Block (melden, nicht
   blockieren; User-eigene Unterordner ohne
-  KI-Verwaltung und Plattform-Konventions-Pfade
-  nach der §1.1-Öffnungsklausel sind kein Befund).
+  KI-Verwaltung, Plattform-Konventions-Pfade
+  nach der §1.1-Öffnungsklausel und die
+  Template-Quelle `_template/` sind kein Befund; ein
+  `referenzprozesse/` im Root dagegen ist einer —
+  Prozess-Vorlagen liegen in `_template/`, DEC-223).
 
 **C7 Trigger-Hygiene-Wächter** (regulärer Start nach
 abgeschlossenem Init; berichtet nur, blockiert nie —

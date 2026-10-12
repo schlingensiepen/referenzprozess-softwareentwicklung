@@ -10,15 +10,23 @@ type: internal-rule
   Vorfestlegung, kein Anwender-Init-Entscheid mehr
   nötig).
 - **Anbindungs-Modus:** vom Anwender beim Einbinden
-  gewählt (B Submodul `_template/` oder A
-  Einmal-Kopie); Phase A0 und Prozess-Merge beim
-  Starter-Bau vorab vollzogen
-  (Starter-Vorfestlegung).
+  gewählt (B Submodul unter `_template/` oder A
+  Einmal-Kopie unter `_template/`, mit dem Projekt
+  committet — DEC-223); Phase A0 und Prozess-Merge
+  beim Starter-Bau vorab vollzogen
+  (Starter-Vorfestlegung). `referenzprozesse/`
+  bleibt in beiden Modi unter
+  `_template/referenzprozesse/`.
+- **Template-Herkunft:** **OFFEN** — beim Einbinden
+  vom Agenten einzutragen: Quelle (Repo-URL) und
+  Stand (Commit-Hash bzw. Tag); bei Modus A der
+  Stand der Einmal-Kopie unter `_template/`, bei
+  Modus B der Submodul-Pin (DEC-223).
 - **RP-1-Rolle:** **OFFEN** — Standalone oder
   Koordinator entscheidet der Anwender im
   INIT.md-Fragen-Block. Bei „Koordinator":
   Contract-Index aus
-  `referenzprozesse/RP-1-Systementwicklung/wiki/`
+  `_template/referenzprozesse/RP-1-Systementwicklung/wiki/`
   aktivieren und das Werkstatt/Produkt-Angebot
   vorlegen ([[Two-Repo-Submodul-Muster]]).
 - **Abweichungen von der Vorauswahl:**

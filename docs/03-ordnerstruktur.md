@@ -2,7 +2,7 @@
 
 > Erklär-Doku des Template-Systems, abgeleitet aus
 > dem Regelwerk (MasterPrompt.md, Wiki.md,
-> Vorgehen.md), Starter-Stand 2026-10-11; kein
+> Vorgehen.md), Starter-Stand 2026-10-12; kein
 > Wahrheits-Ort — verbindlich ist das Regelwerk.
 
 Ein Projekt aus diesem Starter hat eine feste
@@ -82,17 +82,19 @@ Stand; die Historie liefert git.
 Faustregel: Was lebt, lebt im `wiki/` — `output/`
 und `overview/` frieren ein, `outgoing/` verpackt.
 
-## referenzprozesse/: die Nur-Lese-Vorlage
+## _template/referenzprozesse/: die Nur-Lese-Vorlage
 
-Der mitkopierte Ordner `referenzprozesse/` enthält
-alle Prozess-Pakete der Vorlage (siehe
+Der Ordner `referenzprozesse/` enthält alle
+Prozess-Pakete der Vorlage (siehe
 [04-prozesse.md](04-prozesse.md)) — vollständig,
-auch die hier nicht aktivierten. Er ist **nur-lese**:
-Der Agent bedient sich daraus (z.B. beim
-Reaktivieren einer Fassade oder beim Aktivieren
-einer Prozess-Option), schreibt dort aber nie. So
-bleibt das Projekt selbsttragend, auch wenn die
-Template-Quelle später nicht mehr erreichbar ist.
+auch die hier nicht aktivierten. Er wird **nicht**
+in dein Projekt-Root kopiert, sondern bleibt in der
+eingebundenen Vorlage unter
+`_template/referenzprozesse/` (nächster Abschnitt).
+Er ist **nur-lese**: Der Agent bedient sich daraus
+(z.B. beim Reaktivieren einer Fassade oder beim
+Aktivieren einer Prozess-Option), schreibt dort aber
+nie.
 
 ## Weitere Ordner
 
@@ -105,14 +107,32 @@ der aktive Prozess, oder du gibst sie frei — die
 Freigabe wird als Entscheidung im Wiki gebucht,
 damit die Struktur nachvollziehbar bleibt.
 
-## Und bei eingebundener Vorlage: _template/
+## Die eingebundene Vorlage: _template/
 
-Wurde der Starter als git-Submodul eingebunden,
-liegt er unter `_template/` im Projekt — nur-lese,
-auf einen festen Stand „gepinnt". Dort bleiben auch
-diese Erklär-Doku (`_template/docs/`), die
-Start-Choreografien (`_template/INIT.md`,
+Der Starter liegt nach der Einbindung dauerhaft
+unter `_template/` im Projekt — nur-lese, in einer
+von zwei Formen, die du beim Start wählst:
+
+- als **verknüpfte Vorlage, die du später gezielt
+  aktualisieren kannst** (technisch ein
+  git-Submodul, auf einen festen Stand „gepinnt"),
+  oder
+- als **eingefrorene Kopie, die dauerhaft im
+  Projekt bleibt, damit du immer siehst, womit du
+  gestartet bist** (technisch eine Einmal-Kopie ohne
+  Git-Verbindung, die mit deinem Projekt committet
+  wird; gegen sie kannst du jederzeit vergleichen).
+
+Welcher Stand eingebunden ist (Repo-Adresse und
+Commit bzw. Tag), vermerkt der Agent im Wiki
+(`wiki/Aktivierter-Prozess.md`). In `_template/`
+bleiben die Prozess-Vorlagen
+(`_template/referenzprozesse/`), diese Erklär-Doku
+(`_template/docs/`), die Start-Choreografien
+(`_template/INIT.md`,
 `_template/migration/MIGRATION.md`) und die
-Kopier-Skripte dauerhaft nachlesbar. Dein
+Kopier-Skripte dauerhaft nachlesbar — so bleibt das
+Projekt selbsttragend, auch wenn das Vorlagen-Repo
+später nicht mehr erreichbar ist. Dein
 Projekt-`docs/` gehört dagegen ganz dir bzw. deiner
 Projekt-Dokumentation.

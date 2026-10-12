@@ -763,8 +763,8 @@ Aktivierung beim Merge — die Ja/Nein-Frage entfällt
 (die Anweisung ist die Entscheidung). Der Agent
 setzt `active: true`, liest die Bootstrap-Datei der
 Fassade aus der Template-Quelle
-(`referenzprozesse/<P>/bootstrap/<Fassade>.md`,
-DEC-217; Modus A: mitkopierter bootstrap/-Ordner),
+(`_template/referenzprozesse/<P>/bootstrap/<Fassade>.md`,
+DEC-217; in beiden Modi, DEC-223),
 arbeitet sie ab und führt den Landkarten-Status
 nach.
 
@@ -1527,7 +1527,10 @@ schlank, jeder Prozess ergänzt lokal.
 
 **Ort im Template:** `referenzprozesse/<PROZESS>/` als
 self-contained Ordner; die Basis-Wiki-Skelette liegen
-analog unter `referenzprozesse/base/wiki/`.
+analog unter `referenzprozesse/base/wiki/`. Im
+Anwender-Projekt liegt der Ordner in beiden
+Anbindungs-Modi unter `_template/referenzprozesse/`
+(MasterPrompt §1, DEC-223).
 
 **Inhalt:**
 
@@ -1585,8 +1588,8 @@ analog unter `referenzprozesse/base/wiki/`.
 
 | Ebene | Datei | Zweck |
 |---|---|---|
-| Auswahl (schlank) | Scan über `referenzprozesse/*/Steckbrief.md` | Auswahl-Angebot im Init (MasterPrompt §5.3 Phase B/D) |
-| Design-Wahrheit (voll) | `referenzprozesse/<PROZESS>/index.md` | Merge-Metadaten (Frontmatter) + Ableitung aller Artefakte |
+| Auswahl (schlank) | Scan über `_template/referenzprozesse/*/Steckbrief.md` | Auswahl-Angebot im Init (MasterPrompt §5.3 Phase B/D) |
+| Design-Wahrheit (voll) | `_template/referenzprozesse/<PROZESS>/index.md` | Merge-Metadaten (Frontmatter) + Ableitung aller Artefakte |
 
 Ein zentrales Prozess-Register gibt es nicht — die
 Steckbriefe pro Prozess ersetzen es. Damit wird bei jedem
@@ -1711,6 +1714,10 @@ werden wie Basis-Wiki behandelt.
 
 **Voraussetzung:** Aggregat aus §11.2 liegt vor,
 Vererbungs-Konsistenz-Lint sauber.
+
+**Merge-Quelle:** `_template/referenzprozesse/` — in
+beiden Anbindungs-Modi (MasterPrompt §1, DEC-223);
+die `referenzprozesse/…`-Pfade unten liegen darunter.
 
 **Sequenz** — pro Prozess in Basis-zuerst-Reihenfolge:
 

@@ -46,7 +46,7 @@ Koordinator":**
   (kein Koordinator/Komponent-Split nötig).
 
 Die konkreten Freigabe-Anlässe liegen in RP-1
-(`referenzprozesse/RP-1-Systementwicklung/wiki/Vorgehen-RP-1.md`
+(`_template/referenzprozesse/RP-1-Systementwicklung/wiki/Vorgehen-RP-1.md`
 §4).
 
 ## Meilenstein-Vorgang

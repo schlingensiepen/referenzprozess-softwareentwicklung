@@ -9,7 +9,7 @@ active: false   # Vorauswahl deaktiviert; Aktivierung im Init wählbar oder spä
 
 - **Bootstrap/Reaktivierung (DEC-217):**
   Einmal-Anweisungen in der Template-Quelle
-  `referenzprozesse/base/bootstrap/Mitgliedschaften.md` —
+  `_template/referenzprozesse/base/bootstrap/Mitgliedschaften.md` —
   bei Reaktivierung von dort abarbeiten.
 
 - **Typ:** `member-log` — Relations-Fassade: Register

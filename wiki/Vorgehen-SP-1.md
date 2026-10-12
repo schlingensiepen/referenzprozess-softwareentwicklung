@@ -84,7 +84,7 @@ Tabelle ist die kanonische Phasen-Bindung.
 
 **Nicht SP-1-Angebote** (RP-spezifisch): R4, R5, R9,
 R10 sowie die V3–V6a-Präzisierungen bindet
-`referenzprozesse/RP-1-Systementwicklung/wiki/Vorgehen-RP-1.md`
+`_template/referenzprozesse/RP-1-Systementwicklung/wiki/Vorgehen-RP-1.md`
 §4 in seiner Zusatz-Tabelle.
 
 ## 4. Bindung der Prüfungen an Phasen
@@ -172,7 +172,7 @@ V1 beim Projektstart, V2 als P3-Anker
 (Anforderungsskizze Stufe 1), V3–V6 in den frühen
 Auswahl-Phasen. Die prozess-spezifische Zeilen-
 Präzisierung der V-Themen (V3–V6a) liegt in
-`referenzprozesse/RP-1-Systementwicklung/wiki/Vorgehen-RP-1.md`
+`_template/referenzprozesse/RP-1-Systementwicklung/wiki/Vorgehen-RP-1.md`
 §2.
 
 ## 5. Freigabe-Rücknahme
@@ -265,4 +265,4 @@ kein einzelner Arbeitsschritt.
 - Volle Prozess-Definition: `index.md`
 - Kurzform: `Steckbrief.md`
 - RP-1-Präzisierungen:
-  `referenzprozesse/RP-1-Systementwicklung/wiki/Vorgehen-RP-1.md`
+  `_template/referenzprozesse/RP-1-Systementwicklung/wiki/Vorgehen-RP-1.md`

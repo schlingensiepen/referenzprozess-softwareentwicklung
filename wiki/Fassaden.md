@@ -92,4 +92,4 @@ Status: aktiv, Kategorie Basis, nicht deaktivierbar.
 | [[Mitgliedschaften]] | Relations-Register Person↔Organisation | deaktiviert _(Vorauswahl)_ | Basis |
 | [[Aktenzeichen]] | Register aller Aktenzeichen | deaktiviert _(Vorfestlegung; Reaktivierung per Zuruf)_ | Basis |
 | [[Geschäftsbeziehungen]] | Register externer Organisations-Beziehungen | deaktiviert _(Vorauswahl)_ | Prozess-mitgebracht (SP-1) |
-| Contract-Index | Contract-Register — **nicht aktiviert**; wird bei Koordinator-Entscheid aus `referenzprozesse/RP-1-Systementwicklung/wiki/` aktiviert | nicht aktiviert _(Rollen-Option)_ | Prozess-mitgebracht (RP-1) |
+| Contract-Index | Contract-Register — **nicht aktiviert**; wird bei Koordinator-Entscheid aus `_template/referenzprozesse/RP-1-Systementwicklung/wiki/` aktiviert | nicht aktiviert _(Rollen-Option)_ | Prozess-mitgebracht (RP-1) |

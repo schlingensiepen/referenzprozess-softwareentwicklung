@@ -8,10 +8,10 @@ prozess: "RP-1-Systementwicklung"
 
 _(Ziel: `wiki/Contract-Index.md`. Ausführung beim Init/Merge
 bzw. bei Reaktivierung — Wiki.md §11.3/§3a. Diese
-Datei wird nie ins Anwender-wiki kopiert; in Modus A
-liegt sie in der mitkopierten
-`referenzprozesse/RP-1-Systementwicklung/bootstrap/`-Vorlage —
-DEC-217.)_
+Datei wird nie ins Anwender-wiki kopiert; sie liegt
+in beiden Modi unter
+`_template/referenzprozesse/RP-1-Systementwicklung/bootstrap/` —
+DEC-217, DEC-223.)_
 
 _(Einmal-Anweisungen. Die Betriebs-Semantik steht
 dauerhaft im `## Meta` der Fassade; diese Datei wird

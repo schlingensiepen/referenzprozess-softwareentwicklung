@@ -19,33 +19,48 @@ MasterPrompt §5.3.
 
 **Bootstrap-Hinweis:** Beim allerersten Init
 existiert das Anwender-`wiki/` noch nicht — dieser
-Knoten ist dann über die Template-Quelle lesbar
-(Modus B: `_template/referenzprozesse/base/wiki/`,
-Modus A: `<pfad>/referenzprozesse/base/wiki/`).
-Phase A0 kopiert ihn mit dem Basis-Wiki ins
-Anwender-`wiki/`.
+Knoten ist dann über die Template-Quelle lesbar:
+`_template/referenzprozesse/base/wiki/` — in beiden
+Modi, sobald die Modus-Wahl `_template/` angelegt
+hat; davor über den übergebenen Template-Pfad
+(DEC-223). Phase A0 kopiert ihn mit dem Basis-Wiki
+ins Anwender-`wiki/`.
 
 ## Phase A0 — Setup lebende Dokumente (nur Init mit Template-Quelle)
 
-Nach der Modus-Wahl kopiert der Agent aus der
-Template-Quelle (Modus B: `_template/`; Modus A:
-`<pfad>/`) ins Anwender-Projekt:
+Die Modus-Wahl legt die Template-Quelle unter
+`_template/` an (DEC-223):
+
+- **Modus A:** der Agent kopiert die komplette
+  Template-Quelle aus dem übergebenen Pfad einmalig
+  nach `_template/` (bei einem git-Klon ohne dessen
+  `.git`) und committet sie mit dem Projekt — als
+  **Ur-Versions-Archiv**, gegen das der Anwender
+  jederzeit diffen kann. Die Herkunft (Quelle und
+  Stand, z.B. Commit/Tag) vermerkt er im
+  `internal-rule`-Knoten [[Aktivierter-Prozess]].
+- **Modus B:** der Agent bindet das Template-Repo
+  als git-Submodul unter `_template/` ein.
+
+Danach kopiert der Agent — in beiden Modi gleich —
+aus `_template/` ins Anwender-Projekt:
 
 - die **Wurzel-Dokumente** `MasterPrompt.md`,
   `Wiki.md`, `Outgoing.md`, `Vorgehen.md`,
   `Reviewmuster.md`, die Styleguides und `README.md`
   ins Anwender-Root,
-- das **Basis-Wiki** (`referenzprozesse/base/wiki/`)
-  ins Anwender-`wiki/`.
+- das **Basis-Wiki**
+  (`_template/referenzprozesse/base/wiki/`) ins
+  Anwender-`wiki/`.
 
 Die Kopien sind **lebende Dokumente** — Drift
-gegenüber der Template-Quelle ist intendiert. Bei
-Modus B bleibt `_template/` Nur-Lese. Bei Modus A
-wird zusätzlich `referenzprozesse/` (Steckbriefe und
-`wiki/`-Skelette als Merge-Quelle) mit ins
-Anwender-Root kopiert und gilt dort als
-Nur-Lese-Vorlage — das Projekt bleibt damit
-selbsttragend, ohne dauerhafte externe Lese-Quelle.
+gegenüber der Template-Quelle ist intendiert.
+`_template/` bleibt in beiden Modi Nur-Lese;
+`referenzprozesse/` (Steckbriefe, `wiki/`-Skelette
+als Merge-Quelle, `bootstrap/`) bleibt dort und wird
+nicht ins Anwender-Root kopiert (DEC-223). Das
+Projekt bleibt selbsttragend, weil die
+Template-Quelle im Projekt liegt.
 
 ## Phase D beim Init — mehrstufiger Ablauf
 
@@ -71,7 +86,7 @@ Umsetzung verschränken sich über mehrere Turns:
    - TLA,
    - WM-Verfügbarkeit,
    - **Prozess-Angebot** (aus Aggregat der
-     `referenzprozesse/*/Steckbrief.md`, falls
+     `_template/referenzprozesse/*/Steckbrief.md`, falls
      vorhanden — siehe unten),
    - **Commit-Sprache** (A/B/C-Menü, Vorauswahl
      abhängig vom Prozess — siehe unten).
@@ -185,7 +200,7 @@ verteilt sich auf mehrere Turns; der Init-Fahrplan
    Versionskette in `output/`/`overview/`.
 2. **WorkspaceManager verfügbar?** (siehe unten)
 3. **Prozess-Angebot** (Auswahlmenü, siehe unten) —
-   nur wenn `referenzprozesse/*/Steckbrief.md`
+   nur wenn `_template/referenzprozesse/*/Steckbrief.md`
    gefunden werden.
 4. **Commit-Sprache** (Auswahlmenü, siehe unten) —
    Vorauswahl abhängig von der Prozess-Wahl.
@@ -230,7 +245,7 @@ Ingest der ersten Dokumente.
 ## Baustein: Prozess-Angebot
 
 **Prozess-Angebot:** Der Agent scannt bei Init alle
-Prozess-Steckbriefe (`referenzprozesse/*/Steckbrief.md`)
+Prozess-Steckbriefe (`_template/referenzprozesse/*/Steckbrief.md`)
 und führt den **Vererbungs-Konsistenz-Lint** (Wiki.md
 §11.2) über die gesammelten Steckbriefe aus. Bei
 Lint-Fehlern (Zyklen, fehlende Basen, Steckbrief/
@@ -272,7 +287,7 @@ mit der Basis arbeiten." Danach läuft der Init im
 Zusatz-Angebot. Dasselbe gilt für
 `extends:`-Verweise auf geplante Prozesse.
 
-Falls keine `referenzprozesse/*/Steckbrief.md`
+Falls keine `_template/referenzprozesse/*/Steckbrief.md`
 gefunden wird: die Frage entfällt, Agent arbeitet
 ohne Prozess. Die Wahl wird im
 `internal-rule`-Knoten [[Aktivierter-Prozess]]
@@ -337,8 +352,8 @@ Fassaden-Konfiguration umsetzt.
   Frontmatter; danach **Bootstrap-Abarbeitung** —
   der Agent liest die zugehörige Bootstrap-Datei
   aus der Template-Quelle
-  (`referenzprozesse/<P>/bootstrap/<Fassade>.md`,
-  DEC-217) und arbeitet sie ab (insbesondere die
+  (`_template/referenzprozesse/<P>/bootstrap/<Fassade>.md`,
+  DEC-217, DEC-223) und arbeitet sie ab (insbesondere die
   `### Verankerungen`-Checkliste: anzulegende
   `internal-*`-Knoten und der Eintrag in
   `wiki/Fassaden.md`). In die Anwender-Fassade wird
@@ -349,8 +364,9 @@ Fassaden-Konfiguration umsetzt.
   deaktiviert; für eine spätere Reaktivierung läuft
   dieselbe Frage- und Bootstrap-Mechanik — die
   Bootstrap-Datei liegt dauerhaft in der
-  Template-Quelle (Modus A: mitkopierte
-  `referenzprozesse/.../bootstrap/`-Ordner).
+  Template-Quelle
+  (`_template/referenzprozesse/.../bootstrap/`, in
+  beiden Modi, DEC-223).
 
 Anschließend vermerkt der Agent aktive und
 deaktivierte Fassaden in `wiki/Fassaden.md` (inkl.

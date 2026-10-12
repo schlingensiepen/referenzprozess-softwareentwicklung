@@ -14,7 +14,7 @@ relevant für Vorhaben mit Markt-Kontext
 
 - **Bootstrap/Reaktivierung (DEC-217):**
   Einmal-Anweisungen in der Template-Quelle
-  `referenzprozesse/SP-1-Standardprozess/bootstrap/Geschäftsbeziehungen.md` —
+  `_template/referenzprozesse/SP-1-Standardprozess/bootstrap/Geschäftsbeziehungen.md` —
   bei Reaktivierung von dort abarbeiten.
 
 - **Typ:** `business-relation-log` —

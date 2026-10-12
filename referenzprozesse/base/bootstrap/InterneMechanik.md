@@ -8,10 +8,10 @@ prozess: "base"
 
 _(Ziel: `wiki/InterneMechanik.md`. Ausführung beim Init/Merge
 bzw. bei Reaktivierung — Wiki.md §11.3/§3a. Diese
-Datei wird nie ins Anwender-wiki kopiert; in Modus A
-liegt sie in der mitkopierten
-`referenzprozesse/base/bootstrap/`-Vorlage —
-DEC-217.)_
+Datei wird nie ins Anwender-wiki kopiert; sie liegt
+in beiden Modi unter
+`_template/referenzprozesse/base/bootstrap/` —
+DEC-217, DEC-223.)_
 
 _(Einmal-Anweisungen. Die Betriebs-Semantik steht
 dauerhaft im `## Meta` der Fassade; diese Datei wird
@@ -38,7 +38,10 @@ aktiv, keine Anwender-Frage, nicht deaktivierbar.
   anlegen: gewählter Prozess (bzw. „Basis, ohne
   Prozess"), Abweichungen von der Prozess-Vorauswahl,
   abgelöste Ausprägungen, aktive Prozess-Präfixe nach
-  Merge.
+  Merge, Anbindungs-Modus und Template-Herkunft
+  (Quelle und Stand, z.B. Commit/Tag — bei Modus A
+  der Stand der Einmal-Kopie unter `_template/`,
+  DEC-223).
 - Im mitgelieferten `internal-rule`-Knoten
   **`WorkspaceManager-Kontrakt.md`** die Sektion
   `## Betriebs-Konfiguration` füllen (der Knoten
