@@ -1,6 +1,6 @@
 # Styleguide-wiki — Stilkonventionen für Wiki-Knoten
 
-**Stand: 23.08.2026**
+**Bearbeitungsstand: 2026-10-23**
 
 Dieser Styleguide regelt **Stil und Formulierung**
 für Dateien im `wiki/`-Verzeichnis: Länge und Ton
@@ -11,7 +11,7 @@ Formulierungs-Konventionen in Bezüge-Sektionen.
 **Nicht hier geregelt** — sondern in `Wiki.md`
 (Struktur, "was" statt "wie"):
 
-- Welche Knotentypen es gibt (Wiki.md §3).
+- Welche Typen es gibt (Katalog, Wiki.md §3).
 - Welche Sektionen jeder Knoten hat (Wiki.md §4.2).
 - Welche Frontmatter-Felder Pflicht sind (Wiki.md
   §4.1).

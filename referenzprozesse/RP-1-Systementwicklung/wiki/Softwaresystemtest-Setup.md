@@ -1,6 +1,6 @@
 ---
 type: software-system-test-setup
-supersedes: system-test-setup
+replaces_type: system-test-setup
 # active: false   # bei Deaktivierung (Default ist active: true)
 ---
 
@@ -16,19 +16,22 @@ Umgebungsvariablen, Ausführung).
 - **Typ:** `software-system-test-setup` —
   Sollzustands-Fassade Softwaresystemtest-Setup.
   Singleton; löst `system-test-setup` aus SP-1 ab
-  (`supersedes:` als Katalog-Name, String-Notation).
-- **Kategorie:** (b) Inline-Fassade im wiki/ mit
-  optionalen Detail-Knoten — siehe Wiki.md
-  §Kategorisierung der Register.
+  (`replaces_type:` als Typ-Name, String-Notation;
+  Katalog-Eintrag [[Katalog-Softwaresystemtest-Setup]]).
+- **Kategorie:** (b) Inline-Fassade im wiki/ — siehe
+  Wiki.md §Kategorisierung der Register.
 - **Kanonizität:** die Wahrheit bei allen hier
   festgehaltenen Setup-Angaben liegt in dieser Fassade
-  — Detail-Knoten dürfen für einzelne
-  Integrationstest-Szenarien ergänzt werden
   (Wiki.md §1.1a).
 - **Geheimnisse-Regel:** Werte von Zugangsdaten stehen
   nie in dieser Fassade — nur Variablennamen und
   Erklärung, wie sie zu setzen sind
   (MasterPrompt §6.3).
+- **Abgrenzung:** diese Fassade beschreibt, **wie**
+  geprüft wird. Die einzelnen Testfälle stehen als
+  TEST-Elemente im SP-1-Register [[Testfaelle]], die
+  Ergebnisse eines Durchgangs nach Testplan im
+  SP-1-Register [[Testberichte]].
 - **Ausnahmen sind Feststellungen:** braucht ein
   Projekt keine externen Dienste, wird das ausdrücklich
   festgehalten — das Fehlen der `docker-compose.yml`
@@ -37,33 +40,30 @@ Umgebungsvariablen, Ausführung).
   `docker-compose.yml` bereit, deployt sie aber nicht;
   der User deployt und meldet Host, Ports und
   Zugangsdaten zurück.
-- **`testplan`-Detail-Knoten:** die lebende
-  Testplanung für einen Durchlauf, ein Release oder
-  eine Abnahme ist ein Detail-Knoten vom Typ
-  `testplan` (diese Fassade hält die Solllage und
-  indexiert die Pläne); der übergabefähige Stand
-  geht versioniert nach `output/` (Zweigleisigkeit,
-  MasterPrompt §1.5).
-- **Testergebnis-Regel (dreistufig):**
-  (1) normaler Test-Lauf: Output flüchtig im
-  Code-Bereich, Nachweis ist die Kadenz-Zeile im
-  Commit; (2) beleg-würdiger Lauf (Freigabe,
-  Abnahme, Meilenstein): Ergebnis als
-  REP-Detail-Knoten ins Register [[Agent-Berichte]]
-  — mit kuratierten Auszügen (relevante Fälle als
-  Zitate) und **Reproduzierbarkeits-Angabe**
-  (Commit-Hash, Werkzeug, Aufruf); (3) nur wenn ein
-  Lauf nicht reproduzierbar ist und sein
-  Voll-Material aufbewahrt werden muss: eingefrorene
-  Kopie nach `overview/` mit REP-Verweis. Es gibt
-  keinen eigenen Testergebnis-Knotentyp.
+- **Testplan ist ein Stand, kein Detail-Knoten:**
+  diese Fassade hält die Solllage (Testarten,
+  Testumgebung, Ausführung, Ausnahmen) und bleibt
+  lebend; der Testplan zu einer Marke ist ein Stand
+  mit der Dokumenttyp-Kennung `testplan`, abgeleitet
+  aus den Testfällen und mit Kopie dieser Solllage
+  ([[Katalog-Testplan]]; Mechanik:
+  [[Einfrieren-und-Abloesen]]). Für Ausführende ohne
+  Wiki-Zugang gibt es je Testdurchgang die
+  Durchführungs-Instanz
+  ([[Katalog-Durchfuehrungs-Instanz]]).
+- **Testergebnis-Regel:** die dreistufige
+  Nachweis-Regel (flüchtiger Lauf, beleg-würdiger Lauf
+  mit TRES oder REP, nicht reproduzierbarer Lauf)
+  gilt unverändert aus SP-1 — führender Ort `## Meta`
+  der SP-1-Fassade [[Systemtest-Setup]]; lesen, bevor
+  ein Testlauf belegt wird.
 - **Commit-Präfix:** Änderungen laufen unter dem
   SP-1-Präfix `Test-Setup:` weiter (kein eigener
   RP-1-Präfix).
 
 ---
 
-**Stand:** _(vom Agenten aus der Test-Framework-
+**Bearbeitungsstand:** _(vom Agenten aus der Test-Framework-
 Entscheidung abgeleitet und bei Änderungen
 überschrieben)_
 

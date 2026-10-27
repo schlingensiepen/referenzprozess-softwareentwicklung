@@ -6,7 +6,10 @@ extends: [SP-1]
 
 # RP-1 — Vorgehen (Softwaresystem-Entwicklung)
 
-**Stand:** 2026-08-24
+**Bearbeitungsstand:** 2026-10-25 (Start-Tabelle nach
+`Vorgehen.md` §3, Außerkraftsetzung eines CON,
+Prozess-Definition als Pfad; Produkt in P9, Tag in
+der Folge-Marke)
 
 Adaptiert das SP-1-Vorgehen ([[Vorgehen-SP-1]]) für die
 Entwicklung eines Softwaresystems.
@@ -20,7 +23,7 @@ Wächter-Trigger T4, Rekursions-Muster) gelten
 unverändert aus der Basis-Vorgehen-Datei
 (`Vorgehen.md`).
 
-Alle zwölf SP-1-Phasen bleiben bestehen — RP-1 belegt
+Alle dreizehn SP-1-Phasen bleiben bestehen — RP-1 belegt
 sie mit Software-spezifischen Artefakten und Namen und
 fügt einige Automatisierungs-Regeln hinzu, die
 Software-typisch sind.
@@ -29,18 +32,27 @@ Software-typisch sind.
 
 | # | Phase (SP-1) | RP-1-Artefakt / Präzisierung |
 |---|---|---|
-| P1 | Konzipieren | Konzept plus User-Stories und Use-Cases (RP-1-Detail-Typen mit `rollen:`-Feld, index §3.2) |
+| P1 | Konzipieren | Konzept-Stand ([[Katalog-Konzept-Stand]]) mit User-Stories und Use-Cases (RP-1-Typen anstelle von `need`/`scenario`, mit `rollen:`-Feld, index §3.2) |
 | P2 | Stand der Technik erfassen | Stand-der-Technik-Bericht — Referenzarchitekturen (R4), verfügbare Bibliotheken/Frameworks, Standards (R5) |
-| P3 | Anforderungen sammeln | `Anforderungen.md` (SP-1-Fassade `requirement-log`) — User-Stories und Use-Cases fließen als Anforderungs-Quellen ein |
-| P4 | Spezifizieren der Funktion | Gesamtspezifikation als Wiki-Knoten mit `output/`-Freigabeständen (Spezifikationskette, index §4) |
-| P5 | Zerlegen in Bausteine | `Softwaresystemarchitektur.md` (RP-1-Ablösung von SP-1-`Systemarchitektur.md`) mit Komponenten-Schnitt und Contract-Übersicht; **Architekturmuster explizit als Sub-Wahl** (z.B. MVC, Hexagonal, Layered, Microservices — V4 der Scaffolding-Kette) |
-| P6 | Starten von Teilaktivitäten | Contract-Index + Komponenten-Repositories als Template-Instanzen (index §4); jeder Komponent durchläuft eigenes RP-1 |
-| P7 | Auswählen der Technologie | Technologie-Stack-Entscheidungen (R6 Passende Technologien, R7 Best Practices, R8 Sicherheitslage, R11 Lizenz); **mehrere Sprachen möglich, Runtime-Version explizit** (V3); Werkzeugkette siehe Anmerkung unten (V5) |
-| P8 | Ausarbeiten | **Implementierung inkl. Unit-Tests und automatisierten Integrationstests** (siehe §3 Test-Automatisierungs-Regel) |
-| P9 | Testen | **Testplan mit nicht-automatisierbaren Anteilen** (manuelle Integrationstests + Anwender-Tests) + Testberichte |
-| P10 | Ausliefern | **Deploy-Dokument** in `output/` mit `_VV_TLA` (index §4) + Startprompts; **CI-Pipeline-Konfiguration** (V6a — Deploy-Zielumgebung ist hier verankert) |
-| P11 | Produzieren | Bereitstellen und Konfigurieren der Ziel-Umgebung — bei Standard-Software oft weitgehend durch P10-Rückverweis (Deploy-Dokument) abgedeckt; bei RP-11 Cloudanwendung eigener Substanz-Bereich (Vertragsaspekte, laufender Betrieb); CI-/Deploy-Feinheiten aus V6a greifen hier |
-| P12 | Betreiben | Betriebs-Handbuch + laufende `bug-report`-Ingestion; Fehlerbilder-Recherche R10 aktiv |
+| P3 | Anforderungen sammeln | Anforderungen-Stand ([[Katalog-Anforderungen-Stand]]) aus `Anforderungen.md` (SP-1-Register REQ) — User-Stories und Use-Cases fließen als Anforderungs-Quellen ein |
+| P4 | Beschreiben der Funktion | Funktionsbeschreibung-Stand ([[Katalog-Funktionsbeschreibung-Stand]]) der Gesamt-Funktionsbeschreibung aus dem SP-1-Register FUNC (Funktionsbeschreibungs-Kette, index §4) |
+| P5 | Zerlegen in Bausteine | Architekturdokument ([[Katalog-Architekturdokument]]) aus `Softwaresystemarchitektur.md` (RP-1-Ablösung von SP-1-`Systemarchitektur.md`) mit Komponenten-Schnitt (ARC; was der Stand filtert: Katalog-Eintrag); **Architekturmuster explizit als Sub-Wahl** (z.B. MVC, Hexagonal, Layered, Microservices — V4 der Scaffolding-Kette) |
+| P6 | Starten von Teilaktivitäten | Übergabe je Komponente ([[Katalog-Uebergabe]]) + Komponenten-Repositories als Template-Instanzen mit Start-Tabelle und Startprompt (Anmerkung P6 unten, index §4); jeder Komponent durchläuft eigenes RP-1 |
+| P7 | Auswählen der Technologie | Technologie-Entscheidungen ([[Katalog-Technologie-Entscheidungen]]) aus den Technologie-Stack-Entscheidungen (R6 Passende Technologien, R7 Best Practices, R8 Sicherheitslage, R11 Lizenz); **mehrere Sprachen möglich, Runtime-Version explizit** (V3); Werkzeugkette siehe Anmerkung unten (V5) |
+| P8 | Spezifizieren | Spezifikation-Stand ([[Katalog-Spezifikation-Stand]]) — **Spezifikation** (Bauanleitung nach Schnitt und Technologie-Stack, umsetzbar ohne Fachkenntnis — auch durch Subagenten); entsteht dort, wo gebaut wird: in der nicht weiter zerlegten Komponente, beim Koordinator nur für eigene Bauteile; kleine Projekte: schmal oder Verzichts-DEC (`decision_type: verzicht`, [[Kettenpruefung]] §Fehlende und vertretene Glieder) |
+| P9 | Ausarbeiten | **Implementierung inkl. Unit-Tests und automatisierten Integrationstests** (siehe §3 Test-Automatisierungs-Regel) — das Produkt der Marke ist hier der Code ([[Glossar]]); Glied der Kette ist der Tag der Implementierung |
+| P10 | Testen | **Testplan** ([[Katalog-Testplan]]) **mit nicht-automatisierbaren Anteilen** (manuelle Integrationstests + Anwender-Tests) aus den Testfällen ([[Testfaelle]]) + Testberichte (TRES, [[Testberichte]]); bei einer Komponente das letzte Glied ihrer Kette (§8); Angebot Durchführungs-Instanz je Testdurchgang (§4 Anmerkung P10) |
+| P11 | Ausliefern | **Deploy-Stand** je Umgebung ([[Katalog-Deploy-Stand]]) in `output/` mit `_VV_TLA` (index §4), beim Koordinator für alle Komponenten (§7 Punkt 6, §8) + Startprompts; **CI-Pipeline-Konfiguration** (V6a — Deploy-Zielumgebung ist hier verankert) |
+| P12 | Produzieren | Bereitstellen und Konfigurieren der Ziel-Umgebung — bei Standard-Software oft weitgehend durch P11-Rückverweis (Deploy-Stand) abgedeckt; bei RP-11 Cloudanwendung eigener Substanz-Bereich (Vertragsaspekte, laufender Betrieb); CI-/Deploy-Feinheiten aus V6a greifen hier |
+| P13 | Betreiben | Betriebs-Handbuch + laufende `bug-report`-Ingestion; Fehlerbilder-Recherche R10 aktiv |
+
+Zweck, Filter und Auslöser jedes Stands stehen in
+seinem Dokumenttyp-Eintrag (verlinkt in der Tabelle;
+SP-1-Einträge, RP-1 präzisiert hier nur die Artefakte).
+**Contracts in der Kette:** welche Rolle ein CON in
+P4, P5/P6, P7 und P8 spielt —
+[[Katalog-Contract-Index#Rollen eines CON in der Kette]],
+lesen bei einem Schnitt in Komponenten.
 
 **Anmerkung P3 Anforderungs-Zweistufigkeit:**
 Anforderungen werden in RP-1 **zweistufig** erhoben.
@@ -61,6 +73,30 @@ Negativ-Entscheidung im Projekt-Repo gebucht
 mit Kurzbegründung). Zweistufigkeit greift pro Repo
 (Koordinator und jedes Komponenten-Repo eigenständig).
 
+**Anmerkung P6 Komponenten-Repositories:** Bevor ein
+Komponenten-Repo entsteht, legt der Koordinator in P6
+die **Start-Tabelle** zur Freigabe vor — Spalten,
+Vorschlagswerte und die Wahl der Übernahme-Art samt
+Start und Transport stehen prozess-unabhängig in
+`Vorgehen.md` §3 „Start einer Teilaktivität“ (Kette je
+Art: [[Kettenpruefung]] §Komponenten-Kette nach
+Übernahme-Art). RP-1 präzisiert nur den Ort der Lage:
+Repo-Name, Pfad und Remote stehen in §Komponenten der
+[[Softwaresystemarchitektur]]; der Repo-Name ist der
+Qualifizierer in Verweisen über Repo-Grenzen
+(`<repo>/FUNC-012`).
+
+Nach der Freigabe der Tabelle und des Übergabe-Stands
+an die Komponente erzeugt der Koordinator ihren
+**Startprompt**: den Einzeiler des Starters mit den
+Angaben der Tabelle und dem Verweis auf den
+freigegebenen Übergabe-Stand. Woher der Einzeiler
+kommt, welche Angaben der Startprompt im Einzelnen
+trägt (auch: keine CON-IDs) und wie die Komponente
+ihn im Init liest: [[Init-Choreografie]] §Init mit
+Startprompt (Komponente) — lesen, bevor der
+Startprompt erzeugt wird.
+
 **Anmerkung P7 Werkzeugkette (V5 der
 Scaffolding-Kette):** Die Werkzeugketten-Entscheidung
 umfasst mindestens: Linter, Formatter, Type-Checker,
@@ -76,26 +112,38 @@ Technologie-Stack-Entscheidungen an P7.
 
 **Kern-Verschiebung:** In der Software-Entwicklung sind
 weite Teile des Testens automatisierbar. Die
-automatisierbaren Anteile wandern aus P9 Testen in P8
+automatisierbaren Anteile wandern aus P10 Testen in P9
 Ausarbeiten.
+
+**Zwei Bezugspunkte:** Unit- und automatisierte
+Integrationstests prüfen gegen die **Spezifikation**
+(P8-Artefakt, Bauanleitung — „richtig gebaut");
+System- und Anwender-Tests prüfen gegen die
+**Funktionsbeschreibung** (P4-Artefakt, Außensicht —
+„das Richtige gebaut"). Die Freigabe-Kette unten
+trägt beide Bezugspunkte. Fehlt ein Bezugspunkt
+(Verzicht auf P8; P4 bei Übernahme-Art Auftrag durch
+den Übergabe-Stand vertreten), gilt das, was das
+Glied vertritt — [[Kettenpruefung]] §Fehlende und
+vertretene Glieder.
 
 **Konkret:**
 
-- **Unit-Tests:** entstehen in P8 als Teil der
+- **Unit-Tests:** entstehen in P9 als Teil der
   Implementierung. Bleiben nicht als eigenständige
-  P9-Artefakte in der Test-Doku, weil sie mit dem Code
+  P10-Artefakte in der Test-Doku, weil sie mit dem Code
   leben.
-- **Automatisierte Integrationstests:** entstehen in P8
+- **Automatisierte Integrationstests:** entstehen in P9
   als Teil der Implementierung. Ergebnis: automatische
-  Test-Suite mit Test-Report als P8-Beiwerk.
+  Test-Suite mit Test-Report als P9-Beiwerk.
 - **Nicht-automatisierbare Integrationstests:** landen
-  im P9-Testplan (manuelle Prüfungen, Cross-Component-
+  im P10-Testplan (manuelle Prüfungen, Cross-Component-
   Szenarien, die Instrumentierung außerhalb der
   Software-Umgebung erfordern).
 - **Anwender-Tests / Akzeptanztests:** landen im
-  P9-Testplan.
+  P10-Testplan.
 
-**Folge:** Der P9-Testplan ist kein „umfassender
+**Folge:** Der P10-Testplan ist kein „umfassender
 Testkatalog", sondern der **Rest** nach Automatisierung.
 Er enthält typischerweise:
 
@@ -104,43 +152,100 @@ Er enthält typischerweise:
 - Performance-/Last-Tests (falls nicht automatisiert)
 - Sicherheits-Tests (falls nicht automatisiert)
 
-**Freigabe-Kette:** P8-Artefakt (Implementierung) ist
-freigegeben „für P9 Testen" (Buchung in der
-kanonischen Formel, Vorgehen.md §4: „Stand x von
-⟨Artefakt⟩, freigegeben für Zweck Z [zu Marke M]")
-wenn **beide** Nachweise vorliegen:
+**Freigabe-Kette:** Die Code-Glieder der Kette und
+ihre Vorbedingungen stehen in [[Kettenpruefung]]
+§Code-Glieder — lesen vor dem Tag und vor der
+Freigabe des Deploy-Stands. RP-1 präzisiert:
 
-- **(a) Regressions-Sicherheit** — Unit-Tests grün und
-  automatisierte Integrationstests grün. Automatisch
-  prüfbare Vorbedingung — der Agent kann die Prüfung
-  nach der Delegations-Regel (Vorgehen.md §4) an sich
-  selbst delegieren, wenn der Anwender die
+**P9 → P10.** Die Implementierung wird **per Tag**
+freigegeben (der Tag der Implementierung ist das Glied
+P9). Vorbedingung sind **beide** Nachweise:
+
+- **(a) Tests grün (Regressions-Sicherheit)** —
+  Unit-Tests und automatisierte Integrationstests grün.
+  Automatisch prüfbare Vorbedingung — der Agent kann
+  die Prüfung nach der Delegations-Regel (Vorgehen.md
+  §4) an sich selbst delegieren, wenn der Anwender die
   Standing-Freigabe erteilt hat oder pro Freigabe
   zustimmt.
-- **(b) Anforderungs-Deckung** — mindestens ein
-  Prüf-Subagent nach dem Basis-Prüfangebot
-  (MasterPrompt §5.6) hat die Implementierung gegen die
-  Gesamtspezifikation geprüft (Standard-Prüfprompt:
-  Auftrag, Vorgehen mit Beispiel, Widersprüche/Lücken/
-  Mehrdeutigkeiten; Zwei-Modelle-Regel bei
-  substantieller Prüfung). Substantielle Prüfung mit
-  inhaltlichem Urteil — nicht automatisch delegierbar.
+- **(b) Code-Review als Kettenprüfung des Glieds P9**
+  — ein anderes Modell als das implementierende oder
+  ein spezialisiertes Werkzeug (z.B. Codex) prüft den
+  Code gegen **alle freigegebenen Vorgänger der
+  Marke** ([[Kettenpruefung]] §Regel), darunter die
+  Spezifikation (P8), wenn es sie gibt; eine eigene
+  Regel für das Code-Review gibt es nicht. Welche
+  Vorgänger fehlen dürfen und was dann an ihre Stelle
+  tritt: [[Kettenpruefung]] §Fehlende und vertretene
+  Glieder — lesen, bevor der Prüfauftrag formuliert
+  wird. Das Review ist **Vorbedingung, kein Angebot**:
+  angeboten wird nur die Werkzeug-Wahl (`Vorgehen.md`
+  §7b; Wahl in `Tools.md`, Kategorie
+  „Code-Review-Werkzeuge“); steht kein zweites Modell
+  zur Verfügung, gilt der beim Init gewählte Ersatzweg
+  aus `Tools.md` (`Reviewmuster.md` §Schleife 2).
+  Anregungen aus dem Review stimmt der Agent mit dem
+  Anwender ab. Ein Verzicht ist nur als
+  Anwender-Entscheidung mit benanntem Impact möglich.
+  Substantielle Prüfung mit inhaltlichem Urteil —
+  nicht automatisch delegierbar.
 
-Beide Nachweise werden in den Freigabe-DEC-Eintrag
-eingetragen (Feld „Prüfer" — automatisierte Test-Suite
-als Selbst-Prüfer, Prüf-Subagent als zweiter
-unabhängiger Prüfer). Automatische Tests allein reichen
-nicht — sie prüfen „läuft der Code"
-(Regressions-Sicherheit), nicht „tut der Code was die
-Spezifikation verlangt" (Anforderungs-Deckung).
+Der Freigabe-Eintrag nennt den Tag und beide Nachweise
+(Aufbau: `## Meta` von [[Entscheidungen]]
+„Freigabe-Einträge“ — lesen vor der Buchung).
+Automatische Tests allein reichen nicht — sie prüfen
+„läuft der Code" (Regressions-Sicherheit), nicht „tut
+der Code, was die freigegebenen Vorgänger verlangen".
 
-Analog P9-Artefakt (Testbericht mit manuellen
-Test-Ergebnissen) ist freigegeben „für P10 Ausliefern"
-wenn (a) alle nicht-automatisierten Tests aus dem
-Testplan bestanden UND (b) ein Prüf-Subagent den
-Testbericht gegen die Spezifikation geprüft hat.
+**Tag setzen.** Der Tag ist die Freigabe des Codes,
+und Freigaben sind Anwender-Entscheidungen
+(`_template/referenzprozesse/RP-1-Systementwicklung/index.md`
+§4). Ablauf:
 
-**Rollen bei Integrationstest-Befunden (P9):**
+1. Beide Nachweise liegen vor: (a) Tests grün,
+   (b) Code-Review als Kettenprüfung des Glieds P9.
+2. Der Anwender gibt frei.
+3. **Der Agent setzt den Tag** nach dem OK, im Repo,
+   das den Code führt (bei Werkstatt und Produkt in
+   zwei Repos: im Produkt, [[Two-Repo-Submodul-Muster]]
+   §Standardbelegung). Der **Tag-Name** folgt der
+   Konvention des Projekts in `Facts.md`; er ist nicht
+   die Marken-Bezeichnung. Bei einer Zwischenmarke
+   sitzt der Tag auf ihrem eigenen Zweig ab dem Tag
+   der Vormarke (Zweig-Konvention in `Facts.md` neben
+   der Tag-Konvention; [[Zielmarken]] §Meta,
+   Zwischenmarke — Tag und Produkt-Repo).
+4. Die Freigabe wird als DEC gebucht, mit dem
+   Tag-Namen an Stelle der Version (Wortlaut des
+   Tag-Eintrags samt Marken-Zusatz: `Vorgehen.md` §4
+   „Freigabe per Tag“; Aufbau des Eintrags: oben).
+   In `herkunft` späterer Stände steht der Tag-Name,
+   bei Werkstatt und Produkt in zwei Repos als
+   `<produkt-repo>/<tag>` ([[Einfrieren-und-Abloesen]]
+   §Stand).
+
+**Ein gesetzter Tag wird nie verschoben oder
+gelöscht.** Eine Korrektur ist ein neuer Tag mit neuer
+Freigabe; vor dem Marken-Wechsel löst der
+Freigabe-Eintrag des neuen Tags den alten per
+`supersedes:` ab; nach dem Wechsel bei unverändertem
+Code steht die neue Tag-Freigabe im Nachtrag „Tag
+korrigiert“ am Marken-Eintrag, und die alte bleibt
+stehen ([[Zielmarken]] §Meta, Nachtrag;
+[[Kettenpruefung]] §Kette). Gepusht wird der Tag wie
+jeder Commit nur auf Anfrage (MasterPrompt §6.4). Bei
+einer Komponente ist der Tag zugleich ihre Lieferung
+an den Koordinator (§8); bleibt der Code in der
+Folge-Marke unverändert, gelten Tag und Lieferung
+dort weiter ([[Kettenpruefung]] §Kette, Übernahme des
+Tags und der Lieferung).
+
+**P10 → P11.** Glied ist der Testbericht (TRES,
+[[Testberichte]]) zu einem Durchgang nach dem
+freigegebenen Testplan-Stand; Nicht-Bestandenes erzeugt
+einen BUG ([[Kettenpruefung]] §Code-Glieder).
+
+**Rollen bei Integrationstest-Befunden (P10):**
 
 - **Reproduziert wird beim Koordinator.** Nur er hat
   den lauffähigen Gesamtaufbau (Integrationstests,
@@ -148,14 +253,17 @@ Testbericht gegen die Spezifikation geprüft hat.
   Komponenten-Agent hat nur seine eigene Komponente und
   kann einen Integrationstest-Befund nicht selbst
   nachvollziehen.
-- Der Koordinator gibt der betroffenen Komponente mit,
-  was sie zur Eingrenzung braucht: **Testfall,
-  Protokolle, beobachtetes gegen erwartetes Verhalten.**
-  Erst damit ist eine Meldung im Komponenten-Repository
-  bearbeitbar.
-- **Ein Contract-Bruch erzeugt eine Meldung beim
-  Provider**, nicht zusätzlich beim Consumer — der
-  Contract gehört dem Provider (siehe §9
+- Der Koordinator schickt der betroffenen Komponente
+  eine Nachricht ([[Katalog-message]]) mit dem, was sie
+  zur Eingrenzung braucht: **Testfall, Protokolle,
+  beobachtetes gegen erwartetes Verhalten.** Die
+  Komponente bucht den Befund als BUG mit `quelle:` auf
+  die Nachricht (`Vorgehen.md` §3a); erst damit ist er
+  im Komponenten-Repository bearbeitbar.
+- **Ein Contract-Bruch geht als Nachricht an den
+  Provider** und wird dort als BUG gebucht, nicht
+  zusätzlich beim Consumer — den
+  Contract verantwortet der Provider (siehe §9
   Contract-Aushandlung und -Eskalation). Betrifft der
   Befund beide Seiten zugleich, ist es kein
   Contract-Bruch mehr, sondern ein Rücklauf nach P4 der
@@ -196,10 +304,10 @@ Testbericht gegen die Spezifikation geprüft hat.
   nicht** ([[Berichten-statt-Blockieren]]) —
   Zwischenspeicher-Commits mit rotem Zustand sind
   explizit erlaubt und im späteren `git log` erkennbar.
-  Trennung zur Freigabe-Frage: **Freigabe „für P9
-  Testen"** verlangt weiterhin grüne Tests als
-  Vorbedingung nach der Freigabe-Kette oben (a) — das
-  ist Freigabe-Frage, nicht Kadenz-Frage.
+  Trennung zur Freigabe-Frage: der **Tag der
+  Implementierung** (P9 → P10) verlangt weiterhin grüne
+  Tests als Vorbedingung nach der Freigabe-Kette oben
+  (a) — das ist Freigabe-Frage, nicht Kadenz-Frage.
 - **Standing-Freigabe im Init** — der Agent führt die
   Kadenz still bei jedem Quelltext-Commit aus (kein
   Nachfragen), Ergebnis erscheint in Commit-Message.
@@ -221,47 +329,112 @@ Scaffolding-Vorlagen-Präzisierung (Vorgehen.md §7a,
 |---|---|---|---|
 | R | **R4** Referenzarchitekturen | P5 Zerlegen in Bausteine | vor Architektur-Entscheidung |
 | R | **R5** Standards und Austauschformate | P5 Zerlegen in Bausteine · P7 Auswählen der Technologie | vor Contract-Definition; vor Technologie-Wahl |
-| R | **R9** Betriebs- und Deploypraxis der Zielumgebung | P10 Ausliefern | vor Deploy-Erstellung |
-| R | **R10** Fehlerbilder der eingesetzten Version | P12 Betreiben | laufend, insbesondere nach neuen Releases |
-| M | **Vierte Frage: Technologieagnostik** — Spezifikation frei von Technologie-Vorannahmen? | P4 Spezifizieren der Funktion | vor Freigabe |
-| M | **Hochwertiger Prüfer, mehrere Runden** — Spezifikations-Fehler kaskadieren | P4 Spezifizieren der Funktion | vor Freigabe |
+| R | **R9** Betriebs- und Deploypraxis der Zielumgebung | P11 Ausliefern | vor Deploy-Erstellung |
+| R | **R10** Fehlerbilder der eingesetzten Version | P13 Betreiben | laufend, insbesondere nach neuen Releases |
+| M | **Vierte Frage: Technologieagnostik** — Funktionsbeschreibung frei von Technologie-Vorannahmen? | P4 Beschreiben der Funktion | vor Freigabe |
+| M | **Hochwertiger Prüfer, mehrere Runden** — Fehler der Funktionsbeschreibung kaskadieren | P4 Beschreiben der Funktion | vor Freigabe |
+| M | **UI-Entwürfe** (bei Systemen mit Benutzungs-Schnittstelle) — alle Fälle der Funktionsbeschreibung abgebildet? (Anmerkung P4 unten) | P4 Beschreiben der Funktion | vor Freigabe für P5 |
 | M | **Querprüfung:** jede Anforderung mindestens einer Komponente zugeordnet? | P5 Zerlegen in Bausteine | vor Freigabe |
-| M | Prüfung, dass **Startprompts der Komponenten-Repositories** ohne Rückfrage ausreichen | P6 Starten von Teilaktivitäten | vor Freigabe |
-| M | Prüfung gegen Teil- und Gesamtspezifikation (kein Widerspruch, kein ungewollter Lock-in) | P7 Auswählen der Technologie | vor Freigabe |
-| M | **Anforderungs-Vollerfassung Stufe 2 vollständig** (§2 Anmerkung P3) — oder Negativ-Entscheidung „Verzicht auf Stufe 2" im Projekt-Repo vorhanden; Warnung nach [[Berichten-statt-Blockieren]], keine harte Blockade | Übergang P7 → P8 | vor Fachlogik-Start |
-| M | **Querprüfung durch Koordinator** — Konsistenz zwischen den Teilspezifikationen | P8 Ausarbeiten (Teilspezifikationen) | vor Freigabe |
-| M | **Spezialisiertes Modell, nicht das implementierende** — vermeidet Selbst-Bestätigung | P8 Ausarbeiten (Implementierung) | bei der Prüfung |
-| M | **„Kann ein Fremder ausführen?"** — Deploy und Startprompts als selbstständige Anleitung | P10 Ausliefern | vor Freigabe |
+| M | Prüfung, dass **Startprompts der Komponenten-Repositories** ohne Rückfrage ausreichen (§2 Anmerkung P6) | P6 Starten von Teilaktivitäten | vor Freigabe |
+| M | Prüfung gegen Teil- und Gesamt-Funktionsbeschreibung (kein Widerspruch, kein ungewollter Lock-in) | P7 Auswählen der Technologie | vor Freigabe |
+| M | **Anforderungs-Vollerfassung Stufe 2 vollständig** (§2 Anmerkung P3) — oder Negativ-Entscheidung „Verzicht auf Stufe 2" im Projekt-Repo vorhanden; Warnung nach [[Berichten-statt-Blockieren]], keine harte Blockade | Übergang P8 → P9 | vor Fachlogik-Start |
+| M | **Code-Review als Kettenprüfung des Glieds P9** ([[Kettenpruefung]] §Regel) durch ein anderes Modell als das implementierende oder ein spezialisiertes Werkzeug — Vorbedingung, angeboten wird nur die Werkzeug-Wahl (§3 Nachweis (b)) | Übergang P9 → P10 | vor dem Tag der Implementierung |
+| M | **„Kann ein Fremder ausführen?"** — Betriebs-Anleitung und Startprompts als selbsttragende Anleitung | P11 Ausliefern | Startprompts vor Freigabe; Betriebs-Anleitung vor ihrer Veröffentlichung, nicht vor der Freigabe des Deploy-Stands (sie entsteht erst danach, [[Katalog-Betriebs-Anleitung]]) |
 | V | **V2**-Präzisierung: Anforderungsskizze Stufe 1, nur setup-relevant (§2 Anmerkung P3) | P3 Anforderungen sammeln | vor Scaffolding-Commit |
 | V | **V3**-Präzisierung: mehrere Sprachen möglich, Runtime-Version explizit | P7 Auswählen der Technologie | Wurzelentscheidung |
 | V | **V4**-Präzisierung: Architekturmuster explizit als Sub-Wahl (MVC, Hexagonal, Layered, Microservices) | P5 Zerlegen in Bausteine | mit Architektur-Entscheidung |
 | V | **V5**-Präzisierung: Werkzeugketten-Liste (§2 Anmerkung P7) | P7 Auswählen der Technologie | nach V3 |
-| V | **V6a**-Präzisierung: CI-Pipeline-Konfiguration, Deploy-Zielumgebung | P10 Ausliefern · P11 Produzieren | mit Deploy-Entscheidungen |
+| V | **V6a**-Präzisierung: CI-Pipeline-Konfiguration, Deploy-Zielumgebung | P11 Ausliefern · P12 Produzieren | mit Deploy-Entscheidungen |
 
 (V1 und V6b sind Basis-Angelegenheit — siehe
 Vorgehen.md §7a.)
+
+Zeilen, die ein Glied nennen (die P4-Prüfungen, die
+Anforderungs-Vollerfassung am Übergang P8 → P9, die
+Spezifikation als Bezugspunkt), gelten für das, was
+das Glied vertritt, und entfallen, wo es fehlt: bei
+Übernahme-Art Auftrag vertritt der Übergabe-Stand
+P1–P4 der Komponente, beim Koordinator ohne eigene
+Bauteile fehlen P7–P9 ([[Kettenpruefung]] §Fehlende
+und vertretene Glieder).
+
+Die Stimmigkeit zwischen den Teil-Funktionsbeschreibungen
+der Komponenten tragen die Contracts (Rollen je Phase:
+[[Katalog-Contract-Index#Rollen eines CON in der Kette]])
+und der Integrationstest des Koordinators (§8); eine
+eigene Querprüfung des Koordinators in P4 der
+Komponenten gibt es nicht.
+
+**Anmerkung P4 UI-Entwürfe:** Bei Systemen mit
+Benutzungs-Schnittstelle bietet der Agent in P4
+UI-Entwürfe an. Ablauf: Werkzeug-Wahl durch den
+Anwender (`Vorgehen.md` §7b; Wahl in `Tools.md`,
+Kategorie „UI-Entwurfs-Werkzeuge“;
+z.B. Stitch, ohne Werkzeug Markdown-Wireframes oder
+HTML-Mockups) → Entwürfe →
+Prüfung „alle Fälle der Funktionsbeschreibung
+abgebildet?“ vor der Freigabe für P5. Ändert sich dabei
+die Funktionsbeschreibung, greift das Review nach einer
+Änderung (`Reviewmuster.md`).
+
+**Anmerkung P10 Durchführungs-Instanz:** In P10 bietet
+der Agent je Testdurchgang eine Durchführungs-Instanz
+an — Plan und Protokoll in einem ausfüllbaren
+Dokument, selbsttragend abgeleitet aus dem
+freigegebenen Testplan-Stand, für Ausführende ohne
+Wiki-Zugang. Das Format wählt der Anwender
+(Werkzeug-Wahl nach `Vorgehen.md` §7b, z.B.
+Tabellenkalkulation). Auslöser, Marke, Feld
+Zielgruppe, Vorlage der Struktur und der Weg von der
+ausgefüllten Instanz zum Testbericht:
+[[Katalog-Durchfuehrungs-Instanz]] — lesen, bevor die
+Struktur vorgelegt wird.
 
 ## 5. Prüfungs-Präzisierungen
 
 **In der §4-Tabelle konsolidiert (Typ M)** — dort die
 Software-typischen Zusatz-Anforderungen zur
-SP-1-Basis-Prüfung (Standard-Zwei-Modelle-Regel +
-Selbst-Triage E/F/A + Reifekriterium).
+SP-1-Basis-Prüfung (Prüflauf nach `Reviewmuster.md`
+§2, [[Vorgehen-SP-1]] §4).
 
-## 6. Freigabe-Rücknahme (RP-1-Präzisierung)
+## 6. Änderung nach der Freigabe (RP-1-Präzisierung)
 
-Bei kritischen Artefakten macht RP-1 die formale
-Rücknahme zur Pflicht:
+Wie eine Änderung nach einer Freigabe beantwortet wird
+(Freigabe des eingefrorenen Stands bleibt, überholter
+Stand, neuer Stand mit eigener Freigabe):
+`Vorgehen.md` §4 „Änderung nach der Freigabe“ und
+[[Vorgehen-SP-1]] §5 — lesen, wenn sich nach einer
+Freigabe etwas ändert. RP-1 präzisiert für kritische
+Artefakte und für Contracts:
 
-- **Contracts:** jede Änderung an einem Contract nach
-  Freigabe erfordert **explizites Rücknahme-DEC** und
-  Neu-Freigabe. Grund: Contract-Änderungen betreffen
-  andere Komponenten, die den Contract als Grundlage
-  genommen haben.
-- **Gesamtspezifikation nach P4-Freigabe:** analog
-  Rücknahme-DEC bei substantieller Änderung.
-- **Andere Artefakte:** SP-1-Grundsatz (implizite
-  Rücknahme + Meldung) reicht.
+- **Contracts:** ein angenommener CON ist eingefroren;
+  eine Rücknahme gibt es nicht. Jede Änderung ist ein
+  **Nachfolge-CON** — ein neues Element mit
+  `supersedes:` (ersetzt den Vorgänger) oder
+  `vorgaenger:` (Vorgänger bleibt parallel gültig).
+  Freigegeben wird er vom Provider, bei Berührung einer
+  freigegebenen Grundlage vom Anwender; gemeldet und
+  gebucht wird er wie jede CON-Freigabe (§9). Die
+  Nachricht an die registrierten Consumer meldet die
+  Ablösung und, falls ein parallel gültiger Vorgänger
+  später außer Kraft gesetzt wird, auch diese — was
+  die Außerkraftsetzung an beiden Elementen bucht und
+  warum erst sie die Consumer-Stände überholt:
+  [[Contract-Index]] §Meta „Identität und Nachfolge“.
+  Grund:
+  Contract-Änderungen betreffen andere Komponenten, die
+  den Contract als Grundlage genommen haben; wann ihre
+  Stände überholt sind: [[Einfrieren-und-Abloesen]]
+  §Überholt-Regel.
+- **Gesamt-Funktionsbeschreibung nach P4-Freigabe:**
+  ist der freigegebene Stand überholt (Auslöser:
+  [[Einfrieren-und-Abloesen]] §Überholt-Regel), ist
+  **sofort** — nicht erst im nächsten Zyklus — ein neuer
+  Stand mit eigener Freigabe-DEC Pflicht, die die alte
+  per `supersedes:` ablöst, weil die Komponenten auf ihm
+  aufsetzen.
+- **Andere Artefakte:** die SP-1-Präzisierung (Meldung,
+  neuer Stand im nächsten Zyklus) reicht.
 
 ## 7. Wechsel-Semantik SP-1 → RP-1
 
@@ -315,15 +488,20 @@ SP-1-Vorgehens.
    Technologie; zusätzlich richtet der Koordinator eine
    **System-CI** ein, die die Integrationstests fährt.
    Die System-CI entsteht dort, wo der Koordinator
-   seine Integrationstests baut (P9+P10-Aggregat, siehe
+   seine Integrationstests baut (P10+P11-Aggregat, siehe
    §8); ein früherer Aufbau zusammen mit den übrigen
    beim Koordinator verbleibenden
    Technikentscheidungen aus Schritt 4 ist zulässig.
 6. **Die Deployment- und Zielumgebungs-Entscheidung**
    bleibt beim **Koordinator** — er baut die
-   Deployment-Automatisierung des Gesamtsystems (P10
-   Ausliefern, Deploy-Dokument in `output/`); die
-   Komponenten liefern ihre Teile zu.
+   Deployment-Automatisierung des Gesamtsystems und
+   führt P11 Ausliefern: Deploy-Stände je Zielumgebung
+   in `output/` und die DEPL-Elemente für alle
+   Komponenten seiner §Komponenten-Zeilen; die
+   Komponenten liefern ihre Teile zu. Wann eine
+   Komponente P11 und ihre DEPL selbst führt (eigene
+   Zielumgebung): [[Kettenpruefung]] §Fehlende und
+   vertretene Glieder.
 7. **Die Lizenz-Entscheidung** wird **einmal global**
    beim Koordinator getroffen und gilt für alle
    Komponenten. Braucht eine Komponente eine
@@ -345,56 +523,116 @@ RP-1 nutzt das Zweck-Freigabe-Modell des Basisrahmens
 Tore; Verlässlichkeit tragen die zweck-gebundenen
 Freigaben und der Wächter-Trigger T4 (Warnung nach
 [[Berichten-statt-Blockieren]]). Typische
-Zweck-Freigaben in RP-1:
+Zweck-Freigaben in RP-1 (führend für den Zweck eines
+Stands ist sein Dokumenttyp-Eintrag im [[Katalog]];
+die Tabelle wendet ihn auf Koordinator und
+Komponente an):
 
 | Phase-Artefakt | Freigabe-Zweck | Zuschnitt |
 |---|---|---|
-| P3-Artefakt (Anforderungs-Register) | „P4 Spezifizieren der Funktion" | global |
-| P4-Artefakt (Gesamtspezifikation) | „P5 Zerlegen in Bausteine" | global |
-| P5-Artefakt (Softwaresystemarchitektur mit Schnitt und Contract-Übersicht) | „P6 Starten von Teilaktivitäten" | global |
-| P4-Artefakt der Komponente (rekursiv: Teilspezifikation + Contracts) | „P7 Auswählen der Technologie der Komponente" | je Komponente |
-| P7-Artefakt der Komponente (technischer Stack) | „P8 Ausarbeiten der Komponente" | je Komponente |
-| P8-Artefakt der Komponente (Implementierung) | „P9 Testen der Komponente" (zweistufig: Regressions-Sicherheit + Anforderungs-Deckung, §3) | je Komponente |
-| P9+P10-Aggregat (Testplan/Testbericht + Deploy-Dokument) | „Integrationstest des Gesamtsystems" bzw. „P12 Betreiben" | global |
+| P3-Artefakt (Anforderungen-Stand) | „P4 Beschreiben der Funktion" | global |
+| P4-Artefakt (Funktionsbeschreibung-Stand der Gesamt-Funktionsbeschreibung) | „P5 Zerlegen in Bausteine" | global |
+| P5-Artefakt (Architekturdokument aus der Softwaresystemarchitektur mit Schnitt) | „P6/P7" | global |
+| P6-Artefakt (Übergabe an Komponente K) | „für den Start von K" | je Komponente |
+| P3-Artefakt der Komponente (Anforderungen-Stand mit den eigenen REQ) | „P4 Beschreiben der Funktion der Komponente" | je Komponente |
+| P4-Artefakt der Komponente (Funktionsbeschreibung-Stand: Teil-Funktionsbeschreibung, als Provider mit Verweisen auf die CON) | „P5 Zerlegen in Bausteine der Komponente" | je Komponente |
+| P5-Artefakt der Komponente (Architekturdokument, darf dünn sein) | „P6/P7" | je Komponente |
+| P7-Artefakt der Komponente (Technologie-Entscheidungen) | „P8 Spezifizieren der Komponente" | je Komponente |
+| P8-Artefakt der Komponente (Spezifikation-Stand) | „P9 Ausarbeiten der Komponente" | je Komponente |
+| Tag der Implementierung der Komponente (Glied P9) | „P10 Testen der Komponente" (Vorbedingung: Tests grün + Code-Review als Kettenprüfung P9, §3); zugleich die **Lieferung** an den Koordinator, gemeldet per Nachricht (`Vorgehen.md` §3a) | je Komponente |
+| P10-Artefakt der Komponente (Testplan-Stand der Komponenten-Tests, nach ihrem Tag; der Durchgang wird mit einem Testbericht belegt — damit endet die Kette der Komponente) | „P10 Testen der Komponente" | je Komponente |
+| P10+P11-Aggregat, Teil P10 (Testplan-Stand des Integrationstests; Vorbedingung: alle Lieferungen der Marke gebucht, bei eigenen Bauteilen dazu der eigene Tag — [[Kettenpruefung]] §Freigabe-Ordnung des Koordinators) | „P10 Testen" | global |
+| P10+P11-Aggregat, Teil P11 (Deploy-Stand für alle Komponenten seiner §Komponenten-Zeilen; Glied davor ist der Testbericht des Integrationstests, §3 „P10 → P11“) | „P11 Ausliefern" | je Zielumgebung |
 
-**P11 „Produzieren"** trägt keine eigene
+Welche dieser Glieder bei einer Komponente der
+Übergabe-Stand vertritt (Übernahme-Art Auftrag: P1–P4,
+selbstständig: P1) und wann eine Komponente P11 mit
+eigenem Deploy-Stand und eigenen DEPL führt (eigene
+Zielumgebung): [[Kettenpruefung]] §Fehlende und
+vertretene Glieder — lesen, bevor die Kette einer
+Komponente geplant wird. Ihr Abschluss-Stand listet
+die Glieder, die sie führt, und geht mit dem
+Marken-Abschluss an den Koordinator
+([[Katalog-Abschluss-Stand]]).
+
+**P12 „Produzieren"** trägt keine eigene
 Standard-Freigabe — bei Standard-Software ist es
-weitgehend durch das P10-Deploy-Dokument abgedeckt
-(§2); RP-11 Cloudanwendung präzisiert P11/P12 später
+weitgehend durch den P11-Deploy-Stand abgedeckt
+(§2); RP-11 Cloudanwendung präzisiert P12/P13 später
 (dominante Vertragsaspekte, laufender Betrieb).
 
 **Anmerkung Split P3/P4:** Anforderungen sammeln (P3)
-und Spezifizieren der Funktion (P4) sind zwei getrennte
+und Beschreiben der Funktion (P4) sind zwei getrennte
 Phasen mit zwei eigenständigen Freigaben: das
 P3-Artefakt „Anforderungs-Register" wird für Zweck „P4
-Spezifizieren der Funktion" freigegeben, das
-P4-Artefakt „Gesamtspezifikation" für Zweck „P5
-Zerlegen in Bausteine" — die Spezifikations-Arbeit
+Beschreiben der Funktion" freigegeben, das
+P4-Artefakt „Gesamt-Funktionsbeschreibung" für Zweck „P5
+Zerlegen in Bausteine" — die Beschreibungs-Arbeit
 startet nicht implizit mit der letzten gesammelten
 Anforderung, sondern mit der P3-Freigabe.
 
 ## 9. Contract-Aushandlung und -Eskalation
 
-**Wo Contracts entstehen.** Ein Contract wird im Rahmen
-der rekursiven **P4 Spezifizieren der Funktion** der
-jeweiligen Komponente (Provider) verhandelt — Teil
-ihrer eigenen Teilspezifikations-Arbeit (index §4,
-Komponenten-Repositories). Der **[[Contract-Index]]**
-selbst liegt beim Koordinator in **P6 Starten von
-Teilaktivitäten**.
+**Wo Contracts entstehen.** Dass es eine Schnittstelle
+gibt, folgt aus dem Schnitt (Zuschnitt im
+Architekturdokument, P5 des Koordinators). Ihren
+Inhalt verhandelt die **Provider-Komponente** in ihrer
+rekursiven **P4 Beschreiben der Funktion** — Teil
+ihrer eigenen Teil-Funktionsbeschreibungs-Arbeit
+(index §4, Komponenten-Repositories). Das CON-Element
+liegt im **[[Contract-Index]]** des Koordinators; die
+Übergabe an eine Komponente (P6) enthält die
+angenommenen CON, an denen sie beteiligt ist. Welche
+Rolle ein CON je Phase hat und was gilt, wenn der
+Übergabe-Stand das P4-Glied der Provider-Komponente
+vertritt (Übernahme-Art Auftrag):
+[[Katalog-Contract-Index#Rollen eines CON in der Kette]]
+— lesen, bevor eine Komponente einen CON verhandelt.
 
-**Aushandlung ohne Anwender.** Solange Provider und
-Consumer sich innerhalb der freigegebenen
-Gesamtspezifikation (P4-Artefakt des Koordinators) und
-des freigegebenen Schnitts (P5-Artefakt) bewegen,
-handeln sie Contract-Anforderungen selbst aus.
+**Verantwortung.** Der **Provider** verantwortet den
+Contract und implementiert ihn; welche Komponente
+Provider ist, gibt der Anwender frei. Änderungswünsche
+gehen dem Provider als Nachricht zu ([[Katalog-message]];
+Schreibgrundsatz: `Vorgehen.md` §3a); **er entscheidet**
+— ohne Anwender, solange die Aushandlung innerhalb der
+freigegebenen Grundlagen bleibt (Delegations-Grenze
+unten).
+
+**Freigabe, Meldung, Buchung.**
+
+- Die **Erst-CON** eines Contracts und jede Änderung,
+  die eine freigegebene Grundlage berührt, gibt nach
+  Empfehlung der **Anwender** frei.
+- Einen **Nachfolge-CON** innerhalb der
+  Delegations-Grenze gibt der **Provider** selbst frei.
+- Jede Freigabe meldet der Provider dem Koordinator
+  per Nachricht mit `erwartet: buchung`
+  ([[Katalog-message]]); eine Anwender-Freigabe steht
+  in dieser Meldung. Der Koordinator bucht das
+  CON-Element aus der Meldung mit
+  `quelle: <provider>/MSG-NNN` (Buchung, Status,
+  Feld `provider:`: `## Meta` von [[Contract-Index]] —
+  lesen vor jeder CON-Buchung). Die registrierten
+  Consumer werden per Nachricht informiert.
+- **CON-ID beim Provider:** Die CON-ID vergibt der
+  Koordinator bei der Buchung; der Provider erfährt
+  sie aus der Quittung (gebuchter Knoten in `bezug`,
+  [[Katalog-message]], Zeile Quittung) und verweist erst
+  danach in seinem P4-Stand auf
+  `<koordinator>/CON-NNN`.
+- **Neuer Nutzer:** Wann eine weitere Komponente oder
+  ein externer Nutzer nur als Consumer registriert
+  wird, wer zustimmt und bucht, und wann stattdessen
+  ein Nachfolge-CON entsteht: `## Meta` von
+  [[Contract-Index]], Consumer-Registrierungen — lesen,
+  wenn ein weiterer Nutzer dazukommt.
 
 **Eskalation bei Streit — Bericht statt Blockade.**
-Einigen sich Provider und Consumer nicht, entscheidet
-**der Anwender**; der Koordinator entscheidet nichts,
-sondern bereitet vor:
+Akzeptiert ein Consumer die Ablehnung durch den
+Provider nicht, entscheidet **der Anwender**; der
+Koordinator entscheidet nichts, sondern bereitet vor:
 
-1. Der Koordinator prüft, ob **Gesamtspezifikation
+1. Der Koordinator prüft, ob **Gesamt-Funktionsbeschreibung
    (P4)** oder **Schnitt (P5)** die Frage bereits
    beantworten.
 2. **Tun sie das:** Er benennt die Stelle als
@@ -403,7 +641,7 @@ sondern bereitet vor:
 3. **Tun sie das nicht:** Dann ist der Streit selbst
    Beleg für eine Lücke im Freigegebenen. Der
    Koordinator legt einen **Rücklauf-Vorschlag** vor —
-   nach P4, wenn die Spezifikation schweigt, nach P5,
+   nach P4, wenn die Funktionsbeschreibung schweigt, nach P5,
    wenn eine Zuständigkeit falsch geschnitten ist
    (siehe §10 Rücklauf-Mechanik).
 
@@ -414,43 +652,46 @@ Anwender entscheidet über die Weiterarbeit.
 
 **Contract-Wegfall.** Entfällt die Komponente, die
 Provider eines Contracts ist, fällt der Contract an den
-**Koordinator** zurück: Er markiert ihn im
-Contract-Index als entfallen oder weist ihn einem neuen
-Provider zu. Beides ist zugleich ein Rücklauf nach
-**P5 Zerlegen in Bausteine**, weil sich der Schnitt
-geändert hat.
+**Koordinator** zurück: Er setzt den CON außer Kraft
+(Status `abgeschlossen`), oder ein neuer Provider
+handelt einen Nachfolge-CON aus, der den bisherigen
+per `supersedes:` ablöst und den neuen Provider im
+Feld `provider:` trägt (`provider:` ändert sich nur
+per Nachfolge-CON). Beides ist zugleich ein
+Rücklauf nach **P5 Zerlegen in Bausteine**, weil sich
+der Schnitt geändert hat.
 
 **Delegations-Grenze zum Anwender.** Nicht jede
 Contract-Änderung braucht Anwender-Freigabe. Klar
 getrennt:
 
-- **Provider ↔ Consumer handeln selbst aus**, solange
-  die Aushandlung sich innerhalb der bereits
-  freigegebenen Gesamtspezifikation (P4-Artefakt) und
-  des bereits freigegebenen Schnitts (P5-Artefakt mit
-  Contract-Index) bewegt. Typische Fälle: Feld-Namen,
-  Feld-Typen, Fehler-Codes, Timeout-Werte, Reihenfolge-
-  Garantien, Pagination, Idempotenz-Header sowie
+- **Der Provider entscheidet allein**, solange die
+  Aushandlung sich innerhalb der bereits freigegebenen
+  Gesamt-Funktionsbeschreibung (P4-Artefakt) und des
+  bereits freigegebenen Schnitts (P5-Artefakt)
+  bewegt. Typische Fälle: Feld-Namen, Feld-Typen,
+  Fehler-Codes, Timeout-Werte, Reihenfolge-Garantien,
+  Pagination, Idempotenz-Header sowie
   Contract-Präzisierungen und -Erweiterungen, die die
-  Gesamtspez nicht widersprüchlich berühren.
-  Contract-Version wird gemeinsam gebucht (Provider und
-  Consumer als Prüfer im Freigabe-DEC-Eintrag), der
-  Koordinator wird via Contract-Index-Update
-  informiert.
+  Gesamt-Funktionsbeschreibung nicht widersprüchlich
+  berühren. Ergebnis ist ein Nachfolge-CON, den der
+  Provider freigibt und meldet; der Koordinator bucht
+  ihn (oben). Kommt nur ein Nutzer hinzu: oben,
+  Neuer Nutzer.
 - **Anwender-Freigabe wird nötig**, sobald die
   Aushandlung eine bereits freigegebene Grundlage
-  (Gesamtspez oder Schnitt) verändern müsste. Dann
+  (Gesamt-Funktionsbeschreibung oder Schnitt) verändern müsste. Dann
   greift die Rücklauf-Mechanik in §10 (Rücklauf nach
   P4 bzw. P5, neue Freigabe erforderlich) — nicht mehr
   Aushandlung, sondern Grundlagen-Iteration.
-- **Provider und Consumer werden sich nicht einig:**
-  Eskalation nach der dreistufigen Mechanik oben in
-  diesem §9 (Anwender-Entscheidung →
+- **Ein Consumer akzeptiert die Ablehnung durch den
+  Provider nicht:** Eskalation nach der dreistufigen
+  Mechanik oben in diesem §9 (Anwender-Entscheidung →
   Koordinator-Vorprüfung → Rücklauf-Belegfall).
 
 Die Grenze ist automatisch prüfbar (berührt der
 Aushandlungs-Vorschlag Text im freigegebenen
-Gesamtspez- oder Schnitt-Artefakt?) und damit ein
+Funktionsbeschreibung-Stand oder Architekturdokument?) und damit ein
 sauberer Delegations-Fall nach Vorgehen.md §4.
 Wächter-Trigger T4 warnt, wenn Aushandlungs-Bezüge auf
 nicht-freigegebene Grundlagen zeigen.
@@ -468,18 +709,28 @@ teurer.
 
 | Befund | Eintrittspunkt (P-Phase) | Wer arbeitet danach |
 |---|---|---|
-| Zusammengefasste Deployanweisung oder Testplan fehlerhaft; Code und Spezifikation sind in Ordnung | **P9+P10-Aggregat** des Koordinators | Koordinator |
-| Implementierungsfehler; Contract und Spezifikation bleiben gültig | **P8 der Komponente** | betroffene Komponente |
-| Testlücke — das Verhalten war nie geprüft, die Spezifikation ist korrekt | **P8 der Komponente** (automatisierbarer Testfall) bzw. **P9-Testplan** (nicht-automatisierbarer Anteil), siehe §3 Test-Automatisierungs-Regel | betroffene Komponente |
-| Contract-Bruch — der Provider hält seinen eigenen Contract nicht ein | **P8 der Komponente**, beim Provider | der Provider |
-| Technischer Fehlgriff — Stack, Bibliothek oder Konfiguration ungeeignet | **P7 der Komponente** | die Komponente, mit erneuter Freigabe des P7-Artefakts für Zweck „P8 Ausarbeiten der Komponente" |
-| Teilspezifikation weicht von der Gesamtspezifikation ab | **P4 der Komponente** | die betroffene Komponente |
-| Contract-Lücke — ein Consumer braucht etwas, das nicht im Contract steht | **P4 der Komponente** (Provider verhandelt) | Consumer stellt die Anforderung, Provider ändert und implementiert |
-| Contract inhaltlich falsch — weder Lücke noch Bruch, sondern falsch beschrieben | **P4 der Komponente** | der Provider |
-| Startprompt fehlerhaft — falscher Zuständigkeitssatz oder falsche Fundorte | **P6 Starten von Teilaktivitäten** | Koordinator |
+| Zusammengefasster Deploy-Stand oder Testplan fehlerhaft; Code und Spezifikation sind in Ordnung | **P10+P11-Aggregat** des Koordinators | Koordinator |
+| Implementierungsfehler; Contract und Spezifikation bleiben gültig | **P9 der Komponente** | betroffene Komponente |
+| Testlücke — das Verhalten war nie geprüft; die Spezifikation (automatisierbarer Anteil) bzw. die Funktionsbeschreibung (nicht-automatisierbarer Anteil) ist korrekt | **P9 der Komponente** (automatisierbarer Testfall) bzw. **P10-Testplan** (nicht-automatisierbarer Anteil), siehe §3 Test-Automatisierungs-Regel | betroffene Komponente |
+| Contract-Bruch — der Provider hält seinen eigenen Contract nicht ein | **P9 der Komponente**, beim Provider | der Provider |
+| Spezifikationsfehler — die Bauanleitung ist lückenhaft oder falsch; Funktionsbeschreibung, Contract und Stack bleiben gültig | **P8 der Komponente** | die betroffene Komponente, mit erneuter Freigabe des P8-Artefakts für Zweck „P9 Ausarbeiten der Komponente" |
+| Technischer Fehlgriff — Stack, Bibliothek oder Konfiguration ungeeignet | **P7 der Komponente** | die Komponente, mit erneuter Freigabe des P7-Artefakts für Zweck „P8 Spezifizieren der Komponente" |
+| Teil-Funktionsbeschreibung weicht von der Gesamt-Funktionsbeschreibung ab | **P4 der Komponente** | die betroffene Komponente |
+| Contract-Lücke — ein Consumer braucht etwas, das nicht im Contract steht | **P4 der Komponente** (Provider verhandelt) | Consumer stellt die Anforderung per Nachricht, Provider handelt einen Nachfolge-CON aus und implementiert ihn |
+| Contract inhaltlich falsch — weder Lücke noch Bruch, sondern falsch beschrieben | **P4 der Komponente** | der Provider (Nachfolge-CON) |
+| Startprompt fehlerhaft — falsche Rolle, Übernahme-Art oder Lage, falscher Verweis auf den Übergabe-Stand | **P6 Starten von Teilaktivitäten** | Koordinator |
 | Komponentenschnitt falsch — eine Zuständigkeit liegt an der falschen Stelle | **P5 Zerlegen in Bausteine** | Koordinator; es entstehen neue Startprompts (erneut P6) |
-| Gesamtspezifikation lückenhaft, widersprüchlich oder von außen überholt; Anforderungen und Teilspezifikationen sind korrekt | **P4** (Gesamtspezifikation des Koordinators) | Koordinator; danach erneute Freigabe des P4-Artefakts für Zweck P5, für betroffene Komponenten erneut ab deren P4 |
+| Gesamt-Funktionsbeschreibung lückenhaft, widersprüchlich oder von außen überholt; Anforderungen und Teil-Funktionsbeschreibungen sind korrekt | **P4** (Gesamt-Funktionsbeschreibung des Koordinators) | Koordinator; danach erneute Freigabe des P4-Artefakts für Zweck P5, für betroffene Komponenten erneut ab deren P4 |
 | Anforderung fehlt oder ist falsch | **P3 Anforderungen sammeln** | Koordinator, danach die volle Kette |
+
+„P4 der Komponente“ und „P9 der Komponente“ meinen
+das Glied, das die Komponente selbst führt. Vertritt
+der Übergabe-Stand das Glied (Übernahme-Art Auftrag),
+liegt der Eintrittspunkt beim Koordinator: Ein neuer
+CON oder eine Änderung über den Übergabe-Stand hinaus
+ist ein Rücklauf an ihn ([[Kettenpruefung]] §Fehlende
+und vertretene Glieder;
+[[Katalog-Contract-Index#Rollen eines CON in der Kette]]).
 
 ### Vier Rücklauf-Regeln
 
@@ -489,19 +740,23 @@ teurer.
 - **Alle Freigaben ab dem Eintrittspunkt sind erneut
   einzuholen** — nur für die betroffenen Komponenten
   und nur, soweit sie inhaltlich berührt sind. Eine
-  Lücke in der Gesamtspezifikation muss den Schnitt
+  Lücke in der Gesamt-Funktionsbeschreibung muss den Schnitt
   nicht berühren; dann bleibt die P5-Freigabe
   unangetastet.
 - **Ein Rücklauf springt nie hinter seinen
-  Eintrittspunkt zurück.** Wer bei P8 wieder einsetzt,
+  Eintrittspunkt zurück.** Wer bei P9 wieder einsetzt,
   öffnet nicht die Spezifikation.
 - **Betrifft ein Rücklauf mehrere Komponenten**,
-  benachrichtigt der Koordinator alle betroffenen und
-  hält den Gesamtstand nach.
+  meldet der Koordinator ihn allen betroffenen per
+  Nachricht (Lese-Hinweis `art: ruecklauf`; Wirkung
+  auf ihre Stände: [[Kettenpruefung]]
+  §Komponenten-Kette nach Übernahme-Art). Den
+  Gesamtstand pflegt er nicht nach; er ist eine
+  abgeleitete Sicht ([[devstate-Skelett]]).
 
 **Im Zweifel gilt der frühere Eintrittspunkt.** Ein
 Implementierungsfehler, der sich als
-Spezifikationslücke entpuppt, kostet an P8 doppelt:
+Spezifikationslücke entpuppt, kostet an P9 doppelt:
 einmal die Reparatur, einmal die spätere Wiederholung.
 
 ### Wann der Rücklaufapparat greift
@@ -540,17 +795,24 @@ typischerweise:
   ist behoben (Fix implementiert, Regressionstest
   ergänzt, Status auf `umgesetzt`).
 - **Komponenten-Init durchgeführt** — für eine neue
-  Komponente ist das Template-Instanz-Repository
-  aufgesetzt, Startprompt gebucht, erste P1–P4-Runde
-  im Komponenten-Repo gelaufen.
-- **Contract-Update umgesetzt** — ein Contract im
-  Contract-Index ist geändert (nach §9
-  Contract-Aushandlung), Provider hat Implementierung
-  angepasst, Consumer sind benachrichtigt.
+  Komponente ist die Start-Tabelle freigegeben, das
+  Template-Instanz-Repository aufgesetzt, der
+  Startprompt in `output/` abgelegt und die erste Runde
+  im Komponenten-Repo gelaufen (§2 Anmerkung P6).
+- **Contract-Update umgesetzt** — ein Nachfolge-CON ist
+  gebucht (nach §9 Contract-Aushandlung), der Provider
+  hat die Implementierung angepasst, die registrierten
+  Consumer haben die Nachricht erhalten.
+- **Lieferung gemeldet bzw. gebucht** — die Komponente
+  hat ihren Tag (P9) oder ihren Marken-Abschluss per
+  Nachricht gemeldet; beim Koordinator ist die Meldung
+  am Marken-Eintrag gebucht und quittiert
+  (`Vorgehen.md` §3a).
 - **Testrunde abgeschlossen** — eine automatisierte
   Test-Suite läuft (Ergebnis in Commit-Message nach
-  MasterPrompt §6.1), oder eine manuelle Testrunde nach
-  P9-Testplan ist mit Bericht dokumentiert.
+  MasterPrompt §6.1), oder ein Testdurchgang nach dem
+  freigegebenen Testplan-Stand ist als Testbericht
+  (TRES, [[Testberichte]]) gebucht.
 - **Freigabe erwirkt** — ein zweck-gebundener
   Freigabe-DEC-Eintrag ist gebucht (typisch nach einer
   P-Phase mit Freigabe-Zweck an die nächste, §8).
@@ -629,8 +891,10 @@ Artefakte, nicht Commits.
   §5, Scaffolding-Baustein §7a).
 - SP-1-Vorgehen (direkte Erbschaft):
   [[Vorgehen-SP-1]].
-- Prozess-Definition: [[Steckbrief]] und index
-  (`_template/referenzprozesse/RP-1-Systementwicklung/index.md`).
+- Prozess-Definition:
+  `_template/referenzprozesse/RP-1-Systementwicklung/Steckbrief.md`
+  und `index.md` (ebenda; beide bleiben in der
+  Template-Quelle und werden nicht ins Wiki gemergt).
 - Commit-Kadenz, Werkzeug-Kadenz-Bericht,
   Präfix-Tabelle: MasterPrompt §6.
 - Basis-Knoten: [[Berichten-statt-Blockieren]].

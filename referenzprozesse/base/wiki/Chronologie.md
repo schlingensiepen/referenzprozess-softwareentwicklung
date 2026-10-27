@@ -18,11 +18,9 @@ type: timeline
 - **Gewichtige Ereignisse:** zusätzlicher
   `event`-Detail-Knoten; der Chronologie-Eintrag
   verweist per Wikilink.
-- **`event`-Detail-Knoten-Konventionen:** Frontmatter
-  `type: event`, `date: YYYY-MM-DD`, empfohlen `case:`
-  und `source:` (String-Slugs, keine Wikilinks —
-  Wiki.md §4.1), optional `origin: redaktionell`.
-  Sektionen: Kontext / Beteiligte / Ausschnitt aus
+- **`event`-Detail-Knoten-Konventionen:**
+  Frontmatter-Felder: [[Katalog-Chronologie]] — lesen
+  beim Anlegen eines `event`-Knotens. Sektionen: Kontext / Beteiligte / Ausschnitt aus
   Ursprungsdokument / Bezüge (Case, auslösendes
   Document, Chronologie-Datum).
 - **Redaktionelle Ereignisse** (Telefonate, Meetings):
@@ -31,7 +29,7 @@ type: timeline
 
 ---
 
-**Stand:** _(vom Agenten beim Ingest und laufend
+**Bearbeitungsstand:** _(vom Agenten beim Ingest und laufend
 gepflegt)_
 
 _(vom Agenten beim ersten Ingest gefüllt)_

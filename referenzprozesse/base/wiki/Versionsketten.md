@@ -10,8 +10,9 @@ versionierter Dokumente, Was-zählt-als-neue-Version.
 Wortlaut aus MasterPrompt §4.3–4.5 hierher verlagert;
 Grundprinzip (§4.1), Bearbeiterkürzel (§4.2),
 Markdown-Arbeitsformat (§4.6) und Snapshots (§4.7)
-bleiben im MasterPrompt. Moment: bei Output-Erzeugung
-in `output/` und `overview/`.
+bleiben im MasterPrompt. Moment: vor jedem Schreiben
+in `output/` und `overview/` (neue Version, Ersetzen,
+Korrektur, Löschen).
 
 ## Versionskette
 
@@ -60,7 +61,8 @@ Keine neue Version entsteht bei:
 ## Bezüge
 
 - Fassaden-Eintrag: [[InterneMechanik]]
-- Kern-Kurzformen: MasterPrompt §4.3–4.5;
+- Verweise mit Link-Beschreibung: MasterPrompt
+  §4.3–4.5;
   Grundprinzip und TLA: MasterPrompt §4.1/§4.2
 - Namensschema `_VV_TLA`: MasterPrompt §3.1
 - Snapshots aus dem Wiki: MasterPrompt §4.7,

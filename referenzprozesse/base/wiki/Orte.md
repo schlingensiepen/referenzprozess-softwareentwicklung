@@ -7,7 +7,7 @@ active: false   # Vorauswahl deaktiviert; Aktivierung im Init wählbar oder spä
 
 ## Meta
 
-- **Bootstrap/Reaktivierung (DEC-217):**
+- **Bootstrap/Reaktivierung:**
   Einmal-Anweisungen in der Template-Quelle
   `_template/referenzprozesse/base/bootstrap/Orte.md` —
   bei Reaktivierung von dort abarbeiten.
@@ -27,7 +27,7 @@ active: false   # Vorauswahl deaktiviert; Aktivierung im Init wählbar oder spä
 
 ---
 
-**Stand:** _(vom Agenten beim Ingest und laufend
+**Bearbeitungsstand:** _(vom Agenten beim Ingest und laufend
 gepflegt)_
 
 _(vom Agenten beim ersten Ingest gefüllt)_

@@ -57,31 +57,33 @@ selbst-erklärend ist.
    (Kurzfassung — verbindlich ist MasterPrompt §1):
 
    - `raw/` — Originaldokumente, unveränderlich
-     (§1.2)
+     (MasterPrompt §1.2)
    - `input/` — Volltext-Konvertierungen, erzeugt
-     der WorkspaceManager (§1.3)
+     der WorkspaceManager (MasterPrompt §1.3)
    - `research/` — Recherche-Archiv des Agenten
-     (§1.8)
-   - `wiki/` — alles lebende Projektwissen (§1.4)
+     (MasterPrompt §1.8)
+   - `wiki/` — alles lebende Projektwissen
+     (MasterPrompt §1.4)
    - `output/` — eingefrorene Übergabe-Stände,
-     versioniert (§1.5)
+     versioniert (MasterPrompt §1.5)
    - `overview/` — eingefrorene
-     Selbst-Auswertungen (§1.6)
+     Selbst-Auswertungen (MasterPrompt §1.6)
    - `outgoing/` — Versandstand-Ordner; daraus
      erzeugt der **WorkspaceManager** PDF/EML/DOCX,
-     ohne ihn der Agent selbst (§1.7) — darauf
+     ohne ihn der Agent selbst (MasterPrompt §1.7) — darauf
      zielt die spätere WorkspaceManager-Frage.
 6. **Nur beim Init-Fahrplan — Zielmarken-Vorstellung**
    ([[Zielmarken]]): der Agent stellt den
    Mechanismus kurz vor (benannte
    Planungs-Horizonte mit den Zeigern `current` und
    `in-progress`; Marken-Dreiklang Bezeichnung /
-   Benennung / Beschreibung) und kündigt an, dass
-   nach der Fassaden-Auswahl eine
-   **Erst-Definition** ansteht, sofern die Fassade
-   aktiviert wird. Keine Marken-Vorschläge im
-   Fahrplan selbst (Verbote unten) — die
-   Erst-Definition läuft im Bootstrap der Fassade.
+   Benennung / Beschreibung; die Marke als
+   Zwischenziel-Anker: [[Marken]]) und kündigt an,
+   dass nach der Fassaden-Auswahl die **erste Marke**
+   angelegt wird — die Fassade ist Pflicht, ihre
+   Bezeichnung nennt der Anwender. Keine
+   Marken-Vorschläge im Fahrplan selbst (Verbote
+   unten) — die Anlage läuft im Bootstrap der Fassade.
 
 **Verboten:**
 

@@ -27,6 +27,11 @@ diesen Prozess.
 **Was ich mitbringe:** noch keine RP-5-spezifischen
 Fassaden oder Detail-Typen definiert — Ausarbeitung folgt.
 
+**Typische Marke (Vormerkung):** der übernommene Stand
+als erste Marke, danach die Marken des aufgesetzten
+Prozesses. Der Knoten `Marken-RP-5.md` entsteht mit
+der Ausarbeitung (Basis: [[Marken]]).
+
 ## Mitgebrachte Fassaden
 
 Wird bei der Ausformulierung (Version 1.1+) festgelegt.

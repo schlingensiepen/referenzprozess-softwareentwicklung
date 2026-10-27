@@ -13,9 +13,10 @@ type: agent-report-log
   Singleton.
 - **Kategorie:** (a) Fassade + Detail-Knoten im wiki/ —
   siehe Wiki.md §Kategorisierung der Register.
-- **Kanonizität:** die Wahrheit bei Bericht-Status
-  liegt in dieser Fassade — Detail-Knoten (Typ
-  `agent-report`) spiegeln (Wiki.md §1.1a).
+- **Nachweis, eingefroren ab Anlage, `ampel` als
+  Bewertung:** ein Bericht wird nie abgelöst und nie
+  geändert; Nachträge stehen als angehängte Vermerke
+  ([[Einfrieren-und-Abloesen]] §Klassen).
 - **Ingest-Regel (Standardaufgabe, keine Rückfrage):**
   sobald ein nicht-trivialer Sub-Agent-Aufruf beendet
   ist (eigenständiges Urteil oder Analyse — bloße
@@ -24,27 +25,47 @@ type: agent-report-log
   Auftrag und Bericht unverändert übernehmen (der
   Sub-Agent-Text bleibt kanonisch), Wikilinks
   materialisieren, Register-Eintrag ergänzen, Commit
-  mit Präfix `Report:`. **Reihenfolge (DEC-212):
-  erst ablegen, dann im Chat zusammenfassen** — die
+  mit Präfix `Report:`. **Reihenfolge (Pflege-Pflicht,
+  MasterPrompt §9): erst ablegen, dann im Chat
+  zusammenfassen** — die
   Zusammenfassung zitiert die REP-Nummer; ein
   Bericht, der nur in der Unterhaltung lebt, gilt
   als nicht erstattet.
+- **Header führt, Fassade spiegelt:** die Felder eines
+  Berichts stehen im Frontmatter des Detail-Knotens;
+  der Fassaden-Eintrag zeigt die Kurzform. Wer ein
+  Feld ändert, ändert den Header und zieht den
+  Eintrag nach.
 - **Eintragsformat:** `### REP-NNN — <Kurzsatz>` mit
-  Feldern Modell — Datum — Ampel / Anlass /
+  der Kurzform „**Modell:** … — **Bau:** … —
+  **Runde:** … — **Datum:** … — **Ampel:** …“ (Bau
+  und Runde nur bei Prüfberichten) / Anlass /
   Kern-Ergebnis (ein bis zwei Sätze) / Detail
   (Wikilink auf den Detail-Knoten).
-- **`agent-report`-Detail-Knoten-Konventionen:**
-  Frontmatter `type: agent-report`, `id: REP-NNN`,
-  `titel`, `modell` (z.B. `fable-5`, `sonnet-5`),
-  `datum`, `ampel: gruen|gelb|rot|—`. Sektionen:
-  Auftrag (Wortlaut inkl. Kontext-Bootstrap-Liste) /
-  Bericht (unverändert übernommen) / Vermerke
-  (append-only). Dateiname `REP-NNN — <Kurzsatz>.md`,
-  flach im `wiki/`-Root.
+- **Berichts-Typen** (Typ-Ebene per Vererbung,
+  Wiki.md §3.4): `agent-report` (jeder Bericht),
+  `review-report` (Prüfbericht, schreibt der Prüfer)
+  und `convergence-report` (Konvergenz-Bericht,
+  schreibt der Koordinator nach der
+  Runden-Obergrenze, `Reviewmuster.md` §2
+  Schleife 4). Felder, ihre Bedeutung und was der
+  Vor-Check `sh _template/tools/lint.sh` daran prüft:
+  [[Katalog-Agent-Berichte]],
+  [[Katalog-review-report]],
+  [[Katalog-convergence-report]] — lesen beim Anlegen
+  eines Berichts. Die Meldung „Prüf-Modell =
+  Bau-Modell“ gibt der Trigger-Hygiene-Wächter beim
+  Sessionstart (MasterPrompt §5.3 C7) — Meldung, kein
+  Block.
+- **Detail-Knoten-Konventionen:** Sektionen Auftrag
+  (Wortlaut inkl. Kontext-Bootstrap-Liste) / Bericht
+  (unverändert übernommen) / Vermerke (append-only).
+  Dateiname `REP-NNN — <Kurzsatz>.md` (Kurzsatz ohne
+  Umlaut und ß), flach im `wiki/`-Root.
 
 ---
 
-**Stand:** _(vom Agenten beim ersten Bericht und
+**Bearbeitungsstand:** _(vom Agenten beim ersten Bericht und
 laufend gepflegt)_
 
 Chronologische Liste.

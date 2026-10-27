@@ -7,7 +7,7 @@ active: false   # Vorauswahl deaktiviert; Aktivierung im Init wählbar oder spä
 
 ## Meta
 
-- **Bootstrap/Reaktivierung (DEC-217):**
+- **Bootstrap/Reaktivierung:**
   Einmal-Anweisungen in der Template-Quelle
   `_template/referenzprozesse/base/bootstrap/Mitgliedschaften.md` —
   bei Reaktivierung von dort abarbeiten.
@@ -24,11 +24,9 @@ active: false   # Vorauswahl deaktiviert; Aktivierung im Init wählbar oder spä
 - **`member`-Detail-Knoten-Konventionen:** `member`
   ist eine Relation, keine Entität — sie verknüpft
   eine Person mit einer Organisation und hat keinen
-  eigenständigen Objekt-Charakter. Frontmatter
-  `type: member`, `person:` und `organization:`
-  (String-Slugs der verknüpften Knoten), optional
-  `role:`, `from:`/`to:` (Zeitraum, `YYYY-MM-DD`).
-  Body: Kurzbeschreibung, `## Bezüge`. Dateiname
+  eigenständigen Objekt-Charakter.
+  Frontmatter-Felder: [[Katalog-Mitgliedschaften]] —
+  lesen beim Anlegen eines `member`-Knotens. Body: Kurzbeschreibung, `## Bezüge`. Dateiname
   `<Person> bei <Organisation>.md`, flach im wiki/.
   Einfache Mitgliedschaften ohne Detail-Bedarf sind
   als reiner Fassaden-Eintrag zulässig.
@@ -36,7 +34,7 @@ active: false   # Vorauswahl deaktiviert; Aktivierung im Init wählbar oder spä
 
 ---
 
-**Stand:** _(vom Agenten beim Ingest und laufend
+**Bearbeitungsstand:** _(vom Agenten beim Ingest und laufend
 gepflegt)_
 
 _(vom Agenten beim ersten Ingest gefüllt)_

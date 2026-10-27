@@ -1,6 +1,6 @@
 # Wiki-Katalog
 
-**Stand:** _(vom Agenten beim Init und laufend gepflegt)_
+**Bearbeitungsstand:** _(vom Agenten beim Init und laufend gepflegt)_
 
 _(Kein Fassaden-Knoten — Struktur-Datei des Wiki-Layers,
 ohne Bootstrap-/Meta-Sektionen.)_
@@ -21,18 +21,15 @@ Wissen. Zwei Ebenen:
   `deadline`, `idea`, `decision`, `case`,
   `argument` etc.).
 
-**Progressive Disclosure:** Für Überblick reichen die
-Fassaden. Für Details folgt der Agent den Wikilinks
-in die Detail-Knoten. Bei Aufgaben mit Außenwirkung
-sind die Detail-Knoten für Inhalt maßgeblich; für
-kanonisch markierte Felder gilt die Fassade (klassische
-Fälle: Frist-Status, Stolpersteine, Register-Status
-über Basis-Register Entscheidungen/Ideen und vom
-Prozess mitgebrachte Register wie Anforderungen/
-Fehlermeldungen — siehe Wiki.md §1.1a).
+**Progressive Disclosure:** wie Fassaden und
+Detail-Knoten zusammen gelesen werden und welche
+Ebene bei Aufgaben mit Außenwirkung und bei kanonisch
+markierten Feldern maßgeblich ist:
+`../MasterPrompt.md` §5.4 (Progressive Disclosure)
+und `../Wiki.md` §1.1a.
 
 **Externe Agenten und neue Leser** starten bei
-`[[Mission Statement]]`, sofern angelegt.
+[[Mission Statement]], sofern angelegt.
 
 **Fassaden-Status** (aktiv/deaktiviert) lebt führend in
 der FassadenLandkarte [[Fassaden]] — dieser Katalog
@@ -81,6 +78,21 @@ _(wird beim Ingest bei gewichtigen Fristen angelegt)_
 
 _(wird bei gewichtigen IDEA-Einträgen angelegt;
 Register: [[Ideen]])_
+
+## role
+
+_(wird bei der ersten Rolle angelegt; Register:
+[[Rollen]])_
+
+## need
+
+_(wird bei gewichtigen NEED-Einträgen angelegt;
+Register: [[Bedarfe]])_
+
+## scenario
+
+_(wird bei gewichtigen SCEN-Einträgen angelegt;
+Register: [[Szenarien]])_
 
 ## decision
 

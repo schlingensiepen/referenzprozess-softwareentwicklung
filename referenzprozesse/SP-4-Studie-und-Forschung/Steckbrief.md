@@ -32,6 +32,10 @@ und Publikations-Projekten via Wikilinks; Wissen aus
 Studien-Wiki fließt in Publikations-Prozess ein, aber
 Prozesse bleiben eigenständig.
 
+**Typische Marke (Vormerkung):** Studiendesign,
+Ergebnisbericht. Der Knoten `Marken-SP-4.md` entsteht
+mit der Ausarbeitung (Basis: [[Marken]]).
+
 ## Mitgebrachte Fassaden
 
 Wird bei der Ausformulierung (Version 1.1+) festgelegt.

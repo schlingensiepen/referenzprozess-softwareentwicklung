@@ -9,7 +9,7 @@ extends: []
 
 **Ich bin nur geplant, noch nicht ausgearbeitet.**
 Vollständige Ausarbeitung (index.md, Vereinbarungen,
-Fassaden-Skelette, Knotentypen-Anhang) folgt in einer
+Fassaden-Skelette, Katalog-Einträge) folgt in einer
 späteren Version.
 
 **Was ich bin:** Eigenständiger Standardprozess für die
@@ -44,6 +44,10 @@ erweiterbar um weitere Verwaltungs-Vorgangsarten.
   Prozess-Ausarbeitung angelegt (jeder neue Detail-Typ
   bekommt eine indexierende Fassade mit
   Index-Verankerung).
+
+**Typische Marke (Vormerkung):** ein Schriftsatz oder
+ein Bescheid. Der Knoten `Marken-SP-2.md` entsteht mit
+der Ausarbeitung (Basis: [[Marken]]).
 
 ## Mitgebrachte Fassaden
 

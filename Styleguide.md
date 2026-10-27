@@ -1,6 +1,6 @@
 # Styleguide — Allgemeine Schreibanweisungen
 
-**Stand: 21.02.2026**
+**Bearbeitungsstand: 2026-02-21**
 
 ## 1. Sprache und Tonfall
 

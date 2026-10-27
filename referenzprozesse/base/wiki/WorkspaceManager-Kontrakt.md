@@ -7,10 +7,7 @@ type: internal-rule
 Zwei Sektionen mit klarer Trennung: der
 **Kontrakt** (mitgeliefert — Wortlaut aus
 MasterPrompt §1.3.1 hierher verlagert) und die
-**Betriebs-Konfiguration** (beim Init gefüllt; die
-InterneMechanik-Bootstrap-Liste sah diesen Knoten
-bislang als reine Init-Anlage vor — er wird nun
-mitgeliefert und beim Init nur noch gefüllt).
+**Betriebs-Konfiguration** (beim Init gefüllt).
 Moment: bei Konvertierungs- und Versand-Fragen
 sowie beim Konfigurations-Sync (MasterPrompt §5.3
 Phase B).
@@ -52,8 +49,8 @@ WorkspaceManager laufen zu lassen — er stößt ihn
 nicht selbst an.
 
 **Fallback ohne WorkspaceManager.** Wenn der User
-keinen WorkspaceManager hat (Init-Frage in §5.3
-Phase D), übernimmt der Agent die Konvertierung
+keinen WorkspaceManager hat (Init-Frage in MasterPrompt
+§5.3 Phase D), übernimmt der Agent die Konvertierung
 selbst mit den ihm verfügbaren Tools und APIs
 (native PDF-Verarbeitung des Modells, installierte
 MCPs für Konvertierung, ansonsten LLM-basierte

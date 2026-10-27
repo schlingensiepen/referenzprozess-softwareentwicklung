@@ -16,13 +16,9 @@ type: organization-log
   Unterorganisationen eingerückt unter ihrer
   übergeordneten Organisation.
 - **`organization`-Detail-Knoten-Konventionen:**
-  Frontmatter `type: organization`,
-  `organization_type` (Enum: company, team,
-  abteilung, division, institution, publisher, … —
-  erweiterbar), optional `parent_organization`
-  (String-Slug der übergeordneten Organisation;
-  Unterorganisationen rekursiv über dieses Feld).
-  Body: Kurzbeschreibung nach der H1, Sektionen
+  Frontmatter-Felder und Enum `organization_type`:
+  [[Katalog-Organisationen]] — lesen beim Anlegen
+  eines `organization`-Knotens. Body: Kurzbeschreibung nach der H1, Sektionen
   `## Stammdaten` und `## Bezüge` (Erwähnt in,
   Unterorganisationen, Mitglieder). Dateiname
   `<Name>.md`, flach im wiki/.
@@ -30,7 +26,7 @@ type: organization-log
 
 ---
 
-**Stand:** _(vom Agenten beim Ingest und laufend
+**Bearbeitungsstand:** _(vom Agenten beim Ingest und laufend
 gepflegt)_
 
 _(vom Agenten beim ersten Ingest gefüllt)_

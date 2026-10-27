@@ -3,7 +3,7 @@ type: process-brief
 process: RP-9
 status: geplant
 extends:
-  - SP-5-Kaufmaennische-Prozesse
+  - SP-5
 ---
 
 # RP-9 — Vergabe
@@ -23,6 +23,11 @@ Vergebenden.
 
 **Was ich mitbringe:** noch keine RP-9-spezifischen
 Fassaden oder Detail-Typen definiert — Ausarbeitung folgt.
+
+**Typische Marke (Vormerkung):** die veröffentlichte
+Ausschreibung, der Zuschlag. Der Knoten
+`Marken-RP-9.md` entsteht mit der Ausarbeitung (Basis:
+[[Marken]]).
 
 ## Mitgebrachte Fassaden
 

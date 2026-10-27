@@ -3,7 +3,7 @@ type: process-brief
 process: RP-7
 status: geplant
 extends:
-  - SP-4-Studie-und-Forschung
+  - SP-4
 ---
 
 # RP-7 — Sozialforschung
@@ -22,6 +22,11 @@ zitierfähige Ergebnis-Dokumentation.
 
 **Was ich mitbringe:** noch keine RP-7-spezifischen
 Fassaden oder Detail-Typen definiert — Ausarbeitung folgt.
+
+**Typische Marke (Vormerkung):** Studiendesign,
+Abschluss der Feldphase, Ergebnisbericht. Der Knoten
+`Marken-RP-7.md` entsteht mit der Ausarbeitung (Basis:
+[[Marken]]).
 
 ## Mitgebrachte Fassaden
 

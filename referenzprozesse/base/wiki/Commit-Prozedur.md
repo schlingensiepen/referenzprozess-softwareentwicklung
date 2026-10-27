@@ -16,8 +16,8 @@ Prozedur bündelt nur den Moment (Muster analog
 2. **Präfix gewählt?** Aus dem Basis-Katalog (siehe
    §Basis-Präfix-Katalog unten), den Präfixen des aktivierten
    Prozesses (Prozess-Steckbrief §„Mitgebrachte
-   Präfixe", DEC-208) oder den
-   deklarierten [[Projekt-Präfixe]]n. Ein freies
+   Präfixe") oder den
+   deklarierten [[Projekt-Praefixe]]n. Ein freies
    Präfix ohne Deklaration ist Abweichung — lieber
    in einem Satz deklarieren als driften.
 3. **Sprache korrekt?** Nach [[Commit-Sprache]]
@@ -81,4 +81,4 @@ _(Kein Fassaden-Knoten —
 - Fassaden-Eintrag: [[InterneMechanik]]
 - Kern-Kurzformen: MasterPrompt §6.2
   (Basis-Präfix-Katalog-Zeiger), §5.3 C7
-  (Commit-Hygiene-Wächter)
+  (Trigger-Hygiene-Wächter)

@@ -7,7 +7,7 @@ extends: []
 
 # SP-1 — Standardprozess Entwicklungsprojekt
 
-**Stand:** 2026-08-24
+**Bearbeitungsstand:** 2026-10-25
 
 **Was ich bin:** Der allgemeine Standardprozess für
 Entwicklungsprojekte im Template-Umfeld — allgemein für alle
@@ -18,30 +18,72 @@ Domänen-Anforderungen.
 
 ## Mitgebrachte Fassaden
 
-| Fassade | Status | Bemerkung |
-|---|---|---|
-| Anforderungen | mandatory | REQ-Register, funktional und nicht-funktional |
-| Fehlermeldungen | mandatory | BR-Register — Meldungen, nicht Arbeit |
-| Systemarchitektur | mandatory | Sollzustands-Fassade; RP-1 löst mit Softwaresystemarchitektur ab |
-| Systemtest-Setup | mandatory | Sollzustands-Fassade Prüfung; RP-1 löst mit Softwaresystemtest-Setup ab |
-| Verwendungs-Rollen | mandatory | Rollen im Nutzer-Prozess (Ebene B) |
-| Geschäftsbeziehungen | optional | Kunden/Wettbewerber/Partner (Organisation↔Projektaspekt); Vorauswahl deaktiviert — bei Produktentwicklung Empfehlung aktivieren |
+Was ein Typ ist (Zweck, Datei, Pflichtfelder,
+Präfix), steht nur in seinem Katalog-Eintrag — lesen
+bei Anlage oder Pflege der Fassade; die Spalte
+„Gegenstand“ ist die Link-Beschreibung. Die
+Einstufung (Status, Vorauswahl, Ablösung) steht hier;
+ob eine Fassade aktiv ist, führt [[Fassaden]].
+
+| Fassade | Status | Katalog-Eintrag | Gegenstand | Einstufung |
+|---|---|---|---|---|
+| Anforderungen | mandatory | [[Katalog-Anforderungen]] | REQ-Register | — |
+| Funktionsbeschreibungen | mandatory | [[Katalog-Funktionsbeschreibungen]] | FUNC-Register (P4, Außensicht) | — |
+| Spezifikationen | mandatory | [[Katalog-Spezifikationen]] | SPEC-Register (P8, Bauanleitung) | — |
+| Fehlermeldungen | mandatory | [[Katalog-Fehlermeldungen]] | BUG-Register | setzt Anforderungen voraus (die Behebung ist dort eine Fix-Anforderung oder die ablösende bzw. neue Anforderung) — solange Fehlermeldungen aktiv ist, lehnt der Agent die Abwahl oder Deaktivierung von Anforderungen ab; wer Anforderungen abwählen will, wählt zuerst Fehlermeldungen ab; der Lint meldet aktive Fehlermeldungen ohne Anforderungen |
+| Systemarchitektur | mandatory | [[Katalog-Systemarchitektur]] | ARC-Register und Sollzustand mit §Komponenten | RP-1 löst mit Softwaresystemarchitektur ab |
+| Systemtest-Setup | mandatory | [[Katalog-Systemtest-Setup]] | Sollzustand der Prüfung | RP-1 löst mit Softwaresystemtest-Setup ab |
+| Testfälle | mandatory | [[Katalog-Testfaelle]] | TEST-Register | — |
+| Testberichte | mandatory | [[Katalog-Testberichte]] | TRES-Register | — |
+| Deployments | mandatory | [[Katalog-Deployments]] | DEPL-Register | — |
+| Zielumgebungen | mandatory | [[Katalog-Zielumgebungen]] | Zielumgebungen (Entitäten) | — |
+| Contract-Index | optional | [[Katalog-Contract-Index]] | CON-Register | vorausgewählt, sobald ein Schnitt in Komponenten stattfindet; aktiv nur beim Koordinator |
+| Geschäftsbeziehungen | optional | [[Katalog-Geschaeftsbeziehungen]] | Kunden, Wettbewerber, Partner | Vorauswahl deaktiviert — bei Produktentwicklung Empfehlung aktivieren |
+
+**Basis-Fassaden, die SP-1 voraussetzt:** Eine
+optionale Basis-Fassade wird Pflicht, wenn der aktive
+Prozess sie voraussetzt; der Merge aktiviert sie ohne
+Anwender-Frage (Wiki.md §3a). Unter SP-1 sind das:
+
+| Basis-Fassade | Warum SP-1 sie voraussetzt |
+|---|---|
+| [[Rollen]], [[Bedarfe]], [[Szenarien]] | der Konzept-Stand (P1) filtert bzw. kopiert sie |
+| [[Agent-Berichte]] | je Pflicht-Stand ein `review-report` der Kettenprüfung ([[Kettenpruefung]]; nicht beim Abschluss-Stand, der nur auf Vollständigkeit geprüft wird) |
+| [[Ideen]] | zurückgestellte Entscheidungen der Ableitungsprüfung ([[Einfrieren-und-Abloesen]]) |
+
+Ohne Prozess bleiben diese Fassaden optional.
+[[Zielmarken]] und [[Entscheidungen]] stehen nicht in
+der Tabelle: sie sind in jedem Projekt Pflicht
+(Wiki.md §3a „mandatory“); SP-1 nutzt sie für die
+`marke` in jeder Herkunftszeile, den Abschluss-Stand
+beim Marken-Abschluss und die Freigabe-Einträge
+(`Vorgehen.md` §4). Die typische Marke unter SP-1:
+[[Marken-SP-1]].
+
+Dazu bringt SP-1 Dokumenttyp-Einträge mit: die
+Pflicht-Stände der Kette und die optionalen bzw.
+selbsttragenden Dokumenttypen. Welche es sind und
+welche Phase sie tragen, steht in `index.md` §3.2
+(lesen beim Merge und vor der Bildung eines Stands);
+sie werden beim Merge wie die Register-Einträge als
+Dateien kopiert und im Katalog verankert.
 
 ## Mitgebrachte Ordner
 
 Vom Prozess deklarierte Root-Ordner-Freigaben — beim
 Merge automatisch als Freigabe-Buchung ins
 Entscheidungs-Register übernommen (MasterPrompt
-§1.1); die Ordner entstehen erst bei Bedarf
-(Scaffolding, `index.md` §4.4).
+§1.1; beim Init erst nach der Anlage der ersten
+Marke, Wiki.md §11.3 Schritt 2); die Ordner entstehen
+erst bei Bedarf (Scaffolding, `index.md` §4.4).
 
 | Ordner/Muster | Zweck | Einordnung |
 |---|---|---|
 | `src/` | Quellcode | Code-Bereich, lebend |
-| `tests/` | Tests | Code-Bereich, lebend; Test-Outputs flüchtig (Nachweis-Regel: Test-Setup-Fassade) |
+| `tests/` | Tests | Code-Bereich, lebend; Test-Outputs flüchtig (Nachweis-Regel: [[Systemtest-Setup]] `## Meta`) |
 | `ci/` | Pipeline-Konfiguration | Code-Bereich, lebend; konkreter Zuschnitt je Scaffolding (V4); Plattform-Konventions-Pfade (z.B. `.github/workflows/`) laufen unter dieser Deklaration mit (MasterPrompt §1.1) |
 | `deploy/` | Deploy-Skripte und Infrastruktur-Definitionen | Code-Bereich, lebend, optional; Zuschnitt je Scaffolding (V4/V6a) |
-| `docs/` | externe Doku-Ableitungen (User-/Developer-/Ops-Doku, Handbücher) | **Ableitungs-Schicht** — gepflegt, Wahrheit bleibt im wiki (`index.md` §4.11); Unterstruktur je Bedarf (`docs/user/`, `docs/developer/`, `docs/ops/`) |
+| `docs/` | externe Doku-Ableitungen (User-/Developer-/Ops-Doku, Handbücher) | **Ableitungs-Schicht** — neu abgeleitet, nicht gepflegt; Wahrheit bleibt im wiki (`index.md` §4.11); Unterstruktur je Bedarf (`docs/user/`, `docs/developer/`, `docs/ops/`) |
 | weitere je Scaffolding | nach V4-Vorlage | Code-Bereich; Zuschnitt im Instanz-Projekt, Buchung je Ordner |
 
 ## Mitgebrachte Präfixe
@@ -56,10 +98,15 @@ zu den Basis-Präfixen aus MasterPrompt §6.2):
 
 - `Anforderungen:` — Änderung an `wiki/Anforderungen.md`
   oder REQ-Detail-Knoten
+- `Funktionsbeschreibungen:` — Änderung an
+  `wiki/Funktionsbeschreibungen.md` oder
+  FUNC-Detail-Knoten
+- `Spezifikationen:` — Änderung an
+  `wiki/Spezifikationen.md` oder SPEC-Detail-Knoten
 - `Fehlermeldungen:` — Änderung an `wiki/Fehlermeldungen.md`
-  oder BR-Detail-Knoten
+  oder BUG-Detail-Knoten
 - `Architektur:` — Änderung an `wiki/Systemarchitektur.md`
-  (bzw. RP-1-Überschreibung)
+  oder ARC-Detail-Knoten (bzw. RP-1-Überschreibung)
 - `Test-Setup:` — Änderung an `wiki/Systemtest-Setup.md`
   (bzw. RP-1-Überschreibung)
 - `Systemkomponente:` — Änderung an
@@ -72,6 +119,11 @@ zu den Basis-Präfixen aus MasterPrompt §6.2):
 - `Freigabe:` — Buchung eines zweck-gebundenen
   Freigabe-DEC-Eintrags (RP-1 führt das Präfix
   unverändert fort)
+
+Die Register Testfälle, Testberichte, Deployments,
+Zielumgebungen und Contract-Index bringen keinen
+eigenen Präfix mit; Änderungen laufen unter dem
+Basis-Präfix `Wiki:`.
 
 ## Mitgebrachte Mechanik
 
@@ -88,9 +140,9 @@ Merge ins Anwender-`wiki/` kopiert):
 
 | Knoten | Typ | Zweck |
 |---|---|---|
-| [[Register-Lebenszyklus]] | `internal-concept` | der feste 8-Zustands-Lebenszyklus der Register-Einträge (REQ, BR — Muster auch für DEC) samt Feld-Regeln |
-| [[Meilenstein-und-T2]] | `internal-rule` | Wächter-Trigger T2 (Prozess-Meilenstein-Wechsel), Meilenstein-Regel „agent-lokal, mit Aggregaten für Koordinator", Meilenstein-Vorgang |
-| [[Register-Grundmuster]] | `internal-pattern` | Register-Status-Kanonizität als §1.1a-Ausnahme: Vier-Schichten-Absicherung, Feldliste kanonisch vs. gespiegelt |
+| [[Register-Lebenszyklus]] | `internal-concept` | Status-Achse der Register-Einträge, Zustände je Register-Art, samt Feld-Regeln |
+| [[Meilenstein-und-T2]] | `internal-rule` | Wächter-Trigger T2 (Prozess-Meilenstein-Wechsel, volle Runde C4–C8), Meilenstein-Anlässe, Meilenstein-Regel „agent-lokal" mit Koordinator-Meilenstein, Meilenstein-Vorgang |
+| [[Register-Grundmuster]] | `internal-pattern` | Register-Status-Kanonizität als Ausnahme von Wiki.md §1.1a: Vier-Schichten-Absicherung, Feldliste kanonisch vs. gespiegelt |
 | [[devstate-Skelett]] | `internal-pattern` | `devstate_active.md` im Repo-Root: Anlage-Zeitpunkt, Minimal-Skelett, Koordinator-Regel |
 
 **Einführungs-Anweisungen (je Knoten, beim Merge):**
@@ -110,11 +162,11 @@ Merge ins Anwender-`wiki/` kopiert):
    Zielmarken-`## Meta`, die Grundmuster-Nennungen
    der Register-Fassaden-Metas); wird dabei eine bestehende projekt-eigene
    Regel ersetzt, trägt sie den Vermerk „abgelöst
-   durch [[neu]]" (kein stiller Ersatz):
+   durch `[[<neu>]]`" (kein stiller Ersatz):
    - [[Register-Lebenszyklus]] ← SP-1-`index.md`
-     §4.1-Kurzform; `Knotentypen-Anhang-SP-1`
-     §Register-Detail-Knoten; RP-1-[[Contract-Index]]
-     `## Meta` (Status-Enum).
+     §4.1-Kurzform und §3.2 Absatz
+     „Register-Detail-Knoten"; [[Contract-Index]]
+     `## Meta` (Status).
    - [[Meilenstein-und-T2]] ← SP-1-`index.md`
      §4.2/§4.3-Kurzformen; MasterPrompt §6.1
      (Begriffs-Kette Meilenstein-Vorgang);
@@ -122,8 +174,7 @@ Merge ins Anwender-`wiki/` kopiert):
      §„Was ich kann".
    - [[Register-Grundmuster]] ← SP-1-`index.md`
      §3.3-Kurzform; die Kanonizitäts-Absätze der
-     Register-Fassaden-Metas (Anforderungen,
-     Fehlermeldungen, Verwendungs-Rollen) nennen
+     Fassaden-Metas der Ketten-Register nennen
      dieselbe Regel in Kurzform.
    - [[devstate-Skelett]] ← SP-1-`index.md`
      §4.5-Kurzform; `## Meta` der Fassade
@@ -146,14 +197,14 @@ Merge ins Anwender-`wiki/` kopiert):
 **Was ich kann:**
 
 - Anforderungen und Fehlermeldungen als Register mit
-  8-Zustands-Lebenszyklus führen (offen | aufgeschoben |
-  angenommen | in-umsetzung | umgesetzt | abgeschlossen |
-  verworfen | abgelöst durch).
-- Wächter mit den Basis-Triggern T1 (Sessionstart) und
-  T3 (User-Anfrage) ausführen und um Trigger T2
-  (Prozess-Meilenstein) ergänzen — Meilenstein-Regel
-  „agent-lokal, mit Aggregaten für Koordinator" siehe
-  [[Meilenstein-und-T2]] (Kurzform `index.md` §4.2).
+  8-Zustands-Lebenszyklus führen (Zustände und
+  Ablöseverweis: [[Register-Lebenszyklus]]).
+- Den Wächter der Basis um Trigger T2
+  (Prozess-Meilenstein) ergänzen — Meilenstein-Anlässe
+  und Meilenstein-Regel „agent-lokal" mit
+  Koordinator-Meilenstein siehe
+  [[Meilenstein-und-T2]] (Kurzform `index.md` §4.2;
+  Basis-Anlässe: MasterPrompt §5.4 „Wächter-Trigger“).
 - Zweck-gebundene Freigaben als DEC-Einträge im
   Entscheidungs-Register verankern und per
   Wächter-Trigger T4 „Freigabe-Bezugsprüfung" gegen die
@@ -162,48 +213,34 @@ Merge ins Anwender-`wiki/` kopiert):
 - Prüf- und Rechercheangebot mit den SP-1-R-Themen an
   P-Phasen des Vorgehens organisieren (kanonische
   Bindungstabelle: `Vorgehen-SP-1.md` §3; Angebotsformat:
-  MasterPrompt §5.6).
+  [[Angebots-und-Beauftragungs-Muster]]).
 - Init-Verzahnung mit dem Prozess-Angebot in
   MasterPrompt §5.3 (Steckbrief-Scan, automatische
   Aktivierung der mandatory-Fassaden).
 
 **Was ich mitbringe:**
 
-- **Fassaden:** siehe Tabelle oben — `Anforderungen.md`
-  (`requirement-log`), `Fehlermeldungen.md`
-  (`bug-report-log`), `Systemarchitektur.md`
-  (`system-architecture-overview`; RP-1 löst mit
-  `Softwaresystemarchitektur` ab), `Systemtest-Setup.md`
-  (`system-test-setup`; RP-1 löst mit
-  `Softwaresystemtest-Setup` ab), `Verwendungs-Rollen.md`
-  (`role-log`, Register aller Verwendungs-Rollen im
-  Nutzer-Prozess — Ebene B), `Geschäftsbeziehungen.md`
-  (`business-relation-log`, optional mit Vorauswahl
-  deaktiviert — Kunden/Wettbewerber/Partner).
-- **Detail-Knotentypen:** `requirement`, `bug-report`,
-  `system-component`, `system`, `role` — dazu die
-  MADR-Präzisierung des Basis-Typs `decision` und die
-  Relations `customer`/`competitor`/`partner`. Die Typen `need`
-  (rollen-basierter Bedarf, referenziert
-  Verwendungs-Rollen) und `scenario` sind als generische
-  Vorstufen im Katalog benannt; konzeptuelle Ausarbeitung
-  folgt.
-- **Präfixe:** SP-1-eigene Commit-Präfixe für Register-,
-  Architektur-, Test-Setup-, Systemkomponente-, Code-,
-  Scaffolding-, devstate- und Freigabe-Commits —
-  vollständige Deklaration oben,
-  §„Mitgebrachte Präfixe".
-- **Mechanik:** vier `internal-*`-Knoten
-  ([[Register-Lebenszyklus]], [[Meilenstein-und-T2]],
-  [[Register-Grundmuster]], [[devstate-Skelett]]) —
-  vollständige Deklaration samt
-  Einführungs-Anweisungen oben,
+- **Fassaden** für Anforderungen, Funktion,
+  Spezifikation, Fehler, Architektur, Test, Deployment,
+  Zielumgebungen, Contracts und Geschäftsbeziehungen —
+  Deklaration oben, §„Mitgebrachte Fassaden".
+- **Detail-Knotentypen und Dokumenttyp-Einträge** der
+  Kette, dazu die MADR-Präzisierung des Basis-Typs
+  `decision` und die Relations zu Organisationen — die
+  Liste steht in `index.md` §3.2 (lesen beim Merge und
+  vor dem Anlegen eines Knotens). Die Basis-Typen
+  `need`, `scenario` und `role` nutzt SP-1 über den
+  Konzept-Stand.
+- **Ordner, Präfixe, Mechanik** — Deklarationen oben,
+  §„Mitgebrachte Ordner", §„Mitgebrachte Präfixe",
   §„Mitgebrachte Mechanik".
 
 **Zur Abgrenzung:** `Entscheidungen.md` (`decision-log`)
 und der Detail-Typ `decision` sind Basis-Fassade bzw.
 Basis-Detail-Typ, nicht SP-1-mitgebracht — universeller
-Mechanismus, jedes Projekt dokumentiert Entscheidungen.
+Mechanismus, jedes Projekt dokumentiert Entscheidungen;
+die Fassade ist in jedem Projekt Pflicht (Wiki.md §3a
+„mandatory“), wie [[Zielmarken]].
 Einen eigenen Typ `structure` gibt es nicht — Struktur
 ist durch die Systemarchitektur-Fassade plus
 `system-component`-Detail-Knoten abgedeckt.
@@ -211,7 +248,10 @@ ist durch die Systemarchitektur-Fassade plus
 **Setzt voraus:** nur die Basis (Template out-of-the-box).
 
 **Volle Definition:** [[index]] (Architektur und
-Verhältnis zur Basis) · Mechanik-Knoten:
+Verhältnis zur Basis) · Vorgehen: [[Vorgehen-SP-1]] ·
+Marken: [[Marken-SP-1]] (typische Marke, ihr Produkt,
+Schnitt, Zusammenspiel mit dem Meilenstein-Vorgang) ·
+Mechanik-Knoten:
 [[Register-Lebenszyklus]] · [[Meilenstein-und-T2]] ·
 [[Register-Grundmuster]] · [[devstate-Skelett]]
 (Deklaration: §„Mitgebrachte Mechanik" oben)

@@ -21,22 +21,20 @@ type: research-artifact-log
   Projekt ist eine bewusste Anwender-Entscheidung
   und wird als Entscheidung im Register gebucht —
   das Rechercheartefakt selbst dient als Beleg.
-- **Kanonizität:** die Wahrheit bei
-  Recherche-Status liegt in dieser Fassade —
-  Detail-Knoten (Typ `research-artifact`) spiegeln
+- **Nachweis, eingefroren ab Anlage:** ein
+  Rechercheartefakt wird nie abgelöst und nie
+  geändert; Nachträge stehen als angehängte Vermerke
+  ([[Einfrieren-und-Abloesen]] §Klassen). Die
+  Fassaden-Zeile spiegelt den Detail-Knoten
   (Wiki.md §1.1a).
 - **Eintragsformat:**
   `### REC-NNN — <Kurzsatz>` mit Feldern
   Quelle(n) + Datum / Frage / Kern-Ergebnis
   (1–2 Sätze) / Übernommen als DEC
   (Wikilink oder „offen") / Detail (Wikilink).
-- **Detail-Knoten-Konventionen:** Frontmatter
-  `type: research-artifact`, `id: REC-NNN`,
-  `titel`, `quelle_liste` (Liste; je Quelle
-  Herkunfts-URL **und** Archiv-Pfad unter
-  `research/REC-NNN - <Kurzsatz>/`, sofern
-  archiviert), `datum`.
-  Sektionen: Frage / Recherche-Verlauf /
+- **Detail-Knoten-Konventionen:** Frontmatter-Felder:
+  [[Katalog-Rechercheartefakte]] — lesen beim Anlegen
+  eines REC-Knotens. Sektionen: Frage / Recherche-Verlauf /
   Fundstellen (Zitate als Blockquotes mit
   Quellen-Angabe unmittelbar am Zitat) / Ergebnis /
   Vermerke (append-only) / Bezüge. Dateiname
@@ -59,7 +57,7 @@ type: research-artifact-log
 
 ---
 
-**Stand:** _(vom Agenten beim Ingest und laufend
+**Bearbeitungsstand:** _(vom Agenten beim Ingest und laufend
 gepflegt)_
 
 ## Einträge

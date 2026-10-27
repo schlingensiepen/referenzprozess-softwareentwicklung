@@ -27,12 +27,10 @@ type: input-document-log
   Chronologische Liste, optional gruppiert nach
   `document_type` (z.B. `brief`, `schreiben`,
   `protocol`, …).
-- **`document`-Detail-Knoten-Konventionen:** Frontmatter
-  `type: document`, `document_type` (Enum, siehe
-  [[Knotentypen]]), `source_text:
-  input/raw/<datei>.md`, `ingested_at`, empfohlen
-  `source_original` (bei Scans), `pages` (nur bei
-  Sammeldokumenten). Body: Volltext, Metadaten-Block
+- **`document`-Detail-Knoten-Konventionen:**
+  Frontmatter-Felder und Enum `document_type`:
+  [[Katalog-Eingangsdokumente]] — lesen beim Ingest
+  eines Eingangsdokuments. Body: Volltext, Metadaten-Block
   (Dokumenttyp, Datum, Absender, Empfänger,
   Aktenzeichen, weitere Datenfelder),
   Kurzzusammenfassung in Fließtext, `## Bezüge` (Case,
@@ -41,7 +39,7 @@ type: input-document-log
 
 ---
 
-**Stand:** _(vom Agenten beim Ingest und laufend
+**Bearbeitungsstand:** _(vom Agenten beim Ingest und laufend
 gepflegt)_
 
 _(vom Agenten beim ersten Ingest gefüllt; optionale

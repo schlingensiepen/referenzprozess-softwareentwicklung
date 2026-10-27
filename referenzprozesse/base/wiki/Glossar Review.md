@@ -24,12 +24,16 @@ type: glossary-review
      `## Freigegeben (Audit-Trail)`.
 - **Eintragsformat:** `### <Begriff>` mit `**English:**`,
   `**Freigabe:**`, `**Kommentar:**`,
-  `**Rückmeldung AIG:**`, Definition in Fließtext,
-  `**Verankert in:**`, `**Siehe auch:**`.
+  `**Rückmeldung AIG:**`, Definition in ein bis zwei
+  Sätzen, `**Vormals:**` und `**Nicht verwenden:**`
+  (nur, wo sie anfallen), `**Verankert in:**`,
+  `**Siehe auch:**` — dieselben inhaltlichen Felder
+  wie in [[Glossar]] (dort das Format), plus die
+  Prozess-Felder.
 
 ---
 
-**Stand:** _(vom Agenten oder User beim ersten
+**Bearbeitungsstand:** _(vom Agenten oder User beim ersten
 Vorschlag angelegt und laufend gepflegt)_
 
 ## In Bearbeitung
@@ -39,4 +43,4 @@ _(vom User oder Agenten beim ersten Vorschlag gefüllt)_
 ## Freigegeben (Audit-Trail)
 
 _(Agent verschiebt Einträge hierher, sobald sie in
-`[[Glossar]]` übernommen wurden.)_
+[[Glossar]] übernommen wurden.)_

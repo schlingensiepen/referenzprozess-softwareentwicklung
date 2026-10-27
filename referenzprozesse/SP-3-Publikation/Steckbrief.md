@@ -9,7 +9,7 @@ extends: []
 
 **Ich bin nur geplant, noch nicht ausgearbeitet.**
 Vollständige Ausarbeitung (index.md, Vereinbarungen,
-Fassaden-Skelette, Knotentypen-Anhang) folgt in einer
+Fassaden-Skelette, Katalog-Einträge) folgt in einer
 späteren Version.
 
 **Was ich bin:** Eigenständiger Standardprozess für
@@ -48,6 +48,10 @@ journalistische oder redaktionelle Veröffentlichungen.
 hierher — Institutionen werden über den Basis-Typ
 `organization` mit `organization_type: institution`
 abgedeckt.
+
+**Typische Marke (Vormerkung):** Einreichung,
+Revision, Endfassung. Der Knoten `Marken-SP-3.md`
+entsteht mit der Ausarbeitung (Basis: [[Marken]]).
 
 ## Mitgebrachte Fassaden
 

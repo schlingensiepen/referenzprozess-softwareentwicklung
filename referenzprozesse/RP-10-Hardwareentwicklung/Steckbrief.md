@@ -30,6 +30,11 @@ Zertifizierung); RP-2 = **Betrieb** einer bestehenden
 IT-Infrastruktur (die Hardware enthalten kann, aber
 Fokus ist Betrieb, nicht Entwicklung).
 
+**Typische Marke (Vormerkung):** eine
+Prototyp-Iteration, die Zertifizierung. Der Knoten
+`Marken-RP-10.md` entsteht mit der Ausarbeitung
+(Basis: [[Marken]]).
+
 ## Mitgebrachte Fassaden
 
 Wird bei der Ausformulierung (Version 1.1+) festgelegt.

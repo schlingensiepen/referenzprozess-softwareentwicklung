@@ -10,7 +10,7 @@ extends:
 
 **Ich bin nur geplant, noch nicht ausgearbeitet.**
 Vollständige Ausarbeitung (index.md, Vereinbarungen,
-Fassaden-Skelette, Knotentypen-Anhang) folgt in einer
+Fassaden-Skelette, Katalog-Einträge) folgt in einer
 späteren Version aus realen Infrastruktur-Projekten.
 
 **Was ich bin:** Referenzprozess für den **Aufbau und
@@ -28,6 +28,11 @@ Infrastruktur-Projekten.
 
 **Was ich mitbringe:** noch keine RP-2-spezifischen
 Fassaden oder Detail-Typen definiert — Ausarbeitung folgt.
+
+**Typische Marke (Vormerkung):** eine Ausbaustufe der
+Infrastruktur; im Betrieb ein Änderungspaket. Der
+Knoten `Marken-RP-2.md` entsteht mit der Ausarbeitung
+(Basis: [[Marken]]).
 
 ## Mitgebrachte Fassaden
 

@@ -1,13 +1,13 @@
 ---
 type: mission-long
-active: false   # Default deaktiviert; nur auf User-Anweisung aktivieren
+active: false   # Voreinstellung deaktiviert; im Init angeboten, nicht vorausgewählt (Wiki.md §3a)
 ---
 
 # Mission Statement Long
 
 ## Meta
 
-- **Bootstrap/Reaktivierung (DEC-217):**
+- **Bootstrap/Reaktivierung:**
   Einmal-Anweisungen in der Template-Quelle
   `_template/referenzprozesse/base/bootstrap/Mission Statement Long.md` —
   bei Reaktivierung von dort abarbeiten.
@@ -23,7 +23,7 @@ active: false   # Default deaktiviert; nur auf User-Anweisung aktivieren
 
 ---
 
-**Stand:** _(bei Aktivierung über den Setup-Dialog
+**Bearbeitungsstand:** _(bei Aktivierung über den Setup-Dialog
 befüllt)_
 
 _(vom Agenten aus User-Angaben und Kontext befüllt)_

@@ -11,15 +11,16 @@ bzw. bei Reaktivierung — Wiki.md §11.3/§3a. Diese
 Datei wird nie ins Anwender-wiki kopiert; sie liegt
 in beiden Modi unter
 `_template/referenzprozesse/base/bootstrap/` —
-DEC-217, DEC-223.)_
+Wiki.md §11 „`bootstrap/`“, MasterPrompt §1.)_
 
 _(Einmal-Anweisungen. Die Betriebs-Semantik steht
 dauerhaft im `## Meta` der Fassade; diese Datei wird
-nie ins Anwender-wiki kopiert — DEC-217.)_
+nie ins Anwender-wiki kopiert.)_
 
-Diese MetaFassade ist **mandatory** — beim Init
-automatisch aktiv, keine Anwender-Frage, nicht
-deaktivierbar.
+Einstufung und Deaktivierungs-Grenzen dieser
+MetaFassade: Wiki.md §3a („mandatory vs. optional
+beim Init“, „Deaktivierungs-Grenzen“) — vor den
+Schritten lesen.
 
 1. Nach der Init-Fassaden-Auswahl die Status-Spalte
    aller Basis-Einträge unten nachführen (`aktiv` /
@@ -32,11 +33,15 @@ deaktivierbar.
    mitgebrachten Fassaden als Einträge ergänzen
    (Kategorie `Prozess-mitgebracht` mit Prozess-Angabe);
    abgelöste Fassaden auf `deaktiviert` setzen mit
-   Vermerk „abgelöst durch [[neu]]".
+   Vermerk „abgelöst durch `[[<neu>]]`".
 4. `### Verankerungen` abarbeiten.
 
 ### Verankerungen
 
 - Eigener Eintrag in dieser Landkarte (Sektion
   `## InterneMechanik und MetaFassade` unten) prüfen.
-- Keine `internal-*`-Knoten anzulegen.
+- Die Aktivierung dieser Fassade legt keine
+  `internal-*`-Knoten an. Projekt-eigene
+  Steuerungs-Regeln (Dauerfreigaben, gewünschte
+  Abweichungen vom Template) entstehen unabhängig
+  davon als `internal-rule` in [[InterneMechanik]].

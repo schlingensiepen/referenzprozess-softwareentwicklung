@@ -1,6 +1,6 @@
 # Outgoing — Versandpipeline
 
-**Stand: 23.08.2026**
+**Bearbeitungsstand: 2026-10-23**
 
 Dieses Dokument beschreibt die vollständige Logik des
 `outgoing/`-Ordners und der zugehörigen Versandpipeline.
@@ -11,10 +11,11 @@ zusammen mit den Regeln aus `MasterPrompt.md`.
 
 | Aspekt | `output/` | `outgoing/` |
 |---|---|---|
-| Inhalt | eingefrorene Übergabe-Stände (z.B. Stellungnahme, Angebot, Bericht; auch Agent-zu-Agent-Übergaben) | Versandstand-Ordner (Anschreiben, Anlagen-Kopien, Versand-Metadaten, erzeugte Artefakte) |
+| Empfänger | Menschen, andere Agenten und Repos | nur Menschen |
+| Inhalt | eingefrorene Übergabe-Stände (z.B. Stellungnahme, Angebot, Bericht; auch Agent-zu-Agent-Übergaben) und Nachrichten im Verbund (`output/nachrichten/`, MasterPrompt §1.5) | Versandstand-Ordner (Anschreiben, Anlagen-Kopien, Versand-Metadaten, erzeugte Artefakte) |
 | Versionierung | ja, `_VV_TLA`-Kette | **nein**, Zeitstempel im Ordnernamen reicht |
 | Unveränderlichkeit | pro Version | ganzer Ordner ab Erzeugung |
-| Erzeugung | KI und User iterativ | einmalig aus finalen `output/`-Fassungen (als Kopien in den Ordner) |
+| Erzeugung | KI und User iterativ | einmalig aus finalen `output/`-Versionen (als Kopien in den Ordner) |
 | Artefakte | `.md` als Arbeitsformat | `Anschreiben.md` als Quelle + `.pdf`, `.eml`, `.docx` + Anlagen-Kopien (erzeugt vom WorkspaceManager, bzw. Agent-Fallback nach §4.1) |
 
 ## 2. Dateistruktur — Versandstand-Ordner
@@ -245,12 +246,12 @@ zentralen WorkspaceManager-Bestand.
 
 1. In `output/` entsteht der inhaltliche Entwurf
    (z.B. Stellungnahme, Angebot, Bericht) mit
-   `_VV_TLA`-Kette bis zur finalen Fassung.
+   `_VV_TLA`-Kette bis zur finalen Version.
 2. User oder KI legt den **Versandstand-Ordner** an
    (`YYYY-MM-DD HH-mm - <Adressat> - <Benennung>/`):
    - `Anschreiben.md` mit Versand-Metadaten im
      YAML-Frontmatter und Anschreibentext im Body
-   - die finalen Fassungen als **Kopien** in den
+   - die finalen Versionen als **Kopien** in den
      Ordner (Original-Dateinamen bleiben), via
      `attachments` gelistet
 3. **Pflicht-Review-Angebot** (vor jeder
@@ -266,7 +267,7 @@ zentralen WorkspaceManager-Bestand.
    REP-Knoten (MasterPrompt §5.6), das
    `review:`-Feld verweist darauf; Befunde werden
    vor der Erzeugung eingearbeitet (neue
-   `output/`-Fassung → Kopie im Ordner
+   `output/`-Version → Kopie im Ordner
    aktualisieren, solange noch nichts erzeugt ist).
 4. Der WorkspaceManager verarbeitet je Ordner das
    `Anschreiben.md` und legt die Artefakte (`.pdf`,

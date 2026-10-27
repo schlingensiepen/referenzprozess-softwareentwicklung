@@ -11,7 +11,7 @@ danach anpassen. Keine Wiki-Knoten-Datei.)_
 ```markdown
 # Styleguide-chat — Konventionen für die Chat-Interaktion
 
-**Stand: <Datum>**
+**Bearbeitungsstand: <Datum>**
 
 Dieser Styleguide regelt, wie der Agent mit dem
 User im laufenden Chat kommuniziert. Er ergänzt

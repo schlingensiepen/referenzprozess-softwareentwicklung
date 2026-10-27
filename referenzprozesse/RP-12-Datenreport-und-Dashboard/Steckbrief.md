@@ -30,6 +30,11 @@ Deshalb eigenständiger RP auf SP-1, nicht auf RP-1
 (Systementwicklung). Inhaltlich verwandt mit RP-6
 (Datenmigration; teilt Datenquellen-Denken).
 
+**Typische Marke (Vormerkung):** eine Auslieferung
+des Reports oder Dashboards. Der Knoten
+`Marken-RP-12.md` entsteht mit der Ausarbeitung
+(Basis: [[Marken]]).
+
 ## Mitgebrachte Fassaden
 
 Wird bei der Ausformulierung (Version 1.1+) festgelegt.

@@ -30,11 +30,21 @@ Do-first):
 - „Gewichtige" Detail-Knoten (Ereignisse, Fristen,
   neue Concepts nach Wiki.md §2.4) werden als
   Aktions-Entwurf am Vorgangs-Ende vorgelegt.
+- Aufträge mit Außenwirkung, Kosten oder
+  Kontingent-Verbrauch (externe Dienste, Serien- und
+  Hintergrund-Aufträge) laufen nie als Do-first;
+  vorher legt der Agent eine **Auftragsliste zur
+  Freigabe** vor.
 
 ## Bezüge
 
 - Fassaden-Eintrag: [[InterneMechanik]]
 - Schwester-Regel: [[Berichten-statt-Blockieren]]
+- Auftragsliste zur Freigabe (Format, Freigabe als
+  Ganzes, Meldungen im Lauf) und
+  Werkzeug-Dauerfreigabe:
+  [[Angebots-und-Beauftragungs-Muster]] — lesen, bevor
+  eine Auftragsliste vorgelegt wird.
 - Anwendung: Wiki.md §2.1, §2.3, §3.2, §8.4;
   MasterPrompt §5.3 (Init-Fassaden-Auswahl,
   Negativ-Abgrenzung)

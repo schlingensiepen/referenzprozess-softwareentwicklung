@@ -24,6 +24,11 @@ kaufmännische Vorgangsarten.
 Fassaden oder Detail-Typen definiert — Ausarbeitung folgt
 in einer späteren Version.
 
+**Typische Marke (Vormerkung):** ein Ergebnis nach
+außen (Angebot, Zuschlag, Rechnung). Der Knoten
+`Marken-SP-5.md` entsteht mit der Ausarbeitung (Basis:
+[[Marken]]).
+
 ## Mitgebrachte Fassaden
 
 Wird bei der Ausformulierung (Version 1.1+) festgelegt.

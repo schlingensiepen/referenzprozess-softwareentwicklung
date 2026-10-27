@@ -37,6 +37,10 @@ RP-11 nutzt die per SP-1-Vererbung verfügbaren Relations
 `customer`/`partner` für die Modellierung der
 Vertragsaspekte.
 
+**Typische Marke (Vormerkung):** eine Auslieferung,
+ein Anbieter-Wechsel. Der Knoten `Marken-RP-11.md`
+entsteht mit der Ausarbeitung (Basis: [[Marken]]).
+
 ## Mitgebrachte Fassaden
 
 Wird bei der Ausformulierung (Version 1.1+) festgelegt.

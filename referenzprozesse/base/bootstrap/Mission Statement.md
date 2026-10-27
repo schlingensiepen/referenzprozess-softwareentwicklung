@@ -11,14 +11,15 @@ bzw. bei Reaktivierung — Wiki.md §11.3/§3a. Diese
 Datei wird nie ins Anwender-wiki kopiert; sie liegt
 in beiden Modi unter
 `_template/referenzprozesse/base/bootstrap/` —
-DEC-217, DEC-223.)_
+Wiki.md §11 „`bootstrap/`“, MasterPrompt §1.)_
 
 _(Einmal-Anweisungen. Die Betriebs-Semantik steht
 dauerhaft im `## Meta` der Fassade; diese Datei wird
-nie ins Anwender-wiki kopiert — DEC-217.)_
+nie ins Anwender-wiki kopiert.)_
 
-Diese Fassade ist **optional** mit Basis-Vorauswahl
-„aktiv". Beim Init:
+Einstufung und Basis-Vorauswahl dieser Fassade:
+Wiki.md §3a („mandatory vs. optional beim Init“) —
+vor der Aktivierungs-Wahl lesen. Beim Init:
 
 1. Aktivierungs-Wahl des Anwenders als
    `active: true|false` im Frontmatter setzen
@@ -34,6 +35,9 @@ Diese Fassade ist **optional** mit Basis-Vorauswahl
 
 ### Verankerungen
 
-- Eintrag in [[Fassaden]] anlegen: Kurzform-Erklärung,
-  Wikilink, Status, Kategorie `Basis`.
-- Keine `internal-*`-Knoten anzulegen.
+- Eintrag in [[Fassaden]] prüfen (Status, Kurzform).
+- Die Aktivierung dieser Fassade legt keine
+  `internal-*`-Knoten an. Projekt-eigene
+  Steuerungs-Regeln (Dauerfreigaben, gewünschte
+  Abweichungen vom Template) entstehen unabhängig
+  davon als `internal-rule` in [[InterneMechanik]].

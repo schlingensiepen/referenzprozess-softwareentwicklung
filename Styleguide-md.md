@@ -1,6 +1,6 @@
 # Styleguide-md — Markdown-Konventionen
 
-**Stand: 23.08.2026**
+**Bearbeitungsstand: 2026-09-02**
 
 Namenskonventionen siehe MasterPrompt §3, insbesondere
 §3.9 zu Neuheits-Markern in Namen.

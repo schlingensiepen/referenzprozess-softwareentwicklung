@@ -1,6 +1,6 @@
 # Wiki — lebender Sachstand
 
-**Stand: 23.08.2026**
+**Bearbeitungsstand: 2026-10-25**
 
 Dieses Dokument beschreibt die vollständige Logik des
 `wiki/`-Layers und ist eine Teildatei des MasterPrompts.
@@ -18,7 +18,7 @@ Typenkatalog. Ebenen:
 - **Fassaden (Übersichts-Knoten):** geschlossene,
   am Stück lesbare Dokumente, die zusammenhängende
   Aspekte des Projekts abbilden (Facts,
-  Knotentypen, Fassaden, InterneMechanik,
+  Katalog, Fassaden, InterneMechanik,
   Chronologie, Fristen, Aktenzeichen,
   Ansprechpartner, Ideen, Entscheidungen, Glossar,
   Mission Statement — vollständige Übersicht in
@@ -48,8 +48,8 @@ können, gilt:
 - **Detail-Knoten maßgeblich für Inhalt** (Beschreibung,
   Kontext, Nachweis, Vermerke, ausformulierte Fassung).
 - **Fassade kanonisch für die als kanonisch markierten
-  Felder** (typischerweise Status, Sektions-Zuordnung,
-  Ablösungs-Verweise). Jede Fassade benennt diese
+  Felder** (typischerweise Status und
+  Sektions-Zuordnung). Jede Fassade benennt diese
   Felder in ihrer `## Meta`-Sektion.
 
 **Schichten, die die Regel arbeitsfähig machen:**
@@ -73,19 +73,20 @@ können, gilt:
    Lint finden residuale Drift und melden sie als
    Warnung zur Nachpflege durch den User.
 
-**Aktuelle kanonische Ausnahmen** (jede folgt diesem
-Muster):
-
-- **Frist-Status:** Fassade `wiki/Fristen.md` kanonisch;
-  Detail-Knoten `deadline` spiegelt. Siehe §10a.
-- **Stolpersteine:** Fassade `wiki/Facts.md` kanonisch
-  gegenüber Detail-Knoten-Inhalten. Siehe MasterPrompt
-  §5.4.
-- **Register-Status:** `wiki/Entscheidungen.md` (Basis,
-  optional) sowie mit SP-1
-  `wiki/Anforderungen.md` und `wiki/Fehlermeldungen.md`
-  kanonisch für den 8-Zustands-Status; Detail-Knoten
-  (`decision`, `requirement`, `bug-report`) spiegeln.
+Welche Felder eine Fassade kanonisch führt, benennt
+ihre `## Meta` (Frist-Status in [[Fristen]] mit §10a,
+Stolpersteine in [[Facts]],
+Status in den Register-Fassaden). Für die
+Register-Elemente gilt
+dabei die Klassen-Einteilung Element · Nachweis ·
+außerhalb mit Freeze, Ablösung und Stand-Bildung aus
+[[Einfrieren-und-Abloesen]] — der eine führende Ort;
+die Status-Achse der Ketten-Register beschreibt mit
+SP-1 der Mechanik-Knoten `Register-Lebenszyklus`. Die
+Ablösung ist kanonisch im Frontmatter beider Elemente
+(`supersedes:`/`superseded_by:`), die Fassade
+spiegelt sie; der Lint meldet Drift in beide
+Richtungen.
 
 ### 1.2 Strikte Entkopplung (eiserne Regel)
 
@@ -117,8 +118,8 @@ Pro `input/`-Datei:
    Einzeldokument, *n* bei Sammeldokument).
 3. Legt pro Einzeldokument einen Wiki-Knoten an:
    - Volltext des Einzeldokuments
-   - Typ-Zuordnung mit **Vorschlags-Bias
-     (DEC-218):** bei typ-mehrdeutigem Material
+   - Typ-Zuordnung mit **Vorschlags-Bias:** bei
+     typ-mehrdeutigem Material
      zuerst die Typen/Subtypes der aktiven
      Prozesse vorschlagen, dann die generischen
      Basis-Typen; die Wahlfreiheit bleibt
@@ -159,10 +160,9 @@ rückgängig machen. Regel-Kern und Grenzen:
 [[Do-first-mit-Veto]] (führender Ort). Ausnahmen
 in Kurzform:
 
-- **Facts:** eigene Sonderregel (siehe
-  MasterPrompt §5.4 unter "Progressive Disclosure",
-  Ausnahme 2 — Stolpersteine überstimmen Detail-
-  Knoten). Facts-Vorschläge landen im Frage-Block
+- **Facts:** eigene Sonderregel (Stolpersteine
+  überstimmen Detail-Knoten; `## Meta` von
+  [[Facts]]). Facts-Vorschläge landen im Frage-Block
   am Ingest-Ende, sparsam und mit Erläuterung.
 - **Glossar:** Vorschläge landen in
   `wiki/Glossar Review.md`; nur nach User-Freigabe
@@ -333,28 +333,39 @@ verweisen auf diese Kategorisierung:
   Fassade indexiert eigenständige Detail-Knoten
   (z.B. Eingangsdokumente, Entscheidungen, Ideen,
   Agent-Berichte, Rechercheartefakte, Fristen —
-  soweit Detail-Knoten existieren).
+  soweit Detail-Knoten existieren; der Katalog mit
+  seinen Katalog-Einträgen).
 - **(b) Inline-Fassade im wiki/** — die Fassade
   verwaltet ihre Inhalte inline, ohne Detail-Knoten
-  (z.B. Chronologie, Facts, Ansprechpartner,
-  Knotentypen).
+  (z.B. Chronologie, Facts, Ansprechpartner).
 - **(c) Inline-Register im Root** — Session-
   Artefakte, keine Wissens-Sicht (z.B. TODO.md,
   `Offene Fragen.md`, Tools.md, `index-output.md`,
   `index-overview.md`).
 
-## 3. Knotentypen
+## 3. Typen und Katalog
 
-### 3.0 Katalog: wiki/Knotentypen.md ist kanonisch
+### 3.0 Katalog: wiki/Katalog.md und die Katalog-Einträge sind kanonisch
 
-**Die tatsächlich verwendeten Knotentypen des
-Projekts liegen in `wiki/Knotentypen.md`** (Singleton
-mit Typ `types`). Diese Datei kommt vorausgefüllt
-mit dem Standardkatalog des Templates und kann
+**Der Katalog** ist das Verzeichnis der im Projekt
+zulässigen Wiki-Typen. Er besteht aus der Meta-Fassade
+`wiki/Katalog.md` (Singleton mit Typ `catalog`; je
+Eintrag eine Zeile mit Link und Link-Beschreibung) und
+den **Katalog-Einträgen** `wiki/Katalog-<Name>.md`
+(Typ `catalog-entry`), die je Typ Zweck, Pflichtfelder,
+Datei-Konvention und Singleton-Markierung tragen.
+Einträge gibt es in drei Arten: **Register-Eintrag**
+(Fassaden-Typ und Element-Typ eines Registers als
+Tupel), **Dokumenttyp-Eintrag** und
+**Einzeltyp-Eintrag** (Fassade ohne Element, Element
+ohne Register, Relation, Mechanik- und
+Template-Quelltypen). Der Katalog kommt vorausgefüllt
+mit den Basis-Einträgen des Templates und kann
 jederzeit erweitert werden — **Erweiterung ist das
 erwartete Default-Verhalten**, wann immer ein neues
 Wissensobjekt keinem bisherigen Typ entspricht (siehe
-§3.5).
+§3.5). Der Katalog sagt, welche Typen es gibt;
+[[InterneMechanik]] sagt, wie das Projekt arbeitet.
 
 Wiki.md §3 beschreibt die **konzeptionelle Struktur**
 der Kern-Detail-Typen (Zweck, Rolle in der Wiki-
@@ -362,10 +373,16 @@ Mechanik, Entstehungsregeln), weil sie eng mit
 Ingest, Fassaden-Mechanik und Snapshots verzahnt
 sind. **Pflichtfelder, Enum-Werte und Beispielnamen
 werden nicht in Wiki.md dupliziert** — sie stehen
-ausschließlich in `wiki/Knotentypen.md`.
+ausschließlich in den Katalog-Einträgen. Die
+**Grammatik der Einträge** (welche Zeilen ein Eintrag
+je Art und Klasse trägt, in welcher Reihenfolge und
+wie der Lint sie liest) steht führend im Abschnitt
+Typ-Konventionen des [[Katalog]]s — lesen, bevor ein
+Eintrag angelegt oder geändert wird.
 
-Bei Konflikten gilt: `wiki/Knotentypen.md` ist die
-kanonische Quelle für das konkrete Projekt.
+Bei Konflikten gilt: die Katalog-Einträge des
+Projekts sind die kanonische Quelle für das konkrete
+Projekt.
 
 ### 3.0a Terminologie-Konventionen
 
@@ -389,13 +406,14 @@ Der Katalog ist in folgende Kategorien organisiert:
 
 | Kategorie | Rolle |
 |---|---|
-| **Fassaden (Singletons)** | Übersichts-Knoten für Themenkomplexe — §3a. Standard-Kandidaten in `wiki/Knotentypen.md`. |
+| **Fassaden (Singletons)** | Übersichts-Knoten für Themenkomplexe — §3a. Standard-Kandidaten in den Katalog-Einträgen ([[Katalog]]). |
 | **Kern-Detail-Typen** | Zentrale Detail-Knoten: `document`, Basis-Entities (`person`, `place`, `organization`, `thing`), `concept`, `event`, `deadline`, `idea`, `decision`, `agent-report`, `research-artifact`, `internal-*` — §3.2. |
 | **Relations-Typen** | Verknüpfen bestehende Knoten mit Zweck/Attributen, ohne eigenständigen Objekt-Charakter (z.B. `member`) — §3.2a. |
 | **Domänen-Detail-Typen** | Domänen- bzw. prozess-spezifisch — §3.3. |
 
 Konkrete Typen, Pflichtfelder und Enum-Werte: siehe
-`wiki/Knotentypen.md`. Für neue Typen: §3.5.
+die Katalog-Einträge ([[Katalog]]). Für neue Typen:
+§3.5.
 
 ### 3.2 Kern-Detail-Typen (konzeptionell)
 
@@ -403,7 +421,7 @@ Die folgenden Kern-Detail-Typen sind so eng mit
 der Wiki-Mechanik verzahnt (Ingest, Fassaden,
 Snapshots), dass ihre Semantik hier beschrieben ist.
 Pflichtfelder und weitere Detail-Angaben stehen in
-`wiki/Knotentypen.md`.
+den Katalog-Einträgen ([[Katalog]]).
 
 #### document
 
@@ -418,10 +436,9 @@ und Cross-References. Provenienz-Frontmatter
 
 Person, Ort, Organisation oder physisches Ding, auf
 die Dokumente Bezug nehmen. Halten Stammdaten und
-Rollen; `organization` trägt das Enum-Feld
-`organization_type:` und optional
-`parent_organization:` (Unterorganisationen
-rekursiv). **KI erkennt beim Ingest Entitäten und
+Rollen; `organization` trägt eine Art und kann
+Unterorganisationen rekursiv führen (Felder:
+[[Katalog-Organisationen]]). **KI erkennt beim Ingest Entitäten und
 legt Knoten an oder ergänzt bestehende**
 ([[Do-first-mit-Veto]]). User kann redaktionell
 ergänzen. Indexierende Fassaden: [[Personen]],
@@ -463,12 +480,9 @@ Namensmarker `Frist` verhindert Kollision.
 Für **unverbindliche Ideen** aus der Ideen-Fassade.
 Detail-Knoten Pflicht, sobald Optionen,
 Trade-offs oder Voraussetzungen ausformuliert werden.
-Register-Felder im Frontmatter (`id`, `status`,
-`status_date`, ggf. `trigger` — Datum oder
-Zielmarken-Bezeichnung —, `zielmarke`,
-`superseded_by`) analog
-zu den Register-Typen (Basis: `decision`; SP-1:
-`requirement`, `bug-report`). **Kanonizität:** Die Fassade
+Register-Felder im Frontmatter analog zu den
+Register-Typen (Felder: [[Katalog-Ideen]]).
+**Kanonizität:** Die Fassade
 `wiki/Ideen.md` ist kanonisch für den Status (§1.1a).
 
 #### decision
@@ -477,16 +491,16 @@ Für **Design- und Prozess-Entscheidungen** aus der
 Entscheidungen-Fassade.
 Detail-Knoten Pflicht, sobald verworfene Alternativen,
 Vermerke, Nachweise oder ausführliche Wahl-Begründung
-anfallen. Register-Felder im Frontmatter (`id`, `status`,
-`status_date`, ggf. `superseded-by`) analog zu den
+anfallen. Register-Felder im Frontmatter analog zu den
 anderen Register-Typen. **Kanonizität:** Die Fassade
 `wiki/Entscheidungen.md` ist kanonisch für den Status
-(§1.1a). Für DEC-Einträge gelten
-Unveränderlichkeits-Regeln (Inhalt eingefroren ab
-Status `angenommen`, Ablösung nur vollständig und
-unter neuer Nummer) — führender Ort ist der Katalog
-`wiki/Knotentypen.md`, Betriebs-Detail die `## Meta`
-der Fassade [[Entscheidungen]].
+(§1.1a). DEC ist Eintritts-Register (ab `angenommen`,
+ohne `offen`/`aufgeschoben`). Wohin eine nicht
+getroffene Entscheidung gehört, Freeze und Ablösung
+führt [[Einfrieren-und-Abloesen]]; Pflichtfelder der
+Katalog-Eintrag [[Katalog-Entscheidungen]],
+Betriebs-Detail die `## Meta` der Fassade
+[[Entscheidungen]].
 
 #### agent-report
 
@@ -536,15 +550,16 @@ Der Basis-Katalog führt als Domänen-Bestand die
 Rechtsfall-Typen `case` und `argument` (bis zur
 Ausarbeitung des zugehörigen Prozesses in der Basis
 belassen, ohne indexierende Fassade).
-**Prozess-spezifische Typen** kommen über die
-Prozess-Anhänge (`Knotentypen-Anhang-<Prozess>.md`)
-beim Merge in den Katalog (§11.3) — z.B.
-`requirement` und `bug-report` mit SP-1,
-`user-story` und `use-case` mit RP-1; `decision`
-liegt bereits in der Basis (§3.2).
+**Prozess-spezifische Typen** bringt der Prozess als
+eigene Katalog-Einträge (`Katalog-<Name>.md` in
+seinem Teil-Wiki) mit; sie kommen beim Merge als
+Dateien in den Katalog (§11.3) — z.B. `requirement`
+und `bug-report` mit SP-1, `user-story` und
+`use-case` mit RP-1; `decision` liegt bereits in der
+Basis (§3.2).
 
 Details (Zweck, Pflichtfelder, Beispielnamen) stehen
-in `wiki/Knotentypen.md`. Ein Projekt nutzt in der
+in den Katalog-Einträgen. Ein Projekt nutzt in der
 Regel nur eine Teilmenge; nicht genutzte Typen
 bleiben unbelegt und erscheinen nicht im Wiki-Index.
 
@@ -582,12 +597,15 @@ Feldern.
 ### 3.5 Neue Typen anlegen (Default-Verhalten)
 
 **Es ist erwartetes Default-Verhalten**, dass der
-Katalog in `wiki/Knotentypen.md` im Projektverlauf
-wächst. Wenn ein Wissensobjekt auftaucht, das
-keinem der bisherigen Typen entspricht:
+Katalog im Projektverlauf wächst. Wenn ein
+Wissensobjekt auftaucht, das keinem der bisherigen
+Typen entspricht:
 
-1. Neuen Typ in `wiki/Knotentypen.md` definieren
-   (Name, Zweck, Pflichtfelder, Beispielname).
+1. Neuen Katalog-Eintrag `wiki/Katalog-<Name>.md`
+   anlegen — welche Zeilen er je Art und Klasse trägt
+   und in welcher Reihenfolge: Grammatik im [[Katalog]]
+   §Typ-Konventionen — und in `wiki/Katalog.md` als
+   Zeile verankern.
 2. Bei Detail-Typen (Kategorie a nach §2.5):
    indexierende Fassade anlegen — oder eine
    bestehende Fassade explizit als indexierend
@@ -609,9 +627,9 @@ Entwurf), legt sie aber nicht ohne User-Bestätigung
 an — neue Typen sind projektstrukturelle
 Entscheidungen.
 
-Die KI liest `wiki/Knotentypen.md` beim Sessionstart
-(registrieren) und konsultiert sie bei jeder neuen
-Knoten-Anlage.
+Die KI liest `wiki/Katalog.md` beim Sessionstart
+(registrieren) und konsultiert den Katalog-Eintrag des
+Typs bei jeder neuen Knoten-Anlage.
 
 **Ungenutzte Typen:** Die Domänen-Gruppierung im
 Katalog ist reine **Sortierhilfe** — es gibt
@@ -625,7 +643,8 @@ es verlangt.
 
 Wenn ein Projekt den Katalog reduzieren möchte
 (z.B. nur Rechtsfall-Typen behalten), kann der User
-`wiki/Knotentypen.md` direkt bearbeiten — der Agent
+Katalog-Einträge entfernen und die Zeilen in
+`wiki/Katalog.md` direkt bearbeiten — der Agent
 respektiert die reduzierte Liste beim nächsten
 Sessionstart.
 
@@ -644,63 +663,119 @@ Knotentyp:
 Fassaden sind Übersichts-Knoten mit **eigenem
 Typ pro Fassade**. Sie existieren höchstens einmal
 pro Projekt (Singleton). Die Tabelle ist eine
-Kurz-Übersicht — **jede Fassade stellt sich selbst
+Kurz-Übersicht der Basis-Fassaden. Was ein Typ ist
+(Zweck, Datei, Pflichtfelder, Präfix), steht nur in
+seinem **Katalog-Eintrag** — lesen bei Anlage oder
+Pflege der Fassade; die Spalte „Gegenstand“ ist die
+Link-Beschreibung. **Jede Fassade stellt sich selbst
 vor**: ihre Betriebs-Semantik (Format, Pflege,
 Kanonizität) steht in ihrer eigenen
 `## Meta`-Sektion (Zweiklang: Übersicht hier,
-Vollversion in der Fassade). Die Zeilen-Reihenfolge
-dieser Tabelle ist Katalog-Gruppierung ohne
-Ordnungs-Anspruch — die Anzeige- und
-Anlage-Reihenfolge der Fassaden regeln §6.1 und die
-FassadenLandkarte [[Fassaden]].
+Vollversion in der Fassade). Ob eine Fassade aktiv
+ist, führt die FassadenLandkarte [[Fassaden]]. Die
+Zeilen-Reihenfolge dieser Tabelle ist
+Katalog-Gruppierung ohne Ordnungs-Anspruch — die
+Anzeige- und Anlage-Reihenfolge der Fassaden regeln
+§6.1 und [[Fassaden]].
 
-| Typ | Datei | Zweck |
+| Typ | Katalog-Eintrag | Gegenstand |
 |---|---|---|
-| `mission` | `wiki/Mission Statement.md` | Projekt-Überblick (Kurzform) |
-| `mission-long` | `wiki/Mission Statement Long.md` | Projekt-Überblick (Langform) |
-| `facts` | `wiki/Facts.md` | Projekteinstieg, Anwender-Fakten, Stolpersteine |
-| `types` | `wiki/Knotentypen.md` | Kanonischer Typen-Katalog |
-| `facade-registry` | `wiki/Fassaden.md` | FassadenLandkarte — Register aller Fassaden mit Status |
-| `internal-machinery-log` | `wiki/InterneMechanik.md` | Steuerungs-Wissen des Projekts (`internal-*`-Knoten) |
-| `timeline` | `wiki/Chronologie.md` | Zeitachse: was ist wann passiert |
-| `deadline-log` | `wiki/Fristen.md` | Fälligkeitsübersicht (Offen/Erledigt/Abgelaufen) |
-| `file-number-log` | `wiki/Aktenzeichen.md` | Register aller Aktenzeichen im Projekt |
-| `contact-log` | `wiki/Ansprechpartner.md` | Wer ist wofür zuständig (Relations-Register) |
-| `glossary` | `wiki/Glossar.md` | Freigegebene Terminologie |
-| `glossary-review` | `wiki/Glossar Review.md` | Glossar-Vorschläge in Bearbeitung |
-| `concept-log` | `wiki/Konzepte.md` | Register der Sach-Wissens-Anker (`concept`-Knoten); Sprach-Ebene regelt das Glossar |
-| `target-mark-log` | `wiki/Zielmarken.md` | Register der Zielmarken (Planungs-Horizonte) mit Zeigern `current`/`in-progress` |
-| `idea-log` | `wiki/Ideen.md` | Register unverbindlicher Ideen |
-| `decision-log` | `wiki/Entscheidungen.md` | Register aller Entscheidungen (universeller Mechanismus) |
-| `input-document-log` | `wiki/Eingangsdokumente.md` | Register aller Eingangsdokumente |
-| `agent-report-log` | `wiki/Agent-Berichte.md` | Register aller Sub-Agent-Berichte |
-| `research-artifact-log` | `wiki/Rechercheartefakte.md` | Register aller Rechercheartefakte (Nachweis, nicht Wahrheit) |
-| `person-log` | `wiki/Personen.md` | Register aller `person`-Knoten |
-| `place-log` | `wiki/Orte.md` | Register aller `place`-Knoten |
-| `organization-log` | `wiki/Organisationen.md` | Register aller `organization`-Knoten |
-| `thing-log` | `wiki/Dinge.md` | Register aller `thing`-Knoten |
-| `member-log` | `wiki/Mitgliedschaften.md` | Relations-Register Person↔Organisation |
+| `mission` | [[Katalog-Mission-Statement]] | Projekt-Überblick (Kurzform) |
+| `mission-long` | [[Katalog-Mission-Statement-Long]] | Projekt-Überblick (Langform) |
+| `facts` | [[Katalog-Facts]] | Projekteinstieg, Anwender-Fakten, Stolpersteine |
+| `catalog` | [[Katalog-Katalog]] | Katalog der Typen (Meta-Fassade) |
+| `facade-registry` | [[Katalog-Fassaden]] | FassadenLandkarte |
+| `internal-machinery-log` | [[Katalog-InterneMechanik]] | Steuerungs-Wissen (`internal-*`-Knoten) |
+| `timeline` | [[Katalog-Chronologie]] | Zeitachse |
+| `deadline-log` | [[Katalog-Fristen]] | Fristen |
+| `file-number-log` | [[Katalog-Aktenzeichen]] | Aktenzeichen |
+| `contact-log` | [[Katalog-Ansprechpartner]] | Zuständigkeiten (Relations-Register) |
+| `glossary` | [[Katalog-Glossar]] | Freigegebene Terminologie |
+| `glossary-review` | [[Katalog-Glossar-Review]] | Glossar-Vorschläge in Bearbeitung |
+| `concept-log` | [[Katalog-Konzepte]] | Sach-Wissens-Anker (`concept`-Knoten) |
+| `target-mark-log` | [[Katalog-Zielmarken]] | Zielmarken (Planungs-Horizonte) |
+| `idea-log` | [[Katalog-Ideen]] | Ideen |
+| `decision-log` | [[Katalog-Entscheidungen]] | Entscheidungen |
+| `input-document-log` | [[Katalog-Eingangsdokumente]] | Eingangsdokumente |
+| `agent-report-log` | [[Katalog-Agent-Berichte]] | Sub-Agent-Berichte |
+| `research-artifact-log` | [[Katalog-Rechercheartefakte]] | Rechercheartefakte |
+| `person-log` | [[Katalog-Personen]] | Personen |
+| `place-log` | [[Katalog-Orte]] | Orte |
+| `organization-log` | [[Katalog-Organisationen]] | Organisationen |
+| `thing-log` | [[Katalog-Dinge]] | Dinge |
+| `member-log` | [[Katalog-Mitgliedschaften]] | Mitgliedschaften Person↔Organisation |
+| `role-log` | [[Katalog-Rollen]] | Rollen-Definitionen |
+| `need-log` | [[Katalog-Bedarfe]] | Bedarfe (Vorstufe der Anforderungen) |
+| `scenario-log` | [[Katalog-Szenarien]] | Szenarien (Vorstufe der Anforderungen) |
 
 **mandatory vs. optional beim Init:**
 
 - **mandatory** (nicht abwählbar, beim Init
-  automatisch aktiv): `facts`, `types`,
-  `facade-registry`, `internal-machinery-log`.
+  automatisch aktiv): `facts`, `catalog`,
+  `facade-registry`, `internal-machinery-log`,
+  `target-mark-log`, `decision-log` — die beiden
+  letzten in jedem Projekt, mit und ohne Prozess: die
+  Marke ist der Zwischenziel-Anker jeder Projektart
+  ([[Marken]]; Begriff: [[Glossar]] „Marke“), und
+  Freigaben, die Freigabe des Abschluss-Stands und der
+  Marken-Wechsel werden im Entscheidungs-Register
+  gebucht. Der Init legt die erste Marke an
+  ([[Init-Choreografie]] §Init-Fassaden-Auswahl).
 - **optional**: alle anderen — Anwender-Ja/Nein mit
   Voreinstellung (MasterPrompt §5.3 Phase D).
   Basis-Vorauswahl „aktiv": Mission Statement,
   Chronologie, Fristen, Aktenzeichen,
-  Ansprechpartner, Ideen, Entscheidungen, Glossar,
-  Glossar Review, Konzepte, Zielmarken,
+  Ansprechpartner, Ideen, Glossar,
+  Glossar Review, Konzepte,
   Eingangsdokumente,
   Agent-Berichte, Rechercheartefakte, Personen,
   Organisationen.
   Basis-Vorauswahl „deaktiviert": Mission Statement
-  Long, Orte, Dinge, Mitgliedschaften.
+  Long, Orte, Dinge, Mitgliedschaften, Rollen,
+  Bedarfe, Szenarien. Auch eine Fassade mit
+  Voreinstellung „deaktiviert“ wird angeboten, nicht
+  vorausgewählt; das Ankreuzen ist die Anweisung zur
+  Aktivierung (Mission Statement Long: §3a.2).
+- **Pflicht durch den Prozess:** Eine optionale
+  Basis-Fassade wird Pflicht, wenn der aktive Prozess
+  sie voraussetzt — weil ein Dokumenttyp-Eintrag sie
+  filtert oder kopiert (mit SP-1 Rollen, Bedarfe und
+  Szenarien für den Konzept-Stand) oder weil seine
+  Kette sie braucht (z.B. Agent-Berichte für den
+  `review-report` je Pflicht-Stand, Ideen für
+  zurückgestellte Entscheidungen). Der Prozess-Merge
+  aktiviert sie
+  ohne Rückfrage ([[Init-Choreografie]]
+  §Init-Fassaden-Auswahl); welche es sind, nennt der
+  Steckbrief des Prozesses (`§ Mitgebrachte Fassaden`
+  bzw. Einstufungs-Tabelle) — er ist der führende
+  Ort der Liste. Ohne Prozess bleiben diese Fassaden
+  optional; Zielmarken und Entscheidungen sind davon
+  unabhängig in jedem Projekt Pflicht (oben,
+  mandatory).
 - **Regel-Analog für Prozess-Steckbriefe:** die
   `§ Mitgebrachte Fassaden`-Sektion des Steckbriefs
   regelt mandatory/optional für die vom Prozess
   mitgebrachten Fassaden (§11.3).
+- **Abhängigkeiten:** Eine Fassade kann eine andere
+  voraussetzen; der Steckbrief des Prozesses nennt es
+  in der Einstufung. Mit SP-1 setzt Fehlermeldungen
+  die Fassade Anforderungen voraus — die Behebung
+  einer Fehlermeldung ist dort eine Fix-Anforderung;
+  wer kein Anforderungs-Register hat, braucht keine
+  Fehlermeldungen. Ist die abhängige Fassade aktiv,
+  ist die vorausgesetzte Pflicht und nicht abwählbar:
+  der Agent lehnt ihre Abwahl ab — beim Init in der
+  Fassaden-Auswahl ([[Init-Choreografie]]
+  §Init-Fassaden-Auswahl) wie später bei einer
+  Deaktivierung auf Anweisung (Deaktivierungs-Grenzen
+  unten); wer die vorausgesetzte Fassade abwählen will,
+  wählt zuerst die abhängige ab (mit SP-1: zuerst
+  Fehlermeldungen, dann Anforderungen). Was mit den
+  Einträgen einer deaktivierten Fassade geschieht:
+  „Aktivierung / Deaktivierung“ unten. Der
+  Lint meldet eine aktive Fassade ohne ihre
+  Voraussetzung als Fehler (`PFLICHT-FASSADE`).
 - **Prozess-Fassaden.** Fassaden können auch von
   Prozessen mitgebracht werden (§11 Prozess-Teil-Wikis).
   Sie erscheinen im Anwender-`wiki/` nach dem
@@ -711,9 +786,10 @@ FassadenLandkarte [[Fassaden]].
 **MetaFassade:** [[Fassaden]] ist das Register der
 Fassaden — ihre „Detail-Elemente" sind andere
 Fassaden. Komplementäre Meta-Register:
-[[Knotentypen]] (Struktur), [[Fassaden]]
-(Projekt-Ist), [[InterneMechanik]] (Steuerung),
-[[Facts]] (Anwender-Fakten).
+[[Katalog]] (Struktur: welche Typen es gibt),
+[[Fassaden]] (Projekt-Ist), [[InterneMechanik]]
+(Steuerung: wie das Projekt arbeitet), [[Facts]]
+(Anwender-Fakten).
 
 **Aktivierung / Deaktivierung:**
 
@@ -745,18 +821,24 @@ Sessionstart-Wächter kann die Synchronität
 zusätzlich prüfen (KANN).
 
 **Deaktivierungs-Grenzen für mandatory-Fassaden:**
-Die vier Basis-mandatory-Fassaden (`facts`, `types`,
-`facade-registry`, `internal-machinery-log`) sind
+Die Basis-mandatory-Fassaden (`facts`, `catalog`,
+`facade-registry`, `internal-machinery-log`,
+`target-mark-log`, `decision-log`) sind
 Pflicht-Fassaden und können **nie** deaktiviert
 werden — ihre Skelette tragen `active: true` mit
 einem entsprechenden Kommentar; setzt der User
 `active: false`, ignoriert der Agent das und weist
-auf die Regel hin. **Übrige mandatory-Fassaden**
+auf die Regel hin; der Lint meldet eine fehlende oder
+deaktivierte Pflicht-Fassade (`PFLICHT-FASSADE`). **Übrige mandatory-Fassaden**
 (von Prozessen als mandatory mitgebracht) sind im
 Init nicht abwählbar; deaktivieren lassen sie sich
 später nur auf ausdrückliche Anweisung des Users —
 der Agent weist auf die Folgen hin und führt dann
-aus.
+aus. Ausgenommen ist eine Fassade, die von einer
+anderen aktiven Fassade vorausgesetzt wird
+(„Abhängigkeiten“ oben): ihre Deaktivierung lehnt der
+Agent ab, solange die abhängige aktiv ist — zuerst wird
+die abhängige deaktiviert.
 
 **Reaktivierung** („reaktiviere X"): läuft wie die
 Aktivierung beim Merge — die Ja/Nein-Frage entfällt
@@ -764,8 +846,9 @@ Aktivierung beim Merge — die Ja/Nein-Frage entfällt
 setzt `active: true`, liest die Bootstrap-Datei der
 Fassade aus der Template-Quelle
 (`_template/referenzprozesse/<P>/bootstrap/<Fassade>.md`,
-DEC-217; in beiden Modi, DEC-223),
-arbeitet sie ab und führt den Landkarten-Status
+§11 „`bootstrap/`“; in beiden Anbindungs-Modi,
+MasterPrompt §1), arbeitet sie ab und führt den
+Landkarten-Status
 nach.
 
 **Fassaden-Promotion** („wenn etwas häufig
@@ -787,12 +870,28 @@ Fassade muss sich verdienen). **Bei Ja** in einem
 Zug: Eintrag im Entscheidungs-Register (Typ +
 Fassade), Fassaden-Datei mit `## Meta` und
 Eintragsformat, Landkarten-Eintrag in [[Fassaden]],
-Katalog-Block unter „Projektspezifische
-Erweiterungen" in [[Knotentypen]], Bestands-Knoten
-einsortieren. **Bei Nein oder Später:** Ideen-
-Eintrag „Fassaden-Kandidat <X>, vertagt" — je
-Muster nur ein Angebot, Wiedervorlage über das
-Ideen-Register. **Rückweg:** eine fehlgepromotete
+Katalog-Eintrag `Katalog-<Name>.md` mit Zeile unter
+„Projektspezifische Erweiterungen" in [[Katalog]],
+Bestands-Knoten einsortieren. **Bei Nein:** der Agent
+hält die Entscheidung im Entscheidungs-Register fest
+(Kandidat und Muster mit Belegen, die abgelehnte
+Fassade, die gewählte Weiterführung inline) — je
+Muster nur ein Angebot; will der Anwender später doch
+eine Fassade, löst eine neue Entscheidung die alte ab.
+**Bei Später:** er fragt im selben Zug, wann er das
+Angebot erneut vorlegen soll (Datum oder Anlass), und
+trägt auf die Antwort hin — sie ist die Anweisung
+dafür ([[Standarddateien-Katalog]] §2.11) — eine
+Wiedervorlage „Fassaden-Kandidat <X>“ in `TODO.md`
+ein; zum genannten Zeitpunkt legt er das Angebot noch
+einmal vor. Das erneute Vorlegen gehört zu dem einen
+Angebot; wächst die Serie in der Wartezeit, macht er
+kein zweites. Sagt der Anwender wieder „Später“, fragt
+er im selben Zug nach dem neuen Zeitpunkt und ändert
+ihn im selben Eintrag; mit „Ja“ oder „Nein“ erledigt
+er den Eintrag im selben Zug. Ein vertagter Kandidat
+ist ein erneut vorzulegender Vorschlag, keine
+zurückgestellte Entscheidung. **Rückweg:** eine fehlgepromotete
 Fassade wird deaktiviert; Einschmelzen der Einträge
 nur auf ausdrückliche Anweisung.
 
@@ -810,7 +909,10 @@ machen; sie landen aber nicht direkt in
 `wiki/Glossar.md`, sondern in
 `wiki/Glossar Review.md`.
 
-**Format eines Glossar-Eintrags** (Beispiel):
+**Format eines Glossar-Eintrags** (Beispiel; der
+Eintrag benennt, definiert in ein bis zwei Sätzen und
+verweist auf den führenden Ort des Begriffs — er zählt
+keine Ausprägungen auf):
 
 ```markdown
 ### Grundsteuerwertbescheid
@@ -825,8 +927,13 @@ einer wirtschaftlichen Einheit festgestellt wird.
 Grundlage für die Berechnung der Grundsteuer nach
 neuem Recht.
 
+**Vormals:** Wertfeststellungsbescheid (Arbeitsbegriff
+bis 2025-03)
+**Nicht verwenden:** Grundsteuerbescheid (das ist der
+Bescheid der Gemeinde über die Steuer selbst)
 **Verankert in:** [[2025-03-11 Grundsteuerwertbescheid Flst 136 Muehlgaessle]]
-**Siehe auch:** [[Grundsteuerwert]]
+**Siehe auch:** [[Grundsteuerwert]] — Sach-Wissen zum
+Begriff (Herleitung, Kontext, Anwendung)
 ```
 
 **Feld-Semantiken:**
@@ -839,6 +946,10 @@ neuem Recht.
   Frage.
 - `Freigabe:` — User-Entscheidung final
   (`<Datum> <TLA>`).
+- `Vormals:` — frühere Benennungen desselben Begriffs;
+  `Nicht verwenden:` — verworfene Synonyme. Beide nur,
+  wo sie anfallen; über sie bleiben ältere und
+  eingefrorene Texte lesbar.
 
 **Prozess:**
 
@@ -849,8 +960,9 @@ neuem Recht.
 3. Bei Zufriedenheit: User setzt
    `Freigabe: <Datum> <TLA>`.
 4. Agent verschiebt **nur die inhaltlichen Felder**
-   (English, Definition-Text, Verankert in, Siehe
-   auch) nach `wiki/Glossar.md`.
+   (English, Definition-Text, Vormals, Nicht
+   verwenden, Verankert in, Siehe auch) nach
+   `wiki/Glossar.md`.
 5. Der komplette Trail bleibt in
    `wiki/Glossar Review.md` unter
    `## Freigegeben (Audit-Trail)`.
@@ -858,13 +970,22 @@ neuem Recht.
 `wiki/Glossar.md` bleibt clean — nur inhaltliche
 Felder, keine Prozess-Felder.
 
-**Duplizierung akzeptiert:** Wenn ein Glossar-Eintrag
-und ein Concept-Knoten (§3.2) für denselben Begriff
-existieren, ist die Definition in beiden — auf
-unterschiedlicher Ebene (Glossar: lexikalische
-Kurzfassung + Terminologie; Concept: erweiterte
-Definition + Kontext + Backlinks). Drift wird
-bewusst in Kauf genommen.
+**Glossar führt die Definition.** Existieren ein
+Glossar-Eintrag und ein `concept`-Knoten (§3.2) für
+denselben Begriff, steht die Definition **einmal**, im
+Glossar; der Glossar-Eintrag endet mit dem Link auf
+den `concept`-Knoten samt Link-Beschreibung. Der
+`concept`-Knoten erklärt (Kontext, Anwendung,
+Herleitung, Bezüge) und verweist für die Definition
+auf das Glossar — er definiert nicht noch einmal.
+
+**Begriffs-Pflege.** Ab seiner Freigabe im Glossar gilt
+ein Begriff für alles Neue; im Bestand wird nicht
+massenhaft geändert. Wer einen lebenden Knoten ohnehin
+ändert, zieht dort die Begriffe mit. Ändert sich die
+**Bedeutung** eines Begriffs, bekommt er einen neuen
+Namen und der alte wird `Vormals:` — keine stille
+Umdeutung.
 
 ### 3a.2 Mission-Statement-Setup-Dialog
 
@@ -876,7 +997,7 @@ sind — kein reines Ingest-Nebenprodukt.
 **Kurzform (`wiki/Mission Statement.md`):**
 
 1. **Nach Abschluss des sonstigen Setups** (Facts,
-   Knotentypen, Fassaden-Auswahl, ggf. erste Ingest-
+   Katalog, Fassaden-Auswahl, ggf. erste Ingest-
    Runde) fragt der Agent **aktiv**, was ins Mission
    Statement soll.
 2. Der Agent **schlägt ggf. gleich einen Entwurf
@@ -891,8 +1012,11 @@ sind — kein reines Ingest-Nebenprodukt.
    §Projekteinstieg übernehmen.
 
 **Langform (`wiki/Mission Statement Long.md`):**
-Deaktiviert per Default (§3a). Wird nur auf explizite
-User-Anweisung aktiviert. **Sobald aktiviert, gilt
+Voreinstellung deaktiviert (§3a); im Init wie jede
+optionale Fassade angeboten, nicht vorausgewählt —
+das Ankreuzen ist die Anweisung zur Aktivierung,
+später genügt eine Anweisung des Users. **Sobald
+aktiviert, gilt
 derselbe Setup-Dialog** wie für die Kurzform (aktiv
 fragen, Entwurf vorschlagen, Freigabe, Fallback) —
 mit erweitertem Umfang.
@@ -918,9 +1042,10 @@ ingested_at: 2026-04-17
 
 Feldregeln:
 
-- **type:** einer der Knotentypen aus §3.
+- **type:** einer der Typen des Katalogs (§3).
 - **document_type:** bei `document` Pflicht —
-  Enum-Wert aus `wiki/Knotentypen.md` (§3.4).
+  Enum-Wert aus dem Katalog-Eintrag
+  [[Katalog-Eingangsdokumente]] (§3.4).
 - **source_text:** bei `document` immer vorhanden;
   Pfad zur `input/`-Datei.
 - **source_original:** bei `document` mit Scan-Quelle
@@ -930,10 +1055,86 @@ Feldregeln:
   (`document`-Knoten, die Ausschnitte eines größeren
   Eingangsdokuments sind).
 - **ingested_at:** Datum des Ingests (`YYYY-MM-DD`).
-- **supersedes:** optional. Bei Wiki-Elementen aus einem
-  Prozess-Teil-Wiki (§11) — **Katalog-Name (String)** des
-  abgelösten Elements aus einem Basis-Prozess. Löst die
+- **replaces_type:** optional. Bei Wiki-Elementen aus
+  einem Prozess-Teil-Wiki (§11) — **Typ-Name (String)**
+  des ersetzten Typs aus einem Basis-Prozess; derselbe
+  Name steht als Zeile `Replaces type` im
+  Katalog-Eintrag des ersetzenden Typs. Löst die
   Aktivitäts-Regel „nur hochwertigste aktiv" aus (§11.4).
+  (`supersedes:` bleibt den Register-Elementen mit
+  ID-Listen vorbehalten, z.B. DEC.)
+- **supersedes: / superseded_by:** an Register-Elementen
+  (Klasse Element, [[Einfrieren-und-Abloesen]]) —
+  **immer Listen** mit ID-Werten, auch bei einem
+  einzelnen Eintrag, und **beidseitig Pflicht**: wer
+  `supersedes:` setzt, setzt am Vorgänger
+  `superseded_by:`. Schreibweise mit Unterstrich; die
+  ältere DEC-Form `superseded-by` wird im Bestand noch
+  gelesen. Der Status `abgelöst` folgt der Marke des
+  Nachfolgers; er zeigt die Ablösung an und ist kein
+  Filter für Stände — was in einen Stand zu einer
+  Marke darf, entscheidet die Marken-Regel
+  ([[Einfrieren-und-Abloesen]] §Stand).
+- **vorgaenger:** Gegenstück zu `supersedes:` ohne
+  Ablösung; die Definition steht einmal im
+  [[Katalog]].
+- **ueberlagert:** Liste am Element einer Sackgasse
+  (Zwischenmarke), das ein Element der regulären Linie
+  nur für die Sackgasse ersetzt; einseitig, das
+  überlagerte Element bleibt unverändert — Format und
+  Lesart: [[Zielmarken]] §Meta „Zwischenmarke“.
+- **alias:** Kann-Feld aller Register-Detail-Typen —
+  Liste ehemaliger IDs nach Umbenennung oder
+  Präfixwechsel mit gleichem Inhalt. Der Lint löst
+  `[[ALT-ID]]` über `alias:` auf und meldet
+  „aufgelöst via alias“. Eine Ablösung erhält eine neue
+  ID mit `supersedes:`, nie einen alias.
+- **kopie_von:** an Kopien lebender oder nicht
+  eingefrorener Knoten, die für einen Stand abgelegt
+  werden; Wert, Ablage und Format der Kopie stehen in
+  [[Einfrieren-und-Abloesen]] §Kopien (lesen, bevor
+  eine Kopie entsteht).
+- **abgeleitet_von: / prueft:** an den Elementen der
+  Kette ([[Kettenpruefung]]) — **immer Listen**
+  (alle Verknüpfungen der Kette sind n:m):
+  `abgeleitet_von:` nennt die Vorgänger-Elemente, auf
+  die sich ein Element stützt; `prueft:` an TEST
+  nennt die geprüften REQ/FUNC/SPEC und darf auf SCEN
+  zeigen. Der Lint prüft „mindestens einer“ je Glied.
+- **decision_type:** an `decision` — die Art der
+  Entscheidung, nicht ihr Zeitpunkt (analog
+  `requirement_type`). Werte und wofür sie ausgewertet
+  werden: Katalog-Eintrag [[Katalog-Entscheidungen]]
+  (Enum-Werte nur im Katalog, §3.0).
+- **zielmarke:** Pflichtfeld an Elementen (seit 2.0;
+  Planungsaussage, bis zum Freeze umhängbar): beim
+  Anlegen schreibt der Agent die `in-progress`-Marke
+  hinein, für Geplantes die spätere Marke; Ausnahmen,
+  deren Marke eine Tatsache ist — BUG (Marke des
+  beobachteten Produkt-Stands); die DEPL eines
+  nachgetragenen Deploy-Stands (neue oder anders
+  ausgerollte Umgebung), eine Entscheidung, die nur
+  diese Umgebung betrifft, und eine Fix-Anforderung auf
+  einen Deploy (Marke des nachgetragenen
+  Deploy-Stands) —, Regel und Bestandsschutz für
+  Elemente ohne Feld:
+  [[Zielmarken]] §Meta „Pflichtfeld `zielmarke:`“.
+  Nachweise tragen das Feld nicht.
+- **datum:** an Elementen das Anlage-Datum
+  (`JJJJ-MM-TT`; Pflichtfeld seit 2.0, beim Anlegen
+  zusammen mit `zielmarke:` geschrieben, nie
+  geändert) — das Stichtags-Feld des Bestandsschutzes
+  ([[Katalog]] §Typ-Konventionen); ein Register-Eintrag
+  ohne Detail-Knoten trägt es als Zeile `Angelegt`.
+- **marke, datum, zweck, herkunft, quell_stand:** die
+  Herkunftszeile der Stände und Ableitungen in
+  `output/` und der abgeleiteten Nachweise (z.B.
+  Testbericht) — Bedeutung und Format:
+  [[Einfrieren-und-Abloesen]] §Stand.
+- **quelle, fuer_marke:** `quelle:` an einer Buchung
+  aus einer Nachricht eines anderen Repos — Format:
+  [[Katalog-message]]; `fuer_marke:` am Marken-Eintrag
+  einer Komponente — Format: [[Katalog-Zielmarken]].
 
 Weitere Felder sind je Knotentyp zulässig (z.B.
 `status` bei `case`, `case:`/`source:` bei `event`/
@@ -942,7 +1143,8 @@ Weitere Felder sind je Knotentyp zulässig (z.B.
 **Frontmatter-Verweise auf andere Wiki-Knoten:
 String-Notation Pflicht.** Alle Frontmatter-Felder, die
 auf einen anderen Wiki-Knoten verweisen (`supersedes:`,
-`case:`, `source:`, `parent:`, `refers-to:` etc.),
+`replaces_type:`, `case:`, `source:`, `parent:`,
+`refers-to:` etc.),
 tragen den Wert als **schlichten String** (kanonisch-
 eindeutiger Slug oder Anzeigename) — keine Wikilink-
 Notation `[[…]]` im YAML-Block. Grund: YAML-Parser
@@ -1002,7 +1204,7 @@ Grundmuster analog:
 
 Konkrete Struktur-Konventionen je Typ stehen in der
 `## Meta`-Sektion der jeweils indexierenden Fassade
-(§3.5) bzw. im Katalog `wiki/Knotentypen.md`.
+(§3.5) bzw. im Katalog-Eintrag des Typs ([[Katalog]]).
 
 **Pflicht vs. Kann:**
 
@@ -1181,7 +1383,7 @@ Ordnungs-Regel der FassadenLandkarte [[Fassaden]]
 Mission Statement Long, Facts, Chronologie, Fristen,
 Aktenzeichen, Ansprechpartner, Ideen,
 Entscheidungen, Glossar, Glossar Review, Konzepte,
-Zielmarken, Knotentypen, InterneMechanik, Fassaden,
+Zielmarken, Katalog, InterneMechanik, Fassaden,
 Eingangsdokumente, Agent-Berichte,
 Rechercheartefakte, Personen, Orte, Organisationen,
 Dinge, Mitgliedschaften. Reihenfolge-Logik:
@@ -1323,14 +1525,71 @@ Regel:
 - **Fehlende explizite Rückverweise** werden vom Lint
   erkannt und als Vorschlag vorgelegt (§9).
 
-### 8.6 Entscheidungs-Verweise (Inlining-Regel)
+### 8.6 Link statt Wiederholung (Link-Regel)
 
-Stützt sich ein Wiki-Knoten oder Dokument auf eine
-Entscheidung, stehen **Aussage und Begründung inline
-im Text**; der Register-Verweis ist Wartungsvermerk,
-nie Verständnisvoraussetzung.
+**Warum verlinkt wird.** Wissen, das an mehreren
+Stellen gebraucht wird, steht im Wiki an **einem Ort**
+und wird von überall sonst verlinkt. Zweck ist nicht
+Ordnung, sondern **Kontextökonomie**: wer navigiert,
+liest nur, was er tatsächlich braucht, und keine
+zweite Formulierung kann gegen die erste driften. Jede
+Aussage steht einmal; statt einer Wiederholung steht
+ein Link.
+
+**Link-Beschreibung.** Wo ein Link steht, steht kurz,
+was hinter dem Link zu erwarten ist — Gegenstand,
+Zweck, Lese-Moment („… — zu lesen vor jedem Ingest“).
+Ohne Beschreibung müsste der Leser das Ziel ganz lesen,
+und das Kontextfenster wäre nicht geschont. Die
+Link-Beschreibung ist prinzipbedingt **akzeptierte
+Redundanz**. Ihre Grenze: sie enthält keine
+Regel-Aussage, die man ohne das Ziel befolgen könnte;
+was ein Agent zwingend wissen muss, ohne das Ziel zu
+lesen, steht an seinem führenden Ort, nicht zusätzlich
+an der Link-Stelle. Die Paarung Fassade ↔
+Detail-Knoten (§1.1a) ist davon nicht betroffen.
+
+**Entscheidungs-Verweise.** Stützt sich ein Wiki-Knoten
+oder ein wiki-verweisendes Dokument auf eine
+Entscheidung, steht der Link auf den
+Entscheidungs-Eintrag mit Link-Beschreibung — nicht
+die Wiederholung von Aussage und Begründung. Aussage
+und Begründung inline gehören nur in **selbsttragende**
+Dokumente, die am Stück an Empfänger ohne Wiki-Zugang
+gehen (MasterPrompt §9.6 — Grade, Link-Regel und
+anerkannte Redundanz-Klassen).
 
 ## 9. Lint
+
+**Vor-Check (Template-Lint):** Vor jedem Lint-Lauf
+nach §9.3 — und zu den weiteren Anlässen: vor den
+Wächter-Läufen C5, C7 und C8 (MasterPrompt §5.3), nach
+jeder Ablösung und beim Marken-Wechsel
+([[Zielmarken]]) — läuft der deterministische
+Template-Lint `_template/tools/lint.sh` (POSIX-sh,
+KI-agnostisch; Aufruf im Projekt-Root `sh
+_template/tools/lint.sh`, der eingetragene Aufruf steht
+in `Tools.md` §Projekt-Skripte; beim Init vor Turn 2:
+[[Init-Choreografie]] §Phase A0 „Lint vor Turn 2“).
+Er prüft mechanisch, was ohne Sprachmodell prüfbar
+ist; neue Pflichtfelder gelten als Fehler nur bei
+Knoten ab dem Stichtag, im Bestand als Hinweis
+([[Katalog]] §Typ-Konventionen — so auch `zielmarke:`
+an Elementen, §4.1); Pflicht-Fassaden prüft
+er unabhängig vom Stichtag (§3a) — den Stichtag
+liest er aus dem Herkunfts-Vermerk in
+[[Aktivierter-Prozess]] (Zeile `Template-Stand`, Datum
+hinter `seit`; [[Init-Choreografie]] §Phase A0),
+`--stichtag` geht vor. `sh
+_template/tools/lint.sh --help` zählt die Prüf-Gruppen
+mit ihren Befund-Codes vollständig auf und erklärt die
+Optionen — lesen vor dem ersten Lauf und wenn ein Code
+unklar ist. Sein Report nennt am Ende, was er nicht
+prüft. Er ersetzt die Prüfungen in
+§9.1 nicht; was er findet, muss nicht noch einmal
+gesucht werden. Werkzeug des Templates: keine Kopie
+ins Projekt-`tools/`, Eintrag in `Tools.md` als
+„Template-Werkzeug, nur lesen“.
 
 ### 9.1 Prüfungen
 
@@ -1353,14 +1612,15 @@ nie Verständnisvoraussetzung.
   (§1.1a). Warnung, kein Fehler (Fassade
   gilt). Klassischer Fall: Frist-Status (Sektion in
   `wiki/Fristen.md` vs. `status` im `deadline`-Knoten).
-  Register-Status (Basis: Entscheidungen, Ideen; mit
-  SP-1 zusätzlich Anforderungen, Fehlermeldungen; von
-  weiteren Prozessen mitgebracht) folgt demselben Muster.
-- **Vererbungs-Konsistenz** — Zyklen, fehlende Basen,
-  Steckbrief-index-Drift (§11.2), Doppel-Definition
-  eines Elements innerhalb eines Prozesses (§11.3).
+  Register-Status (alle aktiven Register-Fassaden nach
+  dem Katalog, z.B. Entscheidungen, Ideen, mit SP-1
+  Anforderungen) folgt demselben Muster.
+- **Vererbungs-Konsistenz** — Zyklen, fehlende Basen
+  (§11.2), Doppel-Definition eines Elements innerhalb
+  eines Prozesses (§11.3).
 - **Ablöse-Ketten-Konsistenz** — Element-Sackgassen und
-  -Zyklen bei `supersedes:` (§11.4).
+  -Zyklen bei `replaces_type:` (§11.4); ein ersetzter
+  Typ kommt im Projekt nicht vor.
 - *Optional, später:* Widersprüche zwischen Knoten.
 
 ### 9.2 Ausnahmen
@@ -1456,9 +1716,9 @@ Knoten werden neu angelegt, keine
 kein Chronologie-Vermerk. Vorhandene `deadline`-
 Knoten bleiben unangetastet und tragen ihren
 `status` weiterhin selbst. **Kanonizität wechselt
-bei Deaktivierung auf den Detail-Knoten** — MasterPrompt
-§5.4 (Ausnahme "Frist-Status Fassade maßgeblich")
-greift dann nicht.
+bei Deaktivierung auf den Detail-Knoten** — die
+Fassaden-Kanonizität für den Frist-Status
+(`## Meta` von [[Fristen]]) greift dann nicht.
 
 Der Statuswechsel bei Fristen läuft **automatisch mit
 Meldung**:
@@ -1510,10 +1770,10 @@ Sync ist Pflicht (§10a).
 Bei Drift zwischen Fassade und Detail-Knoten meldet
 der Lint eine Warnung. **Bei kanonisch markierten
 Feldern gilt die Fassade** (§1.1a — konkret §10a für
-Frist-Status, MasterPrompt §5.4 für Stolpersteine,
-aktive Register-Fassaden für Register-Status — Basis
-`Entscheidungen`/`Ideen` sowie vom Prozess mitgebrachte
-wie `Anforderungen`/`Fehlermeldungen`); **für
+Frist-Status, `## Meta` von [[Facts]] für Stolpersteine,
+aktive Register-Fassaden nach dem Katalog für
+Register-Status — z.B. `Entscheidungen`, `Ideen`,
+mit Prozess `Anforderungen`); **für
 Inhalt** (Beschreibung, Kontext, Nachweis, Vermerke)
 sind Detail-Knoten maßgeblich (Progressive Disclosure,
 siehe MasterPrompt §5.4).
@@ -1530,7 +1790,7 @@ self-contained Ordner; die Basis-Wiki-Skelette liegen
 analog unter `referenzprozesse/base/wiki/`. Im
 Anwender-Projekt liegt der Ordner in beiden
 Anbindungs-Modi unter `_template/referenzprozesse/`
-(MasterPrompt §1, DEC-223).
+(MasterPrompt §1).
 
 **Inhalt:**
 
@@ -1544,7 +1804,8 @@ Anbindungs-Modi unter `_template/referenzprozesse/`
   je Fassade (§11.3); die KANN-Sektion
   `§ Mitgebrachte Ordner` deklariert
   Root-Ordner-Freigaben des Prozesses (beim Merge
-  automatisch als Freigabe-Buchung übernommen,
+  automatisch als Freigabe-Buchung übernommen, beim
+  Init nach der ersten Marke, §11.3 Schritt 2;
   MasterPrompt §1.1); die Sektion
   `§ Mitgebrachte Präfixe` ist der führende
   Deklarations-Ort der Prozess-Commit-Präfixe
@@ -1561,12 +1822,15 @@ Anbindungs-Modi unter `_template/referenzprozesse/`
 - **`index.md`** (Typ `process-mapping`) — Design-Wahrheit
   des Prozesses. Beginnt mit dem Verweissatz „Ich bin in
   [[Steckbrief]] beschrieben; konkret mache ich Folgendes:
-  …". Trägt alle §-Sektionen (Positionierung, konkrete
+  …" samt Link-Beschreibung (dort stehen die
+  Prozess-Felder und die Mitbringsel-Deklarationen).
+  Trägt alle §-Sektionen (Positionierung, konkrete
   Basis-Instanzen, eigene Mechanismen, Rolle, Vorwahlen,
-  Bezüge). Frontmatter `process:` / `extends:` spiegeln
-  den Steckbrief.
+  Bezüge). Die Prozess-Felder `process:`, `extends:` und
+  `status:` stehen **nur im Steckbrief**; das
+  Frontmatter von `index.md` trägt nur `type:`.
 - **`bootstrap/`** — Einmal-Anweisungen je Fassade
-  (`bootstrap/<Fassade>.md`, DEC-217): wird beim
+  (`bootstrap/<Fassade>.md`): wird beim
   Merge **nie** ins Anwender-wiki kopiert; der Agent
   liest und arbeitet sie aus der Template-Quelle ab.
 - **`wiki/`** — Prozess-Teil-Wiki:
@@ -1575,21 +1839,30 @@ Anbindungs-Modi unter `_template/referenzprozesse/`
     `Systemarchitektur.md` bei SP-1 usw.); die
     Einmal-Anweisungen liegen daneben in
     `bootstrap/`.
-  - **`Knotentypen-Anhang-<Prozess>.md`** — Typen, die
-    dieser Prozess mitbringt (das Prozess-Suffix macht
-    die Anhänge über alle Prozesse disjunkt). Wird beim
-    Merge **nicht als Datei kopiert** — seine
-    Typ-Blöcke werden in `wiki/Knotentypen.md`
-    eingespielt.
+  - **Katalog-Einträge `Katalog-<Name>.md`** — Typen,
+    die dieser Prozess mitbringt, je Register bzw.
+    Einzeltyp ein Eintrag nach der Grammatik der
+    Typ-Konventionen im [[Katalog]] (Dateinamen
+    disjunkt über alle Prozesse; Ersetzungen unter
+    neuem Namen, §11.4). Werden beim Merge **als
+    Dateien kopiert** und in `wiki/Katalog.md` als
+    Zeilen verankert.
   - **`Vorgehen-<Prozess>.md`** — das
-    Vorgehens-Dokument des Prozesses.
+    Vorgehens-Dokument des Prozesses — und
+    **`Marken-<Prozess>.md`** — sein Marken-Dokument
+    (typische Marke, ihr Produkt, Schnitt, Benennung;
+    Basis: [[Marken]]). Beide tragen den Typ
+    `process-procedure` ([[Katalog-process-procedure]])
+    und werden beim Merge wie die übrigen Dateien des
+    Teil-Wikis ins Anwender-`wiki/` kopiert (§11.3
+    Schritt 1).
 
 **Zugangs-Ebenen:**
 
 | Ebene | Datei | Zweck |
 |---|---|---|
 | Auswahl (schlank) | Scan über `_template/referenzprozesse/*/Steckbrief.md` | Auswahl-Angebot im Init (MasterPrompt §5.3 Phase B/D) |
-| Design-Wahrheit (voll) | `_template/referenzprozesse/<PROZESS>/index.md` | Merge-Metadaten (Frontmatter) + Ableitung aller Artefakte |
+| Design-Wahrheit (voll) | `_template/referenzprozesse/<PROZESS>/index.md` | Ableitung aller Artefakte (die Merge-Metadaten stehen im Steckbrief) |
 
 Ein zentrales Prozess-Register gibt es nicht — die
 Steckbriefe pro Prozess ersetzen es. Damit wird bei jedem
@@ -1599,9 +1872,8 @@ Ordner ist der Beitrag.
 ### 11.1 Selbst-Marker
 
 Jedes Wiki-Element in einem Prozess-Teil-Wiki (Fassade,
-Katalog-Eintrag im `Knotentypen-Anhang-<Prozess>`)
-trägt einen **Selbst-Marker**, der seine Rolle im
-Konzept-Netz benennt:
+Katalog-Eintrag) trägt einen **Selbst-Marker**, der
+seine Rolle im Konzept-Netz benennt:
 
 - **„Ich bin neu"** — bringt ein Element in die Basis
   ein, das es zuvor nicht gab.
@@ -1612,10 +1884,12 @@ Konzept-Netz benennt:
 **Träger: Frontmatter (für Maschinen) und Text (für
 Menschen):**
 
-- **Im Frontmatter:** Feld `supersedes:` (§4.1) — nur bei
-  ablösenden Elementen; **Katalog-Name als String**
-  (keine Wikilink-Notation im YAML).
-  Neue Elemente haben das Feld nicht gesetzt.
+- **Im Frontmatter:** Feld `replaces_type:` (§4.1) —
+  nur bei ablösenden Elementen; **Typ-Name als String**
+  (keine Wikilink-Notation im YAML); im Katalog-Eintrag
+  des ersetzenden Typs steht dieselbe Ersetzung als
+  Zeile `Replaces type`. Neue Elemente haben das Feld
+  nicht gesetzt.
 - **Im Text:** einleitender Absatz nach der H1. „Ich bin
   neu in Prozess X" oder „Ich löse [[Y]] aus Prozess Z ab
   und verändere die Semantik wie folgt: …".
@@ -1669,17 +1943,15 @@ als benutzbar.
   merged **Basis-zuerst → Anwendungs-Prozess-zuletzt**.
   Beispiel: Anwender wählt RP-1 → Reihenfolge
   `Basis → SP-1 → RP-1`.
-- **`index.md`-Frontmatter spiegelt** die Steckbrief-
-  Felder (Steckbrief ist kanonisch, §11 Kopf).
 
 **Lint-Regel „Vererbungs-Konsistenz":**
 
 - **Zyklus** in der Vererbungs-Kette (Prozess A sieht
   sich beim Auflösen zum zweiten Mal) → Fehler.
-- **Fehlende Basis** — `extends:` verweist auf
-  Prozess-Ordner, der nicht existiert → Fehler.
-- **Steckbrief/index-Drift** bei `process:`/`extends:`
-  → Warnung (Steckbrief gewinnt).
+- **Fehlende Basis** — `extends:` nennt eine
+  Prozess-Kennung (z.B. `SP-1`), die in keinem
+  Steckbrief als `process:` steht → Fehler. `extends:`
+  nennt immer die Kennung, nie den Ordnernamen.
 
 Auslöser wie bestehende Lint-Regeln (§9.3) plus
 **zusätzlich vor jedem Merge** (Prozess-Wahl im Init) —
@@ -1694,8 +1966,7 @@ Ergebnis erzeugt er ein **konsolidiertes Aggregat**
 Vererbungsbaum), auf dessen Basis er die Auswahl
 präsentiert. Fehler aus dem Lint blockieren die Auswahl-
 Vorstellung — der Agent meldet sie und bittet um
-Bereinigung, bevor er fortfährt. Warnungen (Drift)
-laufen als Info-Zeile mit.
+Bereinigung, bevor er fortfährt.
 
 **Ort des Aggregats:** on-demand berechnet, keine
 persistente Datei. Das bewahrt die self-contained-
@@ -1716,7 +1987,7 @@ werden wie Basis-Wiki behandelt.
 Vererbungs-Konsistenz-Lint sauber.
 
 **Merge-Quelle:** `_template/referenzprozesse/` — in
-beiden Anbindungs-Modi (MasterPrompt §1, DEC-223);
+beiden Anbindungs-Modi (MasterPrompt §1);
 die `referenzprozesse/…`-Pfade unten liegen darunter.
 
 **Sequenz** — pro Prozess in Basis-zuerst-Reihenfolge:
@@ -1732,33 +2003,45 @@ die `referenzprozesse/…`-Pfade unten liegen darunter.
    Kopiervorlagen-Ordners `templates/`) und die
    Prozess-Skelette aus
    `referenzprozesse/<PROZESS>/wiki/` ins
-   Anwender-`wiki/` — alle Dateien außer dem
-   `Knotentypen-Anhang-<Prozess>`.
-2. **Katalog-Anhang einspielen:** Typ-Blöcke aus
-   `referenzprozesse/<PROZESS>/wiki/Knotentypen-Anhang-<Prozess>.md`
-   in Anwender-`wiki/Knotentypen.md` einmergen (Typen-
-   Blöcke anhängen bzw. bei `supersedes:` gemäß §11.4
-   ersetzen); der Anhang wird nicht als Datei kopiert.
-   Nach demselben Anhang-Muster wird — **falls
-   vorhanden** — ein
+   Anwender-`wiki/` — alle Dateien, einschließlich der
+   mitgebrachten Katalog-Einträge `Katalog-<Name>.md`.
+2. **Katalog-Einträge verankern:** je mitgebrachtem
+   Eintrag eine Zeile in `wiki/Katalog.md` (Abschnitt
+   „Prozess-mitgebrachte Einträge“); die
+   Pflichtfeld-Zeile jedes Eintrags wird **wörtlich
+   übernommen** (eine logische Zeile je Typ, nicht
+   umformuliert — der Lint liest sie). Trägt ein Eintrag
+   eine Zeile `Replaces type`, betrifft das genau einen
+   Basis-Eintrag und läuft nach §11.4. Ein Anspielen
+   von Typ-Blöcken in eine gemeinsame Datei gibt es
+   nicht mehr. **Falls vorhanden** wird ein
    `Konzept-Repositories-Anhang-<Prozess>.md`
    eingespielt: seine Einträge wandern mit Geltung =
    Prozess in das Register
-   `wiki/Konzept-Repositories.md`; auch dieser
-   Anhang wird nicht als Datei kopiert. Deklariert
+   `wiki/Konzept-Repositories.md`; dieser Anhang wird
+   nicht als Datei kopiert. Deklariert
    der Steckbrief eine Sektion **„Mitgebrachte
    Ordner"**, werden diese Deklarationen als
    Freigabe-Buchung ins Entscheidungs-Register
    übernommen (Standardaufgabe; MasterPrompt §1.1) —
-   die Ordner selbst entstehen erst bei Bedarf.
+   die Ordner selbst entstehen erst bei Bedarf. Beim
+   Init geschieht diese Buchung erst in Turn 3,
+   unmittelbar nachdem die erste Marke angelegt ist
+   (jeder DEC-Eintrag trägt `zielmarke:`, und vor der
+   ersten Marke gibt es keinen Wert dafür —
+   [[Init-Choreografie]] §Phase D); der Merge in
+   Turn 2 kopiert und verankert nur. Beim Upgrade
+   (§11.5) läuft die Buchung sofort, die Marke
+   existiert.
 
 **Nach der Prozess-Kette:**
 
-3. **Selbst-Marker anwenden** (§11.1): `supersedes:`-
+3. **Selbst-Marker anwenden** (§11.1): `replaces_type:`-
    Verweise auflösen, abgelöste Fassaden auf
    `active: false` setzen und mit Wikilink
-   „abgelöst durch [[neu]]" versehen; abgelöste Katalog-
-   Einträge als Hintergrund markieren.
+   „abgelöst durch [[<neu>]]" versehen; ersetzte
+   Typ-Abschnitte in den Katalog-Einträgen als
+   Hintergrund markieren.
 4. **Aktivierungs-Regel:** Für jede vom Prozess
    mitgebrachte Fassade greift die Steckbrief-Sektion
    `§ Mitgebrachte Fassaden`: mandatory automatisch
@@ -1770,15 +2053,15 @@ die `referenzprozesse/…`-Pfade unten liegen darunter.
    inklusive `### Verankerungen`-Checkliste aus der
    Template-Quelle abarbeiten — sie wird nie
    kopiert, in der Anwender-Fassade kann kein Rest
-   zurückbleiben (DEC-217). Bei optionalen Fassaden
+   zurückbleiben. Bei optionalen Fassaden
    erst bei Aktivierung.
 6. **Aktivierungs-Kontext nachtragen:** im
    `internal-rule`-Knoten [[Aktivierter-Prozess]]
    (gewählter Prozess, Abweichungen von der
-   Vorauswahl, abgelöste Ausprägungen, aktive
+   Vorauswahl, aktive
    Prozess-Präfixe — gelesen aus dem
-   Prozess-Steckbrief §„Mitgebrachte Präfixe",
-   DEC-208) und in der FassadenLandkarte
+   Prozess-Steckbrief §„Mitgebrachte Präfixe")
+   und in der FassadenLandkarte
    [[Fassaden]] (neue Einträge Kategorie
    `Prozess-mitgebracht (<Prozess>)`, Status).
 7. **Mitgebrachte Mechanik einführen:** deklariert
@@ -1800,7 +2083,7 @@ die `referenzprozesse/…`-Pfade unten liegen darunter.
      Sektion deklarierten Zeiger prüfen,
      fehlende nachtragen bzw. bestehende
      umstellen; ersetzte projekt-eigene Regeln
-     erhalten den Vermerk „abgelöst durch [[neu]]"
+     erhalten den Vermerk „abgelöst durch [[<neu>]]"
      (kein stiller Ersatz).
    - Die **Rückbau-Beschreibung** der Sektion bleibt
      stehen — sie gilt bei späterer
@@ -1810,12 +2093,12 @@ die `referenzprozesse/…`-Pfade unten liegen darunter.
 
 **Disjunktheits-Regel** (führender Ort): Dateinamen
 sind disjunkt über Basis + alle Prozess-Wikis;
-Merge = Zusammenkopieren; `supersedes:` regelt
-Ablösung von Fassaden gleichen Zwecks unter neuem
-Namen. Gleichnamige Prozess-Anhänge werden per
-Prozess-Suffix disjunkt gemacht
-(`Knotentypen-Anhang-<Prozess>.md`) — keine
-Ausnahme-Klasse. Geprüft beim Merge und per
+Merge = Zusammenkopieren; `replaces_type:` regelt
+Ablösung von Fassaden und Typen gleichen Zwecks unter
+neuem Namen. Das gilt auch für die Katalog-Einträge
+(`Katalog-<Name>.md`): ein ersetzender Eintrag trägt
+einen neuen Namen — keine Ausnahme-Klasse. Geprüft
+beim Merge und per
 Sessionstart-Wächter „keine zwei Dateien gleichen
 Namens".
 
@@ -1828,14 +2111,14 @@ Folgende Fälle mit jeweiliger Regel:
   Prozess-Definition**, muss vom Vererbungs-Lint (§11.2)
   vorab erkannt werden (zusätzliche Lint-Prüfung
   „Doppel-Definition im Prozess", §9.1).
-- **Zwischen Ebenen ohne `supersedes:`** (Basis-Prozess
-  bringt `X` mit, Anwendungs-Prozess bringt ebenfalls
-  `X` mit ohne Ablöse-Marker): **Fehler beim Merge**,
-  Merge bricht ab, Meldung an User — die Prozess-
-  Definition muss `supersedes:` setzen oder einen
-  anderen Namen wählen. Stillschweigendes Überschreiben
-  ist nicht zulässig.
-- **Zwischen Ebenen mit `supersedes:`** (Anwendungs-
+- **Zwischen Ebenen ohne `replaces_type:`**
+  (Basis-Prozess bringt `X` mit, Anwendungs-Prozess
+  bringt ebenfalls `X` mit ohne Ablöse-Marker):
+  **Fehler beim Merge**, Merge bricht ab, Meldung an
+  User — die Prozess-Definition muss `replaces_type:`
+  setzen oder einen anderen Namen wählen.
+  Stillschweigendes Überschreiben ist nicht zulässig.
+- **Zwischen Ebenen mit `replaces_type:`** (Anwendungs-
   Prozess sagt explizit „ich löse `X` aus dem Basis-
   Prozess ab"): kein Konflikt, geregelte Ablösung nach
   §11.4.
@@ -1859,16 +2142,29 @@ erzeugen.
 Diese Regel gilt einheitlich für alle Element-
 Typen; die Details je Typ folgen unten.
 
-#### Katalog-Einträge (Detail-Typen in `Knotentypen.md`)
+#### Typen (Abschnitte in den Katalog-Einträgen)
 
-Neue Semantik unter **neuem Frontmatter-Namen** (z.B.
+Neue Semantik unter **neuem Typ-Namen** (z.B.
 `software-system-component` löst `system-component` ab).
-Beide Einträge stehen im Katalog nebeneinander:
+Beide Typ-Abschnitte stehen in ihren Katalog-Einträgen
+nebeneinander (der Prozess-Eintrag unter neuem
+Dateinamen neben dem Basis-Eintrag):
 
-- Der neue trägt `supersedes: <alter Name>` als
-  Frontmatter-Feld und Kopf-Marker im Text.
-- Der abgelöste wird mit „**abgelöst durch <neuer Name>
-  (aus Prozess Z)**" markiert.
+- Der neue Typ-Abschnitt trägt die Zeile
+  `- **Replaces type:** `<alter Name>`` (genau eine
+  Ersetzung je Typ; Grammatik im [[Katalog]]), der
+  Eintrag den Kopf-Marker im Text; seine
+  Pflichtfeld-Zeile wird beim Merge wörtlich
+  übernommen (§11.3 Schritt 2). Ersetzende
+  Instanzen tragen `replaces_type: <alter Name>` im
+  Frontmatter — die Katalog-Zeile führt, das
+  Frontmatter spiegelt ([[Katalog]] §Typ-Konventionen
+  „Ersetzung“).
+- Der ersetzte Typ-Abschnitt wird mit „**abgelöst
+  durch <neuer Name> (aus Prozess Z)**" markiert.
+- Der Lint prüft, dass der ersetzte Typ im Projekt
+  nicht mehr vorkommt; die einzige Ausnahme ist die
+  abgelöste Fassade mit `active: false` (unten).
 
 Bestehende Detail-Knoten mit dem alten `type:` behalten
 ihren Frontmatter zunächst — sie folgen der
@@ -1879,17 +2175,17 @@ migriert (automatisch wo möglich, sonst Rückfrage).
 
 Neue Fassade unter **neuem Dateinamen**; alte Fassade auf
 `active: false` gesetzt, mit Wikilink im Kopf „abgelöst
-durch [[neu]]". Beispiel:
+durch [[<neu>]]". Beispiel:
 
 - SP-1 bringt `wiki/Systemarchitektur.md` mit (`type:
   system-architecture-overview`).
 - RP-1 löst diese ab durch
   `wiki/Softwaresystemarchitektur.md` (neuer Dateiname,
   `type: software-system-architecture-overview`,
-  `supersedes: system-architecture-overview`).
+  `replaces_type: system-architecture-overview`).
 - Nach Merge: `Systemarchitektur.md` trägt `active: false`
   und Kopf-Wikilink „abgelöst durch
-  [[Softwaresystemarchitektur]]";
+  `[[Softwaresystemarchitektur]]`";
   `Softwaresystemarchitektur.md` trägt `active: true`;
   die FassadenLandkarte [[Fassaden]] führt beide
   Status-Einträge nach.
@@ -1897,14 +2193,19 @@ durch [[neu]]". Beispiel:
 Deaktivierte Fassaden werden ohnehin nicht beim
 Sessionstart gelesen (§3a) — die Regel greift
 automatisch. Neuer Content geht an die aktive Fassade.
+Die abgelöste Fassade bleibt mit `active: false` und
+ihrem alten `type:` im `wiki/`; für die Lint-Prüfung
+„ersetzter Typ kommt nicht vor“ ist sie kein Befund
+([[Katalog]] §Typ-Konventionen „Ersetzung“).
 
 #### Instanz-Konventionen
 
 Kopiervorlagen gibt es nicht — die
 Struktur-Konventionen für neue Instanzen liefert die
 `## Meta`-Sektion der jeweils aktiven (hochwertigsten)
-Fassade; der Agent findet sie über den Ablöse-Verweis
-des zugehörigen Katalog-Eintrags (siehe oben).
+Fassade; der Agent findet sie über die
+`Replaces type`-Zeile des zugehörigen Katalog-Eintrags
+(siehe oben).
 
 #### Aktivierungs-Kontext in [[Aktivierter-Prozess]] und [[Fassaden]]
 
@@ -1913,18 +2214,14 @@ Nach Merge trägt der Agent im `internal-rule`-Knoten
 
 ```markdown
 - **Aktive Prozesse:** Basis, SP-1, RP-1.
-- **Abgelöste Ausprägungen:**
-  - [[Systemarchitektur]] (SP-1) →
-    [[Softwaresystemarchitektur]] (RP-1)
-  - `system-component` (SP-1) →
-    `software-system-component` (RP-1, per `supersedes:`
-    abgelöst)
 ```
 
-Bei nur einem aktiven Prozess ohne Ablösungen entfällt
-die „Abgelöste Ausprägungen"-Zeile. Parallel wird der
-Status der betroffenen Fassaden in der
-FassadenLandkarte [[Fassaden]] nachgeführt.
+Eine eigene Übersicht abgelöster Ausprägungen gibt es
+dort nicht: welche Typen ersetzt sind, zeigen die
+`Replaces type`-Zeilen der Katalog-Einträge; welche
+Fassaden abgelöst sind, zeigt der Status in der
+FassadenLandkarte [[Fassaden]], die parallel
+nachgeführt wird.
 
 #### Aktive-Ausprägungen-Aggregat (on-demand)
 
@@ -1936,19 +2233,20 @@ rekonstruieren und das **aktive Blatt** bestimmen.
 **Auslöser:**
 
 - **Merge selbst (§11.3)** — Vorabprüfung, ob alle
-  `supersedes:`-Verweise auflösbar sind. Zusätzliche
-  Lint-Regeln:
-  - **Element-Sackgasse:** `supersedes: X`, aber `X`
-    existiert im Merge-Ergebnis nicht → Fehler.
-  - **Element-Zyklus:** A supersedes B supersedes A →
+  `replaces_type:`-Verweise auflösbar sind.
+  Zusätzliche Lint-Regeln:
+  - **Element-Sackgasse:** `replaces_type: X`, aber
+    `X` existiert im Merge-Ergebnis nicht → Fehler.
+  - **Element-Zyklus:** A ersetzt B ersetzt A →
     Fehler.
 - **User-Anfragen** wie „was ist die aktive Ausprägung
   von `structure`?" — Agent berechnet on-demand.
 
 **Ort des Aggregats:** on-demand, keine persistente
-Datei. Die menschenlesbare Kurzform steht als „Abgelöste
-Ausprägungen"-Zeile in [[Aktivierter-Prozess]]; die
-vollständige Rekonstruktion bleibt on-demand.
+Datei. Die menschenlesbare Kurzform sind die
+`Replaces type`-Zeilen der Katalog-Einträge und der
+Fassaden-Status in [[Fassaden]]; die vollständige
+Rekonstruktion bleibt on-demand.
 
 #### Aktivität ist keine Voraussetzung
 
@@ -1978,6 +2276,11 @@ Situationen der Prozess-Wahl:
   wechselt Prozesse in einem bestehenden Repo. Zusätzlich
   zum Merge greift die Migrations-Logik für bestehende
   Instanzen. Commit mit Präfix `Prozess-Upgrade:`.
+  **Vorbedingung:** keine Zwischenmarke läuft (keine
+  Marke steht `zurückgestellt`, [[Zielmarken]] §Meta
+  „Zwischenmarke“); solange eine läuft, gibt es kein
+  Prozess-Upgrade — der Agent verweist auf die Zeit nach
+  der Rückkehr zur zurückgestellten Marke.
 
 #### (A) Erster Init
 
@@ -2020,7 +2323,12 @@ Unterfälle:
    klaren Zuordnungen hat: Sektionen umbenennen und
    -reorganisieren). Die
    konkreten Migrations-Regeln stehen im ablösenden
-   Element selbst.
+   Element selbst. Elemente, die eine Migration
+   übernimmt, bekommen kein Anlage-Datum und gelten
+   als Bestand ([[Katalog]] §Typ-Konventionen,
+   [[Zielmarken]] §Meta): nachgetragen wird nichts,
+   der Lint meldet fehlende neue Pflichtfelder an
+   ihnen als Hinweis.
 6. **Lücken sammeln und im Rückfragen-Block vorlegen**
    (MasterPrompt §5.3 Phase D „Frage brauche ich von
    dir"). Beispiel: „Knoten `[[Sensor-Modul-Struktur]]`
@@ -2031,6 +2339,13 @@ Unterfälle:
    aktualisieren.**
 8. **Commit** mit Präfix `Prozess-Upgrade:` (MasterPrompt
    §6.2).
+9. **Absicherungs-Review**, wenn Schritte 4–6
+   bestehende Instanzen migriert haben: ohne Angebot
+   in zwei Stufen (`Reviewmuster.md` §2 Schleife 2,
+   „Absicherungs-Review nach Upgrade und Migration“).
+   Ein reiner Merge ohne Migration (B.a ohne Ablösung)
+   bekommt das normale Review-Angebot
+   ([[Angebots-und-Beauftragungs-Muster]]).
 
 #### Kein Rollback im Wiki
 

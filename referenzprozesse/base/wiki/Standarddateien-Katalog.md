@@ -24,10 +24,19 @@ bei Bedarf konsultiert.
 
 ## 2.3 KI-Agent-Instruktionsdatei
 
-Agent-spezifisch: `CLAUDE.md` (Claude Code),
-`.cursorrules` (Cursor), `.windsurfrules` (Windsurf)
-etc. Wird bei Sessionstart automatisch geladen.
-Details MasterPrompt §8.
+Agent-spezifisch; jeder Agent erzeugt seine eigene
+native Datei:
+
+| Agent | Instruktionsdatei |
+|---|---|
+| Claude Code | `CLAUDE.md` |
+| Cursor | `.cursorrules` |
+| Windsurf | `.windsurfrules` oder `.windsurf/rules` |
+
+Weitere Agenten nach ihrer Konvention. Mehrere solche
+Dateien dürfen im selben Projekt koexistieren. Wird bei
+Sessionstart automatisch geladen. Grundsatz, Rolle,
+Pflichtabschnitte: MasterPrompt §8.
 
 **Template:** wird nicht mitgeliefert. Der Agent legt
 sie beim Init an (MasterPrompt §5.3).
@@ -88,8 +97,11 @@ Agent-Erweiterungen (Skills, Rules, Workflows je nach
 Agent) sowie der Projekt-Skripte im Ordner `tools/`
 (MasterPrompt §1.9). Details MasterPrompt §7.
 
-**Template:** wird nicht mitgeliefert. Der Agent legt
-sie an, sobald das erste Tool installiert wird.
+**Template:** Kopiervorlage mit den Kategorien
+`wiki/templates/Tools-Vorlage.md`. Der Agent legt
+`Tools.md` an, sobald das erste Tool installiert oder
+die erste Werkzeug-Wahl getroffen wird (Vorgehen.md
+§7b).
 
 ## 2.10 Offene Fragen.md (optional)
 
@@ -103,7 +115,19 @@ sie beim ersten Eintrag an.
 
 Offene Punkte und Erinnerungen des Users. Die KI
 prüft beim Sessionstart und bei relevanten Aufgaben,
-fügt aber nur auf Anweisung neue Einträge hinzu.
+fügt aber nur auf Anweisung neue Einträge hinzu. Als
+Anweisung gilt auch die Antwort des Anwenders auf die
+Frage, wann der Agent ihm eine offene Frage erneut
+stellen soll (Datum oder Anlass): Diese Wiedervorlage
+trägt der Agent ohne weitere Rückfrage ein, führt sie
+fort, bis der Anwender die Frage entschieden hat, und
+erledigt sie mit dieser Entscheidung. Abläufe: die
+Nachfrage nach der Bestätigung einer ausgelieferten
+Behebung — bei der Freigabe des Deploy-Stands wie nach
+einer Antwort „noch nicht“ — in SP-1 `Anforderungen.md`
+„Fehlerbehebungen“; das vertagte Angebot einer Fassade
+— die Antwort „Später“ samt Zeitpunkt — in `Wiki.md`
+§3a „Fassaden-Promotion“.
 
 **Template:** wird nicht mitgeliefert. Der Agent legt
 sie beim Init an.
@@ -148,7 +172,16 @@ und verweist je Aufgabe auf die zugehörige Anweisung
 Wo mehrere Einstiegs-Orte üblich sind (z.B. README
 und Instruktionsdatei), ist einer führend und die
 anderen zeigen darauf. Mitgeliefert; der Agent passt
-sie beim Init an das Projekt an.
+sie beim Init an das Projekt an: die mitgelieferte
+README ist die des Templates — ihre Links auf `docs/`
+und `referenzprozesse/…` zeigen im Projekt-Root ins
+Leere, weil beides in `_template/` bleibt. Der Agent
+ersetzt sie durch das Projekt (Zweck, Einstiege,
+Instruktionsdatei) und verweist für die Erklärung der
+Vorlage auf `_template/docs/Einfuehrung.md` bzw. für
+den Update-Weg auf `_template/README.md` §Template
+aktualisieren; der Startweg „Lies … und setze das
+Projekt auf“ entfällt in der Projekt-README.
 
 ## Bezüge
 

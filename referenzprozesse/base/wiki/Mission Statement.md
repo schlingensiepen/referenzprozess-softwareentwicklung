@@ -20,7 +20,7 @@ type: mission
 
 ---
 
-**Stand:** _(über den Setup-Dialog befüllt, siehe
+**Bearbeitungsstand:** _(über den Setup-Dialog befüllt, siehe
 `../Wiki.md` §3a.2)_
 
 ## Projekt

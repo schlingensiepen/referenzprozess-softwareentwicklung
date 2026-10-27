@@ -3,7 +3,7 @@ type: process-brief
 process: RP-8
 status: geplant
 extends:
-  - SP-5-Kaufmaennische-Prozesse
+  - SP-5
 ---
 
 # RP-8 — Angebot
@@ -21,6 +21,11 @@ Beauftragung oder Absage.
 
 **Was ich mitbringe:** noch keine RP-8-spezifischen
 Fassaden oder Detail-Typen definiert — Ausarbeitung folgt.
+
+**Typische Marke (Vormerkung):** die abgegebene
+Angebotsfassung oder eine Nachbesserung. Der Knoten
+`Marken-RP-8.md` entsteht mit der Ausarbeitung (Basis:
+[[Marken]]).
 
 ## Mitgebrachte Fassaden
 

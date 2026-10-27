@@ -16,7 +16,9 @@ type: deadline-log
 - **Kanonizität:** die Wahrheit bei Frist-Status liegt
   in dieser Fassade — auch bei Aufgaben mit
   Außenwirkung; `deadline`-Detail-Knoten spiegeln
-  (Wiki.md §1.1a).
+  (Wiki.md §1.1a). Bei deaktivierter Fassade trägt
+  der Detail-Knoten seinen Status selbst (Wiki.md
+  §10a).
 - **Eintragsformat:** `### YYYY-MM-DD — <Bezeichnung>`
   mit Feldern Gesetzt am / Typ (z.B. Abgabefrist,
   Zahlungsfrist, Review-Frist) / Gegenstand ([[document-Knoten]]) /
@@ -24,12 +26,9 @@ type: deadline-log
   den Detail-Knoten; bei registrierten externen
   Fristensammlern zusätzlich „Gespiegelt: <Sammler>
   YYYY-MM-DD" je erfolgter Spiegelung.
-- **`deadline`-Detail-Knoten-Konventionen:** Frontmatter
-  `type: deadline`, `status:
-  offen|erfuellt|abgelaufen`, `due: YYYY-MM-DD`,
-  empfohlen `case:` und `source:` (String-Slugs, keine
-  Wikilinks — Wiki.md §4.1), `fulfilled_at:` bei
-  `erfuellt`. Sektionen: Was ist zu tun / Kontext /
+- **`deadline`-Detail-Knoten-Konventionen:**
+  Frontmatter-Felder: [[Katalog-Fristen]] — lesen
+  beim Anlegen eines `deadline`-Knotens. Sektionen: Was ist zu tun / Kontext /
   Teilschritte (Checkliste) / Historie / Bezüge.
   Dateiname `YYYY-MM-DD Frist <Bezeichnung>.md`.
 - **Statuswechsel nach Abgelaufen:** automatisch beim
@@ -63,7 +62,7 @@ type: deadline-log
 
 ---
 
-**Stand:** _(vom Agenten beim Ingest und laufend
+**Bearbeitungsstand:** _(vom Agenten beim Ingest und laufend
 gepflegt)_
 
 ## Offen

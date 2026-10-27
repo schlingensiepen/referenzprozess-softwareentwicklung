@@ -13,41 +13,95 @@ verlagert; dort stehen die Kurzformen.
 ## Wächter — SP-1-Trigger T2
 
 Das Wächter-Grundkonzept (Meta-Hook, der zu Trigger-
-Zeitpunkten Prüfungen ausführt) liegt in der Basis mit
-Triggern T1 (Sessionstart) und T3 (User-Anfrage).
+Zeitpunkten Prüfungen ausführt) und seine
+Basis-Anlässe liegen in der Basis: MasterPrompt §5.4
+„Wächter-Trigger“ — lesen, um T2 gegen die übrigen
+Anlässe abzugrenzen.
 
 **SP-1 ergänzt Trigger T2 — Prozess-Meilenstein-Wechsel.**
-Der Wächter läuft eine volle Runde bei jedem Meilenstein:
-Abschluss eines Meilenstein-Vorgangs
-(§Meilenstein-Vorgang unten), Buchung
-einer zweck-gebundenen Freigabe (RP-1 präzisiert die
-Freigabe-Anlässe), Abschluss eines Scaffolding-Schritts,
-**Zielmarken-Wechsel** (Wechsel des `in-progress`-Zeigers
-— die Wechsel-Prozedur steht in der `## Meta` der
-Fassade Zielmarken; der T2-Lauf reaktiviert dabei auch
-Einträge mit Marken-Trigger auf die neue Marke).
-Die konkreten Meilenstein-Definitionen sind
-prozess-abhängig.
+Bei T2 läuft die **volle Wächter-Runde C4 bis C8**
+(Nicht-Endzustände und eingetretene Auslöser), nicht
+nur C5. Meilenstein-Anlässe:
 
-**Meilenstein-Regel „agent-lokal, mit Aggregaten für
-Koordinator":**
+- **Freigabe eines Pflicht-Stands der Kette** (der
+  Phasen P1–P11 einer Marke, die nicht abgeschlossen
+  ist; der Abschluss-Stand ist ausgenommen, nächster
+  Anlass) — Vorbedingung der Freigabe ist die
+  [[Kettenpruefung]]; der Meilenstein ist die Freigabe
+  selbst, der Wächter läuft danach. **Keine Freigabe im
+  Nachtrag zu einer abgeschlossenen Marke ist ein
+  Anlass** — weder die Tag-Freigabe einer Tag-Korrektur
+  noch die Freigabe eines nachgetragenen Deploy-Stands
+  ([[Zielmarken]] §Meta, Nachtrag): die Marke ist
+  abgeschlossen, ihr Meilenstein Marken-Abschluss ist
+  mit dem Wechsel erreicht, am Produkt ändert sich
+  nichts; eine T2-Runde folgt nicht, auch kein
+  agent-lokaler Freigabe-Meilenstein (unten).
+- **Marken-Abschluss** — erreicht mit dem gebuchten
+  Zielmarken-Wechsel (Schritt 4 der Wechsel-Prozedur,
+  `## Meta` der Fassade Zielmarken): erst damit ist die
+  Marke abgeschlossen; die Freigabe des
+  Abschluss-Stands (Schritt 2) ist kein eigener
+  Meilenstein, weil die Schleife der Prozedur sie
+  wiederholen kann. Der T2-Lauf reaktiviert dabei auch
+  Einträge mit Marken-Trigger auf die neue Marke (nur
+  Sammel-Register) — nach einer Zwischenmarke ist die
+  neue Marke eine folgende Zwischenmarke oder, bei der
+  Rückkehr nach der letzten, die zurückgestellte,
+  geweckt wird, was dann noch aufgeschoben ist
+  ([[Zielmarken]] §Meta, Marken-Trigger).
+- **Phasen-Übergang**.
+- **Scaffolding-Commit** (Anlage der Grundstruktur eines
+  Codeprojekts).
+- Mit RP-1 die agent-lokalen Freigabe-Meilensteine der
+  Rollen (RP-1 `index.md` §6).
 
-- **Komponenten-Agent:** hat die Zweck-Freigaben seiner
-  eigenen Komponente als Meilensteine (T2-Trigger).
-- **Koordinator-Agent:** hat die Zweck-Freigaben der
-  Gesamtsystem-Phasen als Meilensteine plus **Aggregate
-  über alle Komponenten** (die letzte gleichartige
-  Komponenten-Freigabe aller Komponenten wird als
-  Koordinator-Meilenstein gewertet — der Koordinator-
-  Wächter läuft, sobald alle Komponenten den Meilenstein
-  erreicht haben).
-- **Ein-Komponenten-Fall / Standalone:** alle
-  Zweck-Freigaben des eigenen Repos als Meilensteine
-  (kein Koordinator/Komponent-Split nötig).
+Jeder dieser Anlässe schließt einen Meilenstein-Vorgang
+ab (§Meilenstein-Vorgang unten); einen weiteren Anlass
+daneben gibt es nicht — eine Freigabe im Nachtrag zu
+einer abgeschlossenen Marke ist keiner (oben). Der Zielmarken-Wechsel ist damit
+kein T2-Ereignis neben den Meilenstein-Vorgängen,
+sondern der Moment, in dem der Meilenstein
+„Marken-Abschluss“ eintritt — ein T2-Lauf je Abschluss.
 
-Die konkreten Freigabe-Anlässe liegen in RP-1
-(`_template/referenzprozesse/RP-1-Systementwicklung/wiki/Vorgehen-RP-1.md`
-§4).
+**Nicht triggern:** einzelne Register-Statuswechsel
+(werden gebucht und im Erledigt-Block gemeldet),
+Alltags-Commits (Ingest, Wiki-Änderung,
+Output-Version), jeder einzelne Zug. **Ausgabeform:**
+im Erledigt/Aktion/Frage-Raster; bei leerem Befund
+keine Ausgabe.
+
+**Meilenstein-Regel „agent-lokal":**
+
+- **Komponenten-Agent:** hat die Freigaben der
+  Pflicht-Stände seiner eigenen Kette als Meilensteine
+  (T2-Trigger).
+- **Koordinator-Agent:** hat die Freigaben seiner
+  eigenen Pflicht-Stände als Meilensteine; das
+  Koordinator-Aggregat ist P10+P11. **Komponenten-
+  Freigaben erreichen den Koordinator immer per
+  Nachricht** — Lieferung (der Tag der Komponente, P9;
+  übernommene Lieferung und Zwischen-Koordinator:
+  [[Kettenpruefung]] §Kette und §Komponenten-Kette
+  nach Übernahme-Art) und Marken-Abschluss (ihr
+  Abschluss-Stand); das Lesen der Stände der
+  Komponente ist nur die Prüfung.
+  Nachricht und Buchung mit `quelle:`:
+  [[Katalog-message]], lesen, wenn eine Meldung
+  eingeht; gebucht wird am Marken-Eintrag
+  ([[Zielmarken]], Abschnitt „Zuliefernde
+  Komponenten“).
+  **Koordinator-Meilenstein** (T2) sind die letzte
+  Lieferung und der letzte Marken-Abschluss der Marke;
+  sonst löst keine Komponenten-Freigabe eine volle
+  Wächter-Runde des Koordinators aus (den Eingang der
+  Nachricht behandelt C8, Anlass T5 in MasterPrompt
+  §5.4).
+- **Standalone** (kein Schnitt in Komponenten-Repos):
+  alle Freigaben der Pflicht-Stände des eigenen Repos
+  als Meilensteine. Ein Koordinator mit nur einer
+  Komponente bleibt Koordinator (Koordinator-Meilenstein
+  oben).
 
 ## Meilenstein-Vorgang
 
@@ -85,3 +139,6 @@ was ein Zug in SP-1 typisch ist, steht in
 - Kern-Kurzformen: SP-1-`index.md` §4.2 und §4.3
 - Zug-Terminologie: MasterPrompt §6.1;
   `Vorgehen-SP-1.md` §7
+- Freigabe-Vorbedingung und Freigabe-Ordnung:
+  [[Kettenpruefung]]; Marken-Abschluss und
+  Wechsel-Prozedur: [[Zielmarken]]

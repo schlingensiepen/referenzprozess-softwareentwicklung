@@ -27,15 +27,16 @@ active: true   # kann nicht deaktiviert werden — die FassadenLandkarte ist Pfl
   („deaktiviere X" / „reaktiviere X"), Prozess-Merge
   und Anlage projekt-eigener Fassaden im selben Vorgang
   nachführen.
-- **Abgrenzung:** [[Knotentypen]] = was gibt es
-  strukturell (Typ-Katalog); diese Landkarte = was ist
+- **Abgrenzung:** [[Katalog]] = was gibt es
+  strukturell (welche Typen; Katalog-Einträge); diese
+  Landkarte = was ist
   in diesem Projekt aktiv und wozu; [[InterneMechanik]]
   = wie steuert sich dieses Projekt; [[Facts]] = was
   hat der Anwender festgeschrieben.
 
 ---
 
-**Stand:** _(vom Agenten beim Init und laufend gepflegt)_
+**Bearbeitungsstand:** _(vom Agenten beim Init und laufend gepflegt)_
 
 ## InterneMechanik und MetaFassade
 
@@ -50,6 +51,12 @@ Diese Landkarte selbst ([[Fassaden]], Typ
 `facade-registry`) ist das Register aller Fassaden —
 Status: aktiv, Kategorie Basis, nicht deaktivierbar.
 
+Ebenso nicht deaktivierbar sind [[Facts]], [[Katalog]],
+[[Zielmarken]] und [[Entscheidungen]] (Pflicht-Fassaden
+in jedem Projekt, Wiki.md §3a „mandatory“); sie stehen
+mit Status `aktiv` ohne Vorauswahl-Vermerk in der
+Tabelle unten.
+
 ## Aktive Fassaden
 
 | Fassade | Kurzform | Status | Kategorie |
@@ -61,12 +68,12 @@ Status: aktiv, Kategorie Basis, nicht deaktivierbar.
 | [[Aktenzeichen]] | Register aller Aktenzeichen | aktiv _(Vorauswahl)_ | Basis |
 | [[Ansprechpartner]] | wer ist wofür zuständig | aktiv _(Vorauswahl)_ | Basis |
 | [[Ideen]] | Register unverbindlicher Ideen | aktiv _(Vorauswahl)_ | Basis |
-| [[Entscheidungen]] | Register aller Entscheidungen | aktiv _(Vorauswahl)_ | Basis |
+| [[Entscheidungen]] | Register aller Entscheidungen, darunter Freigaben und Marken-Wechsel (Pflicht in jedem Projekt) | aktiv | Basis |
 | [[Glossar]] | freigegebene Terminologie | aktiv _(Vorauswahl)_ | Basis |
 | [[Glossar Review]] | Glossar-Vorschläge in Bearbeitung | aktiv _(Vorauswahl)_ | Basis |
 | [[Konzepte]] | Register der Sach-Wissens-Anker (concept-Knoten) | aktiv _(Vorauswahl)_ | Basis |
-| [[Zielmarken]] | Register der Planungs-Horizonte (Zeiger current/in-progress) | aktiv _(Vorauswahl)_ | Basis |
-| [[Knotentypen]] | kanonischer Typen-Katalog | aktiv | Basis |
+| [[Zielmarken]] | Register der Marken — Zwischenziel-Anker des Projekts (Zeiger current/in-progress; Pflicht in jedem Projekt) | aktiv | Basis |
+| [[Katalog]] | Katalog der Typen (Meta-Fassade mit Katalog-Einträgen) | aktiv | Basis |
 | [[InterneMechanik]] | Steuerungs-Wissen des Projekts | aktiv | Basis |
 | [[Eingangsdokumente]] | Register aller Eingangsdokumente | aktiv _(Vorauswahl)_ | Basis |
 | [[Agent-Berichte]] | Register aller Sub-Agent-Berichte | aktiv _(Vorauswahl)_ | Basis |
@@ -82,3 +89,6 @@ Status: aktiv, Kategorie Basis, nicht deaktivierbar.
 | [[Orte]] | Register aller Orts-Knoten | deaktiviert _(Vorauswahl)_ | Basis |
 | [[Dinge]] | Register aller `thing`-Knoten (physische Dinge) | deaktiviert _(Vorauswahl)_ | Basis |
 | [[Mitgliedschaften]] | Relations-Register Person↔Organisation | deaktiviert _(Vorauswahl)_ | Basis |
+| [[Rollen]] | Register der Rollen-Definitionen (Pflicht, wenn ein Prozess sie kopiert) | deaktiviert _(Vorauswahl)_ | Basis |
+| [[Bedarfe]] | Register der Bedarfe — Vorstufe der Anforderungen (Pflicht, wenn ein Prozess sie filtert) | deaktiviert _(Vorauswahl)_ | Basis |
+| [[Szenarien]] | Register der Szenarien — Vorstufe der Anforderungen (Pflicht, wenn ein Prozess sie filtert) | deaktiviert _(Vorauswahl)_ | Basis |

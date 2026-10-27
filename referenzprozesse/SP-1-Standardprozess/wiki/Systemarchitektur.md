@@ -12,58 +12,116 @@ Systemarchitektur ist bei jedem Entwicklungsvorhaben
 
 ## Meta
 
-- **Typ:** `system-architecture-overview` —
-  Sollzustands-Fassade Systemarchitektur mit
-  generischen Sektionen. Singleton.
-- **Kategorie:** (b) Inline-Fassade im wiki/ mit
-  optionalen Detail-Knoten — siehe Wiki.md
-  §Kategorisierung der Register.
-- **Kanonizität:** die Wahrheit bei allen hier
-  festgehaltenen Aspekten liegt in dieser Fassade —
-  Detail-Knoten (Typ `system-component`) dürfen für
-  einzelne Bausteine ergänzt werden, die Fassade behält
-  die Übersicht (Wiki.md §1.1a).
-- **Sollzustand:** nicht fortgeschrieben — bei
-  Änderungen überschrieben; die zugehörige Entscheidung
-  mit Begründung steht im Entscheidungsregister.
+- **Typ:** `system-architecture-overview` — Fassade
+  der Systemarchitektur: Register der
+  **Architektur-Festlegungen** (ARC) und lebende
+  Übersicht mit generischen Sektionen. Singleton,
+  ID-Präfix `ARC-NNN`.
+- **Kategorie:** (a) Fassade + Detail-Knoten im wiki/ —
+  siehe Wiki.md §Kategorisierung der Register; dazu
+  lebende Sektionen (Zweck und Abgrenzung,
+  Komponenten, Beziehungen, Verantwortungen,
+  Design-Prinzipien).
+- **ARC-Elemente:** Struktur-Beschreibungen ohne
+  Alternativen-Abwägung — Zuschnitt und Zuständigkeit
+  einer Komponente, Kommunikation über Contracts,
+  Lage. Sie stützen sich per `abgeleitet_von:` auf
+  Entscheidungen und Funktionsbeschreibungen; eine
+  Wahl mit Alternativen (Muster, Technologie) bleibt
+  eine DEC in [[Entscheidungen]]. ARC-Elemente werden
+  mit dem Anwender-OK angenommen und sind ab dann
+  eingefroren ([[Einfrieren-und-Abloesen]]); eine
+  Änderung ist eine Ablösung. Der Stand der Phase P5
+  ist das Architekturdokument
+  ([[Katalog-Architekturdokument]]).
+- **Lebende Sektionen:** die übrigen Sektionen sind
+  Sollzustand — bei Änderungen überschrieben, nicht
+  fortgeschrieben; ein Stand kopiert sie. Was eine
+  Festlegung ist, steht als ARC-Element, nicht nur
+  im Fließtext.
+- **Kanonizität:** die Wahrheit beim Status der
+  ARC-Elemente liegt in dieser Fassade —
+  Detail-Knoten (Typ `architecture-description`)
+  spiegeln (Wiki.md §1.1a, [[Register-Grundmuster]]);
+  bei den lebenden Sektionen liegt die Wahrheit hier.
+- **Eintragsformat (ARC):** `### ARC-NNN — <Kurzsatz>`
+  in der Sektion §Festlegungen, mit Feldern Status +
+  status_date / Gestützt auf (DEC, FUNC) / Angelegt
+  (Anlage-Datum `JJJJ-MM-TT`, Pflichtfeld seit 2.0 am
+  Eintrag ohne Detail-Knoten, sonst `datum:` im
+  Detail-Knoten; [[Katalog]] §Typ-Konventionen) /
+  Zielmarke
+  ([[Zielmarken]]; Pflichtfeld, kanonisch hier) /
+  Ablösung / Detail
+  (Wikilink, nur wenn Detail-Knoten existiert).
+  Beschreibt die Festlegung eine Schnittstelle, aus
+  der ein Contract abgeleitet wird, nennt sie
+  zusätzlich **Provider** und **Consumer**
+  (Komponenten-Namen aus §Komponenten; Felder
+  `provider:` und `consumer:` am Detail-Knoten,
+  [[Katalog-Systemarchitektur]]) — daran prüft der
+  Lint die Consumer-Registrierungen im
+  [[Contract-Index]].
+- **`architecture-description`-Detail-Knoten-
+  Konventionen:** Frontmatter-Felder:
+  [[Katalog-Systemarchitektur]] — lesen beim Anlegen
+  eines ARC-Knotens. Sektionen: Festlegung /
+  Begründung aus DEC und FUNC / Vermerke (append-only)
+  / Bezüge (Fassaden-Eintrag [[Systemarchitektur]]).
+  Dateiname `ARC-NNN <Kurzsatz>.md`.
+- **Komponenten (Lage-Entität):** die Sektion
+  §Komponenten ist das Register der Komponenten und
+  ihrer **Lage** — eine Zeile je Komponente (Name,
+  Aufgabe, Repo-Name als Qualifizierer in Verweisen
+  über Repo-Grenzen, Pfad, Remote, Detail). Eine
+  Komponente ist eine Entität; ihr Zuschnitt ist ein
+  ARC-Element, ihre Lage lebend und im Stand kopiert.
+  **Eigenes Bauteil** ist eine Zeile, deren Lage das
+  eigene Repo ist; ein Standalone-Projekt hat genau
+  eine solche Zeile. Im Komponenten-Repo führt die
+  Sektion zusätzlich den Koordinator und die
+  bekannten Nachbarn (gefüllt aus dem Startprompt).
+  Lint und Prüfungen lesen die
+  Lage hier; eine eigene Komponenten-Fassade gibt es
+  nicht.
 - **`system-component`-Detail-Knoten-Konventionen:**
-  Frontmatter `type: system-component`; Dateiname im
-  Title-Case (`Auth Modul.md`, `Sensorik Baugruppe.md`).
-  Sektionen: Zweck (ein bis drei Sätze) /
+  Frontmatter-Felder: [[Katalog-Systemarchitektur]];
+  Dateiname im Title-Case (`Auth Modul.md`,
+  `Sensorik Baugruppe.md`). Sektionen: Zweck (ein bis drei Sätze) /
   Schnittstellen (angeboten und genutzt: Form,
   Gegenstelle, Vertrag) / Verantwortung (wofür
   zuständig — und wofür ausdrücklich nicht) /
   Abhängigkeiten / Bezüge (Fassaden-Eintrag
   [[Systemarchitektur]]). **Anlage-Schwelle:**
-  Pflicht, sobald ein Baustein einen eigenen
+  Pflicht, sobald eine Komponente einen eigenen
   Bearbeiter oder Peer-Agenten, einen Contract oder
   ein eigenes Repository hat — dann ist der Knoten
   der stabile Bezugs-Anker („meine Komponente" ist
-  eine Datei). Darunter Kann — Faustregel: sobald ein
-  Baustein mehrfach referenziert wird, eigene
+  eine Datei). Darunter Kann — Faustregel: sobald eine
+  Komponente mehrfach referenziert wird, eigene
   Schnittstellen hat oder als Argumentations-Anker
   dient.
-- **Bausteine-Register:** die Sektion §Bausteine ist
-  das Register der Komponenten — eine Zeile je
-  Baustein (Name, Aufgabe in einem Satz, Wikilink auf
-  den Detail-Knoten, sobald er existiert). Ein
-  separates Komponenten-Register gibt es nicht; diese
-  Fassade ist der eine führende Ort.
 - **`system`-Detail-Knoten:** das entwickelte System
   selbst und relevante Umsysteme/Nachbar-Systeme
   können als Knoten vom Typ `system` angelegt werden
-  (Katalog: Knotentypen-Anhang). Indexiert über
+  (Katalog-Eintrag [[Katalog-Systemarchitektur]]).
+  Indexiert über
   §Zweck und Abgrenzung bzw. §Beziehungen — es gibt
   kein eigenes Systeme-Register.
+- **Zielumgebungen und Deployments** sind eine eigene
+  Achse ([[Zielumgebungen]], [[Deployments]]); die
+  Architektur gilt je Marke umgebungsunabhängig.
 - **Ablösung:** RP-1 löst diese Fassade mit
-  `Softwaresystemarchitektur` ab (per `supersedes:`,
+  `Softwaresystemarchitektur` ab (per `replaces_type:`,
   Wiki.md §11.4).
+- **Commit-Präfix:** `Architektur:` (Fassade und
+  ARC-Detail-Knoten).
 
 ---
 
-**Stand:** _(vom Agenten beim Init aus dem Auftrag
-abgeleitet und bei Änderungen überschrieben — nicht
-fortgeschrieben)_
+**Bearbeitungsstand:** _(vom Agenten beim Init aus dem Auftrag
+abgeleitet; lebende Sektionen bei Änderungen
+überschrieben, Festlegungen als ARC-Elemente geführt)_
 
 Beschreibt den **Sollzustand** des Systems.
 
@@ -72,25 +130,31 @@ Beschreibt den **Sollzustand** des Systems.
 <Was leistet das System — und ausdrücklich, was leistet
 es nicht.>
 
-## Bausteine
+## Festlegungen
 
-_(Register der Komponenten — führender Ort. Eine Zeile
-je Baustein; Detail-Knoten nach der Anlage-Schwelle in
-`## Meta`.)_
+_(Register der Architektur-Festlegungen, chronologisch
+nach ID; Eintragsformat in `## Meta`.)_
 
-| Baustein | Aufgabe | Detail |
-|---|---|---|
-| <Name> | <ein Satz> | <[[Wikilink]] oder — > |
+## Komponenten
+
+_(Register der Komponenten und ihrer Lage — führender
+Ort. Eine Zeile je Komponente; Detail-Knoten nach der
+Anlage-Schwelle in `## Meta`. Standalone: eine Zeile
+mit dem eigenen Repo.)_
+
+| Komponente | Aufgabe | Repo-Name | Pfad | Remote | Detail |
+|---|---|---|---|---|---|
+| <Name> | <ein Satz> | <Qualifizierer> | <lokaler Pfad> | <Remote oder —> | <[[Wikilink]] oder — > |
 
 ## Beziehungen
 
-<Wie die Bausteine zusammenhängen: Schnittstellen,
+<Wie die Komponenten zusammenhängen: Schnittstellen,
 Datenflüsse, Abhängigkeiten, Verträge zwischen
-Bausteinen.>
+Komponenten.>
 
 ## Verantwortungen
 
-<Zuständigkeit je Baustein bzw. Bereich — wer oder was
+<Zuständigkeit je Komponente bzw. Bereich — wer oder was
 verantwortet welchen Teil des Systems.>
 
 ## Design-Prinzipien

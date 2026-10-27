@@ -3,7 +3,7 @@ type: process-brief
 process: RP-4
 status: geplant
 extends:
-  - SP-2-Recht-und-Verwaltung
+  - SP-2
 ---
 
 # RP-4 — Steuerfall
@@ -31,6 +31,10 @@ Aussage bereits im Source-Knoten enthalten ist).
 Basis-`thing` bleibt für physische Dinge verfügbar
 und wird erst über die `evidence`-Relation zum
 Beweismittel.
+
+**Typische Marke (Vormerkung):** die Erklärung eines
+Jahres oder ein Einspruch. Der Knoten `Marken-RP-4.md`
+entsteht mit der Ausarbeitung (Basis: [[Marken]]).
 
 ## Mitgebrachte Fassaden
 

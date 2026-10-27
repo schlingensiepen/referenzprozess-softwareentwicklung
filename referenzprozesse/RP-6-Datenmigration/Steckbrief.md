@@ -25,6 +25,10 @@ Migrations-Projekte.
 **Was ich mitbringe:** noch keine RP-6-spezifischen
 Fassaden oder Detail-Typen definiert — Ausarbeitung folgt.
 
+**Typische Marke (Vormerkung):** die Probemigration,
+dann die Umstellung. Der Knoten `Marken-RP-6.md`
+entsteht mit der Ausarbeitung (Basis: [[Marken]]).
+
 ## Mitgebrachte Fassaden
 
 Wird bei der Ausformulierung (Version 1.1+) festgelegt.

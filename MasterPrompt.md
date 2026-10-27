@@ -1,6 +1,6 @@
 # MasterPrompt — Projektkonventionen für KI-gestützte Arbeit
 
-**Stand: 23.08.2026**
+**Bearbeitungsstand: 2026-10-25**
 
 Dieses Dokument ist die **KI-agnostische Quelle** aller
 Konventionen für die Zusammenarbeit zwischen User und
@@ -13,7 +13,7 @@ geladene Datei ist die **agent-spezifische
 Instruktionsdatei** (siehe §8), die aus dem MasterPrompt
 abgeleitet wird.
 
-**Adaptions-Pflicht (DEC-211):** Alle hier und in den
+**Adaptions-Pflicht:** Alle hier und in den
 Teildateien beschriebenen Mechanismen (Sub-Agenten,
 Prüf-/Recherche-Werkzeuge, Datei- und Git-Operationen,
 Wächter-Läufe, Konvertierungen) sind
@@ -34,7 +34,7 @@ ausgelagert. Jede ist in sich abgeschlossen und wird
 bei Bedarf gezielt konsultiert:
 
 - **`Wiki.md`** — komplette Wiki-Logik: Ingest,
-  Knotentypen, Knoten-Aufbau, Index, Log,
+  Typen und Katalog, Knoten-Aufbau, Index, Log,
   Cross-References, Lint, Snapshots.
 - **`Outgoing.md`** — Outgoing-Pipeline: Format,
   Pandoc-Templates, Versandkanäle.
@@ -74,10 +74,10 @@ Root/                             ← Arbeitsverzeichnis
 ├── index-output.md               ← Index der Ausgangsdokumente
 ├── index-overview.md             ← Index der Übersichtsdokumente
 ├── [Arbeitsdokumente].md         ← weitere .md nach Bedarf
-├── _template/                    ← Template-Quelle, Nur-Lese, beide Modi (DEC-223)
+├── _template/                    ← Template-Quelle, Nur-Lese, beide Modi
 │   └── referenzprozesse/         ← Prozess-Vorlagen (siehe Anbindungs-Modi)
 │       ├── base/
-│       │   ├── bootstrap/        ← Einmal-Anweisungen je Fassade (DEC-217, nie kopiert)
+│       │   ├── bootstrap/        ← Einmal-Anweisungen je Fassade (nie kopiert; Wiki.md §11)
 │       │   └── wiki/             ← Basis-Fassaden-Skelette
 │       ├── SP-1-Standardprozess/ ← ausgearbeiteter Prozess
 │       ├── RP-1-Systementwicklung/ ← ausgearbeiteter Prozess
@@ -93,9 +93,12 @@ Root/                             ← Arbeitsverzeichnis
 │   ├── index.md                  ← Wiki-Katalog mit Meta-Header
 │   ├── log.md                    ← Ingest-Log
 │   ├── Facts.md                  ← Projekteinstieg, Stolpersteine [mandatory]
-│   ├── Knotentypen.md            ← kanonischer Typen-Katalog [mandatory]
+│   ├── Katalog.md                ← Katalog der Typen (Meta-Fassade) [mandatory]
+│   ├── Katalog-<Name>.md         ← Katalog-Einträge (je Register bzw. Einzeltyp)
 │   ├── Fassaden.md               ← FassadenLandkarte [mandatory]
 │   ├── InterneMechanik.md        ← Steuerungs-Wissen [mandatory]
+│   ├── Zielmarken.md             ← Marken als Zwischenziel-Anker [mandatory]
+│   ├── Entscheidungen.md         ← Entscheidungen, Freigaben, Marken-Wechsel [mandatory]
 │   ├── <weitere Fassaden>.md     ← alle Fassaden mit Status: `wiki/Fassaden.md`
 │   ├── templates/                ← Kopiervorlagen für Root-Setup-Dateien (§2, §7.5)
 │   └── <Wiki-Knoten>.md          ← Detail-Knoten (siehe Wiki.md)
@@ -113,35 +116,26 @@ Aktivierungs-Status aller Fassaden führt
 zeigt nur die Anker.
 
 **Anbindungs-Modi.** Beim Init entscheidet der
-Anwender, wie das Template ins Projekt kommt. Es gibt
-zwei zulässige Modi und nur diese zwei — keine dritte
-Bauform, keine Mischform:
+Anwender, wie das Template ins Projekt kommt: als
+Einmal-Kopie (Modus A) oder als git-Submodul (Modus B)
+unter `_template/`. Die beiden Modi, ihre
+Update-Mechanik und was danach ins Projekt kopiert
+wird: [[Init-Choreografie]] §Phase A0 — lesen beim
+Init und vor einem Template-Update; den Update-Weg
+eines bestehenden Projekts (über den Starter) nennt
+`README.md` §Template aktualisieren.
 
-- **Modus A — Einmal-Kopie unter `_template/`.** Der
-  Agent kopiert die komplette Template-Quelle aus
-  einem angegebenen Pfad einmalig nach `_template/`
-  (bei einem git-Klon ohne dessen `.git`), dort
-  **Nur-Lese** und mit dem Projekt committet. Die
-  Kopie ist das **Ur-Versions-Archiv**: sichtbar,
-  mit welchem Template-Stand das Projekt aufgesetzt
-  wurde, und diff-bar. Die Herkunft (Quelle und
-  Stand, z.B. Commit/Tag) vermerkt der Agent im
-  Knoten [[Aktivierter-Prozess]]. Updates: bewusster
-  Austausch von `_template/` gegen einen neueren
-  Stand (eigener Commit), danach Delta-Nachzug der
-  lebenden Dokumente wie bei Modus B (DEC-223).
-- **Modus B — git-Submodul `_template/`.** Der Agent
-  bindet das Template-Repo als Submodul unter
-  `_template/` ein (Nur-Lese). Version-Pinning per
-  Submodul-Commit-Hash; Template-Updates aktiv
-  abrufbar per `git submodule update --remote`.
-
-In beiden Modi ist `_template/` die Template-Quelle
-(DEC-223). `referenzprozesse/` bleibt in
+In beiden Modi ist `_template/` die Template-Quelle.
+`referenzprozesse/` bleibt in
 `_template/referenzprozesse/` (keine Kopie ins
 Anwender-Root) und ist **Nur-Lese** — zulässige
-Lese-Zugriffe sind der Steckbrief-Scan beim Init
-und das Lesen als Merge-Quelle (Wiki.md §11.3). Der
+Lese-Zugriffe sind unter anderem der Steckbrief-Scan
+beim Init, das Lesen als Merge-Quelle (Wiki.md §11.3),
+die Bootstrap-Abarbeitung (Wiki.md §3a, §11.3
+Schritt 5), das Lesen der Prozess-Definition
+(`index.md`, `Steckbrief.md`) und nicht gemergter
+Prozess-Knoten, auf die ein Zeiger im Wiki verweist,
+sowie der Aufruf von `_template/tools/lint.sh`. Der
 Agent schreibt dort nie.
 
 ### 1.1 Root-Verzeichnis
@@ -154,7 +148,7 @@ von der KI verwaltet und folgen den Konventionen dieses
 Dokuments und seiner Teildateien. Daneben liegt in
 beiden Anbindungs-Modi `_template/` — die
 Template-Quelle, Nur-Lese, kein KI-verwalteter
-Arbeitsordner (DEC-223).
+Arbeitsordner (Anbindungs-Modi, §1).
 
 Der User kann weitere Unterordner im Root anlegen —
 für Teilaufgaben, Zwischendokumente oder thematische
@@ -188,7 +182,10 @@ Konvention. Es gilt:
   „Mitgebrachte Ordner" — der Prozess-Merge
   übernimmt die Deklaration automatisch als
   Freigabe-Buchung (Standardaufgabe, Wiki.md
-  §11.3). Das Arbeiten nach einem
+  §11.3; beim Init erst, nachdem die erste Marke
+  angelegt ist — der Eintrag trägt `zielmarke:`,
+  [[Init-Choreografie]] §Phase D Turn 3). Das
+  Arbeiten nach einem
   **Referenzprozess** impliziert diese Freigabe für
   die dort benannten Ordner — der Referenzprozess-
   Text nennt sie namentlich oder legt fest, wo sie
@@ -301,7 +298,7 @@ KI-Arbeit.** Ebenen:
 
 - **Fassaden (Übersichts-Knoten):** geschlossene, am
   Stück lesbare Dokumente (`Facts.md`,
-  `Knotentypen.md`, `Mission Statement.md`,
+  `Katalog.md`, `Mission Statement.md`,
   `Chronologie.md`, `Fristen.md`, `Aktenzeichen.md`,
   `Ansprechpartner.md`, `Glossar.md` etc.).
 - **Detail-Knoten (atomar):** pro eigenständig
@@ -322,37 +319,57 @@ Knoten-Instanzen. Einzige Unterordner-Ausnahme:
 Root-Setup-Dateien ([[Standarddateien-Katalog]]
 §2.7a/§2.13, §7.5).
 
-**Progressive Disclosure:** Für Überblick reichen die
-Fassaden (context-window-schonend); für Details
-folgt der Agent den Wikilinks in die Detail-Knoten.
-Details siehe `Wiki.md`.
+**Progressive Disclosure:** wie Fassaden und
+Detail-Knoten zusammen gelesen werden: §5.4 — lesen,
+bevor aus dem Wiki eine inhaltliche Aussage
+abgeleitet wird.
 
 ### 1.5 output/
 
 Enthält **eingefrorene Übergabe-Stände**: inhaltliche
 Ausgangsdokumente (Stellungnahmen, Angebote, Briefe,
 Berichte) **und** Übergaben an andere Agenten oder
-Repos (z.B. Startprompts, Deploy-Dokumente, Testpläne
+Repos (z.B. Startprompts, Deploy-Stände, Testpläne
 in Mehr-Repo-Prozessen) — Übergabe ist Übergabe,
 unabhängig davon, ob ein Mensch oder ein Agent
 empfängt. Dokumente in `output/` werden
-**versioniert** (siehe §4). Das Verzeichnis wird von
-KI und User gemeinsam genutzt.
+**versioniert** (siehe §4; vor jedem Schreiben in
+`output/` §4.3 und §4.4 lesen). Das Verzeichnis wird
+von KI und User gemeinsam genutzt.
 
-**Zweigleisigkeits-Regel:** Übergabe-Artefakte mit
-lebendem Wissens-Kern (z.B. Spezifikationen,
-Testpläne) laufen zweigleisig — die **lebende
-Fassung** ist ein Wiki-Knoten (mit Typ und
-indexierender Fassade), der **Freigabe-/
-Übergabe-Stand** ist die versionierte Datei hier;
-der Freigabe-Eintrag im Entscheidungs-Register
-verweist auf die exakte Version. Was lebt, lebt im
-`wiki/` — `output/` friert ein. **Stand-Zwang
-(DEC-214):** jede Zweck-Freigabe bindet sich an
-einen solchen versionierten Stand und folgt der
-kanonischen Formel „Stand x von ⟨Artefakt⟩,
-freigegeben für Zweck Z [zu Marke M]"
-(Vorgehen.md §4).
+**Dreiklang:** Register-Wissen hat drei Ebenen — die
+**Fassade** (lebend) und ihre **Elemente**
+(eingefroren ab ihrem Freeze-Zeitpunkt) liegen im
+`wiki/`, der **Stand** je Dokumenttyp ist das
+abgeleitete, versionierte Dokument hier. Was lebt,
+lebt im `wiki/` — `output/` friert ein. Wann ein
+Artefakt seinen Stand erhalten muss und wie eine
+Freigabe an ihn gebunden und gebucht wird
+(Stand-Zwang, Freigabe-Formel): `Vorgehen.md` §4 —
+lesen vor jeder Freigabe.
+
+- **Herkunftszeile:** im Kopf jedes Stands stehen
+  Marke, Datum, Zweck und Herkunft als
+  Frontmatter-Felder (`marke`, `datum`, `zweck`,
+  `herkunft`; selbsttragende
+  Ableitungen `marke`, `quell_stand`) — Bedeutung und
+  Format: [[Einfrieren-und-Abloesen]] §Stand, lesen
+  beim Anlegen eines Stands.
+- **Kopien:** Kopien der nicht eingefrorenen Knoten
+  und der lebenden Quellen liegen neben dem Stand in
+  `output/<Ketten-ID>_VV_TLA/` (Dateiname des Stands
+  ohne Endung) — was kopiert wird und wie es
+  gekennzeichnet ist: [[Einfrieren-und-Abloesen]]
+  §Kopien.
+- **Überholte Stände** werden abgeleitet, nicht
+  gebucht (Lint berechnet, C5 meldet) —
+  [[Einfrieren-und-Abloesen]] §Überholt-Regel, lesen,
+  wenn ein verwiesenes Element abgelöst wird.
+- **Nachrichten** an andere Repos im Verbund liegen in
+  `output/nachrichten/` des Absenders, ohne `_VV_TLA`:
+  sie sind ab Anlage eingefroren und werden nicht
+  versioniert. Felder, Nummer, Quittung und Buchung:
+  [[Katalog-message]], lesen vor der ersten Nachricht.
 
 ### 1.6 overview/
 
@@ -385,6 +402,11 @@ Tools und APIs — analog zur
 Konvertierungs-Fallback-Regel in §1.3.1.
 
 Vollständig beschrieben in **`Outgoing.md`**.
+
+**Abgrenzung:** `outgoing/` dient nur dem Versand an
+Menschen. Übergaben an andere Agenten oder Repos sind
+Stände in `output/`, Nachrichten im Verbund liegen in
+`output/nachrichten/` (§1.5).
 
 Ein Versandstand-Ordner ist als Ganzes
 **unveränderlich** ab Erzeugung und wird **nicht
@@ -421,7 +443,7 @@ der Agent ab; `docsources.yml` bleibt unberührt).
 
 ### 1.9 tools/
 
-**Projekt-Werkzeuge des Agenten** (DEC-220):
+**Projekt-Werkzeuge des Agenten:**
 Skripte, die das Projekt betreiben — Konverter,
 Massen-Ingest-Skripte, Lint- und Kadenz-Werkzeuge,
 Automatisierungen. Abgrenzung: Produkt-Code gehört
@@ -530,7 +552,8 @@ mit Leerzeichen). Siehe `Wiki.md`.
 
 ### 3.5 output/ und overview/
 
-Volles Schema mit Versionsteil aus §3.1.
+Volles Schema mit Versionsteil aus §3.1. Ausnahme:
+Nachrichten in `output/nachrichten/` (§1.5).
 
 Beispiele:
 
@@ -629,26 +652,26 @@ aber bei Materialisierung.
 
 ### 4.3 Versionskette
 
-Die Versionskette wechselt zwischen Bearbeitern: die
-KI verwendet immer die nächste freie Versionsnummer
-mit Kürzel `AIG` und arbeitet auf User-Versionen
-weiter; es gibt keine Lücken. Beispiel-Kette, Regeln
-und Snapshot-Anschluss: [[Versionsketten]] — bei
-Output-Erzeugung lesen.
+Wie die Versionskette zwischen KI und User wechselt
+(Nummernvergabe, Weiterarbeit auf User-Versionen,
+Snapshot-Anschluss), dazu Unveränderlichkeit und was
+als neue Version zählt: [[Versionsketten]] (ganzer
+Knoten) — lesen bei jeder Output-Erzeugung.
 
 ### 4.4 Unveränderlichkeit versionierter Dokumente
 
-**Grundsatz:** Versionierte Dokumente (`output/`,
-`overview/`) werden **nie überschrieben und nie
-gelöscht** — jede Änderung erzeugt eine neue
-Version. Detail: [[Versionsketten]].
+Das Verbot, ein versioniertes Dokument in `output/`
+oder `overview/` nach seiner Ablage zu überschreiben
+oder zu löschen: [[Versionsketten]]
+§Unveränderlichkeit — lesen vor jedem Schreiben dort,
+ob neue Version, Ersetzen, Korrektur oder Löschen.
 
 ### 4.5 Was zählt als neue Version
 
-Neue Version bei inhaltlicher Änderung, Korrektur
-oder Bearbeiter-Wechsel; keine bei Lesen/Analysieren
-oder Verschieben/Kopieren ohne Änderung. Abgrenzung:
-[[Versionsketten]].
+Wann eine Änderung eine neue Version erzeugt und wann
+nicht: [[Versionsketten]] §Was zählt als neue Version
+— lesen vor jeder Ablage in `output/` oder
+`overview/`.
 
 ### 4.6 Markdown als Arbeitsformat
 
@@ -690,6 +713,32 @@ eine subjektive Auswahl), wird gefragt. Alles andere
 wird **abgeleitet, als Entwurf vorgelegt und zur
 Bestätigung oder Korrektur durch den User**
 angeboten.
+
+**Fragen-Reihenfolge nach Vorfestlegungs-Stärke.**
+Bleiben mehrere Fragen, ordnet der Agent sie nach der
+Stärke ihrer **Vorfestlegung**: die Frage, deren
+Antwort am meisten anderes festlegt, kommt zuerst.
+Nach jeder Antwort prüft er, welche Folgefragen
+entfallen oder ableitbar geworden sind, und stellt sie
+nicht mehr. (Für die Init-Fragen gilt dieselbe Regel;
+ihre Reihenfolge steht in der [[Init-Choreografie]].)
+
+**Übersicht zuerst, Briefing-Modus anbieten.** Stehen
+**etwa drei oder mehr** Klärpunkte an, zeigt der Agent
+zuerst die Liste — geordnet nach Vorfestlegungs-Stärke,
+je Punkt eine Zeile — und bietet den
+**Briefing-Modus** an, mit kurzer Erläuterung: je Punkt
+ein kurzes Briefing, Diskussion, Weitergehen erst auf
+ausdrücklichen Zuruf („weiter“); Alternative ist die
+Klärung aller Punkte im Block. Ohne diese Erläuterung
+gibt es kein Angebot. Unter der Schwelle fragt der
+Agent direkt. Eine Tabelle mit mehreren Vorschlägen
+zur Freigabe zählt als Liste von Klärpunkten, auch bei
+Befunden aus Subagenten-Berichten; Fachbegriffe werden
+im Briefing kurz erklärt. Der Anwender kann jederzeit
+wechseln („Rest im Block“); eine dauerhafte
+Modus-Vorliebe wird als Projekt-Regel in
+[[InterneMechanik]] gebucht.
 
 Dieses Prinzip gilt in allen drei Modi (§5.1.1–§5.1.3).
 
@@ -737,9 +786,15 @@ sondern führt direkt aus:
 - **Prozess-Upgrade** bei user-initiiertem Auslöser
   („Aktiviere Prozess X", „Wechsele auf Prozess Y"):
   Merge (`Wiki.md` §11.3) plus Migration bestehender
-  Instanzen (`Wiki.md` §11.5). Migrations-Rückfragen
+  Instanzen (`Wiki.md` §11.5) — nicht, solange eine
+  Zwischenmarke läuft (§5.4 „Zwischenmarke“): dann
+  verweist der Agent auf die Zeit nach der Rückkehr zur
+  zurückgestellten Marke. Migrations-Rückfragen
   bei Lücken sind Teil des Ablaufs (Rückfragen-Block
-  nach §5.3 Phase D), keine Ausnahme von der Regel.
+  nach §5.3 Phase D), keine Ausnahme von der Regel;
+  wurden Instanzen migriert, folgt das
+  Absicherungs-Review ohne Angebot (`Reviewmuster.md`
+  §2 Schleife 2).
 
 **Beispiel-Prüfung bei Regel-Änderung:** Ändert sich
 eine im Entscheidungs-Register verankerte Regel,
@@ -747,10 +802,10 @@ prüft der Agent die davon berührten Beispiele und
 Erläuterungen in den lebenden Dokumenten mit und
 zieht sie nach (Standardaufgabe im selben Zug).
 
-Standardaufgaben laufen nach [[Do-first-mit-Veto]]:
-der Agent führt aus und meldet im Erledigt-Block;
-der User kann widersprechen, dann wird
-zurückgerollt.
+Wie Standardaufgaben ohne Einzel-Rückfrage ausgeführt,
+gemeldet und per Veto zurückgerollt werden und wo das
+endet: [[Do-first-mit-Veto]] — lesen vor der ersten
+Standardaufgabe.
 
 Bei Unklarheit innerhalb eines Standardvorgangs fällt
 der Vorgang zurück in den Default-Modus — Agent
@@ -826,7 +881,14 @@ nur beim Init (Checkliste: [[Git-Bestandsaufnahme]]):
   Änderungen nicht automatisch.
 - Wenn nicht vorhanden **und** Ordner leer/frisch
   (Init-Situation): `git init` anbieten,
-  `.gitignore` mitliefern, Initial-Commit.
+  `.gitignore` mitliefern (Kopie aus
+  `_template/.gitignore`, sobald die Modus-Wahl
+  `_template/` angelegt hat), Initial-Commit mit
+  Präfix `Setup:` (§6.2; die Commit-Sprache ist noch
+  nicht gewählt, der Präfix ist sprachneutral). Dieser
+  Commit ist **nicht** der Scaffolding-Commit
+  `Initial project scaffolding` (§6.1), der erst das
+  Ende des Startfähigkeits-Vorgangs markiert.
 - Wenn nicht vorhanden **und** Ordner nicht leer
   (git wurde entfernt oder Repo wurde ohne git
   kopiert): **Fail-Safe** — Meldung „git-Repo
@@ -848,8 +910,9 @@ nur beim Init (Checkliste: [[Git-Bestandsaufnahme]]):
 
 **Bootstrap-Init-Frage** (nur wenn der Anwender
 einen Pfad zur Template-Quelle übergeben hat, z.B.
-„lies `<pfad>/MasterPrompt.md` und setze das Projekt
-entsprechend auf"): direkt nach der git-Prüfung, vor
+„Lies `<Pfad zur Vorlage>/MasterPrompt.md` und setze
+das Projekt entsprechend auf“ — der Startweg aus
+`README.md`): direkt nach der git-Prüfung, vor
 allem weiteren Init-Content, stellt der Agent die
 zweistufige Modus-Frage (Anbindungs-Modi siehe §1).
 
@@ -906,17 +969,13 @@ Fehlende werden **ohne Rückfrage** angelegt
 
 #### Phase A0 — Setup lebende Dokumente (nur Init mit Template-Quelle)
 
-Nach der Modus-Wahl steht die Template-Quelle unter
-`_template/` (Modus A: Einmal-Kopie, Modus B:
-Submodul); daraus kopiert der Agent die
-Wurzel-Dokumente und das Basis-Wiki
-(`_template/referenzprozesse/base/wiki/`) als
-**lebende Kopien** ins Anwender-Projekt — in beiden
-Modi gleich; `referenzprozesse/` bleibt unter
-`_template/` (DEC-223). Ablauf und
-Modus-Unterschiede:
-[[Init-Choreografie]] §Phase A0 (beim allerersten
-Init über die Template-Quelle erreichbar).
+Was der Agent nach der Modus-Wahl aus `_template/`
+als lebende Kopien ins Anwender-Projekt übernimmt
+(Kopierliste) und was dort bleibt:
+[[Init-Choreografie]] §Phase A0 — lesen direkt nach
+der Modus-Wahl (beim allerersten Init über die
+Template-Quelle erreichbar).
+
 #### Phase B — Kontext laden
 
 Grundsatz beim Laden: das `wiki/` ist die Quelle
@@ -944,11 +1003,9 @@ und externe Agenten.
 5. `Offene Fragen.md` — Nacharbeit nicht vergessen.
 6. `wiki/Fristen.md` — akute und abgelaufene Fristen
    erkennen (falls Fassade aktiv).
-7. `Tools.md` — verfügbare MCPs und Erweiterungen,
-   inkl. Kategorien „Prüf-Werkzeuge",
-   „Recherche-Werkzeuge", „Sub-Agent-Werkzeuge",
-   „Kadenz-Werkzeuge" und „Projekt-Skripte"
-   (siehe §5.6, §6.1, §7, §1.9).
+7. `Tools.md` — verfügbare Werkzeuge und die
+   Werkzeug-Wahlen des Projekts, je Kategorie
+   (Kategorien: §7.5).
 8. `TODO.md` — für Überblick in Phase D.
 
 **Registrieren** (Existenz + Kopfzeile, bei Bedarf
@@ -966,7 +1023,7 @@ konsultieren):
 - die übrigen aktiven Fassaden laut
   `wiki/Fassaden.md` (z.B. Chronologie,
   Aktenzeichen, Ansprechpartner, Glossar,
-  Glossar Review, Knotentypen, Agent-Berichte,
+  Glossar Review, Katalog, Agent-Berichte,
   Rechercheartefakte, Eingangsdokumente) — bei
   Bedarf.
 - Prozess-Steckbriefe werden bei Bedarf im Init
@@ -1080,33 +1137,46 @@ als einen zu wenig.**
   (Datum-Vergleich per System-Reminder).
 
 **C5 Register-Lebenszyklus-Check** (nur aktiv, wenn
-mindestens eine Register-Fassade aktiv ist — Basis:
-Entscheidungen, Ideen; Prozess-Register wie
-Anforderungen/Fehlermeldungen nach Merge — Status
-siehe `wiki/Fassaden.md`):
+mindestens ein Sammel-Register aktiv ist; aktiv-Status
+siehe `wiki/Fassaden.md`). Welche Register
+Sammel-Register sind, sagt die Sammelzustand-Zeile
+ihres Katalog-Eintrags ([[Katalog]] §Typ-Konventionen
+— lesen beim Zusammenstellen der zu prüfenden
+Register, auch nach jedem Prozess-Merge); was
+`Sammelzustand` für Status und `trigger` bedeutet und
+warum Eintritts-Register keine Trigger tragen:
+[[Einfrieren-und-Abloesen]] §Eintrittsregel.
 
-- Alle Register-Detail-Knoten (Basis: `decision`, `idea`;
-  mit SP-1 zusätzlich `requirement`, `bug-report`; von
-  weiteren Prozessen mitgebracht) und ihre Fassaden-
-  Einträge mit `trigger` prüfen — Datum **oder**
-  Zielmarken-Bezeichnung ([[Zielmarken]]): wenn
-  Trigger-Datum ≤ heute oder die Trigger-Marke die
-  aktuelle `in-progress`-Marke ist (Marken-Zweig
-  nur bei aktivierter Fassade Zielmarken),
-  Statuswechsel
+- Alle Detail-Knoten der Sammel-Register und ihre
+  Fassaden-Einträge mit `trigger` prüfen —
+  Datum **oder** Zielmarken-Bezeichnung
+  ([[Zielmarken]]): wenn Trigger-Datum ≤ heute oder
+  die Trigger-Marke die aktuelle `in-progress`-Marke
+  ist, Statuswechsel
   `aufgeschoben` → `offen` (Standardaufgabe), Fassade
   nachziehen
-  (Fassaden-Nachzug im selben Zug, siehe §5.4).
+  (Fassaden-Nachzug im selben Zug, Wiki.md §1.1a).
+- **Überholte Stände** melden: der Lint-Kern
+  berechnet, welche Stände (jüngste Version je
+  Ketten-ID; für diese Berechnung liest er keine
+  Freigabe) nach der Überholt-Regel mit Marken-Bezug
+  ([[Einfrieren-und-Abloesen]] — der Nachfolger des
+  verwiesenen Elements gilt für die Marke des Stands;
+  bei der Übernahme in eine Folge-Marke gegen diese
+  geprüft) überholt sind; C5 meldet sie laufend,
+  nicht erst beim Marken-Wechsel — „laufend“ schließt
+  den Lint-Lauf nach jeder Ablösung ein (dort
+  §Ablösung). Die Antwort ist ein neuer Stand, keine
+  Buchung von „überholt“.
 - Meldung im Erledigt-Block **nur bei Befund**; bei
   leerem Befund keine Ausgabe (kein Rauschen).
 - **Zusätzlicher Trigger:** bei erstem User-Input an
   einem neuen Tag während einer laufenden Session
   (Datum-Vergleich per System-Reminder, analog C4).
 
-C5 ist eine Wächter-Ausprägung (Basis-Trigger T1).
-Der Wächter läuft darüber hinaus auf User-Anfrage
-(T3, Basis) und — mit SP-1 — an Prozess-Meilensteinen
-(T2) — siehe §5.4 „Wächter-Trigger".
+C5 ist eine Wächter-Ausprägung (Basis-Trigger T1);
+zu welchen weiteren Anlässen der Wächter läuft:
+§5.4 „Wächter-Trigger".
 
 **C6 Wiki-Struktur-Wächter** (regulärer Start nach
 abgeschlossenem Init):
@@ -1117,8 +1187,8 @@ abgeschlossenem Init):
 - `wiki/Fassaden.md`-Status und `active:`-Frontmatter
   der Fassaden-Dateien sind synchron — sonst
   Vormerkung Phase D.
-- **Stale-Fassaden-Check (DEC-212):** die jüngste
-  `**Stand:**`-Zeile der aktiven Fassaden gegen die
+- **Stale-Fassaden-Check** (Pflege-Pflicht, §9): die jüngste
+  `**Bearbeitungsstand:**`-Zeile der aktiven Fassaden gegen die
   jüngste Arbeits-Aktivität (`git log`) halten —
   liegt mehr als ein Arbeitstag Aktivität ohne
   jede Fassaden-Pflege dazwischen, Befund im
@@ -1132,7 +1202,8 @@ abgeschlossenem Init):
   nach der §1.1-Öffnungsklausel und die
   Template-Quelle `_template/` sind kein Befund; ein
   `referenzprozesse/` im Root dagegen ist einer —
-  Prozess-Vorlagen liegen in `_template/`, DEC-223).
+  Prozess-Vorlagen liegen in `_template/`, §1
+  Anbindungs-Modi).
 
 **C7 Trigger-Hygiene-Wächter** (regulärer Start nach
 abgeschlossenem Init; berichtet nur, blockiert nie —
@@ -1143,7 +1214,7 @@ umgeschrieben, Ziel ist „ab jetzt wieder konform"):
   Sessionstart auf Präfix-Konformität prüfen
   (Basis-Präfix-Katalog in [[Commit-Prozedur]],
   Zeiger in §6.2; Prozess-Präfixe,
-  [[Projekt-Präfixe]]). Abweichungen zählen und
+  [[Projekt-Praefixe]]). Abweichungen zählen und
   melden; zeigt sich ein wiederkehrendes freies
   Präfix-Muster (z.B. Modul-Namen), die Deklaration
   als Projekt-Präfix anbieten.
@@ -1155,6 +1226,22 @@ umgeschrieben, Ziel ist „ab jetzt wieder konform"):
   ohne zugehörigen Prüf-Bericht melden (§5.6
   Prüf-Pflichten sind Angebots-Sache — gemeldet
   wird die Lücke, nicht nachträglich blockiert);
+  dazu Prüfberichte (`review-report`), deren
+  Prüf-Modell gleich dem Bau-Modell ist (`modell`
+  = `bau_modell`) — **Prüf-Modell = Bau-Modell**
+  melden: erkannt wird es vom Vor-Check
+  `sh _template/tools/lint.sh` (Aufruf mit Stichtag:
+  `Tools.md` §Projekt-Skripte), gemeldet hier;
+  Meldung, kein Block — auch im Ein-Modell-Weg (der
+  beim Init gewählte Ersatzweg ohne zweites Modell,
+  `Tools.md` §Prüf-Werkzeuge, `Reviewmuster.md` §2
+  Schleife 2): dort ist die Lage erwartet, die
+  Meldung bleibt, und der Freigabe-Eintrag nennt die
+  Einschränkung ([[Entscheidungen]] Meta
+  „Freigabe-Einträge“). Gemeldet wird nur, wenn
+  `modell` und `bau_modell` dasselbe Modell nennen
+  (Anwender als Prüfer, Ersatzweg (b):
+  `Reviewmuster.md` §2 Schleife 2);
   (c) Versandstand-Ordner in `outgoing/` ohne
   gefülltes `review:`-Feld melden (Outgoing.md
   §3.2 — Pflicht-Angebot vor Versand, §5.6).
@@ -1167,9 +1254,13 @@ umgeschrieben, Ziel ist „ab jetzt wieder konform"):
   gestern wird zur sichtbaren Lücke von heute).
 - **Fassaden-Kandidaten:** eine Serie gleichartiger
   Detail-Knoten ohne Register-Fassade (und ohne
-  vertagten Ideen-Eintrag dazu) → als Beobachtung
-  melden; das Promotions-Angebot folgt der Regel
-  Wiki.md §3a „Fassaden-Promotion".
+  Wiedervorlage „Fassaden-Kandidat <X>“ in `TODO.md`,
+  ohne Entscheidung des Anwenders dazu im
+  Entscheidungs-Register und ohne vertagten
+  Ideen-Eintrag „Fassaden-Kandidat <X>, vertagt“ aus
+  dem Bestand) → als Beobachtung melden; das
+  Promotions-Angebot folgt der Regel Wiki.md §3a
+  „Fassaden-Promotion".
 - **Recherche-Trigger:** offene R-Angebote der
   aktuellen Prozess-Phase (Tabelle „Angebote an
   Phasen" des aktiven Prozesses), zu denen weder
@@ -1179,10 +1270,51 @@ umgeschrieben, Ziel ist „ab jetzt wieder konform"):
 - Meldung im Erledigt-Block **nur bei Befund**
   (kein Rauschen).
 
-**Bewusst nicht Teil:** `output/`, `overview/`,
+**C8 Nachrichten-Wächter** (nur aktiv, wenn der
+Abschnitt Komponenten der Architektur-Fassade (mit
+SP-1) mindestens einen **Nachbarn** führt, also eine
+Zeile, deren Lage nicht das eigene Repo ist; ohne
+Nachbarn kein C8; berichtet nur, blockiert nie):
+
+- **Gelesen** wird `output/nachrichten/` im eigenen
+  Repo und bei jedem Nachbarn; dessen Pfad steht in
+  der Zeile des Nachbarn im Abschnitt Komponenten.
+- **Beim Absender:** eigene Nachrichten mit
+  fehlender Quittung melden. **Beim Empfänger:**
+  Nachrichten an das eigene Repo mit fehlender
+  Buchung melden — erkannt werden beide vom
+  Vor-Check `sh _template/tools/lint.sh` (Aufruf:
+  `Tools.md` §Projekt-Skripte; Befunde
+  `NACHRICHT-OFFEN` und `OHNE-ZUGRIFF`), gemeldet
+  hier (ohne Lesezugriff auf einen Nachbarn meldet
+  der Vor-Check einen Hinweis; die Empfängerseite im
+  Komponenten-Repo braucht die eigene Zeile im
+  Abschnitt Komponenten oder `--repo`, siehe
+  `lint.sh --help`); Buchen und Quittieren
+  schlägt der Agent im Aktion-Block vor (wer was
+  bucht: `Vorgehen.md` §3a).
+- Geprüft wird **allein über `erwartet:`** und die
+  folgende Buchung (`quelle:`) bzw. Quittung
+  (`antwort_auf:`); `art` prüft C8 nicht. Wann eine
+  Nachricht offen ist, wie gebucht und quittiert wird:
+  [[Katalog-message]] — lesen vor dem ersten C8-Lauf.
+- **Anlässe:** T1 (Sessionstart), T2 (volle Runde),
+  der tägliche Rückfall (erster User-Input an einem
+  neuen Tag, analog C4) und T5 „Nachricht
+  eingegangen“ — Signal und Zeit-Trigger: §5.4
+  „Wächter-Trigger“.
+- Meldung im Erledigt-Block **nur bei Befund**
+  (kein Rauschen).
+
+**Bewusst nicht Teil:** `output/` (außer
+`output/nachrichten/`, C8), `overview/`,
 `outgoing/` (dort gibt es keinen Drift) sowie
-Lint-Workflow (siehe `Wiki.md`, auf Anfrage oder
-vor Snapshot).
+Lint-Workflow (siehe `Wiki.md` §9, auf Anfrage oder
+vor Snapshot; davor der deterministische Vor-Check
+`sh _template/tools/lint.sh` — Template-Werkzeug,
+nur lesen, keine Kopie ins Projekt-`tools/`; Aufruf
+mit Stichtag und weitere Anlässe: `Tools.md`
+§Projekt-Skripte, `Wiki.md` §9).
 
 #### Phase D — Ausgabe an den User
 
@@ -1252,7 +1384,7 @@ User nicht widerspricht. Typische Beispiele:
 - MasterPrompt ↔ Instruktionsdatei synchronisieren.
 - Bei Init: Setup-Dateien (Instruktionsdatei,
   `Styleguide-project.md`, `Styleguide-chat.md`,
-  Facts-/Knotentypen-Befüllung, initiale
+  Facts-/Katalog-Befüllung, initiale
   Wiki-Knoten) als Entwürfe anlegen — Einzelheiten:
   [[Init-Choreografie]] §Init-Aktionen.
 - Fehlende Konvertierungen in `raw/ → input/raw/`:
@@ -1269,14 +1401,19 @@ User nicht widerspricht. Typische Beispiele:
 **Im laufenden Betrieb** maximal 1–2 echte
 User-Eingaben pro strukturierter Nachricht.
 
-**Beim Init** kommen fixe Setup-Fragen in fester
-Reihenfolge dazu (Turn 1: TLA, WorkspaceManager,
-Prozess-Angebot, Commit-Sprache; Turn 2:
-prozess-spezifische Init-Fragen und
-Fassaden-Auswahl-Vorlage; ggf. weitere Fragen aus
-dem Ingest der ersten Dokumente). Wortlaut,
-Menü-Formate und Umsetzungs-Regeln:
-[[Init-Choreografie]].
+**Beim Init** kommen fixe Setup-Fragen dazu, geordnet
+nach Vorfestlegungs-Stärke (§5.1.0): vorn die
+Prozess-Wahl und die Frage „ein Repo mit allem oder ein
+zweites Repo für das Produkt?“
+([[Two-Repo-Submodul-Muster]]), hinten Details wie die
+Commit-Sprache; in Turn 2 die prozess-spezifischen
+Init-Fragen, die Bezeichnung der ersten Marke und die
+Fassaden-Auswahl-Vorlage.
+Reihenfolge mit der Vorfestlegung je Frage, Wortlaut,
+Menü-Formate, Briefing-Angebot, Ableitung aus einem
+Startprompt und Umsetzungs-Regeln:
+[[Init-Choreografie]] §Init-Fragen im Frage-Block —
+lesen vor Turn 1.
 
 Für den laufenden Betrieb bleibt es bei den
 folgenden nicht-ableitbaren Kategorien:
@@ -1328,17 +1465,127 @@ Arbeitsmodi (§5.1) gelten ab dieser Stelle.
   (`output/`, `outgoing/`) ist die Detail-Version
   für Inhalt maßgeblich; für kanonische Felder ist
   die Fassade maßgeblich (Wiki.md §1.1a).
+- **Zielmarke beim Anlegen.** Jedes neue Element
+  (DEC, IDEA, NEED, SCEN; mit Prozess z.B. REQ, BUG,
+  FUNC, ARC, SPEC, TEST, DEPL, CON) erhält beim Anlegen
+  das Pflichtfeld `zielmarke:` mit der aktuellen
+  `in-progress`-Marke — für eine spätere Marke
+  Geplantes mit dieser Marke; ein BUG trägt die Marke
+  des Produkt-Stands, an dem der Fehler beobachtet
+  wurde (Deploy-Stand der Umgebung oder Testbericht in
+  `gefunden_in:`; ist sie nicht eindeutig, fragt der
+  Agent im Frage-Block, §5.1.0, und schreibt nie die
+  laufende Marke hinein — SP-1 `Fehlermeldungen.md`
+  §Meta „Zielmarke“); die DEPL eines Deploy-Stands, der
+  zu einer abgeschlossenen Marke nachgetragen wird (neue
+  oder anders ausgerollte Umgebung), eine Entscheidung,
+  die nur diese Umgebung betrifft, und eine
+  Fix-Anforderung auf einen Deploy (ein Fehler in der
+  Auslieferung, behoben durch einen weiteren
+  Deploy-Stand) tragen die Marke des nachgetragenen
+  Deploy-Stands —
+  die Marke dessen, was ausgerollt wird; ist sie nicht
+  eindeutig oder ist unklar, ob die Entscheidung nur
+  die Umgebung betrifft, fragt der Agent (SP-1
+  `Katalog-Deployments.md`, `Anforderungen.md`
+  „Fehlerbehebungen“; `Zielmarken.md` §Meta,
+  Nachtrag); ein Freigabe-Eintrag
+  trägt die Marke der Freigabe, ein
+  Marken-Wechsel-Eintrag die abgeschlossene Marke
+  ([[Entscheidungen]] Meta); bis zum Freeze umhängbar,
+  Nachweise tragen das Feld nicht. Zusammen mit dem
+  Feld schreibt der Agent das Anlage-Datum des
+  Elements (`datum:` im Kopf des Detail-Knotens, ohne
+  Detail-Knoten die Zeile `Angelegt` im Eintrag; nie
+  geändert) — fehlt das Feld vor der Annahme, ergänzt
+  er es; danach heilt es nur der angehängte Vermerk
+  `- **Vermerk <Datum>:** Zielmarke <M> (nachgetragen)`,
+  den der Lint wie das Feld liest (eine DEC ist mit der
+  Buchung angenommen: dort heilt es der Vermerk, auch
+  im selben Zug; Regel, Sitz,
+  Anlage-Datum, Bestand und Heilweg: [[Zielmarken]]
+  §Meta „Pflichtfeld `zielmarke:`“). Ruht das Projekt
+  (keine Marke `in-progress`, Ruhe-Zeile in
+  [[Zielmarken]]), legt der Agent zuerst eine Marke an,
+  bevor er ein Element bucht, und legt dann die
+  Übernahme der Stände der letzten Marke vor — der
+  nachgeholte zweite Teil des Wechsels ([[Zielmarken]]
+  §Meta „Ruhe-Zeile“, Weitermachen).
+- **Zwischenmarke.** Soll das Produkt einer
+  abgeschlossenen Marke korrigiert werden (ein anderes
+  Ausrollen bei unverändertem Produkt ist keine
+  Korrektur, sondern ein Nachtrag — `Zielmarken.md`
+  §Meta, Nachtrag), während die nächste schon läuft,
+  zieht der Agent die Patch-Marke als Zwischenmarke vor
+  und stellt die laufende Marke zurück — erst nachdem
+  er das angekündigt hat (die laufende Marke ruht, neue
+  Elemente erhalten die Zwischenmarke in `zielmarke:`,
+  jede Freigabe ohne Stand-Datei nennt ihre Marke und
+  Stände tragen ihre Marke im Kopf, Arbeit an der
+  zurückgestellten Marke nennt diese ausdrücklich, die
+  Arbeit am Produkt läuft auf einem eigenen Zweig ab
+  dem Tag der Vormarke — Zweig-Konvention in
+  `wiki/Facts.md` neben der Tag-Konvention —, er
+  kehrt danach zurück), bei größeren
+  Anpassungswünschen gefragt hat, ob die Arbeit besser
+  auf dem Planweg in der laufenden Marke weitergeht,
+  gefragt hat, ob die Zwischenmarke Vorgänger oder
+  Sackgasse ist — mit den Folgen beider Fälle —, und
+  der Anwender sein OK gegeben hat; die Antwort ist
+  änderbar, bis in der Zwischenmarke zum ersten Mal
+  abgelöst oder überlagert wird. Eine zweite Korrektur
+  gleicher Art nimmt er in dieselbe Zwischenmarke auf
+  (mit derselben Ankündigung), eine andere Art folgt
+  als eigene Zwischenmarke nach dem Abschluss der
+  ersten; zur zurückgestellten Marke kehrt er nach der
+  letzten zurück. In Fällen, die
+  diese Regeln nicht abdecken, fragt er den Anwender.
+  In einer Sackgasse überlagert er Elemente der
+  regulären Linie (`ueberlagert:`) statt sie abzulösen,
+  fragt, wenn eine Überlagerung einen schon
+  freigegebenen oder übernommenen Stand trifft, ob eine
+  neue Version entsteht oder der Stand bleibt, und
+  fragt, bevor die Sackgasse abgeschlossen ist, ob Teile
+  davon in die reguläre Linie übernommen werden —
+  Übernahme statt Umhängen; der Zweig einer Sackgasse
+  bleibt stehen. Bei der Rückkehr aus einem Vorgänger
+  legt er doppelte Nachfolger zur Wahl vor und führt
+  den Zweig in die Hauptlinie zurück, Konflikte legt er
+  vor (`Vorgehen.md` §4; Vollform
+  [[Zielmarken]] §Meta „Zwischenmarke“). Gepusht wird
+  der Zweig wie jeder Commit nur auf Anfrage (§6.4).
+  Solange eine Zwischenmarke läuft, gibt es kein
+  Prozess-Upgrade (§5.1.2); der Agent verweist auf die
+  Zeit nach der Rückkehr.
+- **Fix-Anforderung auf einen Deploy.** Bei der
+  Freigabe eines weiteren Deploy-Stands, der eine
+  Fix-Anforderung auf einen Deploy umsetzt
+  (Nachtragszeile oder Freigabe-Eintrag), fragt der
+  Agent im Frage-Block, wann er nach der Bestätigung
+  der Behebung fragen soll — Datum oder Anlass —,
+  trägt die Wiedervorlage in `TODO.md` ein (die Antwort
+  ist die Anweisung dafür) und fragt zum genannten
+  Zeitpunkt; sagt der Anwender „noch nicht“, fragt er
+  im selben Zug nach dem neuen Zeitpunkt und ändert die
+  Wiedervorlage; mit der Bestätigung schließt er BUG
+  und Fix-Anforderung im selben Zug ab und erledigt die
+  Wiedervorlage, ohne sie folgt eine weitere
+  Fix-Anforderung auf einen Deploy, und er führt
+  dieselbe Wiedervorlage fort
+  (SP-1 `Anforderungen.md` „Fehlerbehebungen“).
 - **Wächter-Trigger** (aktiv, sobald mindestens eine
-  Register-Fassade aktiv ist — Basis: Entscheidungen,
-  Ideen; Prozess-Register wie Anforderungen/
-  Fehlermeldungen nach Merge — Status siehe
+  Register-Fassade aktiv ist — welche es gibt, sagen
+  die Register-Einträge im [[Katalog]], z.B.
+  Entscheidungen, Ideen und nach Merge die
+  Prozess-Register; Status siehe
   `wiki/Fassaden.md`): Der Wächter läuft **nicht
   am Ende jedes Zugs** — das wäre bei der
   Template-typischen Commit-Frequenz zu granular. Er
   läuft an folgenden Triggern plus einer Rückfallebene:
   - **T1 Sessionstart-Phase C5** (Basis) —
     obligatorisch, datumsbasierte Auslöser prüfen
-    (siehe §5.3 Phase C5).
+    (siehe §5.3 Phase C5); mit Nachbarn zusätzlich
+    C8.
   - **T3 auf User-Anfrage** (Basis) — z.B. „Wächter-
     Lauf", „Register-Stand", „was ist offen".
   - **Rückfallebene: mindestens täglich** (Basis) —
@@ -1349,30 +1596,40 @@ Arbeitsmodi (§5.1) gelten ab dieser Stelle.
   - **T2 Meilenstein-Vorgang** (prozess-
     spezifische Erweiterung, mit SP-1; weitere
     Prozesse können analoge T2-Trigger definieren) —
-    volle Wächter-Runde bei den prozess-definierten
-    Meilensteinen (z.B. Ende einer Scaffolding-
-    Vorlage, Freigabe-Buchung).
+    volle Wächter-Runde C4–C8 bei den
+    prozess-definierten Meilensteinen (z.B. Ende einer
+    Scaffolding-Vorlage, Freigabe-Buchung).
+  - **T4 Freigabe-Bezugsprüfung** (Basis, während der
+    Arbeit; dazu der Zielmarken-Wechsel als
+    gebündelter Lauf) — Auslöser, Prüfung und
+    Reaktion: `Vorgehen.md` §5.
+  - **T5 Nachricht eingegangen** (Basis, nur C8;
+    aktiv wie C8, §5.3) — ein Nachbar hat eine neue
+    Nachricht abgelegt; T5 löst nur C8 aus, keine
+    volle Runde. **Kein Weck-Modus:** Nachrichten
+    empfängt nur ein laufender Agent. Er beobachtet
+    `output/nachrichten/` der Nachbarn und gibt bei
+    einer neuen Nachricht ein Signal; wie, löst er mit
+    den Werkzeugen seiner Runtime (z.B.
+    Dateisystem-Beobachtung wie inotify unter Linux;
+    mit Peer-Werkzeug ist die Zustellung das Signal,
+    `Vorgehen.md` §3). Kann er sich nur einen
+    Zeit-Trigger bauen, fragt er den Anwender, wie oft
+    er nachschauen soll. Die Wahl steht in `Tools.md`,
+    Kategorie „Peer-Agenten: Start und Transport“
+    (Werkzeug-Wahl, `Vorgehen.md` §7b); installiert
+    wird nichts ohne Zustimmung des Anwenders.
   
   Ausgabeform bei Befund: Erledigt/Aktion/Frage-
   Raster. Bei leerem Befund keine Ausgabe.
-- **Feld-Kanonizität (Praxisregel).** Wer ein
-  kanonisches Feld ändert (Status, Sektions-Zuordnung,
-  Ablösungs-Verweis), **ändert die Fassade, nicht den
-  Detail-Knoten**. Detail-Knoten spiegelt. Wenn die
-  Änderung dennoch am Detail-Knoten anfällt, ist der
-  Fassaden-Nachzug **Standardaufgabe im selben Zug**
-  (§5.1.2). Vollständige Regel und Vier-Schichten-
-  Absicherung: Wiki.md §1.1a. Konkrete kanonische
-  Fassaden:
-  - **Frist-Status:** `wiki/Fristen.md` kanonisch
-    (Wiki.md §10a). Bei Deaktivierung der Fassade
-    wechselt die Kanonizität auf den `deadline`-
-    Detail-Knoten.
-  - **Stolpersteine:** `wiki/Facts.md` kanonisch
-    gegenüber Detail-Knoten-Inhalten. Bei Widerspruch
-    klärt der Agent zeitnah und pflegt den Detail-
-    Knoten nach (oder aktualisiert den Stolperstein,
-    wenn er veraltet ist).
+- **Feld-Kanonizität.** Welche Ebene beim Ändern
+  eines Status-, Sektions- oder Ablösungs-Felds führt
+  (Fassade oder Detail-Knoten), wie der Nachzug als
+  Standardaufgabe läuft und wie Drift abgesichert ist:
+  Wiki.md §1.1a — lesen, bevor ein solches Feld
+  geändert wird. Welche Felder eine Fassade kanonisch
+  führt, nennt ihre `## Meta` (z.B. Frist-Status in
+  [[Fristen]], Stolpersteine in [[Facts]]).
 - **Styleguides respektieren:**
   - **Schreibende Ausgaben** (`output/`, `overview/`,
     `outgoing/`, Wiki-Knoten): erst
@@ -1417,19 +1674,32 @@ bzw. in `Offene Fragen.md` dokumentieren
 ### 5.6 Prüf- und Rechercheangebot
 
 Der Agent kann bei Bedarf **Prüf-Subagenten**
-starten und **externe Recherche** anbieten; jede
-Sub-Agent-Beauftragung, deren Ergebnis als Bericht
-entstehen soll, folgt dem
-Standard-Beauftragungs-Rahmen. Das vollständige
-Muster (Beauftragungs-Rahmen, Standard-Prüf- und
-Standard-Recherche-Prompt, Zwei-Modelle-Regel,
-Angebots-Tabelle, Ingest- und Archiv-Regeln):
+starten und **externe Recherche** anbieten. Wie
+Angebote und Sub-Agent-Beauftragungen gebaut sind
+(Beauftragungs-Rahmen, Recherche-Prompt,
+Angebots-Formate, Auftragsliste und
+Werkzeug-Dauerfreigabe, Ingest und Archiv):
 [[Angebots-und-Beauftragungs-Muster]] — vor jedem
-Angebot und jeder Beauftragung lesen.
-Subagenten-Beauftragungen referenzieren als
-Einstieg die **freigegebenen Stände** der
-Grundlagen-Artefakte (kanonische Freigabe-Formel,
-§1.5) statt lebender Fassaden (DEC-214).
+Angebot und jeder Beauftragung lesen. Wie ein
+Prüflauf abläuft (Standard-Prüfprompt,
+Zwei-Modelle-Regel, Selbst-Triage, Reifekriterium)
+und was gilt, wenn kein zweites Modell verfügbar ist
+(zuerst ein Werkzeug, sonst der beim Init gewählte
+Ersatzweg aus `Tools.md`): `Reviewmuster.md` §2 —
+lesen vor jeder Prüf-Beauftragung.
+
+**Review-Auslöser.** Wann der Agent von sich aus ein
+Review anbietet (nach einer Änderung, vor jeder
+Publikation, beim Übertrag ins Produkt-Repo; nach
+Upgrade und Migration — beim Prozess-Upgrade nur mit
+Migration — läuft ohne Angebot das Absicherungs-Review,
+`Reviewmuster.md` §2 Schleife 2), in
+welchem Umfang und bis zu welcher Reife:
+[[Angebots-und-Beauftragungs-Muster]], Absatz
+„Review-Angebote — Auslöser“ — lesen nach jeder
+Änderung und vor jeder
+Publikation; Muster, Runden-Obergrenze und
+Konvergenz-Bericht: `Reviewmuster.md`.
 
 ## 6. Git-Umgang
 
@@ -1450,8 +1720,11 @@ Begriffs-Kette: Arbeitsschritt < Zug <
 Meilenstein-Vorgang — Arbeitsschritt und Zug sind hier
 definiert; der Meilenstein-Vorgang ist eine
 prozess-spezifische Erweiterung (mit SP-1: dessen
-mitgebrachter Knoten [[Meilenstein-und-T2]],
-Kurzform SP-1-`index.md` §4.3). Typische Züge:
+mitgebrachter Knoten `Meilenstein-und-T2`,
+Kurzform SP-1-`index.md` §4.3). Die Phasen sind eine
+andere Achse: Züge finden innerhalb einer Phase statt
+und bilden sie; der Zweck einer Freigabe ist eine
+Phase, kein Zug (`Vorgehen.md` §4). Typische Züge:
 
 - **Ingest:** Erzeugen/Aktualisieren von
   Wiki-Knoten.
@@ -1529,10 +1802,11 @@ nachschlagen; typische Vertreter: `Ingest:`,
 Prozesse können eigene Commit-Präfixe deklarieren
 (führender Ort: jeweiliger Prozess-Steckbrief,
 Sektion „Mitgebrachte Präfixe" — einheitlich mit den
-übrigen Mitbringsel-Deklarationen, DEC-208).
+übrigen Mitbringsel-Deklarationen; gelesen beim
+Prozess-Merge, Wiki.md §11.3 Schritt 6).
 **Projekte** können darüber hinaus eigene
 Modul-/Bereichs-Präfixe deklarieren — Register ist der
-`internal-rule`-Knoten [[Projekt-Präfixe]]
+`internal-rule`-Knoten [[Projekt-Praefixe]]
 (Deklaration vor erster Verwendung, ein Satz Zweck
 genügt). Undeklarierte freie Präfixe gelten als
 Abweichung und werden vom Trigger-Hygiene-Wächter
@@ -1585,6 +1859,14 @@ der Kurzbeschreibung.
 - Auf Anfrage pusht er in bestehende Remotes;
   Einrichtung neuer Remotes nur auf ausdrückliche
   Anweisung.
+- Ein Tag der Implementierung ist eine Freigabe, kein
+  Commit-Schritt: Wortlaut des Eintrags, wer den Tag
+  setzt, Tag-Konvention und Pfade des Produkts in
+  `wiki/Facts.md`, Projekt ohne Prozess —
+  `Vorgehen.md` §4 „Freigabe per Tag“ (führender Ort);
+  Vorbedingungen in [[Kettenpruefung]] §Code-Glieder,
+  Ablauf mit RP-1 in `Vorgehen-RP-1.md` §3 „Tag
+  setzen“ — lesen, bevor ein Tag entsteht.
 
 Für Projekte, die Werkstatt und ausgeliefertes
 Produkt in getrennten Repos führen wollen, siehe das
@@ -1612,12 +1894,10 @@ Installation wird in `Tools.md` dokumentiert (§7.5).
 
 ### 7.5 Dokumentation: Tools.md
 
-Alle installierten MCPs und Erweiterungen werden in
-`Tools.md` dokumentiert. Das Gerüst mit allen
-Kategorien (MCPs, Erweiterungen, Prüf-Werkzeuge,
-Recherche-Werkzeuge, Sub-Agent-Werkzeuge,
-Kadenz-Werkzeuge, Projekt-Skripte) liegt als
-Kopiervorlage unter
+Alle installierten MCPs und Erweiterungen und die
+Werkzeug-Wahlen des Projekts werden in `Tools.md`
+dokumentiert. Welche Kategorien `Tools.md` führt, samt
+Beispielen: Kopiervorlage
 `wiki/templates/Tools-Vorlage.md` — bei Anlage von
 `Tools.md` kopieren und die Beispiele ersetzen.
 
@@ -1627,17 +1907,11 @@ Kopiervorlage unter
 
 Der MasterPrompt ist **KI-agnostisch**. Jeder Agent
 erzeugt daraus **seine eigene native
-Instruktionsdatei**:
-
-| Agent | Instruktionsdatei |
-|---|---|
-| Claude Code | `CLAUDE.md` |
-| Cursor | `.cursorrules` |
-| Windsurf | `.windsurfrules` oder `.windsurf/rules` |
-
-Mehrere solche Dateien dürfen im selben Projekt
-koexistieren. Alle sind abgeleitete Sichten auf
-denselben MasterPrompt.
+Instruktionsdatei**; alle sind abgeleitete Sichten auf
+denselben MasterPrompt. Welche Datei zu welchem
+Agenten gehört und ob mehrere nebeneinander stehen
+dürfen: [[Standarddateien-Katalog]] §2.3 — lesen bei
+Anlage der Instruktionsdatei.
 
 Dieselbe Agnostik gilt für die **Mechanismen**: der
 Agent adaptiert jede beschriebene Prozedur auf seine
@@ -1680,7 +1954,7 @@ Erarbeitete muss dort abgelegt sein — was nicht im
 `wiki/` steht, ist nicht festgelegt. Die laufende
 Unterhaltung ist Arbeitsspeicher, nicht Quelle: sie
 wird beim Verdichten lückenhaft. Daraus folgen zwei
-Pflichten (DEC-212):
+Pflichten:
 
 - **Lese-Pflicht:** vor jeder Behauptung über eine
   Festlegung und vor jeder Frage an den Anwender
@@ -1693,8 +1967,8 @@ Pflichten (DEC-212):
 - **Pflege-Pflicht:** neue Klärungen, Berichte und
   Stände werden **im selben Zug** abgelegt —
   Berichte vor der Chat-Zusammenfassung, Fassaden
-  im Arbeits-Rhythmus (C6 wacht über
-  Stand-Zeilen-Alter).
+  im Arbeits-Rhythmus (C6 wacht über das Alter der
+  Bearbeitungsstand-Zeile).
 
 Grundprinzip dahinter: **Wissen lebt auf der Platte,
 nicht im Kopf.** Wer die Session fortsetzt (der gleiche Agent
@@ -1738,8 +2012,10 @@ Zielort je nach Klärung:
   (`wiki/Ideen.md`) festgehalten und dem
   Template-Betreiber über den Update-Weg
   (README §Template aktualisieren) zurückgemeldet.
-- Terminologische Klarstellung → `wiki/Glossar.md`
-  (Kurzform) und/oder `concept`-Knoten (erweitert).
+- Terminologische Klarstellung → Vorschlag in
+  `wiki/Glossar Review.md` (das Glossar führt die
+  Definition; Weg und Eintragsform: Wiki.md §3a.1),
+  Erklärung bei Bedarf im `concept`-Knoten.
 - User-Kondensat gegen Agent-Fehlkonzept →
   `wiki/Facts.md`, **nur auf explizite Anwender-
   Anweisung** (siehe §9.4).
@@ -1756,9 +2032,9 @@ rekonstruieren.
 Der **Handoff-Zustand**: alles ist auf die Platte
 geschrieben, sodass ein anderer Agent nahtlos
 weiterarbeiten kann — ohne diesen Chat. Vor jedem
-**Handoff-Moment** (T1 Session-Resume-Vorbereitung,
-T2 User-Aufforderung, T3 Sub-Agent-Beauftragung,
-T4 Prozess-Merge und Prozess-Upgrade) stellt der
+**Handoff-Moment** (H1 Session-Resume-Vorbereitung,
+H2 User-Aufforderung, H3 Sub-Agent-Beauftragung,
+H4 Prozess-Merge und Prozess-Upgrade) stellt der
 Agent diesen Zustand aktiv her. Prüf-Frage,
 Moment-Definitionen und die
 Standard-Konsolidierungs-Aktionen samt
@@ -1786,8 +2062,8 @@ Ort A führt, Ort B verweist.
   Anwendung; dürfen die Elemente nennen, sollten aber
   Verweis-Charakter auf den Katalog tragen. Beispiel:
   `wiki/Fassaden.md` zeigt den Aktivierungs-Status
-  der Fassaden — der Katalog aller möglichen
-  Fassaden lebt in `Wiki.md` §3a.
+  der Fassaden — was eine Fassade ist, steht in
+  ihrem Katalog-Eintrag (Übersicht: `Wiki.md` §3a).
 - **Aggregat-Zeiger** („aktuell 107 DECs im Register")
   sind erlaubt (Zahl ist Kern-Aussage).
 
@@ -1858,54 +2134,116 @@ Detail-Knoten im Anwender-`wiki/` liegt (z.B. ein
 Basisrahmen enthalten; verboten bleiben nur
 Verweise, die aus dem Basisrahmen hinausführen.
 
-### 9.6 Selbsttragende Dokumente
+### 9.6 Link-Regel und selbsttragende Dokumente
 
-**Prüfregel:** Jedes Dokument im Repo bleibt
-verständlich und befolgbar, wenn jeder Verweis nach
-außen ins Leere zeigt. Externes Wissen wird mit
-Aussage und Begründung hereingeholt (z.B. per
-Konzept-Übernahme, §5.3 Phase D); externe Verweise
-sind Belege oder Vertiefung, nie
-Verständnisvoraussetzung. **Redundanz ist dafür
-ausdrücklich zulässig.**
+**Zwei Grade eines Dokuments.** Ein Dokument ist
+entweder **wiki-verweisend** oder **selbsttragend**;
+die Achse original ↔ abgeleitet ist davon unabhängig.
 
-**Zwei Geschlossenheits-Grade (DEC-214):**
-**wiki-verweisend** für interne Arbeits-Dokumente
-(Spezifikation, Architekturdokument — der Leser ist
-ein Agent mit Repo-Zugang; Details und Begründungen
-bleiben im wiki, das Dokument verweist:
-Kontextfenster-Schutz). **Selbsttragend** für
-Außen-Dokumente (Benutzer-/Entwicklerdoku und alles
-an Empfänger ohne Repo-Zugang — kein Verweis als
-Verständnis-Voraussetzung). Die Prüfregel oben gilt
-in voller Schärfe für den selbsttragenden Grad.
+- **Wiki-verweisend** ist, was nur mit dem Wiki
+  gelesen wird — der Leser ist ein Agent mit
+  Repo-Zugang (Spezifikation, Architekturdokument,
+  Subagenten-Auftrag). Details und Begründungen
+  bleiben im Wiki, das Dokument verweist; wird es
+  umfangreich oder wiederholt es sich, setzt sich ein
+  Link.
+- **Selbsttragend** ist, was **am Stück** an einen
+  Empfänger ohne Wiki-Zugang weitergegeben werden muss:
+  Betriebs-Anleitung, Release-Notes, Durchführungs-
+  Instanz eines Tests, Übergabe-Dokument ohne
+  Lesezugriff, Außen-Doku (Benutzer-, Entwickler-Doku,
+  README nach außen). Keine Wikilinks, keine
+  Register-IDs, Begründungen ausgeschrieben.
 
-Daraus folgen vier Arbeitsregeln:
+**Link-Regel (Wiki und wiki-verweisende Dokumente).**
+Wissen, das an mehreren Stellen genutzt wird, steht an
+**einem Ort** und wird verlinkt, damit keine Drift
+entsteht; jede Aussage steht einmal, statt einer
+zweiten Formulierung steht ein Link. Zweck ist nicht
+Ordnung, sondern **Kontextökonomie**: wer navigiert,
+liest nur, was er tatsächlich braucht. Wo ein Link
+steht, steht eine **Link-Beschreibung** — kurz, was
+hinter dem Link zu erwarten ist; sonst müsste der Leser
+das Ziel ganz lesen. Die Link-Beschreibung ist
+prinzipbedingt akzeptierte Redundanz. **Ihre Grenze:**
+sie nennt Gegenstand, Zweck und Lese-Moment des Ziels
+und enthält keine Regel-Aussage, die man ohne das Ziel
+befolgen könnte; was ein Agent zwingend wissen muss,
+ohne das Ziel zu lesen, steht an seinem führenden Ort.
+Die Paarung Fassade ↔ Detail-Knoten (Wiki.md §1.1a)
+ist davon nicht betroffen. Stützt sich ein
+wiki-verweisendes Dokument auf eine Entscheidung,
+steht dort der Link mit Beschreibung, nicht die
+Wiederholung (Wiki.md §8.6).
 
-- **Anweisungen selbsttragend.** Eine Anweisung, die
-  einzeln weitergegeben werden kann, ist auch
-  gegenüber den übrigen Dateien selbsttragend.
-  Verweise auf Nummern oder Abschnitte anderer
-  Dokumente stehen nur als Herkunftsvermerk in
-  Klammern und dürfen zum Befolgen nicht nötig
-  sein — Aussage und Regel stehen ausgeschrieben in
-  der Anweisung selbst.
-- **Entscheidungs-Kern inline.** Wo ein Dokument
-  sich auf eine Entscheidung stützt, stehen Aussage
-  und Begründung im Dokument selbst; ein Verweis auf
-  das Entscheidungs-Register ist Wartungsvermerk,
-  nie Verständnisvoraussetzung.
-- **Redundanz wird gepflegt, nicht vermieden.** Weil
-  Wissen bewusst mehrfach im Repo steht, gehört zu
-  jeder inhaltlichen Änderung die Frage, welche
-  anderen Stellen sie berührt — und die Antwort
-  gehört in denselben Zug. Der Anwender benennt die
-  für sein Projekt wichtigen Paarungen und pflegt
-  sie explizit. Typische Paarungen: Fassade ↔
-  Detail-Knoten (Wiki.md §1.1a);
+**Anerkannte Redundanz** neben Link-Beschreibung und
+bewussten Paarungen, je mit eigenem Mechanismus:
+Kopien lebender Quellen in eingefrorenen Ständen
+(gekennzeichnet als Kopie, mit Leseregel —
+[[Einfrieren-und-Abloesen]], Abschnitte Kopien und
+Leseregel);
+selbsttragende Ableitungen mit Herkunfts-Kopf (neu
+abgeleitet statt gepflegt, siehe unten);
+Einmal-Instanzen wie Subagenten-Aufträge und
+Startprompts (erzeugt, nicht gepflegt); die
+Belegungs-Tabellen der Prozess-Vorgehen als Anwendung
+des Phasen-Katalogs. Andere Wiederholungen sind nicht
+anerkannt.
+
+**Prüfregel für selbsttragende Dokumente:** Ein
+selbsttragendes Dokument bleibt verständlich und
+befolgbar, wenn jeder Verweis nach außen ins Leere
+zeigt. Externes Wissen wird mit Aussage und Begründung
+hereingeholt (z.B. per Konzept-Übernahme, §5.3
+Phase D); externe Verweise sind Belege oder
+Vertiefung, nie Verständnisvoraussetzung.
+**Redundanz ist dafür ausdrücklich zulässig.** Für
+Wiki und wiki-verweisende Dokumente gilt diese
+Prüfregel nicht, dort gilt die Link-Regel.
+
+Daraus folgen die Arbeitsregeln:
+
+- **Anweisungen selbsttragend nur bei Weitergabe am
+  Stück.** Eine Anweisung, die am Stück an Empfänger
+  ohne Wiki-Zugang geht, trägt Aussage und Regel
+  ausgeschrieben in sich; Verweise auf Nummern oder
+  Abschnitte anderer Dokumente stehen nur als
+  Herkunftsvermerk in Klammern und dürfen zum Befolgen
+  nicht nötig sein. **Subagenten-Aufträge sind
+  wiki-verweisend:** sie nennen Einstieg und
+  freigegebene Stände (§5.6), der Subagent liest im
+  Wiki, was er braucht.
+- **Entscheidungs-Kern inline nur in selbsttragenden
+  Dokumenten.** Wo ein selbsttragendes Dokument sich
+  auf eine Entscheidung stützt, werden Aussage und
+  Begründung übernommen — und, wo es die Sache trägt,
+  auch die erwogenen und verworfenen Alternativen; ein
+  Verweis auf das Entscheidungs-Register ist
+  Wartungsvermerk, nie Verständnisvoraussetzung. Im
+  Wiki und in wiki-verweisenden Dokumenten gilt Link
+  statt Wiederholung.
+- **Neu ableiten statt nachpflegen.** Abgeleitete
+  selbsttragende Dokumente werden zu festgelegten
+  Zeitpunkten vollständig neu aus dem Wiki erzeugt,
+  nicht von Hand nachgezogen — mit Herkunfts-Kopf und
+  nach dem Pflicht-Angebot eines Reviews (§5.6).
+  Standard-Auslöser für Dokumente, die das Produkt
+  beschreiben, ist die Freigabe eines Stands für das
+  Ausliefern oder der Zuruf; ein eigener Auslöser des
+  Dokumenttyps geht vor.
+- **Paarungs-Pflege für bewusste Paarungen.** Die
+  bewussten Paarungen sind Kurz- und Vollform, keine
+  Redundanz, und werden explizit gepflegt — zu jeder
+  inhaltlichen Änderung gehört die Frage, welche
+  Paarung sie berührt, und die Antwort gehört in
+  denselben Zug. Die Paarungen sind abschließend:
+  Fassade ↔ Detail-Knoten (Wiki.md §1.1a);
   `wiki/Fassaden.md`-Status ↔ `active:`-Frontmatter
   der Fassaden-Dateien; Instruktionsdatei-Spiegel ↔
-  seine Quellen (§8.3).
+  seine Quellen (§8.3). Der Anwender benennt, welche
+  davon für sein Projekt wichtig sind. Weitere
+  Wiederholungen werden nicht gepflegt, sondern auf
+  Link mit Beschreibung gestellt.
 - **Erzeugtes ist als erzeugt gekennzeichnet.** Wo
   Dateien aus anderen Dateien erzeugt werden
   (aufgeteilte Dokumente, Verzeichnisse,
@@ -1915,3 +2253,33 @@ Daraus folgen vier Arbeitsregeln:
   ausschließlich an der Quelle (Beispiel: die
   Konfigurations-Übersicht in der
   Instruktionsdatei, §8.3).
+- **Eine Anweisung je wiederkehrender Tätigkeit.**
+  Für jede Tätigkeit, die im Projekt wiederkehrend
+  anfällt (z.B. Ingest einer Dokumentart, Bildung
+  eines Stands, Versand, Wächter-Lauf, ein
+  projekt-eigener Prüf- oder Veröffentlichungs-Schritt),
+  gibt es genau eine Anweisung: was zu tun ist, in
+  welcher Reihenfolge, woran man erkennt, dass es
+  fertig ist — vollständig und ohne externes Vorwissen
+  befolgbar. Sie steht als Anleitung
+  (`internal-procedure`) in [[InterneMechanik]] oder,
+  wo sie das Template schon mitbringt, als
+  MasterPrompt-Sektion bzw. mitgelieferter Knoten
+  (Beispiele: [[Commit-Prozedur]],
+  [[Git-Bestandsaufnahme]], die Bootstrap-Dateien).
+  Fällt eine Tätigkeit zum zweiten Mal an und hat sie
+  noch keine Anweisung, legt der Agent sie als Entwurf
+  vor (Aktion-Block) und verweist künftig darauf,
+  statt die Schritte erneut zu erklären.
+
+**Begriffe.** „Werkstatt“ und „Schleuse“ werden nur
+im Zwei-Repo-Kontext verwendet
+([[Two-Repo-Submodul-Muster]]); allgemein heißt es
+„Wiki (Quelle der Wahrheit)“ und „abgeleitete
+Dokumente“. „Produkt“ ist der allgemeine Begriff für
+das Ergebnis der Ausarbeitung (P9) jedes Projekts
+([[Glossar]]); im Zwei-Repo-Fall ist das Produkt-Repo
+das Repo, das es trägt. Die Grade heißen selbsttragend und
+wiki-verweisend; die Abgrenzung zu „eingefroren“ und
+„abgeschlossen“ steht im Glossar-Eintrag
+„selbsttragend“ ([[Glossar]]).

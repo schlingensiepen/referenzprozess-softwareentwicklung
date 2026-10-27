@@ -43,13 +43,13 @@ Jede Instruktionsdatei enthält verbindlich:
    - `wiki/Facts.md` — Projekt-Einstieg, Stolpersteine
    - `wiki/Fassaden.md` — FassadenLandkarte
    - `wiki/InterneMechanik.md` — Steuerungs-Wissen
-   - `wiki/Knotentypen.md` — Typen-Katalog
+   - `wiki/Katalog.md` — Katalog der Typen
    - `wiki/Fristen.md` — Fristenbuch
    - `wiki/index.md` — Wiki-Katalog
    - `Tools.md` — installierte Erweiterungen
    - `Offene Fragen.md` — offene Fragen
-4. **Arbeitsmodi-Verweis** auf §5.1.
-5. **git-Commit-Kadenz-Verweis** auf §6.
+4. **Arbeitsmodi-Verweis** auf MasterPrompt §5.1.
+5. **git-Commit-Kadenz-Verweis** auf MasterPrompt §6.
 6. **Projektsprache** (meist Deutsch).
 7. **Projektspezifische Besonderheiten** —
    Tonfall, Ansprechpartner, Stichworte, die über
@@ -72,7 +72,7 @@ Jede Instruktionsdatei enthält verbindlich:
 
    Der Agent prüft beim Sessionstart (Phase B) Drift
    und legt Konflikte in Phase D als Frage vor
-   (siehe §5.3).
+   (siehe MasterPrompt §5.3).
 
 ## Synchronisation
 

@@ -4,7 +4,7 @@ type: internal-rule
 
 # Handoff-Prozedur
 
-Handoff-Zustand, Handoff-Momente T1–T4 und die
+Handoff-Zustand, Handoff-Momente H1–H4 und die
 Standard-Konsolidierungs-Aktionen der
 Wahrheits-Konsolidierung. Wortlaut aus MasterPrompt
 §9.2 hierher verlagert; die Doku-Pflicht bei Klärung
@@ -21,16 +21,16 @@ aus den Dateien nahtlos übernehmen — ohne diesen
 Chat?"* Vor jedem **Handoff-Moment** stellt der Agent
 diesen Zustand aktiv her. Handoff-Momente:
 
-- **T1 Session-Resume-Vorbereitung** — vor bewusster
+- **H1 Session-Resume-Vorbereitung** — vor bewusster
   Session-Pause oder nach Rückkehr aus einer solchen.
-- **T2 User-Aufforderung** — auf explizite Anweisung
+- **H2 User-Aufforderung** — auf explizite Anweisung
   („mach mal eine Kondensation", „vor Compact",
   „Speicherpunkt setzen", „Handoff").
-- **T3 Sub-Agent-Beauftragung** — vor jedem
+- **H3 Sub-Agent-Beauftragung** — vor jedem
   Sub-Agent-Aufruf, damit der Sub-Agent-Prompt eine
   ehrliche „aktuelle Wahrheit" referenzieren kann
   (der Sub-Agent liest nur die Platte).
-- **T4 Prozess-Merge und Prozess-Upgrade** — vor dem
+- **H4 Prozess-Merge und Prozess-Upgrade** — vor dem
   Merge (MasterPrompt §5.3/Wiki.md §11.3) und vor jeder
   Upgrade-Migration (Wiki.md §11.5).
 
@@ -70,5 +70,5 @@ brauchen.
 - Kern-Kurzform: MasterPrompt §9.2; Doku-Pflicht:
   MasterPrompt §9.1; Facts-Regel: MasterPrompt §9.4
 - Wächter Handoff-Hygiene: MasterPrompt §5.3 Phase C
-- Sub-Agent-Beauftragung (T3):
+- Sub-Agent-Beauftragung (H3):
   [[Angebots-und-Beauftragungs-Muster]]

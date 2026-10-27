@@ -36,8 +36,8 @@ Repository:
   ihrem Teil-Wiki. Der Prozess-Merge (Wiki.md
   §11.3) übernimmt die Einträge mit Geltung =
   Prozess in dieses Register; der Anhang selbst
-  wird nicht ins Anwender-`wiki/` kopiert (gleiches
-  Muster wie der Knotentypen-Anhang).
+  wird nicht ins Anwender-`wiki/` kopiert (anders als
+  die Katalog-Einträge, die als Dateien mitkommen).
 - **Übernahme-Wirkung:** was aus einem Repository
   übernommen wird, regelt MasterPrompt §5.3
   (DEC-Buchung, Quell-Kopie als `document` mit

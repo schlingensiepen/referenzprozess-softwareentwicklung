@@ -3,7 +3,7 @@ type: process-brief
 process: RP-3
 status: geplant
 extends:
-  - SP-2-Recht-und-Verwaltung
+  - SP-2
 ---
 
 # RP-3 — Rechtsfall
@@ -30,6 +30,12 @@ Aussage bereits im Source-Knoten enthalten ist).
 Basis-`thing` bleibt für physische Dinge verfügbar
 und wird erst über die `evidence`-Relation zum
 Beweismittel.
+
+**Typische Marke (Vormerkung):** ein Schriftsatz oder
+eine Verfahrensstufe; das Produkt der Marke ist der
+Schriftsatz oder die Kommentierung. Der Knoten
+`Marken-RP-3.md` entsteht mit der Ausarbeitung (Basis:
+[[Marken]]).
 
 ## Mitgebrachte Fassaden
 
