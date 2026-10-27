@@ -1,6 +1,6 @@
 ---
 type: role-log
-active: false   # Vorauswahl deaktiviert; Aktivierung im Init wählbar oder später per Reaktivierung
+active: true   # Pflicht durch SP-1 (der Konzept-Stand kopiert die Rollen; Wiki.md §3a) — beim Starter-Bau aktiviert; führend: wiki/Fassaden.md
 ---
 
 # Rollen

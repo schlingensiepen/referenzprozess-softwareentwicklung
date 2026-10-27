@@ -176,6 +176,15 @@ kommt beim Init hinzu)_
   Prozess, Marken-Dokument je Prozess; beim Init
   (erste Marke) und vor einem Marken-Wechsel lesen.
 
+### [[Meilenstein-und-T2]]
+
+- **Typ:** internal-rule
+- **Kurzform:** Wächter-Trigger T2
+  (Prozess-Meilenstein-Wechsel, volle Runde C4–C8),
+  Meilenstein-Anlässe, Meilenstein-Regel „agent-lokal“
+  mit Koordinator-Meilenstein, Meilenstein-Vorgang
+  (Prozess-mitgebracht, SP-1).
+
 ## internal-procedure
 
 _(mitgelieferte Basis-Prozeduren)_
@@ -221,6 +230,13 @@ Bedarf ergänzt)_
   Unveränderlichkeit, Was-zählt-als-neue-Version);
   bei Output-Erzeugung lesen.
 
+### [[Register-Lebenszyklus]]
+
+- **Typ:** internal-concept
+- **Kurzform:** Status-Achse der Register-Einträge,
+  Zustände je Register-Art, samt Feld-Regeln
+  (Prozess-mitgebracht, SP-1).
+
 ## internal-pattern
 
 _(mitgelieferte Basis-Muster)_
@@ -265,3 +281,42 @@ _(mitgelieferte Basis-Muster)_
   sieben Meta-Felder einer Ableitungs-Regel; bei der
   Ein-/Zwei-Repo-Frage und vor dem Übertrag ins
   Produkt lesen.
+
+### [[Register-Grundmuster]]
+
+- **Typ:** internal-pattern
+- **Kurzform:** Register-Status-Kanonizität als
+  Ausnahme von Wiki.md §1.1a: Vier-Schichten-
+  Absicherung, Feldliste kanonisch vs. gespiegelt
+  (Prozess-mitgebracht, SP-1).
+
+### [[devstate-Skelett]]
+
+- **Typ:** internal-pattern
+- **Kurzform:** `devstate_active.md` im Repo-Root:
+  Anlage-Zeitpunkt, Minimal-Skelett, Koordinator-Regel
+  (Prozess-mitgebracht, SP-1).
+
+## Einträge (Vorbelegung beim Starter-Bau)
+
+- **[[Aktivierter-Prozess]]** (internal-rule) —
+  RP-1 auf SP-1, Vorfestlegungen eingearbeitet; der
+  Herkunfts-Vermerk (Template-Stand, Quelle,
+  Anbindungs-Modus) und die Rolle sind offen und
+  werden beim Init geschrieben.
+- **[[Commit-Sprache]]** (internal-rule) — Entscheid
+  offen, reguläres Menü im INIT.md-Fragen-Block.
+- **[[WorkspaceManager-Kontrakt]]** (internal-rule) —
+  Betriebs-Konfiguration offen, wird mit der
+  Init-Frage (INIT.md Fragen-Block) gefüllt.
+- **Prozess-mitgebracht (SP-1):** die Mechanik-Knoten
+  [[Register-Lebenszyklus]], [[Meilenstein-und-T2]],
+  [[Register-Grundmuster]] und [[devstate-Skelett]]
+  sind beim Starter-Bau kopiert und oben in ihren
+  Typ-Sektionen eingetragen; RP-1 bringt keine
+  eigenen Mechanik-Knoten mit.
+- Die Basis-Knoten (u.a. [[Init-Choreografie]],
+  [[Commit-Prozedur]], [[Fahrplan-Vorlage]],
+  [[Two-Repo-Submodul-Muster]], [[Handoff-Prozedur]],
+  [[Angebots-und-Beauftragungs-Muster]]) liegen mit
+  und sind über ihre §Bezüge katalogisiert.

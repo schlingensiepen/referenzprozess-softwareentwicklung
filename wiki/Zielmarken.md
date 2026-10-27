@@ -80,8 +80,8 @@ active: true   # kann nicht deaktiviert werden — Zielmarken ist Pflicht-Fassad
   Marke abgeschlossen ist (erste Marke), trägt keine
   Marke `current`.
   Die Zeiger führt diese Fassade;
-  `devstate_active.md` (mit SP-1) referenziert die
-  `in-progress`-Marke nur — und während einer
+  `devstate_active.md` (mit SP-1: [[devstate-Skelett]])
+  referenziert die `in-progress`-Marke nur — und während einer
   Zwischenmarke die zurückgestellte Marke, zu der der
   Agent zurückkehrt; ruht das Projekt, den Ruhezustand.
   Die Zeiger-Führung liegt
@@ -1401,8 +1401,8 @@ active: true   # kann nicht deaktiviert werden — Zielmarken ist Pflicht-Fassad
 
 ---
 
-**Bearbeitungsstand:** _(vom Agenten bei Anlage und laufend
-gepflegt)_
+**Bearbeitungsstand:** Vorbelegt beim Starter-Bau — die
+erste Marke entsteht beim Init (INIT.md Fragen-Block).
 
 ## Marken
 

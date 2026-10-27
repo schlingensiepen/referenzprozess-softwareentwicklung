@@ -1,6 +1,6 @@
 ---
 type: file-number-log
-# active: false   # bei Deaktivierung (Default ist active: true)
+active: false   # Vorfestlegung (Reaktivierung per Zuruf); führend: wiki/Fassaden.md
 ---
 
 # Aktenzeichen
