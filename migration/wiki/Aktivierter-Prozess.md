@@ -4,55 +4,69 @@ type: internal-rule
 
 # Aktivierter-Prozess
 
+- **Aktive Prozesse:** Basis, SP-1, RP-1.
 - **Gewählter Prozess:** **RP-1 Entwicklung eines
   Softwaresystems** (setzt SP-1 voraus; beide beim
   Starter-Bau nach Wiki.md §11.3 gemergt —
-  Vorfestlegung, kein Anwender-Init-Entscheid mehr
-  nötig).
-- **Anbindungs-Modus:** vom Anwender beim Einbinden
-  gewählt (B Submodul unter `_template/` oder A
-  Einmal-Kopie unter `_template/`, mit dem Projekt
-  committet — DEC-223); Phase A0 und Prozess-Merge
-  beim Starter-Bau vorab vollzogen
-  (Starter-Vorfestlegung). `referenzprozesse/`
-  bleibt in beiden Modi unter
-  `_template/referenzprozesse/`.
-- **Template-Herkunft:** **OFFEN** — beim Einbinden
-  vom Agenten einzutragen: Quelle (Repo-URL) und
-  Stand (Commit-Hash bzw. Tag); bei Modus A der
-  Stand der Einmal-Kopie unter `_template/`, bei
-  Modus B der Submodul-Pin (DEC-223).
-- **RP-1-Rolle:** **OFFEN** — Standalone oder
-  Koordinator entscheidet der Anwender im
-  Fragen-Block der Migration
-  (`_template/migration/MIGRATION.md` Phase 1). Bei „Koordinator": Contract-Index aus
-  `_template/referenzprozesse/RP-1-Systementwicklung/wiki/`
-  aktivieren und das Werkstatt/Produkt-Angebot
-  vorlegen ([[Two-Repo-Submodul-Muster]]).
-- **Abweichungen von der Vorauswahl:**
-  Aktenzeichen deaktiviert (Vorfestlegung;
-  Reaktivierung per Zuruf); Entscheidungs-Register
-  ohne MADR-Detail-Knoten-Pflicht (Register-Zeilen
-  genügen; Detail-Knoten nur bei Bedarf nach
-  Wiki.md-Grundregeln).
-- **Abgelöste Ausprägungen:** SP-1-Systemarchitektur
-  → [[Softwaresystemarchitektur]];
-  SP-1-Systemtest-Setup →
-  [[Softwaresystemtest-Setup]].
-- **Aktive Prozess-Präfixe** (aus SP-1-Steckbrief
-  §Mitgebrachte Präfixe verbucht, §11.3 Schritt 6):
-  `Anforderungen:`, `Fehlermeldungen:`,
-  `Architektur:`, `Test-Setup:`,
+  Vorfestlegung des Starters, kein Prozess-Angebot
+  beim Init). `referenzprozesse/` bleibt in beiden
+  Anbindungs-Modi unter `_template/referenzprozesse/`.
+- **Abweichungen von der Vorauswahl:** Aktenzeichen
+  deaktiviert (Vorfestlegung; Reaktivierung per Zuruf).
+- **Aktive Prozess-Präfixe** (aus dem SP-1-Steckbrief
+  §Mitgebrachte Präfixe verbucht, Wiki.md §11.3
+  Schritt 6; zusätzlich zu den Basis-Präfixen aus
+  MasterPrompt §6.2): `Anforderungen:`,
+  `Funktionsbeschreibungen:`, `Spezifikationen:`,
+  `Fehlermeldungen:`, `Architektur:`, `Test-Setup:`,
   `Systemkomponente:`, `Code:`, `Scaffolding:`,
-  `devstate:`, `Freigabe:` — RP-1 bringt keine
-  weiteren mit.
-- **Mechanik-Einführung (§11.3 Schritt 7):** die
-  SP-1-Mechanik-Knoten [[Register-Lebenszyklus]],
-  [[Meilenstein-und-T2]], [[Register-Grundmuster]],
-  [[devstate-Skelett]] sind kopiert und in
-  [[InterneMechanik]] eingetragen
-  (Prozess-mitgebracht, SP-1).
+  `devstate:`, `Freigabe:`. RP-1 führt `Freigabe:`
+  unverändert fort und bringt keine eigenen Präfixe
+  mit (RP-1-Steckbrief §Mitgebrachte Präfixe). Die
+  Register Testfälle, Testberichte, Deployments,
+  Zielumgebungen und Contract-Index haben keinen
+  eigenen Präfix; Änderungen laufen unter `Wiki:`.
+- **Mechanik-Einführung (Wiki.md §11.3 Schritt 7):**
+  die SP-1-Mechanik-Knoten [[Register-Lebenszyklus]]
+  (internal-concept), [[Meilenstein-und-T2]]
+  (internal-rule), [[Register-Grundmuster]]
+  (internal-pattern) und [[devstate-Skelett]]
+  (internal-pattern) sind kopiert und in
+  [[InterneMechanik]] eingetragen (Prozess-mitgebracht,
+  SP-1); RP-1 bringt keine eigenen Mechanik-Knoten mit
+  (RP-1-Steckbrief §Mitgebrachte Mechanik).
+
+## Herkunft
+
+- **Template-Stand:** offen — die Migration schreibt
+  `2.0 seit JJJJ-MM-TT` (Übernahme-Tag, Stichtag des
+  Bestandsschutzes; Übernommenes bleibt Bestand)
+- **Quelle:** offen — Repo-URL und Commit bzw. Tag;
+  bei Modus A der Stand der Einmal-Kopie unter
+  `_template/`
+- **Anbindungs-Modus:** offen — A | B, vom Anwender
+  beim Einbinden gewählt
+- **Prozess:** RP-1 (setzt SP-1 voraus; beide beim
+  Starter-Bau gemergt — Phase A0 und Prozess-Merge
+  vorab vollzogen)
+- **Rolle:** offen (Fragen-Block der Migration,
+  `_template/migration/MIGRATION.md` Phase 1; bei
+  Rolle Koordinator aktiviert die Migration den
+  Contract-Index nach seinem SP-1-Bootstrap in
+  Phase 5)
+- **Übernahme-Art:** — (Rolle offen; bei Rolle
+  Komponent trägt die Migration sie ein)
+
+Format der Zeilen: [[Init-Choreografie]] §Phase A0
+„Herkunfts-Vermerk“ — der Lint liest aus
+`Template-Stand` den Stichtag und aus `Übernahme-Art`
+das erste Wort. Bis die Migration die offenen Werte
+schreibt, läuft der Lint mit der Option `--stichtag`
+(Eintrag in `Tools.md` §Projekt-Skripte).
 
 ## Bezüge
 
 - Fassaden-Eintrag: [[InterneMechanik]]
+- Format des Herkunfts-Vermerks: [[Init-Choreografie]]
+  §Phase A0
+- Aktivierungs-Stand je Fassade: [[Fassaden]]

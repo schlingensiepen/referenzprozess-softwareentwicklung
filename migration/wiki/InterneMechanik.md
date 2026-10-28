@@ -40,10 +40,26 @@ active: true   # kann nicht deaktiviert werden — InterneMechanik ist Pflicht-F
 - **Pflege:** neue Steuerungs-Regeln des Projekts
   entstehen als `internal-*`-Knoten plus
   Register-Eintrag hier — im selben Vorgang.
+- **Werkzeug-Dauerfreigabe:** je dauerhaft
+  freigegebenem Werkzeug ein `internal-rule`-Knoten
+  `Werkzeug-Dauerfreigabe-<Werkzeug>.md` mit
+  Werkzeug, Umfang (welche Aufträge), Datum der
+  Freigabe und dem Satz „jederzeit widerrufbar“;
+  Register-Eintrag unter `## internal-rule`. Beim
+  Widerruf entfallen Knoten und Register-Eintrag.
+  Wann gefragt wird und was die Freigabe bewirkt:
+  [[Angebots-und-Beauftragungs-Muster]] §Auftragsliste
+  zur Freigabe — lesen vor der Buchung.
+- **Abgrenzung:** diese Fassade sagt, **wie das
+  Projekt arbeitet**; welche Typen es gibt, sagt der
+  [[Katalog]] (Meta-Fassade mit Katalog-Einträgen,
+  darunter [[Katalog-InterneMechanik]] für die
+  `internal-*`-Typen) — lesen, bevor ein neuer Typ
+  oder Mechanik-Knoten angelegt wird.
 
 ---
 
-**Stand:** _(vom Agenten beim Init und laufend gepflegt)_
+**Bearbeitungsstand:** _(vom Agenten beim Init und laufend gepflegt)_
 
 Register des Steuerungs-Wissens dieses Projekts.
 Format pro Eintrag:
@@ -73,7 +89,8 @@ kommt beim Init hinzu)_
 - **Typ:** internal-rule
 - **Kurzform:** mechanische Folge-Schritte einer
   ausgelösten Standardaufgabe ohne Einzel-Rückfrage,
-  sichtbar gemeldet, Veto möglich.
+  sichtbar gemeldet, Veto möglich; Grenzen, darunter
+  Aufträge mit Außenwirkung, Kosten oder Kontingent.
 
 ### [[Konzept-Repositories]]
 
@@ -83,7 +100,7 @@ kommt beim Init hinzu)_
   oder Prozess, Betreiber-Vorbelegung ersetzbar,
   Prozess-Anhänge werden beim Merge übernommen).
 
-### [[Projekt-Präfixe]]
+### [[Projekt-Praefixe]]
 
 - **Typ:** internal-rule
 - **Kurzform:** Register projekt-eigener
@@ -119,9 +136,54 @@ kommt beim Init hinzu)_
 
 - **Typ:** internal-rule
 - **Kurzform:** Handoff-Zustand, Handoff-Momente
-  T1–T4 und Standard-Konsolidierungs-Aktionen der
+  H1–H4 und Standard-Konsolidierungs-Aktionen der
   Wahrheits-Konsolidierung; an Handoff-Momenten
   lesen.
+
+### [[Einfrieren-und-Abloesen]]
+
+- **Typ:** internal-rule
+- **Kurzform:** Klassen Element · Nachweis · außerhalb,
+  Freeze-Zeitpunkt, vollständige Ablösung unter neuer
+  ID, Eintrittsregel, Bildung eines Stands
+  (Ableitungsprüfung, Kopien, Herkunftszeile,
+  Leseregel, Überholt-Regel); vor der Bildung eines
+  Stands, vor jeder Ablösung und beim Anlegen eines
+  Register-Elements lesen.
+
+### [[Kettenpruefung]]
+
+- **Typ:** internal-rule
+- **Kurzform:** Prüfung eines Pflicht-Stands gegen
+  alle freigegebenen Vorgänger derselben Marke
+  (Widerspruch, Abdeckung, Unbegründetes; Lint- und
+  Reviewer-Anteil), Freigabe-Ordnung als Warnung mit
+  Tag als Pflicht-Glied P9 und Übernahme aus der
+  Vormarke, fehlende und vertretene Glieder (Verzicht
+  je Phase, Koordinator ohne Bauteile, Übergabe-Stand,
+  Ende der Komponenten-Kette), Freigabe-Ordnung des
+  Koordinators, Komponenten-Kette nach Übernahme-Art
+  mit Consumer-Prüfung und Rücklauf; vor jeder
+  Freigabe eines Pflicht-Stands lesen.
+
+### [[Marken]]
+
+- **Typ:** internal-rule
+- **Kurzform:** die Marke als Zwischenziel-Anker jeder
+  Projektart — was sie abschließt (Produkt, Tag,
+  Abschluss-Stand), wann eine neue beginnt, Frist als
+  Eigenschaft, Beispiele je Projektart, Projekt ohne
+  Prozess, Marken-Dokument je Prozess; beim Init
+  (erste Marke) und vor einem Marken-Wechsel lesen.
+
+### [[Meilenstein-und-T2]]
+
+- **Typ:** internal-rule
+- **Kurzform:** Wächter-Trigger T2
+  (Prozess-Meilenstein-Wechsel, volle Runde C4–C8),
+  Meilenstein-Anlässe, Meilenstein-Regel „agent-lokal“
+  mit Koordinator-Meilenstein, Meilenstein-Vorgang
+  (Prozess-mitgebracht, SP-1).
 
 ## internal-procedure
 
@@ -168,6 +230,13 @@ Bedarf ergänzt)_
   Unveränderlichkeit, Was-zählt-als-neue-Version);
   bei Output-Erzeugung lesen.
 
+### [[Register-Lebenszyklus]]
+
+- **Typ:** internal-concept
+- **Kurzform:** Status-Achse der Register-Einträge,
+  Zustände je Register-Art, samt Feld-Regeln
+  (Prozess-mitgebracht, SP-1).
+
 ## internal-pattern
 
 _(mitgelieferte Basis-Muster)_
@@ -176,18 +245,24 @@ _(mitgelieferte Basis-Muster)_
 
 - **Typ:** internal-pattern
 - **Kurzform:** vollständige Init-Choreografie des
-  Sessionstarts (Phase A0, Phase-D-Turns,
-  Init-Fragen, Fassaden-Auswahl, Konzept-Angebot,
-  Mission-Statement-Setup); beim allerersten Init
-  über die Template-Quelle lesbar.
+  Sessionstarts (Phase A0 mit Anbindungs-Modi und
+  Kopierliste, Phase-D-Turns, Init-Fragen samt
+  Ein-/Zwei-Repo-Frage, Init mit Startprompt einer
+  Komponente, Prozess-Angebot, Fassaden-Auswahl,
+  Konzept-Angebot, Mission-Statement-Setup); beim Init
+  lesen, beim allerersten Init über die
+  Template-Quelle.
 
 ### [[Angebots-und-Beauftragungs-Muster]]
 
 - **Typ:** internal-pattern
 - **Kurzform:** Prüf- und Rechercheangebot samt
   Standard-Beauftragungs-Rahmen für Sub-Agenten
-  (Prüf-/Recherche-Prompts, Zwei-Modelle-Regel,
-  Angebots-Tabelle, Ingest- und Archiv-Regeln).
+  (Recherche-Prompt, Angebots-Tabelle, Review-Auslöser,
+  Ingest- und Archiv-Regeln; Ablauf eines Prüflaufs in
+  `Reviewmuster.md` §2), Auftragsliste zur Freigabe und
+  Werkzeug-Dauerfreigabe; vor jedem Angebot und jeder
+  Beauftragung lesen.
 
 ### [[Fahrplan-Vorlage]]
 
@@ -200,25 +275,51 @@ _(mitgelieferte Basis-Muster)_
 
 - **Typ:** internal-pattern
 - **Kurzform:** Werkstatt/Produkt-Trennung per
-  Submodul; Einrichtung strukturiert über die
-  sieben Meta-Felder einer Ableitungs-Regel.
+  Submodul (Angebots-Trigger, Bauform-Wahl,
+  Standardbelegung Werkstatt/Produkt/Schleuse,
+  Ein-Repo-Fall); Einrichtung strukturiert über die
+  sieben Meta-Felder einer Ableitungs-Regel; bei der
+  Ein-/Zwei-Repo-Frage und vor dem Übertrag ins
+  Produkt lesen.
+
+### [[Register-Grundmuster]]
+
+- **Typ:** internal-pattern
+- **Kurzform:** Register-Status-Kanonizität als
+  Ausnahme von Wiki.md §1.1a: Vier-Schichten-
+  Absicherung, Feldliste kanonisch vs. gespiegelt
+  (Prozess-mitgebracht, SP-1).
+
+### [[devstate-Skelett]]
+
+- **Typ:** internal-pattern
+- **Kurzform:** `devstate_active.md` im Repo-Root:
+  Anlage-Zeitpunkt, Minimal-Skelett, Koordinator-Regel
+  (Prozess-mitgebracht, SP-1).
 
 ## Einträge (Vorbelegung beim Starter-Bau, Migrations-Pfad)
 
 - **[[Aktivierter-Prozess]]** (internal-rule) —
-  RP-1 auf SP-1, Vorfestlegungen, Rolle offen.
+  RP-1 auf SP-1, Vorfestlegungen eingearbeitet; den
+  Herkunfts-Vermerk (Template-Stand, Quelle,
+  Anbindungs-Modus) schreibt die Migration, die Rolle
+  entscheidet der Anwender in ihrem Fragen-Block
+  (`_template/migration/MIGRATION.md` Phase 1).
 - **[[Commit-Sprache]]** (internal-rule) — Entscheid
-  offen, Frage im Migrations-Fragen-Block.
+  offen; Vorschlag der Migration: bisherige Regelung
+  bis zur regulären Frage in Phase 5.
 - **[[WorkspaceManager-Kontrakt]]** (internal-rule) —
-  Projekt-Festlegung: nicht vorhanden, Agent
-  übernimmt selbst; WSM-Verbot.
-- **Prozess-mitgebracht (SP-1):**
-  [[Register-Lebenszyklus]] (internal-concept),
-  [[Meilenstein-und-T2]] (internal-rule),
-  [[Register-Grundmuster]] (internal-pattern),
-  [[devstate-Skelett]] (internal-pattern).
+  Betriebs-Konfiguration für die Dauer der Migration
+  vorbelegt (nicht vorhanden, der Agent übernimmt
+  selbst); reguläre Frage in Phase 5.
+- **Prozess-mitgebracht (SP-1):** die Mechanik-Knoten
+  [[Register-Lebenszyklus]], [[Meilenstein-und-T2]],
+  [[Register-Grundmuster]] und [[devstate-Skelett]]
+  sind beim Starter-Bau kopiert und oben in ihren
+  Typ-Sektionen eingetragen; RP-1 bringt keine
+  eigenen Mechanik-Knoten mit.
 - Die Basis-Knoten (u.a. [[Init-Choreografie]],
   [[Commit-Prozedur]], [[Fahrplan-Vorlage]],
-  [[Two-Repo-Submodul-Muster]],
-  [[Handoff-Prozedur]], [[Angebots-und-Beauftragungs-Muster]])
-  liegen mit und sind über ihre §Bezüge katalogisiert.
+  [[Two-Repo-Submodul-Muster]], [[Handoff-Prozedur]],
+  [[Angebots-und-Beauftragungs-Muster]]) liegen mit
+  und sind über ihre §Bezüge katalogisiert.

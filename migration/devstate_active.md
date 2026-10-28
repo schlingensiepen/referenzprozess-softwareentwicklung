@@ -2,9 +2,10 @@
 
 ## Aktueller Stand
 
-Zielmarke: 1 — Migriert (in-progress; [[Zielmarken]])
-_(drei bis fünf Sätze — vom Migrations-Agenten ab
-Phase 2 gepflegt)_
+Zielmarke: (wird in der Migration angelegt —
+Übernahme-Marke, [[Zielmarken]])
+_(drei bis fünf Sätze — vom Agenten ab Phase 2
+gepflegt)_
 
 ## Nächste Schritte
 

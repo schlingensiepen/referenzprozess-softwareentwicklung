@@ -7,10 +7,7 @@ type: internal-rule
 Zwei Sektionen mit klarer Trennung: der
 **Kontrakt** (mitgeliefert — Wortlaut aus
 MasterPrompt §1.3.1 hierher verlagert) und die
-**Betriebs-Konfiguration** (beim Init gefüllt; die
-InterneMechanik-Bootstrap-Liste sah diesen Knoten
-bislang als reine Init-Anlage vor — er wird nun
-mitgeliefert und beim Init nur noch gefüllt).
+**Betriebs-Konfiguration** (beim Init gefüllt).
 Moment: bei Konvertierungs- und Versand-Fragen
 sowie beim Konfigurations-Sync (MasterPrompt §5.3
 Phase B).
@@ -52,8 +49,8 @@ WorkspaceManager laufen zu lassen — er stößt ihn
 nicht selbst an.
 
 **Fallback ohne WorkspaceManager.** Wenn der User
-keinen WorkspaceManager hat (Init-Frage in §5.3
-Phase D), übernimmt der Agent die Konvertierung
+keinen WorkspaceManager hat (Init-Frage in MasterPrompt
+§5.3 Phase D), übernimmt der Agent die Konvertierung
 selbst mit den ihm verfügbaren Tools und APIs
 (native PDF-Verarbeitung des Modells, installierte
 MCPs für Konvertierung, ansonsten LLM-basierte
@@ -86,16 +83,21 @@ Provenienz-Kette an dieser Stelle historisch
 
 ## Betriebs-Konfiguration
 
-_(beim Init gefüllt — Init-Frage „WorkspaceManager
-verfügbar?", siehe [[Init-Choreografie]]; getrennt
-pro Rolle)_
+_(Vorbelegung für die Dauer der Migration; die
+reguläre Init-Frage „WorkspaceManager verfügbar?",
+siehe [[Init-Choreografie]], stellt die Migration in
+Phase 5 (`_template/migration/MIGRATION.md`) —
+ihre Antwort ersetzt die Werte unten, getrennt pro
+Rolle)_
 
 - **Konvertierung** (`raw/`/externe Quellen →
-  `input/`): _(vorhanden — User startet bei Bedarf |
-  nicht vorhanden — Agent übernimmt selbst)_
+  `input/`): nicht vorhanden — der Agent übernimmt
+  selbst.
 - **Outgoing-Erzeugung** (PDF/EML/DOCX via Pandoc):
-  _(vorhanden — User startet bei Bedarf |
-  nicht vorhanden — Agent übernimmt selbst)_
+  nicht vorhanden — der Agent übernimmt selbst.
+- Während der Migration startet oder konfiguriert
+  der Agent keinen WorkspaceManager — erst nach der
+  Frage in Phase 5.
 
 ## Bezüge
 
@@ -103,15 +105,3 @@ pro Rolle)_
 - Kern-Kurzform: MasterPrompt §1.3.1 (Ordner-Regel
   und Überblick: §1.3)
 - Outgoing-Fallback analog: Outgoing.md
-
-## Projekt-Festlegung (Migrations-Vorfestlegung)
-
-- **Konvertierung (`raw/` → `input/`):** nicht
-  vorhanden — der Agent übernimmt selbst.
-- **Outgoing-Erzeugung:** nicht vorhanden — der
-  Agent übernimmt selbst.
-- **Ausdrückliches Verbot:** kein WorkspaceManager
-  in diesem Projekt starten oder konfigurieren —
-  erst nach ausdrücklicher Anwender-Freigabe
-  (Hintergrund: beobachtete
-  Verzeichnis-Kopier-Zwischenfälle).
