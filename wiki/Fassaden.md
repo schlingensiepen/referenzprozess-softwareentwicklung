@@ -36,7 +36,7 @@ active: true   # kann nicht deaktiviert werden — die FassadenLandkarte ist Pfl
 
 ---
 
-**Bearbeitungsstand:** Vorbelegt beim Starter-Bau (RP-1 auf SP-1, Vorfestlegungen eingearbeitet; Rollen-Frage offen — bei Rolle Koordinator aktiviert der Init [[Contract-Index]]).
+**Bearbeitungsstand:** Vorbelegt beim Starter-Bau (RP-1 auf SP-1, Vorfestlegungen eingearbeitet; Rollen-Frage offen — bei Rolle Koordinator aktiviert der Init bzw. die Migration [[Contract-Index]]).
 
 ## InterneMechanik und MetaFassade
 

@@ -264,7 +264,8 @@ Fall für diesen Weg, sondern für die Migration
   lesen: Liegen außer den kopierten Dateien und
   `_template/` andere Dateien im Ordner, nimmst du nur
   die kopierten und `_template/` auf (`git add
-  _template <kopierte Pfade>`) und nennst dem Anwender
+  _template <kopierte Pfade>` — das Skript nennt die
+  Pfade am Ende) und nennst dem Anwender
   den Rest — er kommt nach der Kollisionsfrage mit dem
   ersten eigenen Commit (Schritt 5) ins Repo; sonst
   `git add -A && git commit -m "Setup: Starter-Stand aufgenommen"`.
@@ -304,7 +305,14 @@ eigener Repo-Name, Pfad und Remote, Koordinator-Pfad,
 **Übernahme-Art**, Start und Transport, Verweis auf
 den **Übergabe-Stand** ([[Init-Choreografie]] §Init
 mit Startprompt). Den Referenzprozess gibt der
-Startprompt **nicht** vor (Nr. 1).
+Startprompt **nicht** vor (Nr. 1). Seine Form: eine
+Markdown-Datei in `output/` des Koordinators
+(Einmal-Instanz, kein Wiki-Knoten), die mit dem
+Start-Satz der README beginnt und danach die Angaben
+der Tabelle in [[Init-Choreografie]] §Init mit
+Startprompt in deren Reihenfolge nennt, je Angabe
+eine Zeile; die Rolle heißt darin „Komponent“ wie im
+Herkunfts-Vermerk.
 
 1. **Prozess-Nachfrage** — nur, wenn der
    Software-Prozess nach dem, was du bis hierher
@@ -438,8 +446,12 @@ Register-Eintrag).
   [[WorkspaceManager-Kontrakt]]
   (Betriebs-Konfiguration); die Freigaben der Ordner
   aus dem SP-1-Steckbrief §Mitgebrachte Ordner als
-  Einträge in [[Entscheidungen]], je mit `zielmarke:`
-  und Anlage-Datum; die Wahl aus Nr. 2 nach
+  je ein Eintrag in [[Entscheidungen]] nach dem
+  Muster `### DEC-NNN — Freigabe: Ordner src/` (wie
+  in der Migration; der Gegenstand nennt den Ordner,
+  nicht „freigegeben“ — das Wort liest der Lint als
+  Stand-Freigabe), je mit `zielmarke:` und
+  Anlage-Datum; die Wahl aus Nr. 2 nach
   [[Two-Repo-Submodul-Muster]].
 - **`Tools.md`** aus `wiki/templates/Tools-Vorlage.md`:
   Prüf-Werkzeuge und Ersatzweg aus Nr. 6
@@ -450,7 +462,13 @@ Register-Eintrag).
 - **Rolle Koordinator:** Contract-Index aktivieren —
   Skelett und Bootstrap aus
   `_template/referenzprozesse/SP-1-Standardprozess/`
-  (Quelle Nur-Lese), [[Fassaden]] nachführen.
+  (Quelle Nur-Lese), [[Fassaden]] nachführen; dazu
+  die eigene Zeile in §Komponenten von
+  [[Softwaresystemarchitektur]] (Lage im eigenen Repo
+  — daran erkennt der Lint das eigene Repo; die
+  Komponenten kommen mit P5 und P6 hinzu,
+  [[Kettenpruefung]] §Freigabe-Ordnung des
+  Koordinators).
   **Rolle Komponent:** eigene Zeile und Lage des
   Koordinators in §Komponenten von
   [[Softwaresystemarchitektur]]; Kette nach

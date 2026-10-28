@@ -279,13 +279,14 @@ der führende Ort, das Skript ihre Implementierung.
 | Vorprüfung | Sicherungs-Commit vorhanden (keine Änderung an getrackten Dateien; ungetrackte Dateien, die Schritt 1 ausgelassen hat, bleiben unberührt und werden genannt), kein laufender Merge; `_template/` trägt den neuen Stand, Modus erkannt; Vorlage ist dieser Starter, Prozess RP-1 auf SP-1; alte Version bekannt (Schritt 0) |
 | Tausch | geschehen in Schritt 2 — das Skript stellt nur fest, dass `_template/` den neuen Stand trägt |
 | Umbenennungen | Dateinamen nach der Tabelle der Sprung-Datei §1 (`Rollen.md`, `Katalog.md`, Umlaute → ae/oe/ue/ss); per `git mv`, nie über eine vorhandene Datei |
-| Neue Dateien | jede Datei des neuen Stands, die im Projekt fehlt (Root-Regelwerk, `wiki/` samt Katalog-Einträgen, Mechanik-Knoten, Fassaden, Vorlagen; `.gitignore` nur, falls keine da ist), wird angelegt und gesammelt gemeldet — Fassaden, die der aktive Prozess voraussetzt, aktiv, optionale deaktiviert (`active: false`) mit Hinweis an den Anwender, abgelöste nur als Hintergrund; eine bestehende Datei wird nie überschrieben |
+| Neue Dateien | jede Datei des neuen Stands, die im Projekt fehlt (Root-Regelwerk, `wiki/` samt Katalog-Einträgen, Mechanik-Knoten, Fassaden, Vorlagen; `.gitignore` nur, falls keine da ist), wird angelegt und gesammelt gemeldet — Fassaden, die der aktive Prozess voraussetzt, aktiv, optionale deaktiviert (`active: false`) mit Hinweis an den Anwender, abgelöste nur als Hintergrund; eine bestehende Datei wird nie überschrieben; eine so angelegte Fassade trägt im Frontmatter-Kommentar „beim Upgrade angelegt“ |
 | Formalien | Frontmatter nach der Tabelle der Sprung-Datei §1, einschließlich `supersedes:` am Nachfolger einer Ablösung |
 | Herkunft | Zeile `Template-Stand: 2.0 seit <Tag des Upgrades>` neu, darunter `Vorher: <alte Version> (bis <Tag des Upgrades>)`; 1.x-Form wird zur 2.0-Form (Schritt 7 füllt die übrigen Zeilen) |
 | Trefferliste | alles, was du kontext-bewusst nachziehst (Schritt 6): Wikilinks auf umbenannte Dateien, `SPEC`-/`BR`-Kennungen, Pflegezeilen „Stand:“, Marken-Zeiger, Altknoten, Contract-Fassungen, alte Ablöse-Vermerke; dazu die Delta-Liste der bestehenden Dateien, eingeteilt nach Schritt 5 |
 | Lint-Kern | `sh _template/tools/lint.sh` aus dem Projekt-Root — als Trefferliste; maßgeblich ist der Lauf in Schritt 8 |
 
-Danach Commit „Upgrade: Mechanik“.
+Danach Commit „Upgrade: Mechanik“ (entfällt, wenn der
+Lauf nichts geändert hat — das Skript sagt es).
 
 ## 4. Pflicht-Fassaden und laufende Marke — vor dem Lint
 
@@ -318,7 +319,11 @@ Vorschlag** vor — gesammelt, je Datei mit dem, was sich
 ändert sich nie automatisch; projekt-eigene Einträge
 bleiben, Regelwerks-Text wird übernommen — bei einer
 Fassade also der Kopf (`## Meta`, Regeltext) aus der
-Vorlage, die Einträge aus dem Projekt. Neue Dateien
+Vorlage, die Einträge aus dem Projekt; Trennpunkt ist
+die Überschrift des Eintrags-Abschnitts am
+Zeilenanfang (in [[Zielmarken]] `## Marken`), nicht
+ihre erste Erwähnung — `## Meta` nennt sie schon im
+Text. Neue Dateien
 sind keine Übernahmen (Schritt 3). Regel für die
 Vorlage: Gleicht die lebende Kopie dem alten Stand der
 Vorlage (Modus A: `_template/` im Sicherungs-Commit;

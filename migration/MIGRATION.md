@@ -239,9 +239,10 @@ Alt-Zustands → (b) Einbindung (mit Modus-Frage) →
      `git init` gilt auch für den ersten Commit.
    - **Schutzregeln** (gelten für jeden Commit dieser
      Anleitung): Ist nichts zu committen
-     (`git status --porcelain` leer), gilt der
-     aktuelle `HEAD` als Sicherung — kein leerer
-     Commit. Ignorierte Dateien bleiben ignoriert (nie
+     (`git status --porcelain` leer — oder es bleiben
+     nur Dateien, die du nach dem nächsten Satz
+     auslässt), gilt der aktuelle `HEAD` als Sicherung
+     — kein leerer Commit. Ignorierte Dateien bleiben ignoriert (nie
      `git add -f`). **Offensichtlich sensible
      Dateien** unter den ungetrackten (`.env`,
      `*.pem`, `*.key`, `id_rsa*`, `*.p12`,
@@ -293,7 +294,10 @@ Alt-Zustands → (b) Einbindung (mit Modus-Frage) →
    Fehlt die Kopie, **biete die zwei Wege an** und
    kopiere erst nach Zustimmung — **(a)** das
    Kopier-Skript (empfohlen: deterministisch,
-   überschreibt nichts, listet Kollisionen), aus dem
+   überschreibt nichts, listet Kollisionen — bei einer
+   Migration typisch eine vorgefundene
+   `devstate_active.md`, deren Starter-Variante dann
+   ausbleibt), aus dem
    Projektordner: `sh _template/setup/init-migration.sh`
    — oder **(b)** von Hand aus `_template/` nach der
    **Kopier-Liste** unten; sie ist der führende Ort,
