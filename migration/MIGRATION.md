@@ -464,6 +464,16 @@ vorfestgelegt ist ([[Aktivierter-Prozess]]).
    mit `zielmarke:` der Übernahme-Marke und
    Anlage-Datum. `tools/` ist Standard-Ordner
    (MasterPrompt §1.9) und braucht keine Freigabe.
+   Die mitgebrachten Ordner des Prozesses (SP-1-
+   Steckbrief §Mitgebrachte Ordner: `src/`, `tests/`,
+   `ci/`, `deploy/`, `docs/`) buchst du in Phase 3
+   ebenso als Freigaben, wie es der Init tut (Wiki.md
+   §11.3 Schritt 2) — ein vorgefundener Ordner gleichen
+   Namens ist Bestand unter dieser Freigabe. Ein
+   vorgefundenes `docs/` ist handgeschrieben, die
+   Freigabe deklariert `docs/` als aus dem Wiki
+   abgeleitet: wie beides zusammengeht, fragst du den
+   Anwender (Grundsätze).
 8. **Kollisionsfrage** aus Phase 0, falls es
    Kollisionen gab — je Datei oder Ordner (a), (b)
    oder (c) mit Empfehlung und Namensvorschlag (Regel
@@ -593,7 +603,8 @@ Am Ende der Phase:
   Angabe, was die Datei enthält und wohin ihre Punkte
   eingeordnet wurden; eine umbenannte
   `TODO-vorgefunden.md` steht darunter.
-- Bestands-Ordner-Freigaben als DEC buchen (Nr. 7),
+- Ordner-Freigaben als DEC buchen — Bestands-Ordner
+  und mitgebrachte Ordner (Nr. 7) —,
   `Tools.md` um den Ersatzweg ergänzen,
   `devstate_active.md` aktualisieren,
   Abschluss-Commit.
@@ -698,7 +709,8 @@ Anlage-Datum.
    vorgefundene README bleibt; schlage dem Anwender
    vor, dort die Einstiege zu ergänzen
    (Instruktionsdatei, `wiki/`, Erklärung in
-   `_template/docs/Einfuehrung.md`).
+   `_template/docs/Einfuehrung.md`, Update-Weg in
+   `_template/README.md` §Template aktualisieren).
 9. **Lint:** `sh _template/tools/lint.sh` aus dem
    Projekt-Root ohne FEHLER (Stichtag aus dem
    Herkunfts-Vermerk; Hinweise zu Bestand ohne Feld
