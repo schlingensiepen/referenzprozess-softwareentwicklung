@@ -170,10 +170,12 @@ Du startest den Agenten **im Projektordner** und gibst
 ihm einen von drei Sätzen; die Sätze stehen zum
 Herauskopieren in der `../README.md`. Der Agent liest
 die zugehörige Anleitung direkt von der Repo-URL,
-bevor lokal etwas liegt, fragt zuerst, wie der Starter
-als `_template/` in dein Projekt kommt, und bietet
-jeden weiteren Schritt an — nichts läuft ungefragt,
-die Skripte in `setup/` werden nur angeboten.
+bevor lokal etwas liegt, legt dir seine Fragen
+gesammelt vor — bei einem neuen Projekt und bei der
+Migration zuerst, wie der Starter als `_template/` in
+dein Projekt kommt — und bietet jeden weiteren Schritt
+an — nichts läuft ungefragt, die Skripte in `setup/`
+werden nur angeboten.
 
 - **Neues Projekt** — im leeren Projektordner. Der
   Agent bindet den Starter ein, kopiert Regelwerk und
