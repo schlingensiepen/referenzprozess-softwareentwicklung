@@ -21,10 +21,17 @@
 # (je Datei oder Ordner umbenennen und verlinken, integrieren oder
 # beides); nach der Antwort benennt der Agent um und lässt das
 # Skript erneut laufen — es ergänzt nur Fehlendes. Nichts wird still
-# ausgelassen. Varianten werden nur gegen Dateien getauscht, die
-# dieser Lauf selbst kopiert hat; ein kollidierendes Varianten-Ziel
-# bleibt unangetastet. Das Skript braucht kein Temp-Verzeichnis und
-# schreibt nur in den Projektordner.
+# ausgelassen. Stammt wiki/ schon aus diesem Starter (inhaltsgleiches
+# wiki/Init-Choreografie.md), ist eine abweichende Datei darunter keine
+# Kollision, sondern vom Projekt bearbeitet (Herkunfts-Vermerk,
+# Übernahme-Marke): sie bleibt unverändert und wird getrennt gezählt.
+# Bei Root-Dateien kann das Skript Vorgefundenes nicht von Bearbeitetem
+# unterscheiden; sie bleiben in der Kollisions-Liste, mit Hinweis.
+# Varianten werden nur gegen Dateien getauscht, die dieser Lauf selbst
+# kopiert hat oder die noch der Frisch-Fassung gleichen; ein
+# kollidierendes oder bearbeitetes Varianten-Ziel bleibt unangetastet.
+# Das Skript braucht kein Temp-Verzeichnis und schreibt nur in den
+# Projektordner.
 #
 # Copyright 2026 Jörn Schlingensiepen
 #
@@ -56,12 +63,25 @@ fi
 # (muss vorhanden und inhaltsgleich sein, sonst ist der Ordner fremd).
 WIKI_MARKER=wiki/Init-Choreografie.md
 WIKI_FREMD=0
+AUS_STARTER=0
 if [ -e "$DST/wiki" ]; then
     if [ ! -f "$DST/$WIKI_MARKER" ] \
        || ! cmp -s -- "$SRC/$WIKI_MARKER" "$DST/$WIKI_MARKER"; then
         WIKI_FREMD=1
+    else
+        # wiki/ stammt aus diesem Starter: ein Wiederholungslauf —
+        # abweichende Dateien darunter hat das Projekt bearbeitet.
+        AUS_STARTER=1
     fi
 fi
+
+# vom Projekt bearbeitet statt vorgefunden? (nur unter einem wiki/, das
+# aus diesem Starter stammt, ist das sicher entscheidbar)
+bearbeitet() {
+    [ "$AUS_STARTER" -eq 1 ] || return 1
+    case $1 in wiki/*) return 0 ;; esac
+    return 1
+}
 
 # Varianten-Tabelle (MIGRATION.md Phase 0 „Danach eintauschen“):
 # gibt zum Ziel-Pfad den Pfad der Variante relativ zum Starter-Root
@@ -99,7 +119,9 @@ variant_of() {
     SAME=0
     SKIPPED=0
     SWAPPED=0
+    EDITED=0
     COLLREL=""
+    EDITREL=""
 
     if [ "$WIKI_FREMD" -eq 1 ]; then
         COLLREL="wiki/
@@ -113,6 +135,10 @@ variant_of() {
             if cmp -s -- "$SRC/$rel" "$DST/$rel" \
                || { [ -n "$var" ] && cmp -s -- "$SRC/$var" "$DST/$rel"; }; then
                 SAME=$((SAME + 1))
+            elif bearbeitet "$rel"; then
+                EDITREL="${EDITREL}${rel}
+"
+                EDITED=$((EDITED + 1))
             else
                 COLLREL="${COLLREL}${rel}
 "
@@ -134,23 +160,24 @@ variant_of() {
         COPIED=$((COPIED + 1))
     fi
 
-    # war $1 eine Kollision (vorgefundene Datei mit anderem Inhalt
-    # oder Datei in einem fremden, kollidierenden wiki/)?
-    collided() {
+    # ist $1 unantastbar — eine Kollision (vorgefundene Datei mit anderem
+    # Inhalt oder Datei in einem fremden, kollidierenden wiki/) oder eine
+    # vom Projekt bearbeitete Datei?
+    unantastbar() {
         case $1 in
             wiki/*) [ "$WIKI_FREMD" -eq 1 ] && return 0 ;;
         esac
-        printf '%s' "$COLLREL" | grep -Fxq -- "$1"
+        printf '%s%s' "$COLLREL" "$EDITREL" | grep -Fxq -- "$1"
     }
 
-    # tauscht eine eben kopierte (oder inhaltsgleich vorhandene)
-    # Frisch-Datei gegen ihre Migrations-Variante; Kollisionen
-    # bleiben unangetastet — sie kommen nach der Kollisionsfrage
-    # (MIGRATION.md Phase 1) durch den Agenten.
+    # tauscht eine eben kopierte (oder noch der Frisch-Fassung gleiche)
+    # Datei gegen ihre Migrations-Variante; Kollisionen und bearbeitete
+    # Dateien bleiben unangetastet — Kollisionen kommen nach der
+    # Kollisionsfrage (MIGRATION.md Phase 1) durch den Agenten.
     swap_variant() {
         variant_rel=$1   # Pfad der Variante relativ zum Starter-Root
         target_rel=$2    # Ziel-Pfad relativ zum Projekt-Root
-        if [ -e "$DST/$target_rel" ] && ! collided "$target_rel" \
+        if [ -e "$DST/$target_rel" ] && ! unantastbar "$target_rel" \
            && ! cmp -s -- "$SRC/$variant_rel" "$DST/$target_rel"; then
             cp -f -- "$SRC/$variant_rel" "$DST/$target_rel"
             SWAPPED=$((SWAPPED + 1))
@@ -165,6 +192,13 @@ variant_of() {
     swap_variant "migration/wiki/InterneMechanik.md"           "wiki/InterneMechanik.md"
 
     echo "Starter-Ausstattung (Migration) kopiert: $COPIED Datei(en), $SWAPPED Variante(n) eingetauscht; schon vorhanden und inhaltsgleich: $SAME."
+    if [ -n "$EDITREL" ]; then
+        echo ""
+        echo "Vom Projekt bearbeitet (Wiederholungslauf, keine Kollision; bleiben unverändert, keine Variante dorthin): $EDITED Datei(en):"
+        printf '%s' "$EDITREL" | while IFS= read -r rel; do
+            echo "  - $rel"
+        done
+    fi
     if [ -n "$COLLREL" ]; then
         echo ""
         echo "ACHTUNG — $SKIPPED Kollision(en): Vorgefundenes mit anderem Inhalt wurde NICHT überschrieben, die Starter-Datei (bzw. ihre Variante) oder der Starter-Ordner wurde ausgelassen:"
@@ -174,9 +208,12 @@ variant_of() {
         if [ "$WIKI_FREMD" -eq 1 ]; then
             echo "  (wiki/ stammt nicht aus diesem Starter — kein inhaltsgleiches $WIKI_MARKER — und zählt als eine Kollision auf Ordner-Ebene; nichts wurde hineinkopiert, keine Variante dorthin getauscht.)"
         fi
+        if [ "$AUS_STARTER" -eq 1 ]; then
+            echo "  (Das Projekt stammt schon aus diesem Starter: eine Root-Datei hier kann auch vom Projekt bearbeitet sein, etwa devstate_active.md nach Phase 0 — das entscheidet der Agent; überschrieben wird sie so oder so nicht.)"
+        fi
         echo "Diese Liste ist der Eingang der Kollisionsfrage im Phase-1-Fragen-Block von migration/MIGRATION.md (je Datei oder Ordner: umbenennen und verlinken, integrieren oder beides). Erst nach der Antwort: Vorgefundenes umbenennen (Vorschlag <Name>-vorgefunden), dann dieses Skript erneut ausführen — es ergänzt nur Fehlendes und tauscht die Varianten ein."
     fi
     echo ""
-    echo "Nächster Schritt: den Agenten '$SRC/migration/MIGRATION.md' abarbeiten lassen."
+    echo "Weiter nach '$SRC/migration/MIGRATION.md' (Phase 0 Schritt 3: Herkunft vermerken, Aufnahme-Commit)."
 }
 exit 0
