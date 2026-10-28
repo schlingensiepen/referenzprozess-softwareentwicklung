@@ -5,13 +5,17 @@
 # Aufruf: aus dem Projektordner, z.B.
 #   sh _template/setup/init-frisch.sh
 # Ein Agent führt dieses Skript nur nach Zustimmung des Anwenders
-# aus (Angebot in der Choreografie), nie ungefragt.
+# aus (Angebot in der Anleitung), nie ungefragt.
 #
-# Führender Ort der Kopier-Liste ist INIT.md (§1) — dieses Skript
-# implementiert sie. Kollisionsregel: nie eine vorhandene
-# Projekt-Datei überschreiben; Kollisionen werden gelistet und
-# gehören in den Fragen-Block von INIT.md. Das Skript braucht
-# kein Temp-Verzeichnis und schreibt nur in den Projektordner.
+# Führender Ort der Kopier-Liste ist INIT.md (Schritt 1) — dieses
+# Skript implementiert sie. Kollisionen: das Skript überschreibt
+# nie eine vorhandene Projekt-Datei; eine vorhandene Datei, deren
+# Inhalt mit der Starter-Datei identisch ist, ist keine Kollision
+# und wird nur gezählt; jede andere wird ausgelassen und gelistet —
+# die Liste ist der Eingang der Kollisionsfrage im Fragen-Block
+# von INIT.md (je Datei umbenennen und verlinken, integrieren oder
+# beides), nichts wird still ausgelassen. Das Skript braucht kein
+# Temp-Verzeichnis und schreibt nur in den Projektordner.
 #
 # Copyright 2026 Jörn Schlingensiepen
 #
@@ -29,7 +33,7 @@
 
 set -u
 
-SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+SCRIPT_DIR=$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd)
 SRC=$(dirname -- "$SCRIPT_DIR")
 DST=$(pwd)
 
@@ -38,28 +42,33 @@ if [ "$SRC" = "$DST" ]; then
     exit 1
 fi
 
-# Datei-Liste (Kopier-Liste INIT.md §1) erzeugen und in EINEM
-# Block verarbeiten — Zähler und Kollisions-Liste leben im
-# selben Subshell-Kontext, keine Temp-Dateien nötig.
+# Datei-Liste (Kopier-Liste INIT.md Schritt 1) erzeugen und in EINEM
+# Block verarbeiten — Zähler und Kollisions-Liste leben im selben
+# Subshell-Kontext, keine Temp-Dateien nötig.
 {
     for f in MasterPrompt.md Wiki.md Vorgehen.md Reviewmuster.md \
              Outgoing.md Styleguide.md Styleguide-md.md \
              Styleguide-wiki.md devstate_active.md; do
         printf '%s\n' "$f"
     done
-    # referenzprozesse/ wird NICHT kopiert — es bleibt in
-    # _template/referenzprozesse/ (Nur-Lese, beide Einbindungs-Modi).
+    # referenzprozesse/, tools/ und upgrade/ werden NICHT kopiert —
+    # sie bleiben in _template/ (Nur-Lese, beide Einbindungs-Modi).
     ( cd "$SRC" && find wiki -type f | sort )
 } | {
     COPIED=0
+    SAME=0
     SKIPPED=0
     COLLREL=""
 
     while IFS= read -r rel; do
         if [ -e "$DST/$rel" ]; then
-            COLLREL="${COLLREL}${rel}
+            if cmp -s -- "$SRC/$rel" "$DST/$rel"; then
+                SAME=$((SAME + 1))
+            else
+                COLLREL="${COLLREL}${rel}
 "
-            SKIPPED=$((SKIPPED + 1))
+                SKIPPED=$((SKIPPED + 1))
+            fi
         else
             case $rel in
                 */*) mkdir -p "$DST/${rel%/*}" ;;
@@ -76,14 +85,14 @@ fi
         COPIED=$((COPIED + 1))
     fi
 
-    echo "Starter-Startausstattung (frisch) kopiert: $COPIED Datei(en)."
+    echo "Starter-Startausstattung (frisch) kopiert: $COPIED Datei(en); schon vorhanden und inhaltsgleich: $SAME."
     if [ -n "$COLLREL" ]; then
         echo ""
-        echo "ACHTUNG — $SKIPPED Kollision(en), vorhandene Dateien wurden NICHT überschrieben:"
+        echo "ACHTUNG — $SKIPPED Kollision(en): vorhandene Dateien mit anderem Inhalt wurden NICHT überschrieben, die Starter-Datei wurde ausgelassen:"
         printf '%s' "$COLLREL" | while IFS= read -r rel; do
             echo "  - $rel"
         done
-        echo "Diese Liste gehört in den Fragen-Block von INIT.md."
+        echo "Diese Liste ist der Eingang der Kollisionsfrage im Fragen-Block von INIT.md (je Datei: umbenennen und verlinken, integrieren oder beides); erst nach der Antwort werden die ausgelassenen Starter-Dateien eingespielt."
     fi
     echo ""
     echo "Nächster Schritt: den Agenten '$SRC/INIT.md' abarbeiten lassen."
