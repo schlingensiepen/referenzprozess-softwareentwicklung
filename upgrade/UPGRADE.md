@@ -96,14 +96,14 @@ Grundsätzen.
 „dieselbe Vorlage bleibt die Vorlage“ in Orten:
 
 - **Anleitung und Sprung-Datei** (diese Datei und
-  `upgrade/1.x-nach-2.0.md`) liest du aus einem
-  vorübergehenden Klon des Starters außerhalb des
-  Projekts, nur zum Lesen — dem **Lese-Klon**
-  (`git clone --depth 1 <Repo-URL oben> <Ordner
-  außerhalb>`; nach dem Upgrade löschst du ihn). Denn
-  der neue Stand der allgemeinen Vorlage unter
-  `_template/` trägt weder `upgrade/` noch `setup/`
-  noch `INIT.md`. Wo diese Anleitung
+  `upgrade/1.x-nach-2.0.md`) liest du ab Schritt 0
+  aus einem vorübergehenden Klon des Starters
+  außerhalb des Projekts, nur zum Lesen — dem
+  **Lese-Klon** (`git clone --depth 1 <Repo-URL oben>
+  <Ordner außerhalb>`; nach dem Upgrade löschst du
+  ihn). Denn der neue Stand der allgemeinen Vorlage
+  unter `_template/` trägt weder `upgrade/` noch
+  `setup/` noch `INIT.md`. Wo diese Anleitung
   `_template/upgrade/…` oder `_template/INIT.md`
   nennt, liest du im Lese-Klon; das Skript entfällt,
   du gehst den Weg von Hand.
@@ -117,14 +117,9 @@ Grundsätzen.
   Steckbrief §Mitgebrachte Fassaden. Wo diese
   Anleitung `_template/wiki/` nennt, sind das diese
   Ordner.
-- **Ausgangsstand ohne Herkunfts-Vermerk** (Stand 1.0
-  kannte ihn nicht): Vorlage und Version erfragst du
-  (Grundsätze); Anhaltspunkt ist ein Diff der
-  Regelwerks-Dateien des Projekts gegen den passenden
-  Stand der Vorlage. Die Einbindungs-Frage (Schritt 0
-  und 2) nennt als Quelle die Vorlage aus
-  `## Herkunft` bzw. die vom Anwender genannte, nicht
-  die Repo-URL des Starters.
+- **Ausgangsstand ohne Herkunfts-Vermerk oder ohne
+  `_template/`** (Stand 1.0): Schritt 0 („Ohne
+  Vermerk“, „Fehlt `_template/`“).
 
 **Zustimmung:** Die Übersicht in Schritt 0 mit deinem
 Vorschlag für den Weg ist die eine Frage vor der
@@ -161,9 +156,10 @@ Vorschlag für den Weg (Skript oder von Hand).
     Stand) im Knoten, kein `## Herkunft`; Prozess aus
     „Gewählter Prozess“, Rolle aus „RP-1-Rolle“ —
     fehlt die Zeile, fragst du.
-  - **Ohne Vermerk** (Stand 1.0): Vorlage und Version
-    erfragen (Absatz „Projekt aus der allgemeinen
-    Vorlage“).
+  - **Ohne Vermerk** (Stand 1.0 kannte ihn nicht):
+    Vorlage und Version erfragst du (Grundsätze);
+    Anhaltspunkt ist ein Diff der Regelwerks-Dateien
+    des Projekts gegen die Stände der Vorlage.
 - **Anbindungs-Modus:** **B**, wenn `.gitmodules` einen
   Eintrag für `_template` trägt (`git submodule status
   _template` zeigt den Pin); **A**, wenn `_template/`
@@ -177,8 +173,15 @@ Vorschlag für den Weg (Skript oder von Hand).
   welchem Stand das Projekt angelegt wurde (etwa
   `1.1`; Anhaltspunkt: Diff der Regelwerks-Dateien
   gegen die Stände der Vorlage), und gibst sie dem
-  Skript mit `--vorher`; das Skript schreibt keine
-  geratene Version.
+  Skript mit `--vorher`; weiß er es nicht genau, gilt
+  seine Angabe (etwa `1.x`) — das Skript schreibt
+  keine geratene Version. Nennt `Template-Stand` die
+  Zielversion schon und fehlt die Zeile `Vorher`,
+  trägt das Projekt den Stand seit seiner Anlage —
+  kein Sprung: frage, ob ein neuerer Commit derselben
+  Version nachgezogen werden soll (Tausch, Schritt 2,
+  und Delta-Nachzug, Schritt 5); das Skript hält in
+  diesem Fall an.
 - **Vorlage:** aus der Zeile `Quelle` bzw. dem Feld
   „Template-Herkunft“, bei Modus B zusätzlich aus der
   Submodul-URL. Nennt sie diesen Starter
@@ -202,7 +205,8 @@ Vorschlag für den Weg (Skript oder von Hand).
   Starter): **(a)** das Skript `setup/upgrade.sh` für
   die Mechanik (empfohlen: deterministisch, ändert
   Inhalte nicht, listet Treffer für dich; Aufruf nach
-  dem Tausch aus `_template/setup/`, Schritt 3) oder
+  dem Tausch aus `_template/setup/`, Schritt 3; eine
+  Vorschau davor aus einem Klon, ebenda) oder
   **(b)** dieselben Schritte von Hand nach Schritt 3;
   (b) ist zugleich der Fallback, wenn das Skript nicht
   lauffähig ist. Der Anwender wählt.
@@ -262,7 +266,11 @@ Die folgenden Schritte sind reine Mechanik — Inhalte
 führt sie `sh _template/setup/upgrade.sh --vorher
 <alte Version>` aus — aus dem Projektordner, nach dem
 Tausch und seinem Commit (Schritt 2); `--nur-pruefen`
-zeigt vorher, was es täte, auch vor der Sicherung.
+zeigt vorher, was es täte, auch vor der Sicherung —
+vor dem Tausch aus einem Klon des Starters außerhalb
+des Projekts (`sh <Klon>/setup/upgrade.sh
+--nur-pruefen`), weil das alte `_template/` eines
+1.x-Projekts das Skript nicht hat.
 Ein zweiter Lauf ändert nichts mehr. Von Hand gehst
 du dieselbe Liste durch; sie ist der führende Ort, das
 Skript ihre Implementierung.
@@ -308,10 +316,13 @@ Vorschlag** vor — gesammelt, je Datei mit dem, was sich
 ändert sich nie automatisch; projekt-eigene Einträge
 bleiben, Regelwerks-Text wird übernommen. Neue Dateien
 sind keine Übernahmen (Schritt 3). Regel für die
-Vorlage: Gleicht die lebende Kopie dem alten Stand von
-`_template/` (im Sicherungs-Commit), hat das Projekt
-sie nie verändert — solche Dateien schlägst du als
-eine Gruppe zur Übernahme vor; nur Dateien mit
+Vorlage: Gleicht die lebende Kopie dem alten Stand der
+Vorlage (Modus A: `_template/` im Sicherungs-Commit;
+Modus B: der Pin des Submoduls vor dem Tausch,
+`git -C _template show <Pin>:<Datei>`; ohne altes
+`_template/`: der Stand aus Schritt 0), hat das
+Projekt sie nie verändert — solche Dateien schlägst du
+als eine Gruppe zur Übernahme vor; nur Dateien mit
 projekt-eigenen Änderungen einzeln. Dazu:
 
 - **Instruktionsdatei** (`CLAUDE.md` o.ä.) nach
@@ -322,8 +333,11 @@ projekt-eigenen Änderungen einzeln. Dazu:
   Vorschlag ergänzen (Werte aus den
   Nachbarverzeichnissen); bestehende Inhalte der Tabelle
   bleiben. **Rolle Komponent:** die Übernahme-Art aus
-  der gebuchten Modus-Wahl ableiten (Komponenten-Modus A
-  → selbstständig, Modus B → Auftrag) und zur
+  dem gebuchten Übernahme-Modus der 1.x-Vorlage
+  ableiten (`Vorgehen.md` 1.x §3: Modus A „rekursiv
+  selbstständig“ → selbstständig, Modus B „Delegation
+  mit Auftrag“ → Auftrag; nicht zu verwechseln mit dem
+  Anbindungs-Modus A/B von `_template/`) und zur
   Bestätigung vorlegen; ist nichts gebucht, fragen.
 - `Tools.md`: `_template/tools/lint.sh` als
   Template-Werkzeug (§Projekt-Skripte) und die
@@ -375,8 +389,9 @@ Commit „Upgrade: Herkunft“.
    Projekt-Root ohne FEHLER; Hinweise zum Bestand
    (Altknoten, abgeschlossene Marken ohne
    Abschluss-Stand, alte Ablöse-Vermerke, Elemente ohne
-   Feld) sind erwartet — jeden anderen Hinweis
-   begründet dein Bericht.
+   Feld, `KETTE-DECKUNG` für Bestands-Elemente ohne
+   Nachfolger in der Kette) sind erwartet — jeden
+   anderen Hinweis begründet dein Bericht.
 2. **Stufe 1 — maschinelle Vorprüfung:** zwei Prüfer
    verschiedener Modelle als frische Agenten,
    unabhängig voneinander (möglichst beide ungleich
