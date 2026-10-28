@@ -8,11 +8,11 @@
 > `Entscheidungen.md`, `InterneMechanik.md`,
 > `Katalog.md`, `Einfrieren-und-Abloesen.md`,
 > `Glossar.md`, `Standarddateien-Katalog.md`). Stand
-> der Quellen: Starter-Commit `48e5365` (Version 2.0),
-> erzeugt am 2026-10-28. Dieses Dokument wird nicht von
-> Hand nachgepflegt, sondern zu festen Anlässen
-> vollständig neu aus den Quellen erzeugt; Änderungen
-> gehören in die Quellen.
+> der Quellen: Starter-Commit `959026c` (Version 2.0).
+> Dieses Dokument ist aus den Quellen abgeleitet und
+> wird bei Änderungen der Quellen auf deren Stand
+> nachgezogen (zuletzt am 2026-10-28); eigene Inhalte
+> bekommt es nicht — Änderungen gehören in die Quellen.
 
 Zurück zur [Einführung](Einfuehrung.md).
 

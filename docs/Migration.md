@@ -14,11 +14,11 @@
 > `Standarddateien-Katalog.md`) und
 > `../referenzprozesse/SP-1-Standardprozess/Steckbrief.md`
 > (mitgebrachte Ordner). Stand der Quellen:
-> Starter-Commit `48e5365` (Version 2.0), erzeugt am
-> 2026-10-28. Dieses Dokument wird nicht von Hand
-> nachgepflegt, sondern zu festen Anlässen vollständig
-> neu aus den Quellen erzeugt; Änderungen gehören in
-> die Quellen.
+> Starter-Commit `959026c` (Version 2.0). Dieses
+> Dokument ist aus den Quellen abgeleitet und wird bei
+> Änderungen der Quellen auf deren Stand nachgezogen
+> (zuletzt am 2026-10-28); eigene Inhalte bekommt es
+> nicht — Änderungen gehören in die Quellen.
 
 Zurück zur [Einführung](Einfuehrung.md).
 
@@ -200,8 +200,10 @@ da“.
    unveränderten Alt-Zustand, **vor** der Einbindung:
    „Sicherung vor Wissens-Migration“. Dabei gelten
    Schutzregeln für jeden Commit der Migration: Ist
-   nichts zu committen, gilt der aktuelle Stand als
-   Sicherung (kein leerer Commit). Ignorierte Dateien
+   nichts zu committen — auch wenn nur Dateien übrig
+   bleiben, die er nach dem nächsten Satz auslässt —,
+   gilt der aktuelle Stand als Sicherung (kein leerer
+   Commit). Ignorierte Dateien
    bleiben ignoriert. **Offensichtlich sensible
    Dateien** unter den ungetrackten (`.env`, Schlüssel,
    Zertifikate, Namen mit `secret` oder `token`) und
@@ -221,7 +223,10 @@ da“.
    Zustimmung: das Kopier-Skript
    `sh _template/setup/init-migration.sh` (empfohlen:
    deterministisch, überschreibt nichts, listet
-   Kollisionen) oder von Hand nach der Kopier-Liste in
+   Kollisionen — bei einer Migration typisch eine
+   vorgefundene `devstate_active.md`, deren
+   Starter-Variante dann ausbleibt) oder von Hand nach
+   der Kopier-Liste in
    `MIGRATION.md`; die Liste ist der führende Ort, das
    Skript ihre Implementierung. Kopiert werden dieselben
    Dateien wie beim Projektstart (Regelwerk,

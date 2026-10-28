@@ -1,9 +1,9 @@
 # Arbeitsweise — wie Mensch und Agent zusammenarbeiten
 
 > **Herkunft:** abgeleitet aus `../MasterPrompt.md`
-> (Abschnitte 5 bis 9), `../Vorgehen.md` (Abschnitte
-> 1, 6, 7, 7b), `../Reviewmuster.md` (Abschnitte 1
-> bis 4), `../Outgoing.md` (Abschnitte 3, 4, 6),
+> (Abschnitte 5 bis 9), `../Vorgehen.md` (Abschnitte 1,
+> 6, 7, 7b), `../Reviewmuster.md` (Abschnitte 1 bis 4),
+> `../Outgoing.md` (Abschnitte 3, 4, 6),
 > `../Styleguide.md`, den Anleitungen
 > `../migration/MIGRATION.md` (Phase 4) und
 > `../upgrade/UPGRADE.md` (Schritt 8) und dem
@@ -13,11 +13,11 @@
 > `Standarddateien-Katalog.md`, `Kettenpruefung.md`
 > Abschnitt „Reviewer-Anteil“,
 > `Instruktionsdatei-Pflege.md`). Stand der Quellen:
-> Starter-Commit `48e5365` (Version 2.0), erzeugt am
-> 2026-10-28. Dieses Dokument wird nicht von Hand
-> nachgepflegt, sondern zu festen Anlässen vollständig
-> neu aus den Quellen erzeugt; Änderungen gehören in
-> die Quellen.
+> Starter-Commit `959026c` (Version 2.0). Dieses
+> Dokument ist aus den Quellen abgeleitet und wird bei
+> Änderungen der Quellen auf deren Stand nachgezogen
+> (zuletzt am 2026-10-28); eigene Inhalte bekommt es
+> nicht — Änderungen gehören in die Quellen.
 
 Zurück zur [Einführung](Einfuehrung.md).
 

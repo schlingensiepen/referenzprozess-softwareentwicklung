@@ -8,11 +8,11 @@
 > `Init-Choreografie.md`, `Zielmarken.md`,
 > `Kettenpruefung.md`, `Fassaden.md`, `Katalog.md`,
 > `Agent-Berichte.md`). Stand der Quellen:
-> Starter-Commit `48e5365` (Version 2.0), erzeugt am
-> 2026-10-28. Dieses Dokument wird nicht von Hand
-> nachgepflegt, sondern zu festen Anlässen vollständig
-> neu aus den Quellen erzeugt; Änderungen gehören in
-> die Quellen.
+> Starter-Commit `959026c` (Version 2.0). Dieses
+> Dokument ist aus den Quellen abgeleitet und wird bei
+> Änderungen der Quellen auf deren Stand nachgezogen
+> (zuletzt am 2026-10-28); eigene Inhalte bekommt es
+> nicht — Änderungen gehören in die Quellen.
 
 Zurück zur [Einführung](Einfuehrung.md).
 
@@ -23,9 +23,10 @@ Vorlage stammt — aus diesem Starter oder aus der
 allgemeinen Vorlage, mit oder ohne Prozess, mit
 **Herkunfts-Vermerk** (dem Abschnitt „Herkunft“ in
 `wiki/Aktivierter-Prozess.md`) oder (Stand 1.0) ohne.
-Ein Projekt aus Stand 1.0 erkennst du daran, dass
-`MasterPrompt.md` und `Wiki.md` im Projekt-Root neben
-einem `wiki/` mit `Aktivierter-Prozess.md` liegen. Ein
+Ein Projekt aus Stand 1.0, das noch keinen Vermerk
+hat, erkennst du daran, dass `MasterPrompt.md` und
+`Wiki.md` im Projekt-Root neben einem `wiki/` mit
+`Aktivierter-Prozess.md` liegen. Ein
 Projekt ohne Herkunfts-Vermerk und ohne `_template/`,
 das sein Wissen in verstreuten Dateien sammelt, ist
 kein Upgrade-, sondern ein Migrations-Fall
@@ -292,7 +293,8 @@ einem Klon des Starters außerhalb des Projekts, weil
 das alte `_template/` eines 1.x-Projekts das Skript
 noch nicht hat. Aus dem Klon ohne diese Option führt
 es nur den Tausch aus und hält für den Commit aus
-Schritt 2 an. Ein zweiter Lauf ändert nichts mehr. Von
+Schritt 2 an. Ein zweiter Lauf ändert nichts mehr und
+sagt das; einen Commit schlägt er dann nicht vor. Von
 Hand geht der Agent dieselbe Liste durch; sie ist der
 führende Ort, das Skript ihre Implementierung.
 
@@ -301,13 +303,19 @@ führende Ort, das Skript ihre Implementierung.
 | Vorprüfung | Sicherungs-Commit vorhanden (keine Änderung an getrackten Dateien; ungetrackte Dateien, die Schritt 1 ausgelassen hat, bleiben unberührt und werden genannt), kein laufender Merge; `_template/` trägt den neuen Stand, Modus erkannt; Vorlage ist dieser Starter, Prozess ist der Software-Prozess; alte Version bekannt |
 | Tausch | geschehen in Schritt 2 — das Skript stellt nur fest, dass `_template/` den neuen Stand trägt |
 | Umbenennungen | Dateinamen nach der Tabelle der Sprung-Datei (`Rollen.md`, `Katalog.md`, Umlaute in die ae/oe/ue/ss-Form) — per `git mv`, nie über eine vorhandene Datei |
-| Neue Dateien | jede Datei des neuen Stands, die im Projekt fehlt (Root-Regelwerk, `wiki/` samt Katalog-Einträgen, Mechanik-Knoten, Fassaden, Vorlagen; eine `.gitignore` nur, falls keine da ist), wird angelegt und gesammelt gemeldet — Fassaden, die der aktive Prozess voraussetzt, aktiv, optionale deaktiviert mit Hinweis an dich, abgelöste nur als Hintergrund; eine bestehende Datei wird nie überschrieben |
+| Neue Dateien | jede Datei des neuen Stands, die im Projekt fehlt (Root-Regelwerk, `wiki/` samt Katalog-Einträgen, Mechanik-Knoten, Fassaden, Vorlagen; eine `.gitignore` nur, falls keine da ist), wird angelegt und gesammelt gemeldet — Fassaden, die der aktive Prozess voraussetzt, aktiv, optionale deaktiviert mit Hinweis an dich, abgelöste nur als Hintergrund; eine bestehende Datei wird nie überschrieben; eine so angelegte Fassade trägt im Kopf den Vermerk „beim Upgrade angelegt“ |
 | Formalien | Feld-Umbenennungen im Kopf der Knoten, ein abgeschaffter Status-Wert wird umgestellt, Rollen-Knoten bekommen ihre Rollen-Art, der Nachfolger einer Ablösung bekommt den Rückverweis (Einzelheiten unten, „Der Sprung von 1.x auf 2.0“) |
 | Herkunft | die Zeile `Template-Stand: 2.0 seit <Tag des Upgrades>` neu, darunter `Vorher: <alte Version> (bis <Tag des Upgrades>)`; die 1.x-Form wird zur 2.0-Form (Schritt 7 füllt die übrigen Zeilen) |
 | Trefferliste | alles, was der Agent danach kontext-bewusst nachzieht (Schritt 6): Wikilinks auf umbenannte Dateien, alte Kennungen, Pflegezeilen, Marken-Zeiger, Altknoten, Contract-Einträge alter Form, alte Ablöse-Vermerke; dazu die Liste der bestehenden Dateien mit Unterschieden, eingeteilt wie in Schritt 5 |
 | Lint | als Trefferliste; maßgeblich ist der Durchgang in Schritt 8 |
 
-Danach Commit „Upgrade: Mechanik“.
+Danach Commit „Upgrade: Mechanik“ (entfällt, wenn der
+Lauf nichts geändert hat). Bricht das Skript mitten im
+Lauf ab, etwa weil eine Datei nicht beschreibbar ist,
+bleibt das schon Geänderte im Arbeitsbaum; der Agent
+committet es als Zwischenstand oder nimmt es zurück,
+bevor er das Skript erneut aufruft — das sagt ihm die
+Meldung.
 
 ## Schritt 4 — Pflicht-Fassaden und laufende Marke
 
@@ -337,7 +345,11 @@ projekt-eigen bleibt. Eine bestehende Datei ändert
 sich nie automatisch; projekt-eigene Einträge bleiben,
 Regelwerks-Text wird übernommen — bei einer Fassade
 also der Kopf (`## Meta`, Regeltext) aus der Vorlage,
-die Einträge aus dem Projekt. Neue Dateien sind keine
+die Einträge aus dem Projekt; getrennt wird an der
+Überschrift des Eintrags-Abschnitts am Zeilenanfang
+(in den Zielmarken `## Marken`), nicht an ihrer ersten
+Erwähnung, denn `## Meta` nennt sie schon im Text.
+Neue Dateien sind keine
 Übernahmen — die hat Schritt 3 angelegt.
 
 Gleicht eine lebende Kopie dem **alten Stand der
@@ -432,9 +444,10 @@ unverändert):
   Lint den toten Link als Fehler. Stehen bleiben nur
   die alten Ablöse-Vermerke (unten, „Was bleibt“). Ein
   Wikilink, der nur eine Kennung nennt (etwa
-  `[[REQ-001]]`), löst in 2.0 nicht mehr auf; der Agent
-  schreibt ihn als Link auf die Datei mit der Kennung
-  als Anzeigetext.
+  `[[REQ-001]]`), löst in 2.0 nur noch über einen
+  Alias auf; der Agent schreibt ihn als Link auf die
+  Datei mit der Kennung als Anzeigetext — ein Alias
+  auf die eigene Kennung ist kein Ausweg.
 - **Katalog statt Knotentypen:** Für jeden
   projekt-eigenen Typ entsteht ein eigener
   Katalog-Eintrag (Muster ist ein mitgelieferter

@@ -5,15 +5,17 @@
 > (Abschnitte 1.5, 5.3, 5.4, 6.4 und 9.6), `../INIT.md`
 > (Fragen-Block Nr. 2 und 7, „Mit Startprompt“),
 > `../upgrade/UPGRADE.md` (Abschnitt „Verbund“) und dem
-> vorbereiteten `../wiki/` (`Two-Repo-Submodul-Muster.md`,
+> vorbereiteten `../wiki/`
+> (`Two-Repo-Submodul-Muster.md`,
 > `Init-Choreografie.md`, `Kettenpruefung.md`,
 > `Zielmarken.md`, `Katalog-message.md`,
 > `Contract-Index.md`, `Vorgehen-RP-1.md`,
 > `Glossar.md`). Stand der Quellen: Starter-Commit
-> `48e5365` (Version 2.0), erzeugt am 2026-10-28.
-> Dieses Dokument wird nicht von Hand nachgepflegt,
-> sondern zu festen Anlässen vollständig neu aus den
-> Quellen erzeugt; Änderungen gehören in die Quellen.
+> `959026c` (Version 2.0). Dieses Dokument ist aus den
+> Quellen abgeleitet und wird bei Änderungen der
+> Quellen auf deren Stand nachgezogen (zuletzt am
+> 2026-10-28); eigene Inhalte bekommt es nicht —
+> Änderungen gehören in die Quellen.
 
 Zurück zur [Einführung](Einfuehrung.md).
 
@@ -175,11 +177,14 @@ nach der Anleitung unter … ein.“) —, sagt in einem
 Satz, dass es andere Referenzprozesse gibt und der
 Agent im Zweifel fragt, und gibt den Prozess der
 Komponente **nicht** vor. Dazu nennt er die Rolle
-„Komponente“, Name, Pfad und Remote des neuen Repos,
-Name und Pfad des Koordinators, die Übernahme-Art, den
-Verweis auf den freigegebenen **Übergabe-Stand** (die
-Wurzel der eigenen Kette), die bekannten Nachbarn und
-die Wahl für Start und Transport. Was der Startprompt
+„Komponent“ (so heißt die Komponente in der
+Rollen-Frage und im Herkunfts-Vermerk), Name, Pfad und
+Remote des neuen Repos, Name und Pfad des
+Koordinators, die Übernahme-Art, den Verweis auf den
+freigegebenen **Übergabe-Stand** (die Wurzel der
+eigenen Kette), die bekannten Nachbarn und die Wahl
+für Start und Transport — als Markdown-Datei, je
+Angabe eine Zeile nach dem Start-Satz. Was der Startprompt
 vorgibt, legt der Agent der Komponente als abgeleitet
 vor und fragt es nicht mehr; der Start läuft sonst wie
 bei jedem Projekt (siehe

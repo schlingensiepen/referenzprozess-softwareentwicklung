@@ -12,11 +12,11 @@
 > `Instruktionsdatei-Pflege.md`, `Marken-RP-1.md`,
 > `Vorgehen-SP-1.md` Abschnitt 4a,
 > `templates/Tools-Vorlage.md`). Stand der Quellen:
-> Starter-Commit `48e5365` (Version 2.0), erzeugt am
-> 2026-10-28. Dieses Dokument wird nicht von Hand
-> nachgepflegt, sondern zu festen Anlässen vollständig
-> neu aus den Quellen erzeugt; Änderungen gehören in
-> die Quellen.
+> Starter-Commit `959026c` (Version 2.0). Dieses
+> Dokument ist aus den Quellen abgeleitet und wird bei
+> Änderungen der Quellen auf deren Stand nachgezogen
+> (zuletzt am 2026-10-28); eigene Inhalte bekommt es
+> nicht — Änderungen gehören in die Quellen.
 
 Zurück zur [Einführung](Einfuehrung.md).
 
@@ -231,7 +231,8 @@ samt Einbindung (bei der eingefrorenen Kopie
 einschließlich `_template/`) — angekündigt, nicht
 erfragt: „Setup: Starter-Stand aufgenommen“. Liegen
 außer den kopierten Dateien noch andere im Ordner,
-nimmt er nur die Starter-Kopie und `_template/` auf und
+nimmt er nur die Starter-Kopie und `_template/` auf
+(das Skript nennt die kopierten Pfade) und
 nennt dir den Rest — der kommt nach der Kollisionsfrage
 mit deinem ersten eigenen Commit (Schritt 5) ins Repo.
 Ignorierte Dateien bleiben ignoriert; eine fehlende
@@ -320,8 +321,11 @@ der Agent als abgeleitet vor, ohne es zu fragen: Rolle,
 Repo-Name, Pfad und Remote, Pfad des Koordinators,
 Übernahme-Art, Start und Transport, Verweis auf den
 Übergabe-Stand. Den Referenzprozess gibt der Startprompt
-**nicht** vor — dafür gilt Punkt 1. Was ein Startprompt
-ist und was er enthält:
+**nicht** vor — dafür gilt Punkt 1. Der Startprompt ist
+eine Markdown-Datei in `output/` des Koordinators, die
+mit dem Start-Satz beginnt und die Angaben zeilenweise
+nennt; die Rolle heißt darin „Komponent“. Was ein
+Startprompt ist und was er enthält:
 [Zusammenarbeit mehrerer Repos](Mehrere-Repos.md),
 „Startprompt“.
 
@@ -369,16 +373,21 @@ beim Anlegen die laufende Marke und sein Anlage-Datum.
 - **Buchungen:** Commit-Sprache, Betriebs-Konfiguration
   des WorkspaceManagers, die Freigaben der Ordner, die
   der Software-Prozess mitbringt (`src/`, `tests/`,
-  `ci/`, `deploy/`, `docs/`), als Einträge im
-  Entscheidungs-Register, die Wahl „ein Repo oder
-  zwei“.
+  `ci/`, `deploy/`, `docs/`), als je ein Eintrag im
+  Entscheidungs-Register nach dem Muster „Freigabe:
+  Ordner src/“ (wie bei der Migration), die Wahl „ein
+  Repo oder zwei“.
 - **`Tools.md`** aus der Kopiervorlage: Prüf-Werkzeuge
   und Ersatzweg, `_template/tools/lint.sh` als
   Template-Werkzeug, bei einer Komponente Start und
   Transport aus dem Startprompt.
 - **Rolle Koordinator:** der Contract-Index wird
-  aktiviert. **Rolle Komponente:** die eigene Zeile und
-  die Lage des Koordinators in der Architektur-Fassade.
+  aktiviert, und das Projekt bekommt seine eigene Zeile
+  in der Architektur-Fassade (daran erkennt der Lint
+  das eigene Repo; die Komponenten kommen später beim
+  Zuschnitt hinzu). **Rolle Komponente:** die eigene
+  Zeile und die Lage des Koordinators in der
+  Architektur-Fassade.
 - **Mission Statement und Facts** aus ihren
   **Einmal-Anweisungen** — im Starter heißen sie
   Bootstraps und liegen in

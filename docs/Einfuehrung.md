@@ -7,11 +7,11 @@
 > `../wiki/` (`Aktivierter-Prozess.md`, `Fassaden.md`)
 > und den Steckbriefen
 > `../referenzprozesse/*/Steckbrief.md`. Stand der
-> Quellen: Starter-Commit `48e5365` (Version 2.0),
-> erzeugt am 2026-10-28. Dieses Dokument wird nicht von
-> Hand nachgepflegt, sondern zu festen Anlässen
-> vollständig neu aus den Quellen erzeugt; Änderungen
-> gehören in die Quellen.
+> Quellen: Starter-Commit `959026c` (Version 2.0).
+> Dieses Dokument ist aus den Quellen abgeleitet und
+> wird bei Änderungen der Quellen auf deren Stand
+> nachgezogen (zuletzt am 2026-10-28); eigene Inhalte
+> bekommt es nicht — Änderungen gehören in die Quellen.
 
 Diese Erklärung ist für dich geschrieben — einen
 Menschen, der ein Softwareprojekt zusammen mit einem
@@ -270,7 +270,12 @@ Erkennt der Agent den anderen Fall, sagt er es dir.
   Übernahmen in die lebenden Dokumente als Vorschlag
   vor und lässt das Ergebnis absichern. Das Projekt
   behält seinen Prozess. Der ganze Ablauf:
-  [Upgrade](Upgrade.md).
+  [Upgrade](Upgrade.md). Findet der Agent dabei oder
+  im Betrieb etwas, das die Vorlage selbst verbessern
+  würde, hält er es als Ideen-Eintrag in deinem
+  Projekt fest; gemeldet wird es als Issue im
+  GitHub-Repo des Starters (Adresse in der
+  `../README.md`, „Template aktualisieren“).
 
 Alle drei Wege folgen denselben **Grundsätzen**, nach
 denen der Agent auch entscheidet, wo eine Anleitung

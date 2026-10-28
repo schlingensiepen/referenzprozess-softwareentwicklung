@@ -8,14 +8,15 @@
 > vorbereiteten `../wiki/` (`Aktivierter-Prozess.md`,
 > `Init-Choreografie.md`, `Kettenpruefung.md`,
 > `Vorgehen-SP-1.md`, `Vorgehen-RP-1.md`,
-> `Marken-SP-1.md`, `Marken-RP-1.md`), den
-> Steckbriefen `../referenzprozesse/*/Steckbrief.md`
-> und `../referenzprozesse/SP-1-Standardprozess/index.md`
-> (Rollen). Stand der Quellen: Starter-Commit `48e5365`
-> (Version 2.0), erzeugt am 2026-10-28. Dieses Dokument
-> wird nicht von Hand nachgepflegt, sondern zu festen
-> Anlässen vollständig neu aus den Quellen erzeugt;
-> Änderungen gehören in die Quellen.
+> `Marken-SP-1.md`, `Marken-RP-1.md`), den Steckbriefen
+> `../referenzprozesse/*/Steckbrief.md` und
+> `../referenzprozesse/SP-1-Standardprozess/index.md`
+> (Rollen). Stand der Quellen: Starter-Commit `959026c`
+> (Version 2.0). Dieses Dokument ist aus den Quellen
+> abgeleitet und wird bei Änderungen der Quellen auf
+> deren Stand nachgezogen (zuletzt am 2026-10-28);
+> eigene Inhalte bekommt es nicht — Änderungen gehören
+> in die Quellen.
 
 Zurück zur [Einführung](Einfuehrung.md).
 
@@ -290,4 +291,8 @@ Klärungen zur Anwendung des Prozesses in deinem Projekt
 werden als Entscheidungen gebucht. Befunde, die den
 Prozess oder den Starter selbst verbessern würden, hält
 der Agent als Ideen-Eintrag in deinem Projekt fest; in
-`_template/` schreibt er nicht.
+`_template/` schreibt er nicht. Gemeldet werden sie als
+Issue im GitHub-Repo des Starters
+(https://github.com/schlingensiepen/referenzprozess-softwareentwicklung/issues);
+die `../README.md` nennt den Kanal unter „Template
+aktualisieren“.
