@@ -1,24 +1,27 @@
 # Stände, Freigaben und Marken
 
 > **Herkunft:** abgeleitet aus `../Vorgehen.md`
-> (Abschnitte 1 bis 5, 7a), `../MasterPrompt.md`
-> (Abschnitte 1.5, 6.4), `../Wiki.md` (Abschnitt 3a),
-> `../upgrade/UPGRADE.md` (Grundsätze, Zwischenmarke)
-> und dem vorbereiteten `../wiki/`
-> (`Einfrieren-und-Abloesen.md`, `Kettenpruefung.md`,
-> `Zielmarken.md`, `Marken.md`, `Marken-SP-1.md`,
-> `Marken-RP-1.md`, `Vorgehen-SP-1.md`,
-> `Vorgehen-RP-1.md`, `Katalog-Abschluss-Stand.md`,
-> `Entscheidungen.md`, `Fehlermeldungen.md`,
-> `Anforderungen.md`, `Deployments.md`,
-> `Katalog-Deploy-Stand.md`, `Katalog-Deployments.md`,
-> `Katalog-Fehlerstand.md`, `Meilenstein-und-T2.md`,
-> `Katalog-Release-Notes.md`, `Glossar.md`) sowie
+> (Abschnitte 1 bis 5 und 7a), `../MasterPrompt.md`
+> (Abschnitte 1.5 und 6.4), `../Wiki.md` (Abschnitt
+> 3a), `../upgrade/UPGRADE.md` (Grundsätze) und dem
+> vorbereiteten `../wiki/` (`Vorgehen-RP-1.md`
+> Abschnitt 2 für die Phasentabelle,
+> `Vorgehen-SP-1.md`, `Einfrieren-und-Abloesen.md`,
+> `Kettenpruefung.md`, `Zielmarken.md`, `Marken.md`,
+> `Marken-SP-1.md`, `Marken-RP-1.md`,
+> `Katalog-Abschluss-Stand.md`, `Entscheidungen.md`,
+> `Fehlermeldungen.md`, `Anforderungen.md`,
+> `Deployments.md`, `Katalog-Deploy-Stand.md`,
+> `Katalog-Deployments.md`, `Katalog-Fehlerstand.md`,
+> `Meilenstein-und-T2.md`, `Katalog-Release-Notes.md`,
+> `Glossar.md`) sowie
 > `../referenzprozesse/SP-1-Standardprozess/index.md`
-> (Glieder der Kette); erzeugt am 2026-10-28 aus dem
-> Starter in Version 2.0. Dieses Dokument wird nicht
-> von Hand nachgepflegt, sondern zu festen Anlässen neu
-> aus den Quellen erzeugt.
+> (Glieder der Kette). Stand der Quellen:
+> Starter-Commit `09dc8cb` (Version 2.0), erzeugt am
+> 2026-10-28. Dieses Dokument wird nicht von Hand
+> nachgepflegt, sondern zu festen Anlässen vollständig
+> neu aus den Quellen erzeugt; Änderungen gehören in
+> die Quellen.
 
 Zurück zur [Einführung](Einfuehrung.md).
 
@@ -34,23 +37,24 @@ du das schon bedacht?“, und du antwortest „ja, dort“,
 „nein, überspringen“ oder „machen wir jetzt“.
 
 Die Belegung der Phasen P1 bis P13 mit dem
-Software-Prozess dieses Starters:
+Software-Prozess dieses Starters (so, wie
+`wiki/Vorgehen-RP-1.md` sie festlegt):
 
 | Phase | Aktivität | Ergebnis-Artefakt |
 |---|---|---|
-| P1 | Konzipieren | Konzept-Dokument |
-| P2 | Stand der Technik erfassen | Stand-der-Technik-Bericht |
-| P3 | Anforderungen sammeln | Anforderungs-Register |
-| P4 | Beschreiben der Funktion | Funktionsbeschreibung |
-| P5 | Zerlegen in Bausteine | Architektur-Beschreibung |
-| P6 | Starten von Teilaktivitäten | Teil-Register, Übergabe an Komponenten |
-| P7 | Auswählen der Technologie | Technologie-Entscheidungen |
-| P8 | Spezifizieren | Spezifikation (Bauanleitung) |
-| P9 | Ausarbeiten | der Code mit seinen automatisierten Tests (das Produkt) |
-| P10 | Testen | Testplan, Testbericht |
-| P11 | Ausliefern | Deploy-Stand je Zielumgebung |
-| P12 | Produzieren | Produktions-Plan und -Beschreibung |
-| P13 | Betreiben | Betriebs-Plan und -Beschreibung |
+| P1 | Konzipieren | Konzept-Stand, mit User-Stories und Use Cases |
+| P2 | Stand der Technik erfassen | Stand-der-Technik-Bericht: Referenzarchitekturen, verfügbare Bibliotheken und Frameworks, Standards |
+| P3 | Anforderungen sammeln | Anforderungen-Stand aus dem Register Anforderungen; User-Stories und Use Cases fließen als Quellen ein |
+| P4 | Beschreiben der Funktion | Funktionsbeschreibung-Stand aus dem Register Funktionsbeschreibungen |
+| P5 | Zerlegen in Bausteine | Architekturdokument aus der Softwaresystemarchitektur, mit dem Komponenten-Schnitt und dem Architekturmuster als eigener Wahl |
+| P6 | Starten von Teilaktivitäten | Übergabe je Komponente; Komponenten-Repositories mit Start-Tabelle und Startprompt |
+| P7 | Auswählen der Technologie | Technologie-Entscheidungen: Sprachen und Runtime-Version, Werkzeugkette, Lizenzen |
+| P8 | Spezifizieren | Spezifikation-Stand — die Bauanleitung nach Schnitt und Technologie-Stack, umsetzbar ohne Fachkenntnis; entsteht dort, wo gebaut wird |
+| P9 | Ausarbeiten | die Implementierung mit Unit-Tests und automatisierten Integrationstests — das Produkt; Glied der Kette ist der Tag |
+| P10 | Testen | Testplan mit den nicht automatisierbaren Anteilen, aus den Testfällen; Testberichte |
+| P11 | Ausliefern | Deploy-Stand je Zielumgebung; dazu die CI-Pipeline-Konfiguration |
+| P12 | Produzieren | Bereitstellen und Konfigurieren der Zielumgebung — bei Standard-Software oft weitgehend durch den Deploy-Stand abgedeckt |
+| P13 | Betreiben | Betriebs-Handbuch; Fehlermeldungen aus dem Betrieb laufen fortlaufend ins Register |
 
 Phasen heißen nach der **Tätigkeit** („Zerlegen in
 Bausteine“, nicht „Zerlegung“), weil die Tätigkeit sagt,
@@ -158,6 +162,14 @@ als Grundlage nehmen), ohne schon „für P11 Ausliefern“
 freigegeben zu sein. Freigaben sind unabhängig
 voneinander; eine impliziert nicht die andere.
 
+Das Wort „Freigabe“ hat im Regelwerk noch eine zweite,
+engere Bedeutung: die **Freigabe eines Ordners** — die
+als Entscheidung gebuchte Erlaubnis, im Projekt einen
+zusätzlichen Ordner zu führen (siehe
+[Wiki und Register](Wiki-und-Register.md), „Die Ordner
+und ihre Rollen“). Dieses Dokument handelt von der
+Freigabe eines Stands.
+
 **Die Formel.** Jede Freigabe wird wörtlich so gebucht:
 
 > **Stand x von ⟨Artefakt⟩, freigegeben für Zweck Z
@@ -193,7 +205,7 @@ der Marke, nicht als eigener Eintrag, und lösen nichts
 ab — die Tag-Freigabe einer Tag-Korrektur (die alte
 Tag-Freigabe bleibt stehen) und die Freigabe eines
 nachgetragenen Deploy-Stands (unten, „Tag-Korrektur“
-und der Absatz danach).
+und „Nachtrag“).
 
 **Nach der Freigabe.** Eine Freigabe gilt für ihren
 eingefrorenen Stand und wird nicht zurückgenommen.
@@ -273,9 +285,13 @@ Implementierung. Manche Glieder fehlen ohne Verzicht
 von selbst — die Phase P2 hat keinen Pflicht-Stand,
 eine Übergabe gibt es nur bei einem Schnitt in
 Komponenten, Auslieferung nur mit Zielumgebung — oder
-werden durch anderes vertreten (siehe
-[Zusammenarbeit mehrerer Repos](Mehrere-Repos.md)); die
-Fälle legt `../wiki/Kettenpruefung.md` fest.
+werden durch anderes vertreten, etwa den
+Übergabe-Stand des Koordinators bei einer Komponente
+(siehe
+[Zusammenarbeit mehrerer Repos](Mehrere-Repos.md));
+welche Glieder in welchem Fall fehlen oder vertreten
+werden, legt `../wiki/Kettenpruefung.md` im Einzelnen
+fest.
 
 **Kettenprüfung ist kein Wächter.** Die Arbeit wird nie
 gesperrt; nur die Freigabe eines Pflicht-Stands setzt
@@ -343,7 +359,7 @@ Hotfix nach dem Abschluss ist eine **Patch-Marke**
 einer abgeschlossenen Marke korrigiert; ein anderes
 Ausrollen bei unverändertem Produkt ist keine
 Patch-Marke, sondern ein weiterer Deploy-Stand (unten,
-Nachtrag). Beim Koordinator ist die Marke der Release
+„Nachtrag“). Beim Koordinator ist die Marke der Release
 des Gesamtsystems; die Komponenten liefern ihre Tags zu
 dieser Marke.
 
@@ -371,37 +387,51 @@ ersten Marke gibt es noch kein `current`. Keine Marke
 ist `in-progress` nur, wenn das Projekt ruht (unten,
 „Marken-Wechsel“).
 
-- **Zuordnung.** Jedes Element trägt ein Feld
-  `zielmarke:` mit der Marke, zu der es gehört. Beim
-  Anlegen schreibt der Agent die `in-progress`-Marke
-  hinein; ist etwas von vornherein für eine spätere
-  Marke geplant oder wird es dorthin verschoben, steht
-  diese Marke. Vier Ausnahmen tragen eine Tatsache
-  statt einer Planung: eine Fehlermeldung die Marke des
-  Produkt-Stands, an dem der Fehler beobachtet wurde;
-  die Deployment-Elemente eines Deploy-Stands, der zu
-  einer abgeschlossenen Marke nachgetragen wird (neue
-  oder anders ausgerollte Umgebung), eine Entscheidung,
-  die nur diese Umgebung betrifft, und eine
-  Fix-Anforderung, die einen Fehler in der Auslieferung
-  durch einen weiteren Deploy-Stand behebt, die Marke
-  dieses Stands (unten, „Marken-Wechsel“). Das Feld ist
-  bis zum Einfrieren umhängbar; danach gilt das Element
-  ab seiner Marke für alle späteren Marken, die auf ihr
-  aufbauen (ein Element einer Sackgasse gilt nur dort),
-  und eine andere Marke bekommt es nur noch durch eine
-  Ablösung. Hat der Agent das Feld bei einem Element
-  vergessen, das schon eingefroren ist, hängt er einen
-  Vermerk „Zielmarke <M> (nachgetragen)“ an; der Lint
-  liest ihn wie das Feld, der Inhalt bleibt unverändert.
-  Bei einem Element mit eigenem Knoten steht das Feld im
-  Knoten und zur Anzeige im Register-Eintrag; der Agent
-  schreibt beide, und der Lint meldet eine Abweichung —
-  es gilt dann die Marke des Eintrags. Elemente aus der
-  Zeit vor Version 2.0 der Vorlage und Elemente, die
-  eine Migration aus dem Vorgefundenen übernommen hat,
-  haben kein solches Feld und gelten ab ihrer Annahme;
-  nachgetragen wird nichts.
+Zielmarken sind keine Fristen: Fristen sind Termine mit
+Verfall („abgelaufen“), Marken sind Ergebnisse ohne
+Verfall. Und sie sind keine Meilensteine im Sinn einer
+Zeitplanung: gearbeitet wird fließend und parallel; der
+„Meilenstein-Vorgang“ des Software-Prozesses ist eine
+abgeschlossene Arbeits-Einheit, keine Marke.
+
+### Zuordnung der Elemente zu Marken
+
+Jedes Element trägt ein Feld `zielmarke:` mit der
+Marke, zu der es gehört. Beim Anlegen schreibt der
+Agent die `in-progress`-Marke hinein; ist etwas von
+vornherein für eine spätere Marke geplant oder wird es
+dorthin verschoben, steht diese Marke.
+
+Vier Ausnahmen tragen eine Tatsache statt einer
+Planung: eine Fehlermeldung die Marke des
+Produkt-Stands, an dem der Fehler beobachtet wurde; die
+Deployment-Elemente eines Deploy-Stands, der zu einer
+abgeschlossenen Marke nachgetragen wird (neue oder
+anders ausgerollte Umgebung), eine Entscheidung, die
+nur diese Umgebung betrifft, und eine Fix-Anforderung,
+die einen Fehler in der Auslieferung durch einen
+weiteren Deploy-Stand behebt, die Marke dieses Stands
+(unten, „Nachtrag“).
+
+Das Feld ist bis zum Einfrieren umhängbar; danach gilt
+das Element ab seiner Marke für alle späteren Marken,
+die auf ihr aufbauen (ein Element einer Sackgasse gilt
+nur dort), und eine andere Marke bekommt es nur noch
+durch eine Ablösung. Hat der Agent das Feld bei einem
+Element vergessen, das schon eingefroren ist, hängt er
+einen Vermerk „Zielmarke <M> (nachgetragen)“ an; der
+Lint liest ihn wie das Feld, der Inhalt bleibt
+unverändert. Bei einem Element mit eigenem Knoten steht
+das Feld im Knoten und zur Anzeige im Register-Eintrag;
+der Agent schreibt beide, und der Lint meldet eine
+Abweichung — es gilt dann die Marke des Eintrags.
+Elemente aus der Zeit vor Version 2.0 der Vorlage und
+Elemente, die eine Migration aus dem Vorgefundenen
+übernommen hat, haben kein solches Feld und gelten ab
+ihrer Annahme; nachgetragen wird nichts.
+
+Weitere Regeln der Zuordnung:
+
 - **Marken-Trigger.** „Für 2.0 vertagt“ heißt: schlafen
   gelegt mit Wecker — wird die Marke `in-progress`, holt
   der Wächter den aufgeschobenen Eintrag hervor.
@@ -428,173 +458,184 @@ ist `in-progress` nur, wenn das Projekt ruht (unten,
   Ablösung an; welche Stände es noch führen, entscheidet
   nicht der Status, sondern ob der Nachfolger für die
   Marke des Stands gilt.
-- **Zwischenmarke.** Muss eine abgeschlossene Marke
-  korrigiert werden, während die nächste schon läuft,
-  zieht der Agent die Patch-Marke (z.B. `2.0.1`) als
-  Zwischenmarke vor: sie wird `in-progress`, die bisher
-  laufende Marke (`2.1`) ist so lange die
-  **zurückgestellte Marke**, und mit dem Abschluss der
-  letzten Zwischenmarke kehrt der Agent zu ihr zurück.
-  Im Einzelnen:
-  - *Vorziehen und Fragen.* Vorher sagt der Agent dir
-    das — auch, dass jede Freigabe ohne Stand-Datei
-    ihre Marke nennt und Stände ihre Marke im Kopf
-    tragen und dass die Arbeit am Produkt auf einem
-    eigenen Zweig ab dem Tag der Vormarke läuft —,
-    fragt bei größeren Wünschen, ob die Arbeit
-    nicht besser in `2.1` bleibt, und fragt dich, ob
-    die Zwischenmarke Vorgänger der zurückgestellten
-    Marke ist (ein Bugfix, der in `2.1` enthalten sein
-    soll) oder eine Sackgasse (ein Workaround, der dort
-    nicht hineingehört) — mit den Folgen beider Fälle;
-    erst nach deinem OK legt er sie an. Deine Antwort
-    darfst du ändern, bis in der Zwischenmarke zum
-    ersten Mal etwas abgelöst oder überlagert wird;
-    danach steht sie fest, und ein Kurswechsel läuft
-    über die Übernahme (Sackgasse) oder eine Ablösung
-    in `2.1` (Vorgänger).
-  - *Zweite Korrektur.* Kommt während der
-    Zwischenmarke noch eine Korrektur derselben Art
-    (wieder ein Bugfix, wieder ein Workaround), nimmt
-    der Agent sie mit derselben Ankündigung in dieselbe
-    Zwischenmarke auf; eine Korrektur der anderen Art
-    folgt als eigene Zwischenmarke (`2.0.2`) nach dem
-    Abschluss der ersten, und `2.1` bleibt so lange
-    zurückgestellt.
-  - *Zweig im Repo.* Die Zwischenmarke arbeitet auf
-    einem eigenen Zweig, abgezweigt am Tag ihrer
-    Vormarke, in dem Repo, das das Produkt trägt; das
-    Muster des Zweignamens (etwa `marke/2.0.1`) steht
-    in `wiki/Facts.md` neben der Tag-Konvention, der
-    Agent fragt es vor der ersten Zwischenmarke ab. Ihr
-    Tag sitzt auf diesem Zweig. Einen Vorgänger-Zweig
-    führt der Agent bei der Rückkehr in die Hauptlinie
-    zurück — den Zweig, auf dem die zurückgestellte
-    Marke arbeitet — und legt dir Konflikte vor; ein
-    Sackgassen-Zweig bleibt stehen.
-  - *Zuordnung während der Zwischenmarke.* Solange die
-    Zwischenmarke läuft, bekommen neue Elemente sie als
-    `zielmarke:`; Arbeit an `2.1` nennt `2.1`
-    ausdrücklich — Elemente mit `zielmarke: 2.1`,
-    Freigaben „zu Marke 2.1“. Ob ein neues Element zur
-    Zwischenmarke oder zu `2.1` gehört, folgt aus
-    deinem Auftrag; ist es daraus nicht ableitbar,
-    fragt der Agent vor dem Anlegen. Ein Element, das
-    schon „abgelöst“ ist, weil sein Nachfolger zu `2.1`
-    gehört, gilt für die Zwischenmarke weiter und steht
-    in ihren Ständen. Hat ein alter Eintrag ohne
-    `zielmarke:` (Bestand) vor dem Vorziehen etwas
-    ersetzt, fragt dich der Agent, zu welcher Marke die
-    Ersetzung gehört — bei der ersten Meldung,
-    spätestens bevor er einen Stand zur Zwischenmarke
-    bildet —, und vermerkt die Antwort am Nachfolger;
-    bis dahin gibt der Lint einen Hinweis. Eine
-    Fehlermeldung trägt die Marke des Produkt-Stands,
-    an dem der Fehler beobachtet wurde — aus dem
-    Betrieb des ausgelieferten `2.0` also `2.0`, aus
-    einem Test der Arbeit an `2.1` also `2.1`, nie
-    einfach die laufende Marke. Eine Fehlermeldung zu
-    `2.0` darf in der Zwischenmarke behoben werden —
-    ihre Fix-Anforderung trägt dann `2.0.1` — wie in
-    `2.1`; eine Fehlermeldung zu `2.1` nicht: behoben
-    wird nie vor der Meldung. Behebt eine Sackgasse
-    eine Fehlermeldung der regulären Linie nur per
-    Workaround, bleibt sie offen, bis der echte Fix in
-    `2.1` umgesetzt ist; die Meldung nennt beide
-    Anforderungen, und die Release-Notes der Sackgasse
-    führen sie als Workaround, die von `2.1` als
-    Behebung. Folgt kein echter Fix, bleibt es dabei:
-    die Release-Notes der Sackgasse führen sie als
-    Workaround, die der regulären Linie gar nicht, die
-    Meldung bleibt offen und steht im Fehlerstand der
-    regulären Marke als offener Fehler mit Workaround.
-    Eine Fehlermeldung, die am Stand der Sackgasse
-    selbst beobachtet wurde, trägt deren Marke, gilt
-    nur dort und ist mit einer Fix-Anforderung der
-    Sackgasse behoben — in deren Release-Notes eine
-    Behebung; in die Rückfrage zur Übernahme kommt sie
-    nicht, ein Fehler am Stand von `2.1` ist eine neue
-    Meldung.
-  - *Kein Upgrade, kein Prozess-Upgrade.* Solange eine
-    Zwischenmarke läuft, gibt es weder ein Upgrade auf
-    einen neuen Stand der Vorlage noch ein
-    Prozess-Upgrade; der Agent verweist auf die Zeit
-    nach der Rückkehr.
-  - *Vorgänger oder Sackgasse.* Die **reguläre Linie**
-    sind die Marken, die aufeinander aufbauen (`2.0` →
-    `2.1`); ein Vorgänger reiht sich dort ein (`2.0` →
-    `2.0.1` → `2.1`), eine Sackgasse steht daneben.
-  - *Überlagern in der Sackgasse.* In einer Sackgasse
-    löst der Agent nichts aus der regulären Linie ab,
-    sondern **überlagert** es: ein neuer Eintrag ersetzt
-    einen Eintrag nur für die Sackgasse, der
-    ursprüngliche gilt für alle anderen Marken
-    unverändert weiter, und nichts wird zurückgesetzt.
-  - *Rückfragen.* Trifft eine Überlagerung einen Stand,
-    der für die Sackgasse schon freigegeben oder aus
-    der Vormarke übernommen war, fragt er dich, ob er
-    eine neue Version ableitet oder den Stand belässt.
-    Bevor die Sackgasse abgeschlossen ist, fragt er
-    dich, ob Teile davon in die reguläre Linie
-    übernommen werden sollen; Übernommenes entsteht dort
-    als eigener Eintrag für `2.1`, der ablöst, was in
-    `2.1` gerade gilt; verschoben wird aus einer
-    Sackgasse nichts. In Fällen, die diese Regeln nicht
-    abdecken, fragt der Agent dich.
-  - *Doppelte Nachfolger.* Hat ein Vorgänger-Bugfix
-    einen Eintrag ersetzt, den `2.1` schon durch einen
-    eigenen Eintrag ersetzt hat, gelten für `2.1` zwei
-    Nachfolger. Der Agent legt dir solche Fälle bei der
-    Rückkehr vor, und du wählst: der Stand von `2.1`
-    gilt, der Fix gilt, oder beides wird
-    zusammengeführt; bis dahin meldet der Lint den
-    Fall als Fehler.
 
-Zielmarken sind keine Fristen: Fristen sind Termine mit
-Verfall („abgelaufen“), Marken sind Ergebnisse ohne
-Verfall. Und sie sind keine Meilensteine im Sinn einer
-Zeitplanung: gearbeitet wird fließend und parallel; der
-„Meilenstein-Vorgang“ des Software-Prozesses ist eine
-abgeschlossene Arbeits-Einheit, keine Marke.
+### Zwischenmarke
+
+Das Beispiel-Szenario für alles Folgende: Release
+`2.0` ist abgeschlossen und ausgeliefert, die Arbeit an
+`2.1` läuft (`2.1` ist `in-progress`). Jetzt meldet
+der Betrieb einen Fehler in `2.0`, der nicht bis `2.1`
+warten kann. Die Korrektur bekommt eine Patch-Marke
+`2.0.1`, die vor `2.1` fertig werden soll.
+
+Muss eine abgeschlossene Marke korrigiert werden,
+während die nächste schon läuft, zieht der Agent die
+Patch-Marke (`2.0.1`) als **Zwischenmarke** vor: sie
+wird `in-progress`, die bisher laufende Marke (`2.1`)
+ist so lange die **zurückgestellte Marke**, und mit dem
+Abschluss der letzten Zwischenmarke kehrt der Agent zu
+ihr zurück.
+
+**Vorziehen und Fragen.** Vorher sagt der Agent dir das
+— auch, dass jede Freigabe ohne Stand-Datei ihre Marke
+nennt und Stände ihre Marke im Kopf tragen und dass die
+Arbeit am Produkt auf einem eigenen Zweig ab dem Tag
+der Vormarke läuft. Bei größeren Wünschen fragt er, ob
+die Arbeit nicht besser in `2.1` bleibt. Und er fragt
+dich, ob die Zwischenmarke **Vorgänger** der
+zurückgestellten Marke ist (ein Bugfix, der in `2.1`
+enthalten sein soll) oder eine **Sackgasse** (ein
+Workaround, der dort nicht hineingehört) — mit den
+Folgen beider Fälle; erst nach deinem OK legt er sie
+an. Deine Antwort darfst du ändern, bis in der
+Zwischenmarke zum ersten Mal etwas abgelöst oder
+überlagert wird; danach steht sie fest, und ein
+Kurswechsel läuft über die Übernahme (Sackgasse) oder
+eine Ablösung in `2.1` (Vorgänger).
+
+**Vorgänger oder Sackgasse.** Die **reguläre Linie**
+sind die Marken, die aufeinander aufbauen (`2.0` →
+`2.1`); ein Vorgänger reiht sich dort ein (`2.0` →
+`2.0.1` → `2.1`), eine Sackgasse steht daneben.
+
+**Zweite Korrektur.** Kommt während der Zwischenmarke
+noch eine Korrektur derselben Art (wieder ein Bugfix,
+wieder ein Workaround), nimmt der Agent sie mit
+derselben Ankündigung in dieselbe Zwischenmarke auf;
+eine Korrektur der anderen Art folgt als eigene
+Zwischenmarke (`2.0.2`) nach dem Abschluss der ersten,
+und `2.1` bleibt so lange zurückgestellt.
+
+**Zweig im Repo.** Die Zwischenmarke arbeitet auf einem
+eigenen Zweig, abgezweigt am Tag ihrer Vormarke, in dem
+Repo, das das Produkt trägt; das Muster des Zweignamens
+(etwa `marke/2.0.1`) steht in `wiki/Facts.md` neben der
+Tag-Konvention, der Agent fragt es vor der ersten
+Zwischenmarke ab. Ihr Tag sitzt auf diesem Zweig. Einen
+Vorgänger-Zweig führt der Agent bei der Rückkehr in die
+Hauptlinie zurück — den Zweig, auf dem die
+zurückgestellte Marke arbeitet — und legt dir Konflikte
+vor; ein Sackgassen-Zweig bleibt stehen.
+
+**Zuordnung während der Zwischenmarke.** Solange die
+Zwischenmarke läuft, bekommen neue Elemente sie als
+`zielmarke:`; Arbeit an `2.1` nennt `2.1` ausdrücklich
+— Elemente mit `zielmarke: 2.1`, Freigaben „zu Marke
+2.1“. Ob ein neues Element zur Zwischenmarke oder zu
+`2.1` gehört, folgt aus deinem Auftrag; ist es daraus
+nicht ableitbar, fragt der Agent vor dem Anlegen. Ein
+Element, das schon „abgelöst“ ist, weil sein Nachfolger
+zu `2.1` gehört, gilt für die Zwischenmarke weiter und
+steht in ihren Ständen. Hat ein alter Eintrag ohne
+`zielmarke:` (Bestand) vor dem Vorziehen etwas ersetzt,
+fragt dich der Agent, zu welcher Marke die Ersetzung
+gehört — bei der ersten Meldung, spätestens bevor er
+einen Stand zur Zwischenmarke bildet —, und vermerkt
+die Antwort am Nachfolger; bis dahin gibt der Lint
+einen Hinweis.
+
+**Fehlermeldungen während der Zwischenmarke.** Eine
+Fehlermeldung trägt die Marke des Produkt-Stands, an
+dem der Fehler beobachtet wurde — aus dem Betrieb des
+ausgelieferten `2.0` also `2.0`, aus einem Test der
+Arbeit an `2.1` also `2.1`, nie einfach die laufende
+Marke. Eine Fehlermeldung zu `2.0` darf in der
+Zwischenmarke behoben werden — ihre Fix-Anforderung
+trägt dann `2.0.1` — wie in `2.1`; eine Fehlermeldung
+zu `2.1` nicht: behoben wird nie vor der Meldung.
+
+**Workaround in einer Sackgasse.** Behebt eine Sackgasse
+eine Fehlermeldung der regulären Linie nur per
+Workaround, bleibt sie offen, bis der echte Fix in
+`2.1` umgesetzt ist; die Meldung nennt beide
+Anforderungen, und die Release-Notes der Sackgasse
+führen sie als Workaround, die von `2.1` als Behebung.
+Folgt kein echter Fix, bleibt es dabei: die
+Release-Notes der Sackgasse führen sie als Workaround,
+die der regulären Linie gar nicht, die Meldung bleibt
+offen und steht im Fehlerstand der regulären Marke als
+offener Fehler mit Workaround. Eine Fehlermeldung, die
+am Stand der Sackgasse selbst beobachtet wurde, trägt
+deren Marke, gilt nur dort und ist mit einer
+Fix-Anforderung der Sackgasse behoben — in deren
+Release-Notes eine Behebung; in die Rückfrage zur
+Übernahme kommt sie nicht, ein Fehler am Stand von
+`2.1` ist eine neue Meldung.
+
+**Überlagern in der Sackgasse.** In einer Sackgasse löst
+der Agent nichts aus der regulären Linie ab, sondern
+**überlagert** es: ein neuer Eintrag ersetzt einen
+Eintrag nur für die Sackgasse, der ursprüngliche gilt
+für alle anderen Marken unverändert weiter, und nichts
+wird zurückgesetzt.
+
+**Rückfragen.** Trifft eine Überlagerung einen Stand,
+der für die Sackgasse schon freigegeben oder aus der
+Vormarke übernommen war, fragt er dich, ob er eine neue
+Version ableitet oder den Stand belässt. Bevor die
+Sackgasse abgeschlossen ist, fragt er dich, ob Teile
+davon in die reguläre Linie übernommen werden sollen;
+Übernommenes entsteht dort als eigener Eintrag für
+`2.1`, der ablöst, was in `2.1` gerade gilt;
+verschoben wird aus einer Sackgasse nichts. In Fällen,
+die diese Regeln nicht abdecken, fragt der Agent dich.
+
+**Doppelte Nachfolger.** Hat ein Vorgänger-Bugfix einen
+Eintrag ersetzt, den `2.1` schon durch einen eigenen
+Eintrag ersetzt hat, gelten für `2.1` zwei Nachfolger.
+Der Agent legt dir solche Fälle bei der Rückkehr vor,
+und du wählst: der Stand von `2.1` gilt, der Fix gilt,
+oder beides wird zusammengeführt; bis dahin meldet der
+Lint den Fall als Fehler.
+
+**Kein Upgrade, kein Prozess-Upgrade.** Solange eine
+Zwischenmarke läuft, gibt es weder ein Upgrade auf
+einen neuen Stand der Vorlage noch ein Prozess-Upgrade;
+der Agent verweist auf die Zeit nach der Rückkehr.
 
 ## Marken-Wechsel und Abschluss-Stand
 
 Der Wechsel des `in-progress`-Zeigers läuft in festen
 Schritten:
 
-1. **Vollständigkeits-Scan** der abzuschließenden Marke:
-   offene Einträge der Marke werden vorgelegt — dazu
-   die offenen Fehlermeldungen früherer Marken, die für
-   sie gelten (nicht verworfene, keine Duplikate): über
-   jeden bekannten offenen Fehler wird beim Abschluss
-   entschieden, beheben, die Behebung verschieben oder
-   aufschieben —, erledigen oder auf die nächste bzw.
-   eine spätere Marke verschieben, je Punkt deine
-   Entscheidung (einen noch nicht eingefrorenen Eintrag
-   hängt der Agent um; einen eingefrorenen —
-   angenommenen — löst er durch einen neuen Eintrag für
-   die spätere Marke ab; eine Fehlermeldung bleibt bei
-   der Marke ihrer Meldung — der Marke des
-   Produkt-Stands, an dem der Fehler beobachtet wurde —,
-   ihre Behebung plant die Fix-Anforderung mit eigener
-   Marke — oder, wenn die Lösung eine geänderte oder
-   neue Anforderung ist, diese Anforderung, auf die die
-   Meldung dann verweist; liegt der Fehler in der
-   Auslieferung, ist die Behebung ein weiterer
-   Deploy-Stand derselben Umgebung mit einer
-   Fix-Anforderung auf einen Deploy, die die Marke der
-   Meldung behält — nach dem Abschluss ein Nachtrag zu
-   dieser Marke, unten —, sie wird nicht verschoben;
-   bei einer Sackgasse tritt die Rückfrage zur
-   Übernahme an die Stelle des Verschiebens; bei der
-   Rückkehr aus einem Vorgänger kommen doppelte
-   Nachfolger zur Wahl). Beim Koordinator eines
-   Komponenten-Verbunds auch offene Lieferungen. Gibt
-   es keine künftige Marke mehr (die zurückgestellte
-   Marke und eine folgende Zwischenmarke zählen als
-   künftige Marke), fragt der Agent dich hier: eine
-   Folge-Marke anlegen (er schlägt die Bezeichnung vor,
-   du nennst sie) oder das Projekt ruhen lassen.
+1. **Vollständigkeits-Scan** der abzuschließenden Marke.
+   Der Agent legt die offenen Einträge der Marke vor —
+   dazu die offenen Fehlermeldungen früherer Marken,
+   die für sie gelten (nicht verworfene, keine
+   Duplikate), denn über jeden bekannten offenen Fehler
+   wird beim Abschluss entschieden: beheben, die
+   Behebung verschieben oder aufschieben. Je Punkt
+   entscheidest du: erledigen oder auf die nächste bzw.
+   eine spätere Marke verschieben. Dabei gilt:
+   - einen noch nicht eingefrorenen Eintrag hängt der
+     Agent um; einen eingefrorenen — angenommenen —
+     löst er durch einen neuen Eintrag für die spätere
+     Marke ab;
+   - eine Fehlermeldung bleibt bei der Marke ihrer
+     Meldung (der Marke des Produkt-Stands, an dem der
+     Fehler beobachtet wurde); ihre Behebung plant die
+     Fix-Anforderung mit eigener Marke — oder, wenn die
+     Lösung eine geänderte oder neue Anforderung ist,
+     diese Anforderung, auf die die Meldung dann
+     verweist;
+   - liegt der Fehler in der Auslieferung, ist die
+     Behebung ein weiterer Deploy-Stand derselben
+     Umgebung mit einer Fix-Anforderung auf einen
+     Deploy, die die Marke der Meldung behält — nach dem
+     Abschluss ein Nachtrag zu dieser Marke (unten) —;
+     sie wird nicht verschoben;
+   - bei einer Sackgasse tritt die Rückfrage zur
+     Übernahme an die Stelle des Verschiebens; bei der
+     Rückkehr aus einem Vorgänger kommen doppelte
+     Nachfolger zur Wahl;
+   - beim Koordinator eines Komponenten-Verbunds auch
+     offene Lieferungen.
+   Gibt es keine künftige Marke mehr (die
+   zurückgestellte Marke und eine folgende
+   Zwischenmarke zählen als künftige Marke), fragt der
+   Agent dich hier: eine Folge-Marke anlegen (er
+   schlägt die Bezeichnung vor, du nennst sie) oder das
+   Projekt ruhen lassen.
 2. **Freigabe des Abschluss-Stands** durch dich — der
    Pflicht-Stand „für den Marken-Abschluss“, der alle
    freigegebenen Stände der Kette dieser Marke mit ihren
@@ -609,19 +650,20 @@ Schritten:
    Ebenso, wenn der Tag nach der Freigabe des
    Abschluss-Stands und vor dem Wechsel noch korrigiert
    wird.
-4. **Zeiger nachführen** (`current` auf die
+4. **Zeiger nachführen** — `current` auf die
    abgeschlossene, `in-progress` auf die nächste Marke
-   der Abfolge — nach einer Zwischenmarke auf eine
+   der Abfolge; nach einer Zwischenmarke auf eine
    folgende Zwischenmarke oder, nach der letzten, zurück
-   auf die zurückgestellte; ruht das Projekt, auf keine:
-   das Register Zielmarken trägt dann die Zeile „Ruht
-   seit <Datum>“, und wer später weitermacht, legt
-   zuerst eine Marke an — dann legt der Agent dir die
-   Übernahme der Stände der letzten Marke vor, der
-   nachgeholte zweite Teil des Wechsels) und den Wechsel
-   als Entscheidung buchen („Marken-Wechsel von A zu B“
-   — ruht das Projekt, „Marken-Wechsel von A; Projekt
-   ruht“ —, mit Verweis auf den Abschluss-Stand und der
+   auf die zurückgestellte. Ruht das Projekt, zeigt
+   `in-progress` auf keine Marke: das Register
+   Zielmarken trägt dann die Zeile „Ruht seit <Datum>“,
+   und wer später weitermacht, legt zuerst eine Marke
+   an — dann legt der Agent dir die Übernahme der
+   Stände der letzten Marke vor, der nachgeholte zweite
+   Teil des Wechsels. Der Wechsel wird als Entscheidung
+   gebucht („Marken-Wechsel von A zu B“ — ruht das
+   Projekt, „Marken-Wechsel von A; Projekt ruht“ —, mit
+   Verweis auf den Abschluss-Stand und der
    abgeschlossenen Marke A als `zielmarke:`). **Mit dem
    Wechsel ist die Marke abgeschlossen und
    eingefroren.** Elemente, die ab der neuen Marke
@@ -642,63 +684,78 @@ Abschluss-Stand gelten nach einem Upgrade als
 abgeschlossen; ein Abschluss-Stand wird nicht
 nachgebaut.
 
-**Tag-Korrektur.** Stellt sich der Tag vor dem Wechsel
-als falsch heraus, setzt der Agent einen neuen mit
-neuer Tag-Freigabe, die die alte ablöst; der
-Abschluss-Stand führt den neuen Tag als neue Version —
-ein versioniertes Dokument wird nie überschrieben, auch
+### Tag-Korrektur
+
+Stellt sich der Tag **vor dem Wechsel** als falsch
+heraus, setzt der Agent einen neuen mit neuer
+Tag-Freigabe, die die alte ablöst; der Abschluss-Stand
+führt den neuen Tag als neue Version — ein
+versioniertes Dokument wird nie überschrieben, auch
 nicht vor seiner Freigabe. War der Abschluss-Stand noch
 nicht freigegeben, bleibt die vorige Version ohne
 Freigabe liegen; war er es schon, gibst du die neue
-Version erneut frei (Schritt 3). Nach dem Wechsel prüft
-der Agent, ob das Produkt zwischen altem und neuem Tag
-dasselbe ist: Saß der Tag nur auf dem falschen Commit,
-setzt er den neuen Tag nach deinem OK und bucht am
-Marken-Eintrag den Nachtrag „Tag korrigiert: <alt> →
-<neu>, Inhalt unverändert“ — der Abschluss-Stand
-bleibt, wie er ist; im Nachtrag steht auch die neue
-Tag-Freigabe zu derselben Marke — ein eigener
-Freigabe-Eintrag entsteht nicht —, und die alte bleibt
-stehen; hat sich das Produkt geändert, ist es eine
-Patch-Marke.
+Version erneut frei (Schritt 3).
 
-Eine abgeschlossene Marke ist eingefroren. Kommt danach
+**Nach dem Wechsel** prüft der Agent, ob das Produkt
+zwischen altem und neuem Tag dasselbe ist. Saß der Tag
+nur auf dem falschen Commit, setzt er den neuen Tag
+nach deinem OK und bucht am Marken-Eintrag den Nachtrag
+„Tag korrigiert: <alt> → <neu>, Inhalt unverändert“ —
+der Abschluss-Stand bleibt, wie er ist; im Nachtrag
+steht auch die neue Tag-Freigabe zu derselben Marke —
+ein eigener Freigabe-Eintrag entsteht nicht —, und die
+alte bleibt stehen. Hat sich das Produkt geändert, ist
+es eine Patch-Marke.
+
+### Nachtrag
+
+Eine abgeschlossene Marke ist eingefroren. Was danach
+bei unverändertem Produkt noch hinzukommt, wird als
+**Nachtrag** am Marken-Eintrag gebucht — es ändert
+nichts an der Marke.
+
+**Ein weiterer Deploy-Stand.** Kommt nach dem Abschluss
 noch ein Deploy-Stand hinzu, ohne dass sich in der
 Kette bis zum Tag etwas ändert — dieselbe Software in
 einer neuen Umgebung, oder eine Umgebung, die schon
 einen Deploy-Stand hat und anders ausgerollt wird
 (andere Konfiguration, anderes Zielsystem, anderer
-Ablauf) —, wird er als **Nachtrag** am Marken-Eintrag
+Ablauf) —, wird er als Nachtrag am Marken-Eintrag
 gebucht, und seine Freigabe steht in der
-Nachtragszeile — ein eigener Freigabe-Eintrag entsteht
+Nachtragszeile. Ein eigener Freigabe-Eintrag entsteht
 nicht, nichts wird abgelöst, und die Freigabe wirkt wie
-jede Freigabe eines Deploy-Stands (sie löst die
+jede Freigabe eines Deploy-Stands: sie löst die
 Betriebs-Anleitung aus und zählt als Pflicht-Freigabe
-der Umgebung); ebenso die Tag-Korrektur bei
-unverändertem Produkt (oben). Zu einer Marke kann es
-so beliebig viele Deploy-Stände geben; je Umgebung
-gilt der jüngste, und ein weiterer Stand derselben
-Umgebung ist eine neue Version desselben Dokuments.
-Die Deployment-Elemente eines nachgetragenen Stands
-und eine Entscheidung, die nur diese Umgebung betrifft,
+der Umgebung. Ebenso die Tag-Korrektur bei
+unverändertem Produkt (oben). Zu einer Marke kann es so
+beliebig viele Deploy-Stände geben; je Umgebung gilt
+der jüngste, und ein weiterer Stand derselben Umgebung
+ist eine neue Version desselben Dokuments. Die
+Deployment-Elemente eines nachgetragenen Stands und
+eine Entscheidung, die nur diese Umgebung betrifft,
 tragen die Marke des nachgetragenen Stands, nicht die
 laufende Marke. Der Abschluss-Stand, der die ältere
 Fassung des Deploy-Stands nennt, bleibt eingefroren und
 gilt weiter — der Agent liest den Verweis auf die
-jüngste Fassung, wie bei der Tag-Korrektur. Löst ein
-Deployment-Element des Nachtrags ein Element ab, das die
-laufende Folge-Marke schon durch ein eigenes abgelöst
-hat, gelten für die Folge-Marke beide Nachfolger; der
-Lint meldet das, und es gilt dasselbe Verfahren wie bei
-doppelten Nachfolgern bei der Rückkehr aus einer
-Zwischenmarke: der Agent legt beide vor, du wählst —
-der Stand der Folge-Marke, der Nachtrag oder eine
-Zusammenführung —, gebucht als gewöhnliche Ablösung;
-der Nachtrag selbst bleibt, wie er ist. Liegt ein
-gemeldeter Fehler nicht im Produkt, sondern in der
-Auslieferung (etwa eine falsche Konfiguration), ist die
-Fix-Anforderung dazu eine Fix-Anforderung auf einen
-Deploy: ihre Umsetzung ist ein weiterer Deploy-Stand
+jüngste Fassung, wie bei der Tag-Korrektur.
+
+**Doppelte Nachfolger aus einem Nachtrag.** Löst ein
+Deployment-Element des Nachtrags ein Element ab, das
+die laufende Folge-Marke schon durch ein eigenes
+abgelöst hat, gelten für die Folge-Marke beide
+Nachfolger; der Lint meldet das, und es gilt dasselbe
+Verfahren wie bei doppelten Nachfolgern bei der
+Rückkehr aus einer Zwischenmarke: der Agent legt beide
+vor, du wählst — der Stand der Folge-Marke, der
+Nachtrag oder eine Zusammenführung —, gebucht als
+gewöhnliche Ablösung; der Nachtrag selbst bleibt, wie
+er ist.
+
+**Ein Fehler in der Auslieferung.** Liegt ein gemeldeter
+Fehler nicht im Produkt, sondern in der Auslieferung
+(etwa eine falsche Konfiguration), ist die
+Fix-Anforderung dazu eine **Fix-Anforderung auf einen
+Deploy**: ihre Umsetzung ist ein weiterer Deploy-Stand
 derselben Umgebung, sie trägt die Marke des
 ausgelieferten Produkts, nennt die Umgebung und ist mit
 der Freigabe des Stands umgesetzt — keine Patch-Marke;
@@ -710,15 +767,17 @@ Release-Notes beschreiben die Software, und die ist
 unverändert; ein Nachtrag löst auch keine neue Fassung
 der Release-Notes aus. Dokumentiert ist die Behebung im
 Nachtrag und an der Fehlermeldung, und der Fehlerstand
-führt sie mit ihrem Status. Mit der Freigabe des Stands
-ist die Fehlermeldung umgesetzt; abgeschlossen ist sie
-— zusammen mit der Fix-Anforderung — erst, wenn du
-bestätigst, dass der Fehler behoben ist. Weil der Agent
-vom Ausrollen nichts erfährt, fragt er dich bei der
-Freigabe, wann er nachfragen soll (ein Datum oder ein
-Anlass), und trägt sich das in `TODO.md` ein — eine
+führt sie mit ihrem Status.
+
+**Bestätigung und Wiedervorlage.** Mit der Freigabe des
+Stands ist die Fehlermeldung umgesetzt; abgeschlossen
+ist sie — zusammen mit der Fix-Anforderung — erst, wenn
+du bestätigst, dass der Fehler behoben ist. Weil der
+Agent vom Ausrollen nichts erfährt, fragt er dich bei
+der Freigabe, wann er nachfragen soll (ein Datum oder
+ein Anlass), und trägt sich das in `TODO.md` ein — eine
 Erinnerung (Wiedervorlage) je Meldung, die er mit
-deiner Bestätigung erledigt; bestätigst du nicht, weil
+deiner Bestätigung erledigt. Bestätigst du nicht, weil
 der Fehler weiter auftritt, folgt eine weitere
 Fix-Anforderung auf einen Deploy an derselben Meldung,
 und er führt dieselbe Erinnerung mit der weiteren
@@ -726,20 +785,21 @@ Behebung fort. Sagst du „noch nicht“, fragt er, wann er
 erneut nachfragen soll. Beim nächsten Marken-Wechsel
 legt er dir unbestätigte Meldungen dieser Art noch
 einmal vor; du kannst bestätigen, „noch nicht“ sagen
-oder melden, dass der Fehler weiter auftritt. Ob eine
-Änderung am Eintrag einer Zielumgebung (Hosts,
-Versionen, Zugangsverweise) ein anderes Ausrollen ist
-oder nur Pflege, entscheidest du je Fall; der Agent
-weist auf den möglichen weiteren Deploy-Stand hin und
-fragt. Erneutes Ausrollen ohne Änderung ist Betrieb —
-kein neuer Stand, keine Freigabe. Eine Freigabe im
-Nachtrag ist kein Meilenstein: die Marke ist
-abgeschlossen, am Produkt ändert sich nichts, ein
-Wächter-Durchgang folgt nicht. Ändert sich Produkt oder
-Spezifikation, ist es eine neue Marke (z.B. eine
-Patch-Marke `2.0.1`) — läuft die nächste Marke schon,
-als Zwischenmarke (oben); ein anderes Ausrollen allein
-ist keine.
+oder melden, dass der Fehler weiter auftritt.
+
+**Was kein Nachtrag ist.** Ob eine Änderung am Eintrag
+einer Zielumgebung (Hosts, Versionen, Zugangsverweise)
+ein anderes Ausrollen ist oder nur Pflege, entscheidest
+du je Fall; der Agent weist auf den möglichen weiteren
+Deploy-Stand hin und fragt. Erneutes Ausrollen ohne
+Änderung ist Betrieb — kein neuer Stand, keine
+Freigabe. Eine Freigabe im Nachtrag ist kein
+Meilenstein: die Marke ist abgeschlossen, am Produkt
+ändert sich nichts, ein Wächter-Durchgang folgt nicht.
+Ändert sich Produkt oder Spezifikation, ist es eine
+neue Marke (z.B. eine Patch-Marke `2.0.1`) — läuft die
+nächste Marke schon, als Zwischenmarke (oben); ein
+anderes Ausrollen allein ist keine.
 
 ## Selbsttragende Ableitungen
 
@@ -755,7 +815,7 @@ Abschluss-Stand Release-Notes. Solche Ableitungen werden
 zu festen Anlässen vollständig neu erzeugt, nicht von
 Hand nachgepflegt, und tragen einen Herkunfts-Kopf mit
 Marke und Quell-Stand — ähnlich wie diese Erklärung,
-die ihre Quellen und ihr Erzeugungsdatum im Kopf nennt.
+die ihre Quellen und ihren Quell-Stand im Kopf nennt.
 Bei einer Migration bleiben vorgefundene
 Betriebs-Anleitungen als Nachweis liegen; die neue
 entsteht selbsttragend aus dem ersten Deploy-Stand.
@@ -773,5 +833,14 @@ kommt später) → **Scaffolding-Commit** mit der
 Nachricht `Initial project scaffolding`, genau einer je
 Repository. Er markiert den Nullpunkt der Fachlogik,
 nicht des Repositories — committet wird schon vorher.
-Der Agent weist am Ende des Projektstarts auf die
-Vorlagen-Kette als nächsten Schritt hin.
+
+Die Vorlagen-Kette des Software-Prozesses beginnt mit
+der Vorlage „Git und Ablage“ (sie hängt von nichts ab),
+dann folgen Zweck und Anforderungsskizze, Sprache und
+Technologie-Stack, Struktur und Architekturmuster, die
+Werkzeugkette und zuletzt Betrieb und Rechtliches
+(CI-Pipeline, Zielumgebung, Lizenz und Sichtbarkeit des
+Repos). Der Agent weist am Ende des Projektstarts auf
+den Fahrplan und die erste Vorlage als nächsten Schritt
+hin (siehe [Projektstart](Projektstart.md), „Der erste
+Auftrag“).
