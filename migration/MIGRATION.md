@@ -26,7 +26,10 @@ der Einbindung (Phase 0) liest du aus `_template/`.
 - **Arbeitet das Projekt schon mit dieser Vorlage
   oder mit der allgemeinen Vorlage** — erkennbar an
   `wiki/Aktivierter-Prozess.md` mit einem Abschnitt
-  `## Herkunft` oder einem Feld „Template-Herkunft“ —,
+  `## Herkunft` oder einem Feld „Template-Herkunft“,
+  bei Stand 1.0 ohne Vermerk an `MasterPrompt.md` und
+  `Wiki.md` im Root neben einem `wiki/` mit
+  `Aktivierter-Prozess.md` —,
   ist das keine Migration, sondern ein Upgrade: Sag
   es dem Anwender und verweise auf den
   Upgrade-Einzeiler der README (`upgrade/UPGRADE.md`).
@@ -66,7 +69,10 @@ steht, entscheiden sie:
   verlinkt statt übertragen, verlinkt die neue
   `TODO.md` jede Datei mit offenen Arbeiten, und was
   in keine Zeile des Mappings passt, kommt nach
-  `Migrations-Grundlagen` — nie verwerfen.
+  `Migrations-Grundlagen` — nie verwerfen. Ziel ist
+  die oberste Schicht: so sähe das Projekt heute aus,
+  hätte es immer mit der Vorlage gearbeitet; frühere
+  Versionen, Marken und Stände baust du nicht nach.
 - **Im Zweifel fragst du den Anwender.** Gesammelt im
   Fragen-Block (Phase 1); danach arbeitest du autonom
   und berichtest bei echten Blockaden, statt zu
@@ -448,8 +454,10 @@ vorfestgelegt ist ([[Aktivierter-Prozess]]).
    (mehrere Komponenten-Repos unter diesem Projekt)
    oder Komponent (SP-1 `index.md` §5). Bei
    **Koordinator**: ankündigen, dass du in Phase 5 den
-   Contract-Index aktivierst. „Ein Repo oder zwei“
-   kommt für jede Rolle in Phase 5.
+   Contract-Index aktivierst. Bei **Komponent**
+   zusätzlich die Übernahme-Art (selbstständig oder
+   Auftrag). „Ein Repo oder zwei“ kommt für jede Rolle
+   in Phase 5.
 6. **Übernahme-Marke:** Die Migration legt als erste
    Marke `Uebernahme-JJJJ-MM-TT` an (Datum =
    Übernahme-Tag aus dem Herkunfts-Vermerk; Benennung
@@ -475,7 +483,11 @@ vorfestgelegt ist ([[Aktivierter-Prozess]]).
    abgeleitet: wie beides zusammengeht, fragst du den
    Anwender (Grundsätze).
 8. **Kollisionsfrage** aus Phase 0, falls es
-   Kollisionen gab — je Datei oder Ordner (a), (b)
+   Kollisionen gab, und für jede vorgefundene Datei,
+   deren Name eine Datei trägt, die die Migration erst
+   später anlegt (`TODO.md`, Instruktionsdatei,
+   Standarddateien im Root wie `Tools.md` und
+   `Offene Fragen.md`) — je Datei oder Ordner (a), (b)
    oder (c) mit Empfehlung und Namensvorschlag (Regel
    in den Grundsätzen).
 
@@ -497,8 +509,9 @@ Element sie in `zielmarke:` trägt. Dann **Commit**.
 
 ## Phase 2 — Arbeitsmodus
 
-Ab hier arbeitest du **autonom bis zum Ende von
-Phase 4** — keine Rückfragen außer bei echten
+Ab hier arbeitest du **autonom bis zur Vorlage in
+Phase 4** (Stufe 2 und Gesamt-Annahme brauchen den
+Anwender) — keine Rückfragen außer bei echten
 Blockaden (Berichten statt Blockieren). Ausgabe:
 knappe Erledigt-Blöcke je Etappe. Es gelten das
 Grundgesetz und die Grundsätze; außerdem:
@@ -597,7 +610,9 @@ Am Ende der Phase:
 
 - **Neue `TODO.md`** anlegen (Standarddatei, offene
   Punkte des Anwenders) — immer, auch wenn das
-  Projekt keine Aufgabenliste hatte. Sie verlinkt
+  Projekt keine Aufgabenliste hatte; eine vorgefundene
+  `TODO.md` ist nach der Kollisionsfrage schon
+  umbenannt. Sie verlinkt
   jede vorgefundene Datei mit offenen Arbeiten
   (Nr. 2 des Fragen-Blocks), je mit einer kurzen
   Angabe, was die Datei enthält und wohin ihre Punkte
@@ -619,11 +634,16 @@ Am Ende der Phase:
    > jede Wissensbasis-Datei gegen das wiki/: fehlt
    > Substanz? (2) Treue — verfälschen Einträge ihre
    > Quelle? (3) Mapping-Disziplin — alles am
-   > richtigen Ort nach MIGRATION.md Phase 3?
-   > (4) Register-Hygiene — Formate, Status-Werte,
-   > Quell-Verweise, Bestand ohne `zielmarke:` und
-   > Anlage-Datum, Neues mit beidem, keine erfundenen
-   > Daten? Dazu `sh _template/tools/lint.sh` aus dem
+   > richtigen Ort nach `_template/migration/MIGRATION.md`
+   > Phase 3? (4) Register-Hygiene — Formate,
+   > Status-Werte, Quell-Verweise, Bestand ohne
+   > `zielmarke:` und Anlage-Datum, Neues mit beidem,
+   > keine erfundenen Daten? (5) Herkunft und
+   > Festlegungen — `Template-Stand` mit Übernahme-Tag,
+   > Übernahme-Marke `in-progress`, Ordner-Freigaben,
+   > neue `TODO.md` mit Links, Kollisionen nach Schema
+   > umbenannt, unverändert und verlinkt? Dazu
+   > `sh _template/tools/lint.sh` aus dem
    > Projekt-Root: keine FEHLER. Schreibe genau einen
    > Bericht mit Ampel (grün/gelb/rot) und
    > nummerierten Befunden samt Fundstelle. Kein
