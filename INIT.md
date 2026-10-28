@@ -327,8 +327,9 @@ Referenzprozess gibt der Startprompt **nicht** vor
    in `raw/`, Aussagen des Anwenders), nicht zum
    Vorhaben passt oder du nicht sicher bist. Dann
    fragst du: „Bist du sicher, dass das der richtige
-   Prozess ist? Er passt nicht zum Auftrag — willst
-   du mir einen anderen nennen?“ Keine Liste. Nennt
+   Prozess ist? Ich erkenne nicht, dass er zum
+   Vorhaben passt — willst du mir einen anderen
+   nennen?“ Keine Liste. Nennt
    der Anwender einen anderen Prozess, richtest du
    das Projekt nach dem allgemeinen Regelwerk im
    Starter mit diesem Prozess ein (Schritt 4); bleibt
@@ -426,6 +427,8 @@ Referenzprozess gibt der Startprompt **nicht** vor
     `<Name>-vorgefunden.<Endung>` im selben Ordner,
     für einen Ordner `<Name>-vorgefunden/` — z.B.
     `TODO-vorgefunden.md`, `wiki-vorgefunden/`.
+    _Legt vorab fest:_ die Reihenfolge in Schritt 4 —
+    erst umbenennen, dann einspielen, dann buchen.
 
 ## 4. Umsetzung der Antworten
 

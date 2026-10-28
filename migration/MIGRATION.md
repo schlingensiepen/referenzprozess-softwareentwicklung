@@ -313,24 +313,6 @@ Historie sauber „vorher“ von „Starter da“.
      das Ur-Versions-Archiv, gegen das der Anwender
      jederzeit diffen kann.
 
-   **Herkunft vermerken (beide Modi):** Nach der
-   Kopie (Schritt 3), vor dem Aufnahme-Commit,
-   schreibst du in den Abschnitt `## Herkunft` von
-   [[Aktivierter-Prozess]] (Format:
-   [[Init-Choreografie]] §Phase A0
-   „Herkunfts-Vermerk“): `Template-Stand: 2.0 seit
-   JJJJ-MM-TT` mit dem **Übernahme-Tag** — dem Tag
-   des Aufnahme-Commits; das Datum ist der Stichtag,
-   den der Lint liest, und zugleich das Datum in der
-   Bezeichnung der Übernahme-Marke (Phase 1) —,
-   `Quelle` (Repo-URL und Commit/Tag; Modus A der
-   abgelesene Stand, Modus B der Submodul-Pin aus
-   `git submodule status _template`) und
-   `Anbindungs-Modus: A` bzw. `B`. Keine Zeile
-   `Vorher` — die schreibt nur ein Upgrade. Liegt
-   `wiki/Aktivierter-Prozess.md` wegen einer
-   Kollision noch nicht vor, holst du den Vermerk
-   nach der Kollisionsfrage (Phase 1) nach.
 3. **Projektdateien anlegen (Angebot):** **Ist die
    Kopie schon erfolgt?** Ein eigenes `wiki/` oder
    `devstate_active.md` im Bestand beweist nichts —
@@ -385,6 +367,24 @@ Historie sauber „vorher“ von „Starter da“.
    Kollisionsfall — sie wird nur kopiert, wenn keine
    vorhanden ist.
 
+   **Herkunft vermerken (beide Modi):** Nach der
+   Kopie, vor dem Aufnahme-Commit,
+   schreibst du in den Abschnitt `## Herkunft` von
+   [[Aktivierter-Prozess]] (Format:
+   [[Init-Choreografie]] §Phase A0
+   „Herkunfts-Vermerk“): `Template-Stand: 2.0 seit
+   JJJJ-MM-TT` mit dem **Übernahme-Tag** — dem Tag
+   des Aufnahme-Commits; das Datum ist der Stichtag,
+   den der Lint liest, und zugleich das Datum in der
+   Bezeichnung der Übernahme-Marke (Phase 1) —,
+   `Quelle` (Repo-URL und Commit/Tag; Modus A der
+   abgelesene Stand, Modus B der Submodul-Pin aus
+   `git submodule status _template`) und
+   `Anbindungs-Modus: A` bzw. `B`. Keine Zeile
+   `Vorher` — die schreibt nur ein Upgrade. Liegt
+   `wiki/Aktivierter-Prozess.md` wegen einer
+   Kollision noch nicht vor, holst du den Vermerk
+   nach der Kollisionsfrage (Phase 1) nach.
    Danach der **Aufnahme-Commit** — umfasst
    Einbindung (bei Modus A die komplette Kopie unter
    `_template/`), Kopie und Herkunfts-Vermerk;
@@ -465,9 +465,10 @@ und nichts, was schon vorfestgelegt ist (siehe
 
 1. **Prozess-Nachfrage** — nur ohne Software-Bezug
    oder bei Zweifel (Warnung oben): „Bist du sicher,
-   dass das der richtige Prozess ist? Er passt nicht
-   zum Vorgefundenen — willst du mir einen anderen
-   nennen?“ Keine Liste. Nennt der Anwender einen
+   dass das der richtige Prozess ist? Ich erkenne
+   nicht, dass er zum Vorgefundenen passt — willst du
+   mir einen anderen nennen?“ Keine Liste. Nennt der
+   Anwender einen
    anderen Prozess, geht die Transformation in die
    Struktur dieses Prozesses; der Starter bleibt
    `_template/`:
