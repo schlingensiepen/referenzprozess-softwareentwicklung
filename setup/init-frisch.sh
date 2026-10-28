@@ -43,6 +43,14 @@
 
 set -u
 
+# Das Skript kennt keine Optionen; --help zeigt diesen Kopf, alles
+# andere bricht ab, bevor etwas kopiert wird.
+case ${1:-} in
+    "") ;;
+    -h|--help) awk 'NR > 1 && !/^#/ { exit } NR > 1 { sub(/^# ?/, ""); print }' "$0"; exit 0 ;;
+    *) echo "FEHLER: unbekannte Option $1 — das Skript kennt keine Optionen (--help zeigt den Kopf)." >&2; exit 1 ;;
+esac
+
 SCRIPT_DIR=$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd)
 SRC=$(dirname -- "$SCRIPT_DIR")
 DST=$(pwd)
