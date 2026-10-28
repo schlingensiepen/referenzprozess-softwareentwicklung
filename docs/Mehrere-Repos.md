@@ -1,17 +1,19 @@
 # Zusammenarbeit mehrerer Repos
 
 > **Herkunft:** abgeleitet aus `../Vorgehen.md`
-> (Abschnitte 3, 3a, 7b), `../MasterPrompt.md`
-> (Abschnitte 1.5, 5.3 C8, 5.4, 6.4, 9.6), `../INIT.md`
+> (Abschnitte 3, 3a und 7b), `../MasterPrompt.md`
+> (Abschnitte 1.5, 5.3, 5.4, 6.4 und 9.6), `../INIT.md`
 > (Fragen-Block Nr. 2 und 7, „Mit Startprompt“),
 > `../upgrade/UPGRADE.md` (Abschnitt „Verbund“) und dem
 > vorbereiteten `../wiki/` (`Two-Repo-Submodul-Muster.md`,
 > `Init-Choreografie.md`, `Kettenpruefung.md`,
 > `Zielmarken.md`, `Katalog-message.md`,
-> `Vorgehen-RP-1.md`, `Glossar.md`); erzeugt am
-> 2026-10-28 aus dem Starter in Version 2.0. Dieses
-> Dokument wird nicht von Hand nachgepflegt, sondern zu
-> festen Anlässen neu aus den Quellen erzeugt.
+> `Contract-Index.md`, `Vorgehen-RP-1.md`,
+> `Glossar.md`). Stand der Quellen: Starter-Commit
+> `09dc8cb` (Version 2.0), erzeugt am 2026-10-28.
+> Dieses Dokument wird nicht von Hand nachgepflegt,
+> sondern zu festen Anlässen vollständig neu aus den
+> Quellen erzeugt; Änderungen gehören in die Quellen.
 
 Zurück zur [Einführung](Einfuehrung.md).
 
@@ -131,7 +133,9 @@ Entscheidungen vor und beginnt nicht von selbst:
    Remote und Übernahme-Art — zur Freigabe; der
    Repo-Name ist die Kennung, unter der andere Repos
    auf die Komponente verweisen.
-2. **Übernahme-Art.** *Selbstständig* (Standard): Die
+2. **Übernahme-Art.** Das Regelwerk nennt den
+   Koordinator aus Sicht seiner Komponente die
+   **Mutter**. *Selbstständig* (Standard): Die
    Komponente beginnt ihre eigene Kette, legt eigene
    Anforderungen an, die auf die Funktionsbeschreibung
    der Mutter verweisen, und schreibt ihre eigene
@@ -148,11 +152,12 @@ Entscheidungen vor und beginnt nicht von selbst:
    laufen: (a) mit einem **Peer-Werkzeug** — einem
    Werkzeug, mit dem ein Agent einen anderen Agenten
    startet, und einem, das ihm den unveränderten
-   Inhalt der Nachrichten-Datei zustellt (das
-   Regelwerk empfiehlt dafür in `../Vorgehen.md`,
+   Inhalt der Nachrichten-Datei zustellt; welche
+   Werkzeuge dafür in Frage kommen, nennt dir der
+   Agent — das Regelwerk empfiehlt in `../Vorgehen.md`,
    Abschnitt 3 „Start und Transport“, konkrete
-   Werkzeuge — die einzige Stelle, an der es Produkte
-   empfiehlt; der Agent schlägt sie dir vor) oder (b)
+   Produkte, die einzige Stelle, an der es das tut, und
+   du musst dafür nicht selbst nachlesen) oder (b)
    **ohne Werkzeug**: der Empfänger liest die Nachricht
    beim Absender; den Anstoß gibst du oder der
    Nachrichten-Wächter. Der Agent nennt die Trade-offs
@@ -252,8 +257,9 @@ Lieferung seiner Folge-Marke.
 
 **Änderungswünsche** gehen als Nachricht an das Repo,
 das den Gegenstand verantwortet; dort wird entschieden.
-Für einen Contract ist das der Provider; für die
-Grundlagen der Mutter (Funktionsbeschreibung,
+Für einen Contract ist das der **Provider** — die
+Komponente, die die Schnittstelle bereitstellt; für
+die Grundlagen der Mutter (Funktionsbeschreibung,
 Zuschnitt, Übergabe) der Koordinator. Ändert er sie,
 schickt er den betroffenen Komponenten einen
 **Rücklauf**; die Stände der Komponente, die auf den
@@ -278,16 +284,19 @@ trägt. Eine Schnittstelle zwischen zwei Zweigen liegt
 bei der Ebene, die beide kennt.
 
 **Upgrade im Verbund.** Jedes Repo hebt sich selbst auf
-einen neuen Stand des Starters; es gibt keine feste
+den neuen Stand seiner Vorlage; es gibt keine feste
 Reihenfolge, und gemischter Betrieb mit noch nicht
 gehobenen Nachbarn ist zulässig. An ein Repo, das noch
 nicht gehoben ist, schreibt der Agent keine Nachricht;
 er bittet dich, die Sache wie bisher weiterzugeben
 (siehe [Upgrade](Upgrade.md), „Im Verbund“).
 
-Alle Einzelheiten — welche Glieder eine Komponente
-führt, wie der Lint die Rolle eines Repos erkennt, das
-Format der Lieferungs-Tabelle — stehen in
+Was eine Komponente je Übernahme-Art führt und was der
+Übergabe-Stand vertritt, steht oben in Kurzform („Die
+Kette der Komponente“); für eine Komponenten-Wahl
+reicht das. Die Einzelheiten — die Glieder je Fall, wie
+der Lint die Rolle eines Repos erkennt, das Format der
+Lieferungs-Tabelle — stehen in
 `../wiki/Kettenpruefung.md`, `../wiki/Zielmarken.md` und
 `../wiki/Katalog-message.md`; Koordinator, Komponenten,
 Start-Tabelle und Contracts gibt es schon mit dem

@@ -11,10 +11,11 @@
 > `Marken-SP-1.md`, `Marken-RP-1.md`), den
 > Steckbriefen `../referenzprozesse/*/Steckbrief.md`
 > und `../referenzprozesse/SP-1-Standardprozess/index.md`
-> (Rollen); erzeugt am 2026-10-28 aus dem Starter in
-> Version 2.0. Dieses Dokument wird nicht von Hand
-> nachgepflegt, sondern zu festen Anlässen neu aus den
-> Quellen erzeugt.
+> (Rollen). Stand der Quellen: Starter-Commit `09dc8cb`
+> (Version 2.0), erzeugt am 2026-10-28. Dieses Dokument
+> wird nicht von Hand nachgepflegt, sondern zu festen
+> Anlässen vollständig neu aus den Quellen erzeugt;
+> Änderungen gehören in die Quellen.
 
 Zurück zur [Einführung](Einfuehrung.md).
 
@@ -66,7 +67,10 @@ Ordner, sonst nichts.
 Der Starter liefert sein `wiki/` mit zwei bereits
 eingespielten Prozessen: dem **Standardprozess
 Entwicklungsprojekt (SP-1)** und darauf der
-**Entwicklung eines Softwaresystems (RP-1)**. Das
+**Entwicklung eines Softwaresystems (RP-1)** — im
+Ordner `referenzprozesse/` heißen die Pakete
+`SP-1-Standardprozess/` und `RP-1-Systementwicklung/`.
+Das
 Einspielen (der Merge, unten) ist beim Bau des Starters
 vollzogen; der Regel-Knoten `wiki/Aktivierter-Prozess.md`
 bucht die Vorfestlegungen: aktive Prozesse Basis, SP-1,
@@ -102,7 +106,10 @@ Prozess in `../referenzprozesse/<PROZESS>/index.md`.
 
 Der Starter weiß, dass es andere Referenzprozesse gibt;
 sie liegen in `_template/referenzprozesse/` als
-Nur-Lese-Quelle:
+Nur-Lese-Quelle. Die Tabelle zeigt, was in diesem Stand
+im Ordner liegt; der Agent legt sie dir nicht als
+Auswahl vor — nennst du einen Prozess, richtet er ihn
+ein:
 
 | Kennung | Name | Basis | Ausbau-Stand |
 |---|---|---|---|
@@ -157,8 +164,10 @@ Nennst du einen anderen Prozess, richtet der Agent das
 Projekt mit diesem Prozess aus dem Regelwerk im Starter
 ein: Das vorbereitete Software-Wiki wird durch das
 Basis-Wiki und das Paket des gewählten Prozesses aus
-`_template/referenzprozesse/` ersetzt (Merge, unten);
-von den Schritten des Starts entfällt, was RP-1 oder
+`_template/referenzprozesse/` ersetzt (Merge, unten) —
+bei einem nur geplanten Prozess allein durch das
+Basis-Wiki (oben, „Geplant“); von den Schritten des
+Starts entfällt, was RP-1 oder
 SP-1 voraussetzt (etwa die Rolle und der
 Contract-Index); Herkunfts-Vermerk, erste Marke,
 `Tools.md`, Instruktionsdatei und die übrigen

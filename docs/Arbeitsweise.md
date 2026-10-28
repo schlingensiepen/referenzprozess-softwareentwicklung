@@ -12,10 +12,12 @@
 > `Handoff-Prozedur.md`, `Fahrplan-Vorlage.md`,
 > `Standarddateien-Katalog.md`, `Kettenpruefung.md`
 > Abschnitt „Reviewer-Anteil“,
-> `Instruktionsdatei-Pflege.md`); erzeugt am
-> 2026-10-28 aus dem Starter in Version 2.0. Dieses
-> Dokument wird nicht von Hand nachgepflegt, sondern zu
-> festen Anlässen neu aus den Quellen erzeugt.
+> `Instruktionsdatei-Pflege.md`). Stand der Quellen:
+> Starter-Commit `09dc8cb` (Version 2.0), erzeugt am
+> 2026-10-28. Dieses Dokument wird nicht von Hand
+> nachgepflegt, sondern zu festen Anlässen vollständig
+> neu aus den Quellen erzeugt; Änderungen gehören in
+> die Quellen.
 
 Zurück zur [Einführung](Einfuehrung.md).
 
@@ -45,9 +47,8 @@ Der Agent arbeitet in einem dieser Modi:
   mit Außenwirkung oder Kosten bleiben immer außen vor:
   dort legt der Agent einen Entwurf vor und wartet.
 - **Arbeitsmodus.** Bei großen Mengen (etwa dem ersten
-  Einlesen vieler Dokumente oder der Transformation
-  bei einer Migration) schlägt der Agent vor, in den
-  Arbeitsmodus zu wechseln; er gilt nur mit deiner
+  Einlesen vieler Dokumente) schlägt der Agent vor, in
+  den Arbeitsmodus zu wechseln; er gilt nur mit deiner
   Zustimmung. Darin fragt er nicht nach, sondern
   dokumentiert jede Unklarheit in `Offene Fragen.md`
   (Kontext, Frage, was übersprungen wurde, was
@@ -56,7 +57,10 @@ Der Agent arbeitet in einem dieser Modi:
   gesammelten Fragen vor. Nur bei **kritischer**
   Unklarheit — wenn ohne Klärung große Teile des
   Ergebnisses falsch würden — verlässt er den Modus von
-  selbst.
+  selbst. Die Transformation bei einer Migration läuft
+  ähnlich, aber nach ihrer eigenen Anleitung: autonom
+  bis zur Absicherung, Ungeklärtes sammelt dort die
+  Auffang-Datei (siehe [Migration](Migration.md)).
 
 ## Fragen, Fahrplan, Briefing
 

@@ -14,10 +14,11 @@
 > `../Outgoing.md`, `../README.md`, `../INIT.md`,
 > `../migration/MIGRATION.md`, `../upgrade/UPGRADE.md`
 > und `../referenzprozesse/SP-1-Standardprozess/index.md`
-> (Rollen); erzeugt am 2026-10-28 aus dem Starter in
-> Version 2.0. Dieses Dokument wird nicht von Hand
-> nachgepflegt, sondern zu festen Anlässen neu aus den
-> Quellen erzeugt.
+> (Rollen). Stand der Quellen: Starter-Commit `09dc8cb`
+> (Version 2.0), erzeugt am 2026-10-28. Dieses Dokument
+> wird nicht von Hand nachgepflegt, sondern zu festen
+> Anlässen vollständig neu aus den Quellen erzeugt;
+> Änderungen gehören in die Quellen.
 
 Zurück zur [Einführung](Einfuehrung.md).
 
@@ -56,6 +57,9 @@ dieser Starter abgeleitet ist; sie bringt keinen
 Prozess mit, sondern bietet ihn beim Start an. Ein
 Projekt aus ihr hebt sich mit der Anleitung dieses
 Starters auf deren neuen Stand, nicht auf den Starter.
+Ob dein Projekt aus ihr stammt, steht in der Zeile
+`Quelle` seines Herkunfts-Vermerks; fehlt der Vermerk
+(Stand 1.0), fragt der Agent dich nach der Vorlage.
 
 **Ampel.** Das Gesamturteil eines Prüfers über ein
 Artefakt: grün, gelb oder rot. Freigaben nach einem
@@ -70,7 +74,9 @@ verknüpfte Vorlage (git-Submodul), beide unter
 **Arbeitsmodus.** Betriebsart des Agenten für große
 Mengen: keine Rückfragen, Unklarheiten werden in
 `Offene Fragen.md` gesammelt und am Ende vorgelegt.
-Die Transformation einer Migration läuft so.
+Die Transformation einer Migration läuft ähnlich:
+autonom bis zur Absicherung, Ungeklärtes sammelt die
+Auffang-Datei `wiki/Migrations-Grundlagen.md`.
 
 **Aufnahme-Commit.** Der angekündigte, nicht erfragte
 Commit beim Projektstart und bei der Migration, der
@@ -108,6 +114,13 @@ Betriebs-Anleitung für Menschen wird daraus abgeleitet.
 **Detail-Knoten.** Eine Wiki-Datei je Wissensobjekt
 (Anforderung, Entscheidung, Dokument, Person). Für
 Inhalt maßgeblich; der Status steht in der Fassade.
+
+**Einmal-Anweisung (Bootstrap).** Die Anweisung je
+Fassade, die der Agent beim Aktivieren der Fassade
+einmal abarbeitet — etwa die Fragen, mit denen Mission
+Statement und Facts gefüllt werden. Sie liegt im
+Starter unter `referenzprozesse/<Prozess>/bootstrap/`,
+wird von dort gelesen und nie ins Projekt kopiert.
 
 **Element und Nachweis.** Register-Einträge sind
 Elemente (ablösbar, gehen in Stände ein — Entscheidung,
@@ -184,7 +197,11 @@ Eine Freigabe, die nach dem Marken-Wechsel zu einer
 abgeschlossenen Marke gehört (ein nachgetragener
 Deploy-Stand, eine Tag-Korrektur), steht als Nachtrag
 an der Marke statt als eigener Eintrag und ist kein
-Meilenstein.
+Meilenstein. Daneben in engerem Sinn: die **Freigabe
+eines Ordners** — die als Entscheidung gebuchte
+Erlaubnis, einen zusätzlichen Ordner im Projekt zu
+führen; die Ordner des Software-Prozesses gelten mit
+seiner Deklaration als freigegeben.
 
 **Glied.** Ein Pflicht-Stand der Kette einer Marke
 (oder der Tag der Implementierung als Glied P9).
@@ -244,15 +261,19 @@ Migration für jede vorgefundene Datei stellt, deren
 Name mit einer Starter-Datei kollidiert: (a) umbenennen
 und nur verlinken, (b) komplett integrieren, (c)
 integrieren und alte Fassung behalten — mit Empfehlung;
-gelöscht wird nur auf deinen ausdrücklichen Wunsch.
-Umbenannt wird nach dem Schema
+gelöscht wird nur auf deinen ausdrücklichen Wunsch —
+sagst du ihn nicht, fragt der Agent nach und lässt die
+Datei bis dahin umbenannt liegen. Umbenannt wird nach
+dem Schema
 `<Name>-vorgefunden.<Endung>`.
 
 **Komponente, Koordinator.** Bei einem Schnitt in
 Teil-Systeme: der Koordinator ist das Projekt, das
 zerlegt und integriert; eine Komponente ist ein eigenes
 Projekt mit eigenem Repo, eigener Kette und Lieferung.
-Ein Zwischen-Koordinator ist beides.
+Ein Zwischen-Koordinator ist beides. Das Regelwerk und
+die Frage des Agenten schreiben „Komponent“; gemeint
+ist dasselbe.
 
 **Konzept.** Im Register `wiki/Konzepte.md` ein Knoten
 mit Sach-Wissen zu einem Fachbegriff; das Glossar führt
@@ -262,10 +283,6 @@ Zusammenhang.
 **Lieferung.** Der Tag der Implementierung einer
 Komponente, als Nachricht an den Koordinator gemeldet
 und an dessen Marken-Eintrag gebucht.
-
-**MADR.** Ein verbreitetes Format für
-Entscheidungs-Einträge; die lockere Form mit denselben
-Feldern gilt immer.
 
 **Marke (Zielmarke).** Der Zwischenziel-Anker jedes
 Projekts: ein benanntes Ergebnis, das nach außen geht
@@ -303,6 +320,11 @@ sie als Entscheidung gebucht.
 im kopierten Wiki ersetzen — jede mit genau einem
 Unterschied, etwa der Übernahme-Marke statt der Marke
 des Starts.
+
+**Mutter.** So nennt das Regelwerk den Koordinator aus
+der Sicht seiner Komponente: das Projekt, dessen
+Funktionsbeschreibung und Übergabe die Komponente
+übernimmt.
 
 **Nachricht.** Datei in `output/nachrichten/` des
 Absenders, mit der ein Repo einem anderen etwas
@@ -345,7 +367,9 @@ Projekts; der Starter setzt in `Styleguide.md` Deutsch,
 Anweisungen und einem Vorgehen für eine Projektart.
 Standardprozesse (SP) sind eigenständig;
 Referenzprozesse (RP) bauen auf genau einem SP auf. In
-diesem Starter sind SP-1 und RP-1 eingespielt.
+diesem Starter sind SP-1 und RP-1 eingespielt (Ordner
+`SP-1-Standardprozess/` und `RP-1-Systementwicklung/`
+unter `referenzprozesse/`).
 
 **Prozess-Nachfrage.** Die Frage des Agenten, ob der
 Software-Prozess der richtige ist — nur, wenn das
@@ -354,6 +378,11 @@ Projektstart, beim Start einer Komponente oder bei der
 Migration eines Projekts ohne Software-Bezug. Nennst du
 einen anderen Prozess, richtet er ihn aus dem Regelwerk
 im Starter ein.
+
+**Provider.** Die Komponente, die eine Schnittstelle
+(einen Contract) bereitstellt und verantwortet; dort
+wird über Änderungswünsche an den Contract entschieden,
+und von dort wird er dem Koordinator gemeldet.
 
 **Prüfer, Review, Prüfmuster.** Ein Prüfer ist ein
 Unteragent mit frischem Kontext (oder du), der ein
@@ -500,10 +529,16 @@ wenn ein Vorgänger-Stand überholt ist. Wird vom Lint
 berechnet, nicht gebucht; die Antwort ist ein neuer
 Stand mit neuer Freigabe.
 
+**Übernahme.** Das Wort steht in drei Verbindungen:
+die **Übernahme-Marke** der Migration, die
+**Übernahme-Art** einer Komponente und der
+**übernommene Stand** einer Vormarke — je ein eigener
+Eintrag unten.
+
 **Übernahme-Art.** Wie eine Komponente die Vorarbeit der
-Mutter übernimmt: selbstständig (eigene Kette ab den
-Anforderungen) oder Auftrag (die Mutter hat die
-Funktion beschrieben).
+Mutter (ihres Koordinators) übernimmt: selbstständig
+(eigene Kette ab den Anforderungen) oder Auftrag (die
+Mutter hat die Funktion beschrieben).
 
 **Übernahme-Marke.** Die erste Marke eines migrierten
 Projekts, `Uebernahme-JJJJ-MM-TT` mit dem Übernahme-Tag

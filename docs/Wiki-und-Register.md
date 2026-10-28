@@ -7,10 +7,12 @@
 > `Aktivierter-Prozess.md`, `Facts.md`,
 > `Entscheidungen.md`, `InterneMechanik.md`,
 > `Katalog.md`, `Einfrieren-und-Abloesen.md`,
-> `Glossar.md`, `Standarddateien-Katalog.md`); erzeugt
-> am 2026-10-28 aus dem Starter in Version 2.0. Dieses
-> Dokument wird nicht von Hand nachgepflegt, sondern zu
-> festen Anlässen neu aus den Quellen erzeugt.
+> `Glossar.md`, `Standarddateien-Katalog.md`). Stand
+> der Quellen: Starter-Commit `09dc8cb` (Version 2.0),
+> erzeugt am 2026-10-28. Dieses Dokument wird nicht von
+> Hand nachgepflegt, sondern zu festen Anlässen
+> vollständig neu aus den Quellen erzeugt; Änderungen
+> gehören in die Quellen.
 
 Zurück zur [Einführung](Einfuehrung.md).
 
@@ -68,8 +70,13 @@ ist es nicht, jeder Texteditor genügt.
   eine. Jede Fassade beschreibt in ihrem Abschnitt
   `## Meta` selbst, wie sie gepflegt wird und welche
   Felder sie **kanonisch** führt (typisch den Status).
-  Für den Überblick genügen die Fassaden; der Agent
-  liest die aktiven beim Sessionstart.
+  Für den Überblick genügen die Fassaden; beim
+  Sessionstart liest der Agent die wichtigsten
+  vollständig (Landkarte, Facts, Fristen) und
+  registriert die übrigen aktiven, um sie bei Bedarf
+  zu lesen (die Liste steht in
+  [Projektstart](Projektstart.md), „Was der Agent beim
+  Sessionstart tut“).
 - **Detail-Knoten** sind atomar: ein Knoten je
   zitierfähigem Wissensobjekt. Für Inhalt (Beschreibung,
   Kontext, Nachweis) ist der Detail-Knoten maßgeblich;
