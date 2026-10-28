@@ -47,8 +47,9 @@ steht, entscheiden sie:
   (Bestandsschutz, die Überführung wird angeboten) und
   bleiben historische Einträge, alte Ablöse-Vermerke
   und alte Ideen-Einträge „Fassaden-Kandidat …,
-  vertagt“ unverändert stehen. Darum auch kein Upgrade,
-  solange eine Zwischenmarke läuft: zwei Arbeitslinien
+  vertagt“ unverändert stehen. Darum auch kein Upgrade
+  (und kein Prozess-Upgrade), solange eine
+  Zwischenmarke läuft: zwei Arbeitslinien
   auf einer Struktur, die sich unter beiden ändert —
   verweise auf die Zeit nach der Rückkehr, wenn die
   zurückgestellte Marke wieder `in-progress` ist.
