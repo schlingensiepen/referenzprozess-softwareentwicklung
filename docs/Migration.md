@@ -14,7 +14,7 @@
 > `Standarddateien-Katalog.md`) und
 > `../referenzprozesse/SP-1-Standardprozess/Steckbrief.md`
 > (mitgebrachte Ordner). Stand der Quellen:
-> Starter-Commit `09dc8cb` (Version 2.0), erzeugt am
+> Starter-Commit `52d2218` (Version 2.0), erzeugt am
 > 2026-10-28. Dieses Dokument wird nicht von Hand
 > nachgepflegt, sondern zu festen Anlässen vollständig
 > neu aus den Quellen erzeugt; Änderungen gehören in
@@ -37,9 +37,12 @@ Zwei Abgrenzungen prüft der Agent vorab:
 - **Arbeitet das Projekt schon mit diesem Starter oder
   mit der allgemeinen Vorlage** — erkennbar an
   `wiki/Aktivierter-Prozess.md` mit einem Abschnitt
-  „Herkunft“ oder einem Feld „Template-Herkunft“ —,
-  ist das keine Migration, sondern ein
-  [Upgrade](Upgrade.md). Der Agent sagt es dir.
+  „Herkunft“ oder einem Feld „Template-Herkunft“, bei
+  einem Projekt aus Stand 1.0 ohne Vermerk an
+  `MasterPrompt.md` und `Wiki.md` im Root neben einem
+  `wiki/` mit `Aktivierter-Prozess.md` —, ist das keine
+  Migration, sondern ein [Upgrade](Upgrade.md). Der
+  Agent sagt es dir.
 - **Die Migration führt in den Prozess für
   Softwareentwicklung** (RP-1 auf SP-1). Findet der
   Agent im Vorgefundenen keinen Software-Bezug — keinen
@@ -85,7 +88,11 @@ sie:
   verlinkt statt übertragen, verlinkt die neue
   `TODO.md` jede Datei mit offenen Arbeiten, und was
   in keine Wissens-Klasse passt, kommt in eine
-  Auffang-Datei — nie wird etwas verworfen.
+  Auffang-Datei — nie wird etwas verworfen. Ziel ist
+  die oberste Schicht: so sähe das Projekt heute aus,
+  hätte es immer mit der Vorlage gearbeitet; frühere
+  Versionen, Marken und Stände baut der Agent nicht
+  nach.
 - **Im Zweifel fragt er dich.** Gesammelt im
   Fragen-Block; danach arbeitet er autonom und
   berichtet bei echten Blockaden, statt zu blockieren.
@@ -309,7 +316,9 @@ Starter vorfestlegt, fragt er nicht.
    was die Rollen bedeuten, steht in
    [Zusammenarbeit mehrerer Repos](Mehrere-Repos.md).
    Bei Koordinator kündigt der Agent an, dass er in
-   Phase 5 den Contract-Index aktiviert.
+   Phase 5 den Contract-Index aktiviert; bei Komponente
+   fragt er zusätzlich die Übernahme-Art (selbstständig
+   oder im Auftrag).
 6. **Übernahme-Marke.** Die Migration legt als erste
    Marke `Uebernahme-JJJJ-MM-TT` an (Datum ist der
    Übernahme-Tag; Benennung „Übernahme des
@@ -334,7 +343,11 @@ Starter vorfestlegt, fragt er nicht.
    Agent. `tools/` ist Standard-Ordner und braucht
    keine Freigabe.
 8. **Kollisionsfrage** aus Phase 0, falls es
-   Kollisionen gab.
+   Kollisionen gab, und für jede vorgefundene Datei,
+   deren Name eine Datei trägt, die die Migration erst
+   später anlegt (`TODO.md`, die Instruktionsdatei,
+   Standarddateien im Root wie `Tools.md` und
+   `Offene Fragen.md`).
 
 **Antworten einarbeiten.** Der Agent löst Kollisionen
 auf (umbenennen, ausgelassene Starter-Dateien und
@@ -349,8 +362,9 @@ Commit.
 
 ## Phase 2 — der Arbeitsmodus
 
-Ab hier arbeitet der Agent **autonom bis zum Ende von
-Phase 4** — keine Rückfragen außer bei echten
+Ab hier arbeitet der Agent **autonom bis zur Vorlage in
+Phase 4** (deine Prüfung und die Gesamt-Annahme
+brauchen dich) — keine Rückfragen außer bei echten
 Blockaden; Ausgabe sind knappe Erledigt-Blöcke je
 Etappe. Dabei gilt:
 
@@ -450,9 +464,13 @@ und committet.
    Quelle?), Zuordnung (alles am richtigen Ort nach der
    Tabelle?), Register-Hygiene (Formate, Status-Werte,
    Quell-Verweise, Bestand ohne Marke und Datum, Neues
-   mit beidem, keine erfundenen Daten) und der Lint
-   ohne Fehler. Jeder schreibt genau einen Bericht mit
-   Ampel (grün, gelb, rot) und nummerierten Befunden.
+   mit beidem, keine erfundenen Daten), Herkunft und
+   Festlegungen (Template-Stand mit Übernahme-Tag,
+   Übernahme-Marke, Ordner-Freigaben, neue `TODO.md`
+   mit Links, Kollisionen nach Schema umbenannt,
+   unverändert und verlinkt) und der Lint ohne Fehler.
+   Jeder schreibt genau einen Bericht mit Ampel (grün,
+   gelb, rot) und nummerierten Befunden.
 2. Jeden Bericht legt der Agent zuerst im Register
    Agent-Berichte ab, dann fasst er zusammen.
 3. **Beide grün → weiter.** Sonst: Befunde

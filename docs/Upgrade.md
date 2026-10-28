@@ -8,7 +8,7 @@
 > `Init-Choreografie.md`, `Zielmarken.md`,
 > `Kettenpruefung.md`, `Fassaden.md`, `Katalog.md`,
 > `Agent-Berichte.md`). Stand der Quellen:
-> Starter-Commit `09dc8cb` (Version 2.0), erzeugt am
+> Starter-Commit `52d2218` (Version 2.0), erzeugt am
 > 2026-10-28. Dieses Dokument wird nicht von Hand
 > nachgepflegt, sondern zu festen Anlässen vollständig
 > neu aus den Quellen erzeugt; Änderungen gehören in
@@ -34,7 +34,10 @@ dein Projekt hat, steht in der Zeile `Template-Stand`
 seines Herkunfts-Vermerks; aus derselben Zeile im
 Starter liest der Agent die Zielversion. Ein Projekt
 aus Version 1.x erkennt der Agent an der älteren Form
-des Vermerks (unten, Schritt 0).
+des Vermerks (unten, Schritt 0); die Stände 1.0 und
+1.1 tragen in der Quelle die Release-Tags
+`release-1.0` und `release-1.1`, an denen er die alte
+Version abliest.
 
 Zwei Dinge stehen fest, bevor etwas geschieht:
 
@@ -107,7 +110,10 @@ sie:
   Vorlage), stellst den Zugang her oder lässt das
   Upgrade; der Agent wechselt nicht von sich aus auf
   eine andere Vorlage. Erkennt er am Herkunfts-Vermerk
-  eines Nachbar-Repos, dass es noch nicht gehoben ist,
+  eines Nachbar-Repos (die Zeile `Template-Stand` fehlt
+  oder nennt 1.x; wo der Nachbar liegt, sagt die
+  Komponenten-Tabelle der Architektur-Fassade), dass es
+  noch nicht gehoben ist,
   schreibt er ihm keine Nachricht (es könnte sie weder
   lesen noch quittieren), sondern bittet dich, die Sache
   wie bisher weiterzugeben, und empfiehlt, den Nachbarn
@@ -140,7 +146,9 @@ Orte:
   Basis-Wiki aus `referenzprozesse/base/wiki/` und dazu
   der Wiki-Ordner des aktiven Prozesses unter
   `referenzprozesse/`; welche Fassaden der Prozess
-  voraussetzt, sagt sein Steckbrief.
+  voraussetzt, sagt sein Steckbrief. Dasselbe gilt für
+  ein Projekt aus diesem Starter, das mit einem anderen
+  Prozess als dem Software-Prozess arbeitet.
 - **Ausgangsstand ohne Herkunfts-Vermerk oder ohne
   `_template/`** (Stand 1.0): siehe Schritt 0.
 
@@ -175,21 +183,28 @@ Vorschlag für den Weg (Skript oder von Hand).
   `_template` trägt; eingefrorene Kopie (**A**), wenn
   `_template/` ein gewöhnlicher Ordner ohne eigenes
   `.git` ist.
-- **Alte Version:** aus der Zeile `Template-Stand` oder
-  einem Release-Tag der Quelle. Ein 1.x-Stand nennt
-  sie nicht — dann fragt der Agent dich, mit welchem
-  Stand das Projekt angelegt wurde (etwa `1.1`), und
-  gibt sie dem Skript mit; weißt du es nicht genau,
-  gilt deine Angabe (etwa `1.x`) — das Skript schreibt
-  keine geratene Version.
+- **Alte Version:** aus der Zeile `Template-Stand`.
+  Ein 1.x-Stand nennt sie nicht; dann ist der Commit
+  der Herkunft der Anker — das Feld „Template-Herkunft“
+  bzw. bei der verknüpften Vorlage der Stand, auf den
+  das Submodul **vor** dem Tausch gepinnt war: liegt er
+  genau auf einem Release-Tag der Quelle, ist das die
+  alte Version; bei der verknüpften Vorlage liest das
+  Skript sie so selbst. Sonst fragt der Agent dich, mit
+  welchem Stand das Projekt angelegt wurde (etwa
+  `1.1`), und gibt deine Angabe dem Skript mit; weißt du
+  es nicht genau, gilt deine Angabe (etwa `1.x`) — das
+  Skript schreibt keine geratene Version.
 - **Projekt schon auf dem aktuellen Stand:** Nennt
-  `Template-Stand` schon die Zielversion und fehlt die
-  Zeile `Vorher`, trägt dein Projekt diesen Stand seit
-  seiner Anlage — es gibt keinen Sprung, und das Skript
-  hält an. Der Agent fragt dich, ob er einen neueren
+  `Template-Stand` schon die Zielversion, gibt es keinen
+  Sprung — ohne Zeile `Vorher` trägt dein Projekt den
+  Stand seit seiner Anlage, mit `Vorher` ist der Sprung
+  vollzogen. Der Agent fragt dich, ob er einen neueren
   Commit derselben Version nachziehen soll: dann
   tauscht er `_template/` (Schritt 2) und legt dir den
-  Delta-Nachzug vor (Schritt 5), mehr nicht.
+  Delta-Nachzug vor (Schritt 5), mehr nicht. Das Skript
+  hält ohne `Vorher` an und legt mit `Vorher` nur neue
+  Dateien an.
 - **Vorlage:** aus der Zeile `Quelle` bzw. dem Feld
   „Template-Herkunft“, beim Submodul zusätzlich aus
   dessen URL. Nennt sie diesen Starter, ist das Skript
@@ -206,13 +221,18 @@ Vorschlag für den Weg (Skript oder von Hand).
   Register selbst, und hat das Projekt keine laufende
   Marke, benennst du sie jetzt (Schritt 4).
 - **Angebot der zwei Wege** (Projekt aus diesem
-  Starter): das Skript `setup/upgrade.sh` für die
-  Mechanik (empfohlen: deterministisch, ändert Inhalte
-  nicht, listet Treffer; aufgerufen nach dem Tausch
-  aus `_template/setup/`, eine Vorschau davor aus
-  einem Klon) oder dieselben Schritte von Hand; von
-  Hand ist zugleich der Rückfall, wenn das Skript nicht
-  lauffähig ist. Du wählst.
+  Starter mit dessen Software-Prozess): das Skript
+  `setup/upgrade.sh` für die Mechanik (empfohlen:
+  deterministisch, ändert Inhalte nicht, listet
+  Treffer; aufgerufen nach dem Tausch aus
+  `_template/setup/`, eine Vorschau davor aus einem
+  Klon) oder dieselben Schritte von Hand; von Hand ist
+  zugleich der Rückfall, wenn das Skript nicht
+  lauffähig ist. Du wählst. Arbeitet das Projekt mit
+  einem anderen Prozess, hält das Skript an, und der
+  Agent geht den Weg von Hand — neue Dateien kommen
+  dann aus `_template/referenzprozesse/`, wie oben für
+  die allgemeine Vorlage beschrieben.
 
 ## Schritt 1 — die Sicherung
 
@@ -258,25 +278,28 @@ Dateien aus `_template/` und die Anleitung aus
 Die folgenden Schritte sind reine Mechanik — Inhalte
 ändern sie nicht. Für ein Projekt aus diesem Starter
 führt sie das Skript aus:
-`sh _template/setup/upgrade.sh --vorher <alte Version>`
-aus dem Projektordner, nach dem Tausch und seinem
-Commit. `--nur-pruefen` zeigt vorher, was es täte, auch
-vor der Sicherung — vor dem Tausch aus einem Klon des
-Starters außerhalb des Projekts, weil das alte
-`_template/` eines 1.x-Projekts das Skript noch nicht
-hat. Ein zweiter Lauf ändert nichts mehr. Von Hand geht
-der Agent dieselbe Liste durch; sie ist der führende
-Ort, das Skript ihre Implementierung.
+`sh _template/setup/upgrade.sh` aus dem Projektordner,
+nach dem Tausch und seinem Commit (mit `--vorher
+<alte Version>`, wenn der Agent sie in Schritt 0
+erfragt hat). `--nur-pruefen` zeigt vorher, was es
+täte, auch vor der Sicherung — vor dem Tausch aus
+einem Klon des Starters außerhalb des Projekts, weil
+das alte `_template/` eines 1.x-Projekts das Skript
+noch nicht hat. Aus dem Klon ohne diese Option führt
+es nur den Tausch aus und hält für den Commit aus
+Schritt 2 an. Ein zweiter Lauf ändert nichts mehr. Von
+Hand geht der Agent dieselbe Liste durch; sie ist der
+führende Ort, das Skript ihre Implementierung.
 
 | Schritt | Was geschieht |
 |---|---|
-| Vorprüfung | Sicherungs-Commit vorhanden (keine Änderung an getrackten Dateien; ungetrackte Dateien, die Schritt 1 ausgelassen hat, bleiben unberührt und werden genannt), kein laufender Merge; `_template/` trägt den neuen Stand, Modus erkannt; Vorlage ist dieser Starter; alte Version bekannt |
+| Vorprüfung | Sicherungs-Commit vorhanden (keine Änderung an getrackten Dateien; ungetrackte Dateien, die Schritt 1 ausgelassen hat, bleiben unberührt und werden genannt), kein laufender Merge; `_template/` trägt den neuen Stand, Modus erkannt; Vorlage ist dieser Starter, Prozess ist der Software-Prozess; alte Version bekannt |
 | Tausch | geschehen in Schritt 2 — das Skript stellt nur fest, dass `_template/` den neuen Stand trägt |
-| Umbenennungen | `wiki/Verwendungs-Rollen.md` → `wiki/Rollen.md`; `wiki/Knotentypen.md` → `wiki/Katalog.md` (nur der Dateiwechsel; der Inhalt kommt in Schritt 5 und 6); Dateinamen mit Umlaut oder ß in die ae/oe/ue/ss-Form — per `git mv`, nie über eine vorhandene Datei |
-| Neue Dateien | jede Datei des neuen Stands, die im Projekt fehlt (Root-Regelwerk, `wiki/` samt Katalog-Einträgen, Mechanik-Knoten, Fassaden, Vorlagen), wird angelegt und gesammelt gemeldet — Fassaden, die der aktive Prozess voraussetzt, aktiv, optionale deaktiviert mit Hinweis an dich; eine bestehende Datei wird nie überschrieben |
-| Formalien | Feld-Umbenennungen im Kopf der Knoten, ein abgeschaffter Status-Wert wird umgestellt, Rollen-Knoten bekommen ihre Rollen-Art (Einzelheiten unten, „Der Sprung von 1.x auf 2.0“) |
+| Umbenennungen | Dateinamen nach der Tabelle der Sprung-Datei (`Rollen.md`, `Katalog.md`, Umlaute in die ae/oe/ue/ss-Form) — per `git mv`, nie über eine vorhandene Datei |
+| Neue Dateien | jede Datei des neuen Stands, die im Projekt fehlt (Root-Regelwerk, `wiki/` samt Katalog-Einträgen, Mechanik-Knoten, Fassaden, Vorlagen; eine `.gitignore` nur, falls keine da ist), wird angelegt und gesammelt gemeldet — Fassaden, die der aktive Prozess voraussetzt, aktiv, optionale deaktiviert mit Hinweis an dich, abgelöste nur als Hintergrund; eine bestehende Datei wird nie überschrieben |
+| Formalien | Feld-Umbenennungen im Kopf der Knoten, ein abgeschaffter Status-Wert wird umgestellt, Rollen-Knoten bekommen ihre Rollen-Art, der Nachfolger einer Ablösung bekommt den Rückverweis (Einzelheiten unten, „Der Sprung von 1.x auf 2.0“) |
 | Herkunft | die Zeile `Template-Stand: 2.0 seit <Tag des Upgrades>` neu, darunter `Vorher: <alte Version> (bis <Tag des Upgrades>)`; die 1.x-Form wird zur 2.0-Form (Schritt 7 füllt die übrigen Zeilen) |
-| Trefferliste | alles, was der Agent danach kontext-bewusst nachzieht (Schritt 6): Wikilinks auf umbenannte Dateien, alte Kennungen, Pflegezeilen, Altknoten, alte Ablöse-Vermerke, die Liste der bestehenden Dateien mit Unterschieden |
+| Trefferliste | alles, was der Agent danach kontext-bewusst nachzieht (Schritt 6): Wikilinks auf umbenannte Dateien, alte Kennungen, Pflegezeilen, Marken-Zeiger, Altknoten, alte Ablöse-Vermerke; dazu die Liste der bestehenden Dateien mit Unterschieden, eingeteilt wie in Schritt 5 |
 | Lint | als Trefferliste; maßgeblich ist der Durchgang in Schritt 8 |
 
 Danach Commit „Upgrade: Mechanik“.
@@ -285,10 +308,13 @@ Danach Commit „Upgrade: Mechanik“.
 
 Die Register Zielmarken und Entscheidungen sind in
 jedem Projekt Pflicht; fehlten sie, hat Schritt 3 sie
-als neue Dateien angelegt. Trägt keine Marke
-`in-progress`, legt der Agent die von dir benannte
-laufende Marke jetzt an — vor jeder Buchung, weil
-jedes neue Element sie trägt. Fassaden, die der aktive
+als neue Dateien angelegt; waren sie deaktiviert (in
+1.1 war das Register Zielmarken abwählbar), aktiviert
+der Agent sie. Trägt nach der Umstellung der
+Zustand-Zeilen (unten, „Der Sprung von 1.x auf 2.0“)
+keine Marke `in-progress`, legt der Agent die von dir
+benannte laufende Marke jetzt an — vor jeder Buchung,
+weil jedes neue Element sie trägt. Fassaden, die der aktive
 Prozess voraussetzt, sind aktiv; die
 Fassaden-Landkarte wird nachgeführt. Ohne Prozess gilt
 nur die Pflicht der Basis.
@@ -304,37 +330,34 @@ und legt dir Übernahmen **als Vorschlag** vor:
 gesammelt, je Datei mit dem, was sich ändert und was
 projekt-eigen bleibt. Eine bestehende Datei ändert
 sich nie automatisch; projekt-eigene Einträge bleiben,
-Regelwerks-Text wird übernommen. Neue Dateien sind
-keine Übernahmen — die hat Schritt 3 angelegt.
+Regelwerks-Text wird übernommen — bei einer Fassade
+also der Kopf (`## Meta`, Regeltext) aus der Vorlage,
+die Einträge aus dem Projekt. Neue Dateien sind keine
+Übernahmen — die hat Schritt 3 angelegt.
 
 Gleicht eine lebende Kopie dem **alten Stand der
 Vorlage**, hat das Projekt sie nie verändert — solche
 Dateien schlägt der Agent als eine Gruppe zur Übernahme
 vor; nur Dateien mit projekt-eigenen Änderungen
-einzeln. Den alten Stand findet er je Anbindung: bei
-der eingefrorenen Kopie im `_template/` des
+einzeln (das Skript teilt seine Liste so ein). Den
+alten Stand findet er je Anbindung: bei der
+eingefrorenen Kopie im `_template/` des
 Sicherungs-Commits, bei der verknüpften Vorlage im
 Stand, auf den das Submodul vor dem Tausch gepinnt war;
-gab es kein altes `_template/`, gilt der Stand aus
-Schritt 0. Dazu:
+gab es kein altes `_template/`, holt er den alten Stand
+der Quelle über ihr Release-Tag. Dazu:
 
 - die **Instruktionsdatei** des Agenten wird nach dem
   MasterPrompt nachgezogen;
-- bei **Rolle Koordinator** ergänzt der Agent in der
-  Komponenten-Tabelle der Architektur-Fassade die
-  Spalten Pfad und Remote als Vorschlag (Werte aus den
-  Nachbarverzeichnissen); bestehende Inhalte bleiben.
-  Bei **Rolle Komponente** leitet er die Übernahme-Art
-  aus dem Übernahme-Modus ab, den das Projekt unter
-  der 1.x-Vorlage gebucht hat (dort „Modus A, rekursiv
-  selbstständig“ → selbstständig, „Modus B, Delegation
-  mit Auftrag“ → Auftrag; das ist nicht der
-  Anbindungs-Modus A/B von `_template/`), und legt sie
-  dir zur Bestätigung vor; ist nichts gebucht, fragt
-  er;
+- die **Komponenten-Tabelle** der Architektur-Fassade
+  bekommt die Form von 2.0, bei Rolle Komponente dazu
+  die Übernahme-Art — beides unten, „Der Sprung von
+  1.x auf 2.0“;
 - `Tools.md` bekommt den Lint als Template-Werkzeug und
   die Prüf-Werkzeuge mit Ersatzweg, falls noch nicht
-  gebucht — Schritt 8 braucht sie.
+  gebucht — Schritt 8 braucht sie; ein 1.x-Projekt hat
+  die Datei noch nicht, der Agent legt sie aus der
+  Kopiervorlage an.
 
 Nach deiner Antwort setzt er um und committet
 „Upgrade: Delta-Nachzug“.
@@ -372,7 +395,10 @@ unverändert):
 - Im Kopf der Anforderungs-Knoten heißt das Feld für
   die Art der Anforderung jetzt `requirement_type:`
   statt `subtype:`; im Kopf aller Detail-Knoten
-  `superseded_by:` statt `superseded-by:`.
+  `superseded_by:` statt `superseded-by:`, als Liste.
+  Eine Ablösung ist in 2.0 beidseitig: der Nachfolger
+  bekommt `supersedes:` mit dem abgelösten Eintrag
+  (1.x kannte nur den Verweis am abgelösten Knoten).
 - Der Status „umgesetzt, wartet auf Prüfung“ entfällt:
   umgesetzt ist, was am Tag hängt, geprüft, was ein
   Testbericht belegt. Einträge mit dem alten Status
@@ -394,24 +420,33 @@ unverändert):
 
 - **Wikilinks** auf umbenannte Dateien — in Fassaden,
   Mechanik-Knoten, der Landkarte, dem Index, der
-  Instruktionsdatei. Eingefrorene Einträge
-  (Freigaben, abgeschlossene Elemente) bleiben
-  unverändert; ein toter Link dort ist ein Lint-Hinweis
-  am Bestand, kein Fehler.
+  Instruktionsdatei und auch in eingefrorenen
+  Einträgen (Freigaben, abgeschlossene Elemente): dort
+  ist es eine Korrektur toter Verweise, die das
+  Einfrieren ausdrücklich erlaubt; sonst meldet der
+  Lint den toten Link als Fehler. Stehen bleiben nur
+  die alten Ablöse-Vermerke (unten, „Was bleibt“). Ein
+  Wikilink, der nur eine Kennung nennt (etwa
+  `[[REQ-001]]`), löst in 2.0 nicht mehr auf; der Agent
+  schreibt ihn als Link auf die Datei mit der Kennung
+  als Anzeigetext.
 - **Katalog statt Knotentypen:** Für jeden
   projekt-eigenen Typ entsteht ein eigener
-  Katalog-Eintrag; dann ersetzt der Agent den Inhalt
-  von `Katalog.md` durch den des neuen Stands
-  (Delta-Vorschlag) und verankert die projekt-eigenen
-  Einträge darin.
+  Katalog-Eintrag (Muster ist ein mitgelieferter
+  Eintrag); dann ersetzt der Agent den Inhalt von
+  `Katalog.md` durch den des neuen Stands
+  (Delta-Vorschlag) und verankert darin die
+  projekt-eigenen Einträge und die Einträge, die der
+  Prozess mitbringt.
 - **Spezifikation wird Funktionsbeschreibung:**
   Einträge im Register Spezifikationen aus 1.x sind
   Funktionsbeschreibungen (Außensicht). Jeder
   `SPEC`-Eintrag wandert mit gleicher Nummer als
   `FUNC`-Eintrag ins Register Funktionsbeschreibungen;
-  der Detail-Knoten trägt die alte Kennung als Alias.
-  Laufende Freigaben gelten weiter und beziehen sich
-  auf den entsprechenden Stand der
+  der Detail-Knoten bekommt Dateiname, Kennung und
+  Überschrift der neuen Form und trägt die alte
+  Kennung als Alias. Laufende Freigaben gelten weiter
+  und beziehen sich auf den entsprechenden Stand der
   Funktionsbeschreibung — der Freigabe-Eintrag bleibt
   unverändert, der Lint löst die alte Kennung über den
   Alias auf. Das Register Spezifikationen startet leer
@@ -422,6 +457,27 @@ unverändert):
 - **Pflegezeile** „Stand:“ der Fassaden wird
   „Bearbeitungsstand:“ — nur die Pflegezeile; „Stand“
   als eingefrorenes Dokument in `output/` bleibt.
+- **Marken-Einträge:** Der Zeiger der 1.x-Form wird zur
+  Zustand-Zeile, die der Lint liest — die laufende
+  Marke `in-progress`, frühere `abgeschlossen`,
+  geplante `künftig`; der Text der Einträge bleibt.
+  Erst danach ist entscheidbar, ob eine laufende Marke
+  fehlt (Schritt 4).
+- **Komponenten-Tabelle** der Architektur-Fassade: Die
+  Spalten der 1.x-Form werden zu Rolle, Repo-Name,
+  Pfad, Remote und Detail; die Rolle ist Koordinator,
+  Komponente oder eigenes Bauteil — ein
+  Standalone-Projekt trägt sich selbst als eigenes
+  Bauteil mit Pfad `.` ein, ein Koordinator seine
+  Komponenten mit Pfad und Remote aus den
+  Nachbarverzeichnissen. Bei **Rolle Komponente**
+  leitet der Agent die Übernahme-Art aus dem
+  Übernahme-Modus ab, den das Projekt unter der
+  1.x-Vorlage gebucht hat („Modus A, rekursiv
+  selbstständig“ → selbstständig, „Modus B, Delegation
+  mit Auftrag“ → Auftrag; das ist nicht der
+  Anbindungs-Modus A/B von `_template/`), und legt sie
+  dir zur Bestätigung vor; ist nichts gebucht, fragt er.
 - **Phasen-Zuordnung.** Die Phasen des
   Software-Prozesses sind in 2.0 neu nummeriert: P1 bis
   P3 unverändert; P4 „Spezifizieren der Funktion“ heißt
@@ -439,7 +495,9 @@ unverändert):
   Tätigkeitsname.
 - **Landkarte und Steuerungs-Übersicht:** neue
   Fassaden des neuen Stands eintragen, neue
-  Mechanik-Knoten ergänzen; die RP-1-Fassaden
+  Mechanik-Knoten und neu hinzugekommene
+  Prozess-Präfixe verbuchen wie beim Einspielen eines
+  Prozesses; die RP-1-Fassaden
   Softwaresystemarchitektur und
   Softwaresystemtest-Setup erhalten im Delta-Vorschlag
   die Marker, dass sie die SP-1-Fassaden
@@ -453,11 +511,19 @@ unverändert):
   Testpläne in Testfall-Elemente, der nächste Testplan
   entsteht als Stand in `output/`; Deployments in
   Deployment-Elemente und Zielumgebungen.
-- Contract-Einträge alter Form bleiben lesbar; die
-  Überführung in die neue Form wird beim Upgrade des
-  Providers (der Komponente, die die Schnittstelle
-  bereitstellt) angeboten und per Nachricht an den
-  Koordinator nachgezogen — bis dahin ein Lint-Hinweis.
+- Contract-Einträge alter Form bleiben lesbar (ein
+  Lint-Hinweis). Die Überführung bietet der Agent beim
+  Upgrade des Providers an (der Komponente, die die
+  Schnittstelle bereitstellt): er schreibt dem
+  Koordinator eine Nachricht, der Koordinator bucht
+  einen neuen Contract-Eintrag mit Verweis auf den
+  alten — ist er selbst Provider, bucht er direkt.
+  Beide Einträge sind Bestand, ohne Marke und
+  Anlage-Datum.
+- Ein `referenzprozesse/` im Projekt-Root (Stand 1.0,
+  eingefrorene Kopie) ist durch
+  `_template/referenzprozesse/` ersetzt; es bleibt
+  liegen, bis du es entfernen lässt.
 - Die alte Sektion „Nachweis“ bleibt in alten
   Anforderungen; neue erhalten sie nicht (Nachweis ist
   der Testbericht).
@@ -514,7 +580,8 @@ Commit „Upgrade: Herkunft“.
 
 1. **Lint** ohne Fehler; Hinweise zum Bestand
    (Altknoten, abgeschlossene Marken ohne
-   Abschluss-Stand, alte Ablöse-Vermerke, Elemente ohne
+   Abschluss-Stand, alte Ablöse-Vermerke, aufgelöste
+   alte Kennungen, alte Freigabe-Formen, Elemente ohne
    Feld, Bestands-Elemente ohne Nachfolger in der
    Kette) sind erwartet — jeden anderen Hinweis
    begründet der Bericht des Agenten.
@@ -535,9 +602,10 @@ Commit „Upgrade: Herkunft“.
    abgelegt, dann zusammengefasst. **Beide grün →
    weiter.** Sonst: nacharbeiten, Commit,
    Kurz-Re-Check beider Prüfer — höchstens drei Runden;
-   danach ein Konvergenz-Bericht an dich statt Grün; ein
-   Befund, der in gleicher Form wiederkehrt, geht sofort
-   an dich.
+   danach ein Konvergenz-Bericht an dich statt Grün
+   (wiederkehrende Befunde, Ursache,
+   Handlungsoptionen); ein Befund, der in gleicher Form
+   wiederkehrt, geht sofort an dich.
 3. **Du als Prüfer.** Hat das Projekt den Ersatzweg
    „Anwender als Prüfer“ gebucht, prüfst du jetzt das
    Ergebnis der Vorprüfung; dein Urteil hält ein

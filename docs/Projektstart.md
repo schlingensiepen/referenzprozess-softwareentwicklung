@@ -12,7 +12,7 @@
 > `Instruktionsdatei-Pflege.md`, `Marken-RP-1.md`,
 > `Vorgehen-SP-1.md` Abschnitt 4a,
 > `templates/Tools-Vorlage.md`). Stand der Quellen:
-> Starter-Commit `09dc8cb` (Version 2.0), erzeugt am
+> Starter-Commit `52d2218` (Version 2.0), erzeugt am
 > 2026-10-28. Dieses Dokument wird nicht von Hand
 > nachgepflegt, sondern zu festen Anlässen vollständig
 > neu aus den Quellen erzeugt; Änderungen gehören in
@@ -149,7 +149,8 @@ deiner Zustimmung:
 
 - **das Kopier-Skript** `sh _template/setup/init-frisch.sh`
   (empfohlen: deterministisch, überschreibt nichts,
-  listet Kollisionen) oder
+  listet Kollisionen; es kennt keine Optionen, `--help`
+  zeigt seinen Kopf) oder
 - **von Hand** nach der Kopier-Liste aus `INIT.md` —
   die Liste ist der führende Ort, das Skript ihre
   Implementierung; von Hand ist zugleich der Rückfall,
