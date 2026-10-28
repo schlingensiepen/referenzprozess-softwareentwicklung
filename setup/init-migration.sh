@@ -222,6 +222,12 @@ variant_of() {
         echo "Diese Liste ist der Eingang der Kollisionsfrage im Phase-1-Fragen-Block von migration/MIGRATION.md (je Datei oder Ordner: umbenennen und verlinken, integrieren oder beides). Erst nach der Antwort: Vorgefundenes umbenennen (Vorschlag <Name>-vorgefunden), dann dieses Skript erneut ausführen — es ergänzt nur Fehlendes und tauscht die Varianten ein."
     fi
     echo ""
-    echo "Weiter nach '$SRC/migration/MIGRATION.md' (Phase 0 Schritt 3: Herkunft vermerken, Aufnahme-Commit)."
+    if [ "$SAME" -eq 0 ] && [ "$EDITED" -eq 0 ]; then
+        echo "Weiter nach '$SRC/migration/MIGRATION.md' (Phase 0 Schritt 3: Herkunft vermerken, Aufnahme-Commit)."
+    else
+        # Wiederholungslauf: Starter-Dateien lagen schon vor — der
+        # Aufnahme-Commit aus Phase 0 ist dann schon geschehen.
+        echo "Wiederholungslauf (Starter-Dateien lagen schon vor): Weiter nach '$SRC/migration/MIGRATION.md' (Phase 1 'Antworten einarbeiten': Links nach der Regel, Rolle, Commit-Sprache, Übernahme-Marke, dann Commit) — Herkunfts-Vermerk und Aufnahme-Commit aus Phase 0 liegen schon vor und werden nicht wiederholt (fehlen sie noch: Phase 0 Schritt 3)."
+    fi
 }
 exit 0
