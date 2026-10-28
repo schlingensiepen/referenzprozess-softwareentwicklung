@@ -4,37 +4,43 @@
 # des Starters, aus dem dieses Skript stammt (Anleitung:
 # upgrade/UPGRADE.md Schritt 3; Sprung 1.x → 2.0: upgrade/1.x-nach-2.0.md).
 #
-# Aufruf aus dem Projektordner:
-#   sh <neuer Stand>/setup/upgrade.sh [Optionen]
-# <neuer Stand> ist ein Klon des Starters außerhalb des Projekts — bei
-# Modus A (Einmal-Kopie) ersetzt das Skript _template/ durch diesen
-# Klon — oder _template selbst, wenn _template/ den neuen Stand schon
-# trägt. Bei Modus B (Submodul) setzt das Skript das Submodul auf den
-# neuen Stand seiner Quelle; der Klon dient dann nur als Aufruf-Ort.
+# Aufruf aus dem Projektordner, nachdem _template/ den neuen Stand
+# trägt und der Tausch committet ist (UPGRADE.md Schritt 2):
+#   sh _template/setup/upgrade.sh [Optionen]
+# Aus einem Klon des Starters außerhalb des Projekts aufgerufen, holt
+# das Skript den Tausch nach (Modus A: _template/ durch den Klon
+# ersetzen; Modus B: Submodul auf den neuen Stand der Quelle setzen) —
+# die Anleitung beschreibt den Tausch von Hand mit eigenem Commit.
 # Ein Agent führt dieses Skript nur nach Zustimmung des Anwenders aus
 # (Angebot in der Anleitung), nie ungefragt; der Weg von Hand bleibt.
+# Ein zweiter Lauf auf demselben Projekt ändert nichts mehr.
 #
 # Nur Mechanik, Inhalte bleiben unverändert: Vorprüfung
-# (Sicherungs-Commit, Modus, Herkunft), Tausch bzw. Submodul-Update,
-# Datei-Umbenennungen per git mv (nie über eine vorhandene Datei), neue
-# Dateien des neuen Stands (nie überschreiben), Formalien im
-# Frontmatter, Zeilen `Template-Stand` und `Vorher` im Herkunfts-Vermerk,
-# Trefferliste für den Agenten, danach der Lint-Kern. Was das Skript
-# nicht tut: Wikilinks und Kennungen nachziehen (kontext-bewusst durch
-# den Agenten, kein sed), Inhalte zusammenführen, committen.
+# (Sicherungs-Commit, Modus, Herkunft, alte Version), Tausch bzw.
+# Submodul-Update (nur aus einem Klon), Datei-Umbenennungen per git mv
+# (nie über eine vorhandene Datei), neue Dateien des neuen Stands (nie
+# überschreiben), Formalien im Frontmatter, Zeilen `Template-Stand` und
+# `Vorher` im Herkunfts-Vermerk, Trefferliste für den Agenten, danach
+# der Lint-Kern. Was das Skript nicht tut: Wikilinks und Kennungen
+# nachziehen (kontext-bewusst durch den Agenten, kein sed), Inhalte
+# zusammenführen, committen, ungetrackte Dateien anfassen.
 #
 # Optionen:
 #   --vorher <Version>     alte Version der Vorlage für die Zeile
 #                          `Vorher` (z.B. 1.1); sonst aus dem
-#                          Herkunfts-Vermerk, dem Submodul-Tag, zuletzt 1.x
-#   --ref <Tag|Commit>     Modus B: Stand, auf den das Submodul gesetzt
-#                          wird (sonst der aktuelle Stand der Quelle)
+#                          Herkunfts-Vermerk oder dem Release-Tag des
+#                          Submoduls — ist sie so nicht ablesbar, bricht
+#                          das Skript ab (den Anwender fragen)
+#   --ref <Tag|Commit>     Modus B, Aufruf aus einem Klon: Stand, auf den
+#                          das Submodul gesetzt wird (sonst der aktuelle
+#                          Stand der Quelle)
 #   --stichtag JJJJ-MM-TT  Tag des Upgrades (sonst heute)
 #   --vorlage-bestaetigt   der Anwender hat bestätigt, dass das Projekt
 #                          aus diesem Starter stammt (wenn die Herkunft
 #                          nicht ablesbar ist)
 #   --nur-pruefen          nichts ändern: Ausgangsstand, Vorhaben und
-#                          Trefferliste ausgeben
+#                          Trefferliste ausgeben; läuft auch vor dem
+#                          Sicherungs-Commit
 #   --ohne-lint            den Lint-Lauf am Ende auslassen
 #
 # Copyright 2026 Jörn Schlingensiepen
@@ -103,8 +109,12 @@ GITDIR=$(git rev-parse --git-dir)
 if [ -e "$GITDIR/MERGE_HEAD" ] || [ -d "$GITDIR/rebase-merge" ] || [ -d "$GITDIR/rebase-apply" ]; then
     fehler "Laufender Merge oder Rebase — anhalten, Lage beschreiben (UPGRADE.md Schritt 1)."
 fi
-if [ -n "$(git status --porcelain)" ]; then
-    fehler "Arbeitskopie nicht sauber — erst der Sicherungs-Commit (UPGRADE.md Schritt 1), dann erneut aufrufen."
+# Sicherungs-Commit: getrackte Dateien ohne Änderung; ungetrackte Dateien
+# hat Schritt 1 bewusst ausgelassen (sensibel oder groß) — sie bleiben
+# unberührt und werden genannt. Mit --nur-pruefen keine Bedingung.
+UNGETRACKT=$(git status --porcelain | sed -n 's/^?? //p')
+if [ "$PRUEFEN" -eq 0 ] && [ -n "$(git status --porcelain --untracked-files=no)" ]; then
+    fehler "Geänderte getrackte Dateien — erst der Sicherungs-Commit (UPGRADE.md Schritt 1), dann erneut aufrufen."
 fi
 
 AP="$DST/wiki/Aktivierter-Prozess.md"
@@ -150,16 +160,25 @@ if [ -z "$VORHER" ]; then
     else
         case $SUB_ALT in
             release-*) VORHER=${SUB_ALT#release-} ;;
-            *) VORHER=1.x ;;
         esac
     fi
 fi
 # neue Version: aus dem neuen Stand (Vorbelegung des Herkunfts-Vermerks)
 NACH=$(grep -o '[0-9][0-9]*\.[0-9][0-9]* seit JJJJ-MM-TT' "$SRC/wiki/Aktivierter-Prozess.md" | head -n 1 | cut -d' ' -f1)
 [ -n "$NACH" ] || NACH=2.0
+# Wiederholungslauf: Template-Stand nennt schon die Zielversion und eine
+# Zeile Vorher steht — der Herkunfts-Vermerk bleibt dann unverändert.
+SCHON=0
+if [ "$HV_FORM" = 2.0 ] && [ "$ALT_STAND" = "$NACH" ] && grep -q '^- \*\*Vorher:\*\*' "$AP"; then
+    SCHON=1
+fi
+if [ -z "$VORHER" ] && [ "$SCHON" -eq 0 ]; then
+    [ "$PRUEFEN" -eq 1 ] || fehler "Alte Version nicht ablesbar (kein Template-Stand, kein Release-Tag) — den Anwender fragen und --vorher <Version> angeben (UPGRADE.md Schritt 0)."
+    VORHER="offen — --vorher <Version> angeben (UPGRADE.md Schritt 0)"
+fi
 
 IN_PROGRESS=0
-[ -f "$DST/wiki/Zielmarken.md" ] && grep -q 'in-progress' "$DST/wiki/Zielmarken.md" && IN_PROGRESS=1
+[ -f "$DST/wiki/Zielmarken.md" ] && grep -q '^- \*\*Zustand:\*\* *in-progress' "$DST/wiki/Zielmarken.md" && IN_PROGRESS=1
 
 printf 'Ausgangsstand\n'
 printf '  Projekt:          %s\n' "$DST"
@@ -169,8 +188,16 @@ printf '  Herkunfts-Form:   %s\n' "${HV_FORM:-keine (weder ## Herkunft noch Temp
 printf '  Quelle:           %s\n' "${QUELLE_ZEILE:-fehlt}"
 [ -n "$SUB_URL" ] && printf '  Submodul-URL:     %s\n' "$SUB_URL"
 [ -n "$SUB_ALT" ] && printf '  Submodul-Stand:   %s\n' "$SUB_ALT"
-printf '  Version:          %s -> %s (Stichtag %s)\n' "$VORHER" "$NACH" "$STICHTAG"
+if [ "$SCHON" -eq 1 ]; then
+    printf '  Version:          schon %s (Zeile Vorher vorhanden) — Wiederholungslauf, Herkunfts-Vermerk bleibt\n' "$NACH"
+else
+    printf '  Version:          %s -> %s (Stichtag %s)\n' "$VORHER" "$NACH" "$STICHTAG"
+fi
 printf '  Zielmarken:       %s\n' "$([ "$IN_PROGRESS" -eq 1 ] && printf 'eine Marke in-progress' || printf 'keine Marke in-progress — der Anwender benennt die laufende Marke (UPGRADE.md Schritt 4)')"
+if [ -n "$UNGETRACKT" ]; then
+    printf '  Ungetrackt:       in Schritt 1 ausgelassen, bleiben unberührt:\n'
+    printf '%s\n' "$UNGETRACKT" | sed 's/^/    - /'
+fi
 printf '\n'
 
 # ---------------------------------------------------------------------
@@ -224,7 +251,9 @@ treffer() {
 
 printf 'Tausch von _template/\n'
 NEU="$DST/_template"
-if [ "$MODUS" = B ]; then
+if [ "$SRC" = "$NEU" ]; then
+    printf '  kein Tausch — _template/ trägt den neuen Stand schon (Schritt 2; Aufruf aus _template/setup/)\n'
+elif [ "$MODUS" = B ]; then
     if [ "$PRUEFEN" -eq 1 ]; then
         printf '  würde das Submodul _template auf %s setzen\n' "${REF:-den aktuellen Stand der Quelle}"
     else
@@ -240,11 +269,12 @@ if [ "$MODUS" = B ]; then
         printf '  Submodul _template steht auf %s (%s)\n' "$(git -C "$NEU" describe --tags --always)" "$(git -C "$NEU" rev-parse --short HEAD)"
     fi
 else
-    if [ "$SRC" = "$NEU" ]; then
-        printf '  _template/ trägt den neuen Stand schon (Aufruf aus _template/setup/) — kein Tausch\n'
-    elif [ "$PRUEFEN" -eq 1 ]; then
+    if [ "$PRUEFEN" -eq 1 ]; then
         printf '  würde _template/ durch eine Kopie von %s ersetzen (ohne .git)\n' "$SRC"
     else
+        if printf '%s\n' "$UNGETRACKT" | grep -q '^_template/'; then
+            fehler "Ungetrackte Dateien unter _template/ — vor dem Tausch der Kopie sichern oder entfernen (UPGRADE.md Schritt 1)."
+        fi
         rm -rf "$NEU"
         mkdir -p "$NEU"
         cp -R "$SRC/." "$NEU/"
@@ -368,7 +398,7 @@ find "$DST/wiki" -type f -name '*.md' | sort | while IFS= read -r f; do
                 if (wartet == 1) { print "- **Vermerk " stichtag " (Upgrade):** Status vor dem Upgrade `umgesetzt-wartet-auf-Prüfung`; Prüfung offen."; print ""; wartet = 2 }
                 verm = 0
             }
-            if (line ~ /\*\*Status:\*\*.*umgesetzt-wartet-auf-Prüfung/) sub(/umgesetzt-wartet-auf-Prüfung/, "umgesetzt (Prüfung offen — vor dem Upgrade umgesetzt-wartet-auf-Prüfung)", line)
+            if (line ~ /\*\*Status:\*\*.*umgesetzt-wartet-auf-Prüfung/ && line !~ /Prüfung offen — vor dem Upgrade/) sub(/umgesetzt-wartet-auf-Prüfung/, "umgesetzt (Prüfung offen — vor dem Upgrade umgesetzt-wartet-auf-Prüfung)", line)
             print line
         }
         END {
@@ -397,7 +427,9 @@ printf '\n'
 printf 'Herkunfts-Vermerk (wiki/Aktivierter-Prozess.md)%s\n' "$([ "$PRUEFEN" -eq 1 ] && printf ' (Vorschau)')"
 TS="- **Template-Stand:** $NACH seit $STICHTAG"
 VZ="- **Vorher:** $VORHER (bis $STICHTAG)"
-if [ "$HV_FORM" = 2.0 ]; then
+if [ "$SCHON" -eq 1 ]; then
+    printf '  unverändert — Template-Stand %s und Zeile Vorher stehen schon (Wiederholungslauf)\n' "$NACH"
+elif [ "$HV_FORM" = 2.0 ]; then
     printf '  %s\n  %s\n  (Vermerk mit der Zuordnungstabelle direkt unter Vorher: 1.x-nach-2.0.md Abschnitt 2)\n' "$TS" "$VZ"
     if [ "$PRUEFEN" -eq 0 ]; then
         awk -v ts="$TS" -v vz="$VZ" '
@@ -449,7 +481,6 @@ treffer '^\*\*Stand:\*\*' 'Pflegezeile „Stand:“ → „Bearbeitungsstand:“
 treffer '^type: testplan\|^type: deployment' 'Altknoten testplan/deployment — lesbar, Überführung anbieten' wiki
 treffer '^fassung:' 'Contract-Einträge mit fassung — Umzug beim Upgrade des Providers anbieten' wiki
 treffer '^> \*\*⚠ Abgelöst durch \[\[' 'Ablöse-Vermerke der 1.x-Form — bleiben stehen (Lint-Hinweis)' wiki
-treffer '^### IDEA-.*Fassaden-Kandidat' 'Ideen-Einträge „Fassaden-Kandidat“ — bleiben' wiki
 treffer 'Prüfung offen — vor dem Upgrade' 'Register-Zeilen mit Auslöser: — Auslöser-Zeile streichen' wiki
 treffer 'Template-Herkunft' 'Herkunfts-Vermerk 1.x-Form — Zeilen Quelle, Prozess, Rolle füllen' wiki
 [ "$IN_PROGRESS" -eq 1 ] || printf '  Zielmarken: keine Marke in-progress — laufende Marke vom Anwender benennen lassen und anlegen (vor dem Lint, UPGRADE.md Schritt 4)\n'
