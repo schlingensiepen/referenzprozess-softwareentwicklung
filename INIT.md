@@ -41,7 +41,9 @@ unten nicht ausdrücklich steht, entscheiden sie:
   nichts löschen ohne ausdrücklichen Wunsch des
   Anwenders. Darum überschreibt keine Starter-Datei
   eine vorgefundene, und der Aufnahme-Commit nimmt
-  nur auf, was der Anwender freigegeben hat.
+  nur die Starter-Kopie und `_template/` auf —
+  Vorgefundenes kommt erst nach der Kollisionsfrage
+  ins Repo.
 - **Alles wird einsortiert.** Vorgefundenes
   überträgst du in die Struktur der Vorlage oder
   verlinkst es; die Herkunft bleibt erkennbar.
@@ -57,17 +59,21 @@ den Grundsätzen.
 
 **Kollisionsfrage** (Regel, gilt für jede vorgefundene
 Datei und jeden vorgefundenen Ordner, deren Name mit
-etwas kollidiert, das der Init kopiert oder anlegt):
-Du stellst im Fragen-Block (Nr. 11) je Fall die Frage
-mit drei Möglichkeiten und gibst eine Empfehlung mit
-Grund; der Anwender darf gesammelt antworten („alles
-wie empfohlen“, „überall (c)“):
+etwas kollidiert, das der Init kopiert — Schritt 1 —
+oder anlegt — Schritt 4 und 5: `TODO.md`,
+`README.md`, Instruktionsdatei, `Tools.md`; „Datei des
+Inits“ unten meint beides): Du stellst im Fragen-Block
+(Nr. 11) je Fall die Frage mit drei Möglichkeiten und
+gibst eine Empfehlung mit Grund; der Anwender darf
+gesammelt antworten („alles wie empfohlen“, „überall
+(c)“):
 
 - **(a) umbenennen und nur verlinken** — die Datei
-  bleibt umbenannt und unverändert liegen, die
-  Starter-Datei wird angelegt und verlinkt sie;
+  bleibt umbenannt und unverändert liegen, die Datei
+  des Inits wird kopiert bzw. angelegt und verlinkt
+  sie;
 - **(b) komplett integrieren** — ihr Inhalt geht in
-  die Starter-Datei oder an den Ort im Wiki, den du
+  die Datei des Inits oder an den Ort im Wiki, den du
   vorschlägst; **gelöscht wird nur auf ausdrücklichen
   Wunsch** — sonst fragst du nach und lässt die Datei
   bis dahin umbenannt liegen; du empfiehlst nie von
@@ -222,8 +228,12 @@ erst nach seiner Zustimmung:
 **Nie kopiert werden:** `referenzprozesse/`,
 `tools/` (du rufst `_template/tools/lint.sh` auf und
 trägst es so in `Tools.md` ein, Schritt 4),
-`upgrade/`, `README.md`, `INIT.md`, `migration/`,
-`docs/`, `setup/`, `LICENSE`, `.git/`.
+`upgrade/`, `README.md` (die des Starters; die
+Projekt-README legst du in Schritt 5 neu an — das ist
+für diesen Starter das „Anpassen“ der mitgelieferten
+README aus [[Init-Choreografie]] §Phase A0 und
+[[Standarddateien-Katalog]] §2.14), `INIT.md`,
+`migration/`, `docs/`, `setup/`, `LICENSE`, `.git/`.
 
 **Kollisionen** — die Liste des Skripts (bzw. deiner
 Handkopie) ist der Eingang der Kollisionsfrage
@@ -253,8 +263,10 @@ Fall für diesen Weg, sondern für die Migration
   `_template/`). Vorher `git status --porcelain`
   lesen: Liegen außer den kopierten Dateien und
   `_template/` andere Dateien im Ordner, nimmst du nur
-  die freigegebenen auf (`git add _template <kopierte
-  Pfade>`) und nennst dem Anwender den Rest; sonst
+  die kopierten und `_template/` auf (`git add
+  _template <kopierte Pfade>`) und nennst dem Anwender
+  den Rest — er kommt nach der Kollisionsfrage mit dem
+  ersten eigenen Commit (Schritt 5) ins Repo; sonst
   `git add -A && git commit -m "Setup: Starter-Stand aufgenommen"`.
   Ignorierte Dateien bleiben ignoriert (nie
   `git add -f`); fehlende git-Identität erfragst du,
@@ -273,6 +285,10 @@ und biete den Briefing-Modus an: wählt er ihn,
 stellst du die Fragen einzeln, sonst alle in
 **einem** Block (nummeriert, je Punkt dein Vorschlag
 zuerst; Ableitbares als Entwurf, nicht abfragen).
+Dieser Block ersetzt die Turns 1 und 2 der
+[[Init-Choreografie]] §Phase D; was dort Turn 3 und
+die Folge-Turns tun, ist Schritt 4 (einschließlich
+Konzept-Angebot und Mission-Statement-Dialog).
 Frage nichts, was vorfestgelegt ist
 ([[Aktivierter-Prozess]]); die Fassaden-Auswahl ist
 Starter-Vorauswahl ([[Fassaden]]; deaktivierte
@@ -297,13 +313,16 @@ Startprompt **nicht** vor (Nr. 1).
    Vorhaben passt oder du nicht sicher bist: „Bist du
    sicher, dass das der richtige Prozess ist? Ich
    erkenne nicht, dass er zum Vorhaben passt — willst
-   du mir einen anderen nennen?“ Keine Liste. Nennt
-   der Anwender einen anderen Prozess, richtest du
-   das Projekt damit ein (Schritt 4); bleibt er beim
-   Software-Prozess, geht es damit weiter. Ergibt sich
-   der Zweifel erst aus Nr. 8, fragst du vor der
-   Umsetzung nach. _Legt vorab fest:_ ob das
-   vorbereitete `wiki/` gefüllt oder ersetzt wird.
+   du mir einen anderen nennen?“ Keine Liste. Das ist
+   die Nachfrage, die [[Init-Choreografie]] §Init mit
+   Startprompt der Init-Anleitung der Vorlage
+   zuweist. Nennt der Anwender einen anderen Prozess,
+   richtest du das Projekt damit ein (Schritt 4);
+   bleibt er beim Software-Prozess, geht es damit
+   weiter. Ergibt sich der Zweifel erst aus Nr. 8,
+   fragst du vor der Umsetzung nach. _Legt vorab
+   fest:_ ob das vorbereitete `wiki/` gefüllt oder
+   ersetzt wird.
 2. **Ein Repo oder zwei?** ([[Init-Choreografie]]
    §Baustein Ein-/Zwei-Repo-Frage;
    [[Two-Repo-Submodul-Muster]]). _Legt vorab fest:_
@@ -347,7 +366,8 @@ Startprompt **nicht** vor (Nr. 1).
    ([[Zielmarken]] §Meta).
 10. **Remote-Ziel**, falls nicht aus Schritt 2 oder
     dem Startprompt ableitbar.
-11. **Kollisionsfrage** aus Schritt 1, falls es
+11. **Kollisionsfrage** aus Schritt 1 und für die
+    Dateien, die Schritt 4 und 5 anlegen, falls es
     Kollisionen gab — je Datei oder Ordner (a), (b)
     oder (c) mit Empfehlung und Namensvorschlag
     (Regel in den Grundsätzen). _Legt vorab fest:_
@@ -394,6 +414,11 @@ Register-Eintrag).
   [[Commit-Sprache]] (aus dem Basis-Bootstrap
   `InterneMechanik.md`) und
   [[WorkspaceManager-Kontrakt]] (Basis-Wiki) bleiben.
+  Wo bei Rolle Komponent die eigene Zeile, die Lage
+  des Koordinators und die Nachbarn stehen, wenn es
+  keine [[Softwaresystemarchitektur]] gibt, legt die
+  Vorlage nicht fest — du fragst den Anwender
+  (Grundsätze).
 - **Erste Marke** nach dem Bootstrap
   `_template/referenzprozesse/base/bootstrap/Zielmarken.md`:
   Marken-Dreiklang mit der Bezeichnung aus Nr. 9,
@@ -432,7 +457,16 @@ Register-Eintrag).
   [[Kettenpruefung]] §Komponenten-Kette.
 - **Mission/Facts-Bootstraps** aus
   `_template/referenzprozesse/base/bootstrap/`
-  abarbeiten.
+  abarbeiten. Die Aktivierungs-Wahl des
+  Mission-Statement-Bootstraps ist Starter-Vorauswahl
+  (die Fassade ist aktiv), du fragst sie nicht. Am
+  Ende dieses Schritts, nach den Buchungen: erst das
+  **Konzept-Angebot** ([[Init-Choreografie]] §Baustein
+  Konzept-Angebot; ohne Netz entfällt das Listing,
+  ohne Subagenten die Empfehlungs-Stufe — mit
+  Vermerk), dann der **Mission-Statement-Setup-Dialog**
+  (§Baustein Mission-Statement-Setup-Dialog; Entwurf
+  aus Nr. 8 und [[Facts]] §Projekteinstieg).
 - **Instruktionsdatei** anlegen (deine native Datei,
   z.B. `CLAUDE.md`) nach MasterPrompt §8.3 /
   [[Instruktionsdatei-Pflege]], einschließlich des
@@ -450,7 +484,8 @@ Starter und bleibt in `_template/` lesbar.
   **Projekt-README** (Kurzbeschreibung, Einstiege,
   Instruktionsdatei; Verweis auf
   `_template/docs/Einfuehrung.md` und für spätere
-  Stände auf `_template/README.md`) und **`TODO.md`**
+  Stände auf `_template/README.md` §Template
+  aktualisieren) und **`TODO.md`**
   (offene Punkte des Anwenders; sie verlinkt eine in
   Schritt 4 umbenannte `TODO-vorgefunden.md`).
 - **Chronologie-Eintrag** „Projekt aus
@@ -473,8 +508,8 @@ Ab hier gilt der normale Betrieb nach MasterPrompt
 ---
 
 **Bleibt Verweis (steht bewusst nicht hier):**
-Fassaden-Auswahl-Mechanik, Konzept-Angebot,
-Mission-Statement-Setup, Phase-D-Turn-Logik,
+Fassaden-Auswahl-Mechanik, Ablauf von Konzept-Angebot
+und Mission-Statement-Setup (Zeitpunkt: Schritt 4),
 Startprompt-Tabelle → [[Init-Choreografie]];
 Sessionstart-Phasen A–E, Commit-Regeln,
 Ordner-Semantik → MasterPrompt.
