@@ -7,10 +7,12 @@
 > `../wiki/` (`Aktivierter-Prozess.md`,
 > `Init-Choreografie.md`, `Zielmarken.md`,
 > `Kettenpruefung.md`, `Fassaden.md`, `Katalog.md`,
-> `Agent-Berichte.md`); erzeugt am 2026-10-28 aus dem
-> Starter in Version 2.0. Dieses Dokument wird nicht
-> von Hand nachgepflegt, sondern zu festen Anlässen neu
-> aus den Quellen erzeugt.
+> `Agent-Berichte.md`). Stand der Quellen:
+> Starter-Commit `09dc8cb` (Version 2.0), erzeugt am
+> 2026-10-28. Dieses Dokument wird nicht von Hand
+> nachgepflegt, sondern zu festen Anlässen vollständig
+> neu aus den Quellen erzeugt; Änderungen gehören in
+> die Quellen.
 
 Zurück zur [Einführung](Einfuehrung.md).
 
@@ -19,11 +21,20 @@ Zurück zur [Einführung](Einfuehrung.md).
 Das Upgrade gilt für jedes Projekt, das aus einer
 Vorlage stammt — aus diesem Starter oder aus der
 allgemeinen Vorlage, mit oder ohne Prozess, mit
-**Herkunfts-Vermerk** oder (Stand 1.0) ohne. Ein Projekt ohne
-Herkunfts-Vermerk und ohne `_template/`, das sein
-Wissen in verstreuten Dateien sammelt, ist kein
-Upgrade-, sondern ein Migrations-Fall
+**Herkunfts-Vermerk** oder (Stand 1.0) ohne. Ein
+Projekt ohne Herkunfts-Vermerk und ohne `_template/`,
+das sein Wissen in verstreuten Dateien sammelt, ist
+kein Upgrade-, sondern ein Migrations-Fall
 ([Migration](Migration.md)); der Agent sagt es dir.
+
+**Versionen.** Der Starter trägt die Versionsnummer
+2.0 (die `../README.md` nennt sie); frühere Stände
+waren 1.0 und 1.1 — zusammen „1.x“. Welche Version
+dein Projekt hat, steht in der Zeile `Template-Stand`
+seines Herkunfts-Vermerks; aus derselben Zeile im
+Starter liest der Agent die Zielversion. Ein Projekt
+aus Version 1.x erkennt der Agent an der älteren Form
+des Vermerks (unten, Schritt 0).
 
 Zwei Dinge stehen fest, bevor etwas geschieht:
 
@@ -53,8 +64,8 @@ aus der `../README.md`:
 Der Agent liest `upgrade/UPGRADE.md` direkt von der
 Repo-URL; sobald `_template/` den neuen Stand trägt,
 liest er von dort — bei einem Projekt aus der
-allgemeinen Vorlage aus einem Lese-Klon des Starters
-(unten).
+allgemeinen Vorlage von Anfang an aus einem Lese-Klon
+des Starters (unten).
 
 ## Die Grundsätze
 
@@ -114,26 +125,24 @@ bleibt die Vorlage; neue Dateien ohne Rückfrage).
 „dieselbe Vorlage bleibt die Vorlage“ heißt für die
 Orte:
 
-- **Anleitung und Sprung-Datei** liest der Agent aus
-  einem vorübergehenden Klon des Starters außerhalb
-  deines Projekts, nur zum Lesen (dem Lese-Klon, den er
-  nach dem Upgrade löscht) — denn der neue Stand der
-  allgemeinen Vorlage unter `_template/` enthält weder
-  die Anleitungen noch die Skripte. Das Skript entfällt,
-  der Agent geht den Weg von Hand.
+- **Anleitung und Sprung-Datei** liest der Agent von
+  Schritt 0 an aus einem vorübergehenden Klon des
+  Starters außerhalb deines Projekts, nur zum Lesen
+  (dem Lese-Klon, den er nach dem Upgrade löscht) —
+  denn der neue Stand der allgemeinen Vorlage unter
+  `_template/` enthält weder die Anleitungen noch die
+  Skripte. Das Skript entfällt, der Agent geht den Weg
+  von Hand.
 - **Neue Dateien** kommen aus dem neuen `_template/`,
-  zusammengeführt wie beim Projektstart (Merge-Ablauf
-  in `Wiki.md`): das Basis-Wiki aus
-  `referenzprozesse/base/wiki/` und dazu der
-  Wiki-Ordner des aktiven Prozesses unter
+  zusammengeführt wie beim Einspielen eines Prozesses
+  (erklärt in [Referenzprozesse](Referenzprozesse.md),
+  „Einspielen“; den Wortlaut führt `Wiki.md`): das
+  Basis-Wiki aus `referenzprozesse/base/wiki/` und dazu
+  der Wiki-Ordner des aktiven Prozesses unter
   `referenzprozesse/`; welche Fassaden der Prozess
   voraussetzt, sagt sein Steckbrief.
-- **Ausgangsstand ohne Herkunfts-Vermerk** (Stand 1.0
-  kannte ihn nicht): Vorlage und Version erfragt der
-  Agent bei dir; Anhaltspunkt ist ein Diff der
-  Regelwerks-Dateien gegen den passenden Stand der
-  Vorlage. Die Frage nach der Einbindung nennt als
-  Quelle deine Vorlage, nicht den Starter.
+- **Ausgangsstand ohne Herkunfts-Vermerk oder ohne
+  `_template/`** (Stand 1.0): siehe Schritt 0.
 
 **Zustimmung.** Die Übersicht in Schritt 0 mit dem
 Vorschlag des Agenten für den Weg ist die eine Frage
@@ -157,18 +166,30 @@ Vorschlag für den Weg (Skript oder von Hand).
   Zeilen `Template-Stand`, `Quelle`, `Anbindungs-Modus`,
   `Prozess`, `Rolle`, `Übernahme-Art`; in der 1.x-Form
   ein Feld „Template-Herkunft“ im Knoten (fehlt dort
-  die Rolle, fragt er); ohne Vermerk (Stand 1.0) fragt
-  er nach Vorlage und Version.
-- **Anbindungs-Modus:** verknüpfte Vorlage (Submodul),
-  wenn `.gitmodules` einen Eintrag für `_template`
-  trägt; eingefrorene Kopie, wenn `_template/` ein
-  gewöhnlicher Ordner ohne eigenes `.git` ist.
+  die Rolle, fragt er); ohne Vermerk (Stand 1.0 kannte
+  ihn nicht) fragt er dich nach Vorlage und Version —
+  Anhaltspunkt ist ein Vergleich der Regelwerks-Dateien
+  deines Projekts mit den Ständen der Vorlage.
+- **Anbindungs-Modus:** verknüpfte Vorlage (Submodul,
+  **B**), wenn `.gitmodules` einen Eintrag für
+  `_template` trägt; eingefrorene Kopie (**A**), wenn
+  `_template/` ein gewöhnlicher Ordner ohne eigenes
+  `.git` ist.
 - **Alte Version:** aus der Zeile `Template-Stand` oder
   einem Release-Tag der Quelle. Ein 1.x-Stand nennt
   sie nicht — dann fragt der Agent dich, mit welchem
   Stand das Projekt angelegt wurde (etwa `1.1`), und
-  gibt sie dem Skript mit; das Skript schreibt keine
-  geratene Version.
+  gibt sie dem Skript mit; weißt du es nicht genau,
+  gilt deine Angabe (etwa `1.x`) — das Skript schreibt
+  keine geratene Version.
+- **Projekt schon auf dem aktuellen Stand:** Nennt
+  `Template-Stand` schon die Zielversion und fehlt die
+  Zeile `Vorher`, trägt dein Projekt diesen Stand seit
+  seiner Anlage — es gibt keinen Sprung, und das Skript
+  hält an. Der Agent fragt dich, ob er einen neueren
+  Commit derselben Version nachziehen soll: dann
+  tauscht er `_template/` (Schritt 2) und legt dir den
+  Delta-Nachzug vor (Schritt 5), mehr nicht.
 - **Vorlage:** aus der Zeile `Quelle` bzw. dem Feld
   „Template-Herkunft“, beim Submodul zusätzlich aus
   dessen URL. Nennt sie diesen Starter, ist das Skript
@@ -180,16 +201,18 @@ Vorschlag für den Weg (Skript oder von Hand).
   als Quelle — und legt `_template/` in Schritt 2 an.
   Ist die Herkunft auch dann nicht erkennbar, fragt er.
 - **Laufende Marke und Zwischenmarke** aus dem
-  Register Zielmarken; hat das Projekt keine
-  `in-progress`-Marke, benennst du sie jetzt
-  (Schritt 4).
+  Register Zielmarken; findet das Skript dort keine
+  `in-progress`-Zustandszeile, liest der Agent das
+  Register selbst, und hat das Projekt keine laufende
+  Marke, benennst du sie jetzt (Schritt 4).
 - **Angebot der zwei Wege** (Projekt aus diesem
   Starter): das Skript `setup/upgrade.sh` für die
   Mechanik (empfohlen: deterministisch, ändert Inhalte
   nicht, listet Treffer; aufgerufen nach dem Tausch
-  aus `_template/setup/`) oder dieselben Schritte von
-  Hand; von Hand ist zugleich der Rückfall, wenn das
-  Skript nicht lauffähig ist. Du wählst.
+  aus `_template/setup/`, eine Vorschau davor aus
+  einem Klon) oder dieselben Schritte von Hand; von
+  Hand ist zugleich der Rückfall, wenn das Skript nicht
+  lauffähig ist. Du wählst.
 
 ## Schritt 1 — die Sicherung
 
@@ -200,11 +223,11 @@ gelten dieselben Schutzregeln wie bei der Migration:
 kein leerer Commit, ignorierte Dateien bleiben
 ignoriert, offensichtlich sensible oder sehr große
 Dateien lässt er aus und nennt sie (sie bleiben
-ungetrackt liegen; das Skript nennt sie und lässt sie
-unberührt), eine fehlende
-git-Identität erfragt er, bei laufendem Merge oder
-Rebase, abweisendem Hook oder verlangter Signatur hält
-er an und beschreibt die Lage.
+ungetrackt liegen; auch das Skript nennt sie und lässt
+sie unberührt), eine fehlende git-Identität erfragt er,
+bei laufendem Merge oder Rebase, abweisendem Hook oder
+verlangter Signatur hält er an und beschreibt die
+Lage.
 
 ## Schritt 2 — `_template/` durch den neuen Stand ersetzen
 
@@ -237,11 +260,13 @@ Die folgenden Schritte sind reine Mechanik — Inhalte
 führt sie das Skript aus:
 `sh _template/setup/upgrade.sh --vorher <alte Version>`
 aus dem Projektordner, nach dem Tausch und seinem
-Commit; `--nur-pruefen` zeigt vorher, was es täte,
-auch vor der Sicherung. Ein zweiter Lauf ändert nichts
-mehr. Von Hand geht der Agent dieselbe Liste durch;
-sie ist der führende Ort, das Skript ihre
-Implementierung.
+Commit. `--nur-pruefen` zeigt vorher, was es täte, auch
+vor der Sicherung — vor dem Tausch aus einem Klon des
+Starters außerhalb des Projekts, weil das alte
+`_template/` eines 1.x-Projekts das Skript noch nicht
+hat. Ein zweiter Lauf ändert nichts mehr. Von Hand geht
+der Agent dieselbe Liste durch; sie ist der führende
+Ort, das Skript ihre Implementierung.
 
 | Schritt | Was geschieht |
 |---|---|
@@ -280,12 +305,18 @@ gesammelt, je Datei mit dem, was sich ändert und was
 projekt-eigen bleibt. Eine bestehende Datei ändert
 sich nie automatisch; projekt-eigene Einträge bleiben,
 Regelwerks-Text wird übernommen. Neue Dateien sind
-keine Übernahmen — die hat Schritt 3 angelegt. Gleicht
-eine lebende Kopie dem alten Stand von `_template/`
-(im Sicherungs-Commit), hat das Projekt sie nie
-verändert — solche Dateien schlägt der Agent als eine
-Gruppe zur Übernahme vor; nur Dateien mit
-projekt-eigenen Änderungen einzeln. Dazu:
+keine Übernahmen — die hat Schritt 3 angelegt.
+
+Gleicht eine lebende Kopie dem **alten Stand der
+Vorlage**, hat das Projekt sie nie verändert — solche
+Dateien schlägt der Agent als eine Gruppe zur Übernahme
+vor; nur Dateien mit projekt-eigenen Änderungen
+einzeln. Den alten Stand findet er je Anbindung: bei
+der eingefrorenen Kopie im `_template/` des
+Sicherungs-Commits, bei der verknüpften Vorlage im
+Stand, auf den das Submodul vor dem Tausch gepinnt war;
+gab es kein altes `_template/`, gilt der Stand aus
+Schritt 0. Dazu:
 
 - die **Instruktionsdatei** des Agenten wird nach dem
   MasterPrompt nachgezogen;
@@ -294,7 +325,11 @@ projekt-eigenen Änderungen einzeln. Dazu:
   Spalten Pfad und Remote als Vorschlag (Werte aus den
   Nachbarverzeichnissen); bestehende Inhalte bleiben.
   Bei **Rolle Komponente** leitet er die Übernahme-Art
-  aus der früher gebuchten Modus-Wahl ab und legt sie
+  aus dem Übernahme-Modus ab, den das Projekt unter
+  der 1.x-Vorlage gebucht hat (dort „Modus A, rekursiv
+  selbstständig“ → selbstständig, „Modus B, Delegation
+  mit Auftrag“ → Auftrag; das ist nicht der
+  Anbindungs-Modus A/B von `_template/`), und legt sie
   dir zur Bestätigung vor; ist nichts gebucht, fragt
   er;
 - `Tools.md` bekommt den Lint als Template-Werkzeug und
@@ -306,6 +341,10 @@ Nach deiner Antwort setzt er um und committet
 
 ## Schritt 6 — der Sprung von 1.x auf 2.0
 
+Diesen Abschnitt brauchst du nur, wenn dein Projekt
+aus Version 1.0 oder 1.1 stammt; ein Projekt, das
+schon mit 2.0 angelegt wurde, überspringt ihn.
+
 Je Versions-Sprung liegt eine eigene Datei
 `upgrade/<alt>-nach-<neu>.md` im Starter; für ein
 Projekt aus Version 1.0 oder 1.1 ist das
@@ -315,6 +354,17 @@ kontext-bewusst durch den Agenten, jede Stelle einzeln
 mit Blick auf den Kontext, kein pauschales
 Suchen-und-Ersetzen — und was unter Bestandsschutz
 bleibt.
+
+Ein paar Wörter, die dabei fallen: Register-Einträge
+tragen Kennungen mit Präfix — in 1.x hießen
+Spezifikationen `SPEC-` und Fehlerberichte `BR-`, in
+2.0 heißen Funktionsbeschreibungen `FUNC-` und
+Fehlermeldungen `BUG-`. Ein **Alias** ist die alte
+Kennung, die ein umbenannter Eintrag behält, damit
+alte Verweise weiter auflösen. Die **Pflegezeile** ist
+die Datumszeile im Kopf einer Fassade. Die
+**Knotentypen** waren in 1.x das Verzeichnis der
+zulässigen Typen; in 2.0 heißt es Katalog.
 
 **Was das Skript umstellt** (Formalien, Inhalt
 unverändert):
@@ -365,7 +415,7 @@ unverändert):
   Funktionsbeschreibung — der Freigabe-Eintrag bleibt
   unverändert, der Lint löst die alte Kennung über den
   Alias auf. Das Register Spezifikationen startet leer
-  für die neue Phase P8.
+  für die neue Phase P8 „Spezifizieren“.
 - **Fehlerbericht wird Fehlermeldung:** jeder
   `BR`-Eintrag wird mit gleicher Nummer ein
   `BUG`-Eintrag mit Alias; Verweise wie bei `SPEC`.
@@ -405,7 +455,8 @@ unverändert):
   Deployment-Elemente und Zielumgebungen.
 - Contract-Einträge alter Form bleiben lesbar; die
   Überführung in die neue Form wird beim Upgrade des
-  Providers angeboten und per Nachricht an den
+  Providers (der Komponente, die die Schnittstelle
+  bereitstellt) angeboten und per Nachricht an den
   Koordinator nachgezogen — bis dahin ein Lint-Hinweis.
 - Die alte Sektion „Nachweis“ bleibt in alten
   Anforderungen; neue erhalten sie nicht (Nachweis ist
@@ -418,7 +469,11 @@ unverändert):
 - Abgeschlossene 1.x-Marken ohne Abschluss-Stand gelten
   als abgeschlossen und eingefroren; ein
   Abschluss-Stand wird nicht nachgebaut. Für die
-  laufende Marke gilt ab jetzt die normale Kette.
+  laufende Marke gilt ab jetzt die normale Kette; dass
+  Bestands-Elemente keinen Nachfolger in der Kette
+  haben (eine Anforderung ohne Funktionsbeschreibung,
+  ein Element ohne Testfall), meldet der Lint als
+  Hinweis — der Bestand wird nicht nachgebaut.
 - Alte Ablöse-Vermerke bleiben stehen (Text eines
   eingefrorenen Knotens); der Lint meldet den toten
   Link dort als Hinweis und nennt die Alias-Form.
@@ -460,7 +515,8 @@ Commit „Upgrade: Herkunft“.
 1. **Lint** ohne Fehler; Hinweise zum Bestand
    (Altknoten, abgeschlossene Marken ohne
    Abschluss-Stand, alte Ablöse-Vermerke, Elemente ohne
-   Feld) sind erwartet — jeden anderen Hinweis
+   Feld, Bestands-Elemente ohne Nachfolger in der
+   Kette) sind erwartet — jeden anderen Hinweis
    begründet der Bericht des Agenten.
 2. **Maschinelle Vorprüfung** durch zwei Prüfer
    verschiedener Modelle als frische Agenten,
@@ -495,14 +551,15 @@ Commit „Upgrade: Herkunft“.
 
 ## Im Verbund
 
-Jedes Repo hebt sich selbst; es gibt keine feste
-Reihenfolge, und gemischter Betrieb mit noch nicht
-gehobenen Nachbarn ist zulässig — an einen nicht
-gehobenen Nachbarn schreibt der Agent keine Nachricht
-(Grundsätze oben). Übergabe-Stände für bereits laufende
-Komponenten entstehen nur auf deinen Zuruf, nicht
-automatisch. Was mit alten Contract-Einträgen geschieht,
-steht oben unter „Bestandsschutz“.
+Jedes Repo hebt sich selbst auf den neuen Stand seiner
+Vorlage; es gibt keine feste Reihenfolge, und
+gemischter Betrieb mit noch nicht gehobenen Nachbarn
+ist zulässig — an einen nicht gehobenen Nachbarn
+schreibt der Agent keine Nachricht (Grundsätze oben).
+Übergabe-Stände für bereits laufende Komponenten
+entstehen nur auf deinen Zuruf, nicht automatisch. Was
+mit alten Contract-Einträgen geschieht, steht oben
+unter „Bestandsschutz“.
 
 ## Danach
 
