@@ -374,8 +374,8 @@ Register-Eintrag).
   (`wiki-vorgefunden/`, Instruktionsdatei), steht der
   Link in der Projekt-README unter den Einstiegen
   (Schritt 5), bei der Instruktionsdatei zusätzlich in
-  der neuen; eine umbenannte `TODO.md` verlinkt die
-  neue `TODO.md`. Bei (b) und (c) überträgst du den
+  der neuen; die neue `TODO.md` (Schritt 5) verlinkt
+  die umbenannte. Bei (b) und (c) überträgst du den
   Inhalt an den vereinbarten Ort. Links in
   vorgefundenen Dateien ziehst du nicht nach; bricht
   einer, nennst du die Stelle.
@@ -451,7 +451,8 @@ Starter und bleibt in `_template/` lesbar.
   Instruktionsdatei; Verweis auf
   `_template/docs/Einfuehrung.md` und für spätere
   Stände auf `_template/README.md`) und **`TODO.md`**
-  (offene Punkte des Anwenders).
+  (offene Punkte des Anwenders; sie verlinkt eine in
+  Schritt 4 umbenannte `TODO-vorgefunden.md`).
 - **Chronologie-Eintrag** „Projekt aus
   referenzprozess-softwareentwicklung angelegt
   (Template-Stand 2.0 seit <Datum>, Quelle

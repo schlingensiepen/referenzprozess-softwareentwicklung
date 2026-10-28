@@ -341,8 +341,9 @@ beim Anlegen die laufende Marke und sein Anlage-Datum.
   Instruktionsdatei; Verweis auf diese Erklärung unter
   `_template/docs/Einfuehrung.md` und für spätere
   Stände auf `_template/README.md`) und **`TODO.md`**
-  (deine offenen Punkte) entstehen — der Starter
-  liefert sie nicht mit.
+  (deine offenen Punkte; sie verlinkt eine in Schritt 4
+  umbenannte `TODO-vorgefunden.md`) entstehen — der
+  Starter liefert sie nicht mit.
 - Ein **Chronologie-Eintrag** hält fest, dass das
   Projekt aus diesem Starter angelegt wurde, mit
   Template-Stand, Quelle und Modus wie im
