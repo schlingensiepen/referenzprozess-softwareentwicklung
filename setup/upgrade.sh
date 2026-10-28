@@ -25,7 +25,9 @@
 # (Sicherungs-Commit, Modus, Herkunft, Prozess, alte Version), Tausch
 # bzw. Submodul-Update (nur aus einem Klon), Datei-Umbenennungen per
 # git mv (nie über eine vorhandene Datei), neue Dateien des neuen
-# Stands (nie überschreiben), Formalien im Frontmatter einschließlich
+# Stands (nie überschreiben; eine so angelegte Fassade trägt im
+# Frontmatter-Kommentar „beim Upgrade angelegt“ statt „beim
+# Starter-Bau aktiviert“), Formalien im Frontmatter einschließlich
 # `supersedes:` am Nachfolger einer Ablösung, Zeilen `Template-Stand`
 # und `Vorher` im Herkunfts-Vermerk, Trefferliste für den Agenten,
 # danach der Lint-Kern. Was das Skript nicht tut: Wikilinks und
@@ -34,7 +36,11 @@
 # Schlägt ein Schreibvorgang fehl (git mv, mv, mkdir, cp, Schreiben
 # einer Datei), bricht das Skript mit Rückgabewert 1 ab — die
 # Schleifen laufen in der Haupt-Shell (Here-Dokumente, keine
-# Pipe-Blöcke), damit das Ende nie einen Teil-Lauf verdeckt.
+# Pipe-Blöcke), damit das Ende nie einen Teil-Lauf verdeckt. Was der
+# Teil-Lauf schon geändert hat, bleibt im Arbeitsbaum; vor dem
+# erneuten Aufruf wird es committet oder zurückgenommen, sonst hält
+# die Vorprüfung an (die Meldung sagt das). Ein Lauf, der nichts
+# geändert hat, schlägt keinen Commit vor.
 # POSIX-sh; erwartet git, awk, sed, grep, find, cmp.
 #
 # Optionen:
@@ -83,6 +89,11 @@ OHNE_LINT=0
 
 fehler() { printf 'FEHLER: %s\n' "$1" >&2; exit 1; }
 fehlt_wert() { fehler "Option $1 erwartet einen Wert"; }
+# Schreibfehler mitten im Lauf: der Teil-Lauf bleibt im Arbeitsbaum und
+# muss vor dem erneuten Aufruf committet oder zurückgenommen werden,
+# sonst hält die Vorprüfung (geänderte getrackte Dateien) an.
+schreibfehler() { fehler "$1 — Lage prüfen (Rechte?). Was dieser Lauf schon geändert hat, steht im Arbeitsbaum (git status): vor dem erneuten Aufruf committen (Zwischen-Commit, etwa Upgrade: Mechanik, Teil 1) oder zurücknehmen — der nächste Lauf ergänzt nur Fehlendes."; }
+GEAENDERT=0
 
 while [ $# -gt 0 ]; do
     case $1 in
@@ -167,14 +178,15 @@ fi
 # Prozess: der Starter ist mit RP-1 auf SP-1 vorbefüllt; nur dafür legt
 # das Skript neue Dateien an (Fassaden, die der aktive Prozess
 # voraussetzt). Gelesen wird der zuerst genannte Prozess der Zeile
-# `Prozess` (2.0-Form, ## Herkunft); nur wenn diese Zeile fehlt oder
-# noch den Platzhalter „offen“ trägt, den dieses Skript bei der
-# 1.x-Form schreibt (Schritt 7 füllt ihn), gilt die Zeile „Gewählter
-# Prozess“ der 1.x-Form — eine stehengebliebene alte Zeile neben einer
-# gefüllten Zeile `Prozess` zählt nicht.
+# `Prozess` (2.0-Form, ## Herkunft); nur wenn diese Zeile fehlt, leer
+# ist oder noch den Platzhalter „offen“ trägt, den dieses Skript bei
+# der 1.x-Form schreibt (Schritt 7 füllt ihn), gilt die Zeile
+# „Gewählter Prozess“ der 1.x-Form — eine stehengebliebene alte Zeile
+# neben einer gefüllten Zeile `Prozess` zählt nicht.
 PROZESS_ZEILE=$(grep '^- \*\*Prozess:\*\*' "$AP" | head -n 1)
-case $PROZESS_ZEILE in
-    ""|*"**Prozess:** offen"*) PROZESS_ZEILE=$(grep '^- \*\*Gewählter Prozess:\*\*' "$AP" | head -n 1) ;;
+PROZESS_WERT=$(printf '%s' "${PROZESS_ZEILE#*"**Prozess:**"}" | tr -d ' \t\r')
+case $PROZESS_WERT in
+    ""|offen*) PROZESS_ZEILE=$(grep '^- \*\*Gewählter Prozess:\*\*' "$AP" | head -n 1) ;;
 esac
 PROZESS=$(printf '%s\n' "$PROZESS_ZEILE" | grep -o '[RS]P-[0-9][0-9]*' | head -n 1 || true)
 if [ "$PROZESS" != RP-1 ]; then
@@ -287,14 +299,23 @@ umbenennen() {
     fi
     if [ "$PRUEFEN" -eq 0 ]; then
         if git ls-files --error-unmatch -- "$alt" >/dev/null 2>&1; then
-            git mv -- "$alt" "$neu" || fehler "git mv $alt -> $neu fehlgeschlagen — Lage prüfen, dann erneut aufrufen."
+            git mv -- "$alt" "$neu" || schreibfehler "git mv $alt -> $neu fehlgeschlagen"
         else
-            mv -- "$DST/$alt" "$DST/$neu" || fehler "mv $alt -> $neu fehlgeschlagen — Lage prüfen, dann erneut aufrufen."
+            mv -- "$DST/$alt" "$DST/$neu" || schreibfehler "mv $alt -> $neu fehlgeschlagen"
         fi
+        GEAENDERT=1
     fi
     printf '  %s -> %s\n' "$alt" "$neu"
     UMBENANNT="${UMBENANNT}${alt}	${neu}
 "
+}
+
+# inhaltsgleich mit dem neuen Stand? — bis auf den Frontmatter-Kommentar
+# „beim Upgrade angelegt“, den dieses Skript beim Anlegen einer Fassade
+# schreibt (sonst stünde sie im Wiederholungslauf im Delta)
+gleich_neu() {
+    cmp -s -- "$NEU/$1" "$DST/$1" && return 0
+    sed '2,/^---$/s/beim Upgrade angelegt/beim Starter-Bau aktiviert/' "$DST/$1" | cmp -s -- - "$NEU/$1"
 }
 
 # alter Name einer Datei vor der Umbenennung dieses Laufs (sonst der Name selbst)
@@ -445,7 +466,7 @@ while IFS= read -r rel; do
         DELTA="${DELTA}${rel}
 "
     elif [ -e "$DST/$rel" ]; then
-        if cmp -s -- "$NEU/$rel" "$DST/$rel"; then
+        if gleich_neu "$rel"; then
             GLEICH=$((GLEICH + 1))
         else
             DELTA="${DELTA}${rel}
@@ -453,8 +474,18 @@ while IFS= read -r rel; do
         fi
     else
         if [ "$PRUEFEN" -eq 0 ]; then
-            case $rel in */*) mkdir -p "$DST/${rel%/*}" || fehler "mkdir für $rel fehlgeschlagen — Lage prüfen (Rechte?), dann erneut aufrufen." ;; esac
-            cp -- "$NEU/$rel" "$DST/$rel" || fehler "Kopie von $rel fehlgeschlagen — Lage prüfen (Rechte?), dann erneut aufrufen."
+            case $rel in */*) mkdir -p "$DST/${rel%/*}" || schreibfehler "mkdir für $rel fehlgeschlagen" ;; esac
+            cp -- "$NEU/$rel" "$DST/$rel" || schreibfehler "Kopie von $rel fehlgeschlagen"
+            GEAENDERT=1
+            # Der Frontmatter-Kommentar der Starter-Kopie nennt den
+            # Starter-Bau; im gehobenen Projekt ist die Fassade beim
+            # Upgrade entstanden (nur der Kommentar, der Wert bleibt).
+            if sed -n '2,/^---$/p' "$DST/$rel" | grep -q 'beim Starter-Bau aktiviert'; then
+                if ! sed '2,/^---$/s/beim Starter-Bau aktiviert/beim Upgrade angelegt/' "$DST/$rel" > "$TMPD/neu" \
+                   || ! cat -- "$TMPD/neu" > "$DST/$rel"; then
+                    schreibfehler "Schreiben von $rel fehlgeschlagen"
+                fi
+            fi
         fi
         NEUANG=$((NEUANG + 1))
         printf '  + %s\n' "$rel"
@@ -474,7 +505,7 @@ done <<EOF
 $NEULISTE
 EOF
 if [ ! -e "$DST/.gitignore" ] && [ -e "$NEU/.gitignore" ]; then
-    if [ "$PRUEFEN" -eq 0 ]; then cp -- "$NEU/.gitignore" "$DST/.gitignore" || fehler "Kopie von .gitignore fehlgeschlagen — Lage prüfen (Rechte?), dann erneut aufrufen."; fi
+    if [ "$PRUEFEN" -eq 0 ]; then cp -- "$NEU/.gitignore" "$DST/.gitignore" || schreibfehler "Kopie von .gitignore fehlgeschlagen"; GEAENDERT=1; fi
     NEUANG=$((NEUANG + 1)); printf '  + .gitignore\n'
 fi
 printf '  angelegt: %s; vorhanden und inhaltsgleich: %s\n' "$NEUANG" "$GLEICH"
@@ -583,7 +614,7 @@ while IFS= read -r f; do
     if ! cmp -s -- "$f" "$tmp"; then
         printf '  %s\n' "${f#"$DST/"}"
         FORMALIEN_N=$((FORMALIEN_N + 1))
-        [ "$PRUEFEN" -eq 0 ] && { cat -- "$tmp" > "$f" || fehler "Schreiben von ${f#"$DST/"} fehlgeschlagen — Lage prüfen (Rechte?), dann erneut aufrufen."; }
+        [ "$PRUEFEN" -eq 0 ] && { cat -- "$tmp" > "$f" || schreibfehler "Schreiben von ${f#"$DST/"} fehlgeschlagen"; GEAENDERT=1; }
     fi
     rm -f "$tmp"
 done <<EOF
@@ -622,7 +653,7 @@ while IFS='	' read -r alt neu; do
     if ! cmp -s -- "$nf" "$tmp"; then
         printf '  %s (supersedes: %s ergänzt)\n' "${nf#"$DST/"}" "$alt"
         FORMALIEN_N=$((FORMALIEN_N + 1))
-        [ "$PRUEFEN" -eq 0 ] && { cat -- "$tmp" > "$nf" || fehler "Schreiben von ${nf#"$DST/"} fehlgeschlagen — Lage prüfen (Rechte?), dann erneut aufrufen."; }
+        [ "$PRUEFEN" -eq 0 ] && { cat -- "$tmp" > "$nf" || schreibfehler "Schreiben von ${nf#"$DST/"} fehlgeschlagen"; GEAENDERT=1; }
     fi
     rm -f "$tmp"
 done <<EOF
@@ -648,7 +679,8 @@ elif [ "$HV_FORM" = 2.0 ]; then
         awk -v ts="$TS" -v vz="$VZ" '
             /^- \*\*Template-Stand:\*\*/ && !done { print ts; print vz; done = 1; next }
             { print }' "$AP" > "$TMPD/ap"
-        cat -- "$TMPD/ap" > "$AP" || fehler "Schreiben von wiki/Aktivierter-Prozess.md fehlgeschlagen — Lage prüfen (Rechte?), dann erneut aufrufen."
+        cat -- "$TMPD/ap" > "$AP" || schreibfehler "Schreiben von wiki/Aktivierter-Prozess.md fehlgeschlagen"
+        GEAENDERT=1
     fi
 else
     QUELLE_NEU="offen — Repo-URL und Commit bzw. Tag des neuen Stands (UPGRADE.md Schritt 7)"
@@ -673,7 +705,8 @@ else
             /^## Bezüge/ && !done { block(); done = 1 }
             { print }
             END { if (!done) { print ""; block() } }' "$AP" > "$TMPD/ap"
-        cat -- "$TMPD/ap" > "$AP" || fehler "Schreiben von wiki/Aktivierter-Prozess.md fehlgeschlagen — Lage prüfen (Rechte?), dann erneut aufrufen."
+        cat -- "$TMPD/ap" > "$AP" || schreibfehler "Schreiben von wiki/Aktivierter-Prozess.md fehlgeschlagen"
+        GEAENDERT=1
     fi
 fi
 printf '\n'
@@ -715,5 +748,9 @@ if [ "$OHNE_LINT" -eq 0 ] && [ -f "$NEU/tools/lint.sh" ]; then
     sh "$NEU/tools/lint.sh" . || true
     printf '\n'
 fi
-printf 'Nächster Schritt: Commit „Upgrade: Mechanik“, dann UPGRADE.md Schritt 4 bis 8 mit %s/upgrade/1.x-nach-2.0.md.\n' "$NEU"
+if [ "$GEAENDERT" -eq 1 ]; then
+    printf 'Nächster Schritt: Commit „Upgrade: Mechanik“, dann UPGRADE.md Schritt 4 bis 8 mit %s/upgrade/1.x-nach-2.0.md.\n' "$NEU"
+else
+    printf 'Dieser Lauf hat nichts geändert (Mechanik schon vollzogen) — kein Commit nötig. Weiter mit UPGRADE.md Schritt 4 bis 8 mit %s/upgrade/1.x-nach-2.0.md, soweit noch offen.\n' "$NEU"
+fi
 exit 0

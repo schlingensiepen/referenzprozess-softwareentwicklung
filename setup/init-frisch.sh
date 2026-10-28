@@ -107,6 +107,10 @@ bearbeitet() {
     EDITED=0
     COLLREL=""
     EDITREL=""
+    COPIEDREL=""     # kopierte Pfade außerhalb von wiki/ (und wiki/ einzeln, wenn nicht komplett)
+    WIKI_COPIED=0    # kopierte Dateien unter wiki/
+    WIKI_TOTAL=0     # Dateien unter wiki/ in der Kopier-Liste
+    WIKI_REL=""
 
     if [ "$WIKI_FREMD" -eq 1 ]; then
         COLLREL="wiki/
@@ -115,6 +119,7 @@ bearbeitet() {
     fi
 
     while IFS= read -r rel; do
+        case $rel in wiki/*) WIKI_TOTAL=$((WIKI_TOTAL + 1)) ;; esac
         if [ -e "$DST/$rel" ]; then
             if cmp -s -- "$SRC/$rel" "$DST/$rel"; then
                 SAME=$((SAME + 1))
@@ -133,6 +138,12 @@ bearbeitet() {
             esac
             cp -- "$SRC/$rel" "$DST/$rel"
             COPIED=$((COPIED + 1))
+            case $rel in
+                wiki/*) WIKI_COPIED=$((WIKI_COPIED + 1)); WIKI_REL="${WIKI_REL}${rel}
+" ;;
+                *) COPIEDREL="${COPIEDREL}${rel}
+" ;;
+            esac
         fi
     done
 
@@ -141,9 +152,27 @@ bearbeitet() {
     if [ ! -e "$DST/.gitignore" ] && [ -e "$SRC/.gitignore" ]; then
         cp -- "$SRC/.gitignore" "$DST/.gitignore"
         COPIED=$((COPIED + 1))
+        COPIEDREL="${COPIEDREL}.gitignore
+"
     fi
 
     echo "Starter-Startausstattung (frisch) kopiert: $COPIED Datei(en); schon vorhanden und inhaltsgleich: $SAME."
+    # Die kopierten Pfade sind die Pfade des Aufnahme-Commits (INIT.md
+    # Schritt 2: git add _template <kopierte Pfade>); ein komplett
+    # kopiertes wiki/ steht als ein Eintrag.
+    if [ "$COPIED" -gt 0 ]; then
+        echo "Kopierte Pfade (für den Aufnahme-Commit, INIT.md Schritt 2):"
+        printf '%s' "$COPIEDREL" | while IFS= read -r rel; do
+            echo "  - $rel"
+        done
+        if [ "$WIKI_COPIED" -gt 0 ] && [ "$WIKI_COPIED" -eq "$WIKI_TOTAL" ]; then
+            echo "  - wiki/ (komplett, $WIKI_COPIED Dateien)"
+        else
+            printf '%s' "$WIKI_REL" | while IFS= read -r rel; do
+                echo "  - $rel"
+            done
+        fi
+    fi
     if [ -n "$EDITREL" ]; then
         echo ""
         echo "Vom Projekt bearbeitet (Wiederholungslauf, keine Kollision; bleiben unverändert): $EDITED Datei(en):"
