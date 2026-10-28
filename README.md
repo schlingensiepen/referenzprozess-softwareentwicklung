@@ -28,10 +28,11 @@ die zugehörige Anleitung direkt von der Repo-URL,
 bevor lokal etwas liegt (Raw-Pfad
 `https://raw.githubusercontent.com/schlingensiepen/referenzprozess-softwareentwicklung/main/<pfad>`,
 auch für jede Datei, auf die eine Anleitung verweist),
-fragt zuerst, wie der Starter als `_template/` in das
-Projekt eingebunden wird, und bietet jeden weiteren
-Schritt an — nichts läuft ungefragt, die Skripte in
-`setup/` werden nur angeboten.
+legt dir seine Fragen gesammelt vor — bei einem neuen
+Projekt und bei der Migration zuerst, wie der Starter
+als `_template/` eingebunden wird — und bietet jeden
+weiteren Schritt an — nichts läuft ungefragt, die
+Skripte in `setup/` werden nur angeboten.
 
 **Neues Projekt** — im leeren Projektordner; Anleitung
 `INIT.md`:
