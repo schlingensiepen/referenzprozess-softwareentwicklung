@@ -112,9 +112,9 @@ fi
 # Sicherungs-Commit: getrackte Dateien ohne Änderung; ungetrackte Dateien
 # hat Schritt 1 bewusst ausgelassen (sensibel oder groß) — sie bleiben
 # unberührt und werden genannt. Mit --nur-pruefen keine Bedingung.
-UNGETRACKT=$(git status --porcelain | sed -n 's/^?? //p')
+UNGETRACKT=$(git -c core.quotePath=false status --porcelain | sed -n 's/^?? //p')
 if [ "$PRUEFEN" -eq 0 ] && [ -n "$(git status --porcelain --untracked-files=no)" ]; then
-    fehler "Geänderte getrackte Dateien — erst der Sicherungs-Commit (UPGRADE.md Schritt 1), dann erneut aufrufen."
+    fehler "Geänderte getrackte Dateien — erst committen: der Sicherungs-Commit (UPGRADE.md Schritt 1) bzw. der Commit des vorigen Schritts, dann erneut aufrufen."
 fi
 
 AP="$DST/wiki/Aktivierter-Prozess.md"
@@ -169,10 +169,21 @@ NACH=$(grep -o '[0-9][0-9]*\.[0-9][0-9]* seit JJJJ-MM-TT' "$SRC/wiki/Aktivierter
 # Wiederholungslauf: Template-Stand nennt schon die Zielversion und eine
 # Zeile Vorher steht — der Herkunfts-Vermerk bleibt dann unverändert.
 SCHON=0
-if [ "$HV_FORM" = 2.0 ] && [ "$ALT_STAND" = "$NACH" ] && grep -q '^- \*\*Vorher:\*\*' "$AP"; then
-    SCHON=1
+STAND_GLEICH=0
+if [ "$HV_FORM" = 2.0 ] && [ "$ALT_STAND" = "$NACH" ]; then
+    if grep -q '^- \*\*Vorher:\*\*' "$AP"; then
+        SCHON=1
+    else
+        # Template-Stand nennt die Zielversion, ohne Zeile Vorher: das
+        # Projekt wurde auf diesem Stand angelegt (Init oder Migration) —
+        # kein Sprung. Ob ein neuerer Commit derselben Version nachgezogen
+        # werden soll, fragt der Agent den Anwender; das Skript schreibt
+        # keine Zeile Vorher.
+        STAND_GLEICH=1
+        [ "$PRUEFEN" -eq 1 ] || fehler "Projekt trägt den Stand $NACH schon (Template-Stand ohne Zeile Vorher) — kein Sprung; ob ein neuerer Commit derselben Version nachgezogen werden soll, fragt der Agent den Anwender (UPGRADE.md Schritt 0)."
+    fi
 fi
-if [ -z "$VORHER" ] && [ "$SCHON" -eq 0 ]; then
+if [ -z "$VORHER" ] && [ "$SCHON" -eq 0 ] && [ "$STAND_GLEICH" -eq 0 ]; then
     [ "$PRUEFEN" -eq 1 ] || fehler "Alte Version nicht ablesbar (kein Template-Stand, kein Release-Tag) — den Anwender fragen und --vorher <Version> angeben (UPGRADE.md Schritt 0)."
     VORHER="offen — --vorher <Version> angeben (UPGRADE.md Schritt 0)"
 fi
@@ -190,10 +201,12 @@ printf '  Quelle:           %s\n' "${QUELLE_ZEILE:-fehlt}"
 [ -n "$SUB_ALT" ] && printf '  Submodul-Stand:   %s\n' "$SUB_ALT"
 if [ "$SCHON" -eq 1 ]; then
     printf '  Version:          schon %s (Zeile Vorher vorhanden) — Wiederholungslauf, Herkunfts-Vermerk bleibt\n' "$NACH"
+elif [ "$STAND_GLEICH" -eq 1 ]; then
+    printf '  Version:          schon %s (ohne Zeile Vorher) — kein Sprung; Nachzug innerhalb der Version: Anwender fragen (UPGRADE.md Schritt 0)\n' "$NACH"
 else
     printf '  Version:          %s -> %s (Stichtag %s)\n' "$VORHER" "$NACH" "$STICHTAG"
 fi
-printf '  Zielmarken:       %s\n' "$([ "$IN_PROGRESS" -eq 1 ] && printf 'eine Marke in-progress' || printf 'keine Marke in-progress — der Anwender benennt die laufende Marke (UPGRADE.md Schritt 4)')"
+printf '  Zielmarken:       %s\n' "$([ "$IN_PROGRESS" -eq 1 ] && printf 'eine Marke in-progress' || printf 'Zustandszeile in-progress nicht gefunden — Zielmarken selbst lesen; fehlt eine laufende Marke, benennt sie der Anwender (UPGRADE.md Schritt 4)')"
 if [ -n "$UNGETRACKT" ]; then
     printf '  Ungetrackt:       in Schritt 1 ausgelassen, bleiben unberührt:\n'
     printf '%s\n' "$UNGETRACKT" | sed 's/^/    - /'
@@ -429,6 +442,8 @@ TS="- **Template-Stand:** $NACH seit $STICHTAG"
 VZ="- **Vorher:** $VORHER (bis $STICHTAG)"
 if [ "$SCHON" -eq 1 ]; then
     printf '  unverändert — Template-Stand %s und Zeile Vorher stehen schon (Wiederholungslauf)\n' "$NACH"
+elif [ "$STAND_GLEICH" -eq 1 ]; then
+    printf '  unverändert — Template-Stand %s steht schon, kein Sprung (keine Zeile Vorher)\n' "$NACH"
 elif [ "$HV_FORM" = 2.0 ]; then
     printf '  %s\n  %s\n  (Vermerk mit der Zuordnungstabelle direkt unter Vorher: 1.x-nach-2.0.md Abschnitt 2)\n' "$TS" "$VZ"
     if [ "$PRUEFEN" -eq 0 ]; then
@@ -483,7 +498,7 @@ treffer '^fassung:' 'Contract-Einträge mit fassung — Umzug beim Upgrade des P
 treffer '^> \*\*⚠ Abgelöst durch \[\[' 'Ablöse-Vermerke der 1.x-Form — bleiben stehen (Lint-Hinweis)' wiki
 treffer 'Prüfung offen — vor dem Upgrade' 'Register-Zeilen mit Auslöser: — Auslöser-Zeile streichen' wiki
 treffer 'Template-Herkunft' 'Herkunfts-Vermerk 1.x-Form — Zeilen Quelle, Prozess, Rolle füllen' wiki
-[ "$IN_PROGRESS" -eq 1 ] || printf '  Zielmarken: keine Marke in-progress — laufende Marke vom Anwender benennen lassen und anlegen (vor dem Lint, UPGRADE.md Schritt 4)\n'
+[ "$IN_PROGRESS" -eq 1 ] || printf '  Zielmarken: Zustandszeile in-progress nicht gefunden — Zielmarken selbst lesen; fehlt eine laufende Marke, vom Anwender benennen lassen und anlegen (vor dem Lint, UPGRADE.md Schritt 4)\n'
 printf '\n'
 
 # ---------------------------------------------------------------------
