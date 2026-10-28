@@ -570,7 +570,13 @@ und nichts, was schon vorfestgelegt ist (siehe
 **Antworten einarbeiten:** Kollisionen auflösen
 (`git mv` nach dem bestätigten Schema, dann die
 ausgelassenen Starter-Dateien und Varianten aus
-`_template/` einspielen; Links in vorgefundenen
+`_template/` einspielen — Skript erneut oder von Hand;
+bei (a) und (c) verlinkt die Starter-Datei die
+umbenannte; hat sie keinen Platz dafür — Ordner
+`wiki-vorgefunden/`, Instruktionsdatei —, steht der
+Link in `Migrations-Grundlagen` §Herkunft und bei der
+Instruktionsdatei zusätzlich in der neuen
+Instruktionsdatei (Phase 5); Links in vorgefundenen
 Dateien ziehst du nicht nach — bricht dadurch einer,
 notierst du die Stelle für den Bericht zur
 Gesamt-Annahme); bei einem anderen Prozess das

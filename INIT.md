@@ -243,8 +243,13 @@ Fragen-Block (Schritt 3 Nr. 11): je Datei oder Ordner
 Antwort benennst du um (bestätigter Name) und spielst
 die ausgelassenen Starter-Dateien ein — Skript erneut
 ausführen (es ergänzt nur Fehlendes) oder von Hand
-(Schritt 4). `.gitignore` ist kein Kollisionsfall —
-sie wird nur kopiert, wenn keine vorhanden ist. Ein Verzeichnis mit gewachsener
+(Schritt 4). Das Skript sieht nur die Kopier-Liste;
+prüfe selbst, ob im Ordner schon liegt, was du in
+Schritt 4 und 5 anlegst — etwa `TODO.md`, `README.md`,
+die Instruktionsdatei, `Tools.md` —, und nimm es in
+dieselbe Frage auf. `.gitignore` ist kein
+Kollisionsfall — sie wird nur kopiert, wenn keine
+vorhanden ist. Ein Verzeichnis mit gewachsener
 Wissensbasis ist kein Fall für diesen Weg, sondern
 für die Migration (`migration/MIGRATION.md`); sag es
 dem Anwender, wenn du so etwas vorfindest.
@@ -432,15 +437,24 @@ Marke und sein Anlage-Datum ([[Zielmarken]] §Meta;
 `- **Angelegt:** JJJJ-MM-TT` im Register-Eintrag).
 
 - **Kollisionen** nach der Antwort aus Nr. 11:
-  umbenennen per `git mv` (Inhalt unverändert), dann
-  die ausgelassenen Starter-Dateien aus `_template/`
-  einspielen, bei (a) und (c) die umbenannte Datei
-  aus der Starter-Datei verlinken (mit
-  Link-Beschreibung; eine umbenannte `TODO.md` aus
-  der neuen `TODO.md`, Schritt 5); bei (b) und (c)
-  den Inhalt an den vereinbarten Ort übertragen.
-  Links in den vorgefundenen Dateien ziehst du nicht
-  nach; bricht dadurch einer, nennst du die Stelle.
+  umbenennen (Inhalt unverändert) — per `git mv`,
+  wenn die Datei versioniert ist; beim Init ist sie
+  es meist noch nicht (Schritt 2), dann `mv`, und die
+  umbenannte Datei kommt mit dem ersten eigenen
+  Commit (Schritt 5) ins Repo. Dann die ausgelassenen
+  Starter-Dateien aus `_template/` einspielen (Skript
+  erneut oder von Hand); bei (a) und (c) die
+  umbenannte Datei aus der Starter-Datei verlinken
+  (mit Link-Beschreibung; eine umbenannte `TODO.md`
+  aus der neuen `TODO.md`, Schritt 5). Hat die
+  Starter-Datei keinen Platz für einen Link (Ordner
+  `wiki-vorgefunden/`, Instruktionsdatei), steht er in
+  der Projekt-README unter den Einstiegen (Schritt 5)
+  und bei der Instruktionsdatei zusätzlich in der
+  neuen Instruktionsdatei. Bei (b) und (c) den Inhalt
+  an den vereinbarten Ort übertragen. Links in den
+  vorgefundenen Dateien ziehst du nicht nach; bricht
+  dadurch einer, nennst du die Stelle.
 - **Anderer Prozess** (Nr. 1): das vorbereitete
   `wiki/` aus Schritt 1 wird nicht gefüllt, sondern
   ersetzt — Basis-Wiki aus
