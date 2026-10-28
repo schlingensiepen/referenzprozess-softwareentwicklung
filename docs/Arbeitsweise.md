@@ -13,7 +13,7 @@
 > `Standarddateien-Katalog.md`, `Kettenpruefung.md`
 > Abschnitt „Reviewer-Anteil“,
 > `Instruktionsdatei-Pflege.md`). Stand der Quellen:
-> Starter-Commit `09dc8cb` (Version 2.0), erzeugt am
+> Starter-Commit `48e5365` (Version 2.0), erzeugt am
 > 2026-10-28. Dieses Dokument wird nicht von Hand
 > nachgepflegt, sondern zu festen Anlässen vollständig
 > neu aus den Quellen erzeugt; Änderungen gehören in
@@ -59,8 +59,10 @@ Der Agent arbeitet in einem dieser Modi:
   Ergebnisses falsch würden — verlässt er den Modus von
   selbst. Die Transformation bei einer Migration läuft
   ähnlich, aber nach ihrer eigenen Anleitung: autonom
-  bis zur Absicherung, Ungeklärtes sammelt dort die
-  Auffang-Datei (siehe [Migration](Migration.md)).
+  bis zur Vorlage der Ergebnisse in der Absicherung —
+  deine Prüfung und die Gesamt-Annahme brauchen dich
+  —, Ungeklärtes sammelt dort die Auffang-Datei (siehe
+  [Migration](Migration.md)).
 
 ## Fragen, Fahrplan, Briefing
 
@@ -129,8 +131,10 @@ Ergebnis dürfen committet werden; das Ergebnis steht als
 Info-Zeile in Bericht oder Commit-Nachricht, damit in
 der Historie sichtbar bleibt, was Zwischenstand und was
 ein grüner **Meilenstein** war (mit SP-1 der Abschluss
-einer Arbeits-Einheit, etwa eines Scaffolding-Schritts
-— kein Zwischenziel, das ist die Marke). Harte
+einer Arbeits-Einheit, etwa eines Scaffolding-Schritts,
+oder die Freigabe eines Pflicht-Stands einer nicht
+abgeschlossenen Marke — kein Zwischenziel, das ist die
+Marke). Harte
 Blockaden gibt es nur, wo eine Regel sie ausdrücklich
 vorsieht — typisch bei Freigaben mit benannter
 Vorbedingung. Die Regel befreit nicht von der Meldung:
@@ -154,9 +158,10 @@ für den Agenten folgende Pflichten:
   Berichte vor der Chat-Zusammenfassung, Fassaden im
   Arbeitsrhythmus.
 
-**Doku-Pflicht bei Klärung.** Was ihr im Gespräch
-klärt, wandert sofort in eine Datei: eine neue
-Projekt-Wahrheit ins Entscheidungs-Register, eine
+**Doku-Pflicht bei Klärung.** Was du mit dem Agenten
+im Gespräch klärst, wandert sofort in eine Datei:
+eine neue Projekt-Wahrheit ins
+Entscheidungs-Register, eine
 Begriffs-Klarstellung als Vorschlag ins Glossar-Review,
 ein Hinweis gegen ein hartnäckiges Fehlverständnis des
 Agenten — nur auf deine ausdrückliche Anweisung — in
@@ -310,8 +315,9 @@ dich, keine Automatismen:
   (zwei Modelle, sonst frische Agenten desselben
   Modells als schwächere Absicherung; höchstens drei
   Runden, dann ein Konvergenz-Bericht an dich), danach
-  du — wenn du beim Projektstart den Ersatzweg
-  „Anwender als Prüfer“ gewählt hast.
+  du — wenn das Projekt den Ersatzweg „Anwender als
+  Prüfer“ gebucht hat (gewählt beim Projektstart, im
+  Fragen-Block der Migration oder beim Upgrade).
 
 ## Prüfmuster und Review-Kette
 

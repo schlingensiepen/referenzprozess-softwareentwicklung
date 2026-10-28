@@ -10,7 +10,7 @@
 > `Zielmarken.md`, `Katalog-message.md`,
 > `Contract-Index.md`, `Vorgehen-RP-1.md`,
 > `Glossar.md`). Stand der Quellen: Starter-Commit
-> `09dc8cb` (Version 2.0), erzeugt am 2026-10-28.
+> `48e5365` (Version 2.0), erzeugt am 2026-10-28.
 > Dieses Dokument wird nicht von Hand nachgepflegt,
 > sondern zu festen Anlässen vollständig neu aus den
 > Quellen erzeugt; Änderungen gehören in die Quellen.

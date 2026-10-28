@@ -8,7 +8,7 @@
 > `Entscheidungen.md`, `InterneMechanik.md`,
 > `Katalog.md`, `Einfrieren-und-Abloesen.md`,
 > `Glossar.md`, `Standarddateien-Katalog.md`). Stand
-> der Quellen: Starter-Commit `09dc8cb` (Version 2.0),
+> der Quellen: Starter-Commit `48e5365` (Version 2.0),
 > erzeugt am 2026-10-28. Dieses Dokument wird nicht von
 > Hand nachgepflegt, sondern zu festen Anlässen
 > vollständig neu aus den Quellen erzeugt; Änderungen
@@ -181,17 +181,19 @@ Anforderungen voraus; der Lint meldet den Widerspruch.
 Viele Fassaden sind **Register**: eine Übersicht mit je
 einer Zeile pro Eintrag, dahinter — wo nötig — ein
 Detail-Knoten pro Eintrag. Einträge tragen nummerierte
-Kennungen mit Präfix (Entscheidungen `DEC-`, Ideen
+Kennungen mit einem Präfix, das die Fassade in deinem
+Projekt vorgibt — Entscheidungen `DEC-`, Ideen
 `IDEA-`, Berichte `REP-`, Recherchen `REC-`; der
 Software-Prozess bringt `REQ-`, `FUNC-`, `SPEC-`,
-`BUG-`, `TEST-`, `DEPL-`, `ARC-` und weitere mit). Eine
+`BUG-`, `TEST-`, `DEPL-`, `ARC-` und weitere mit. Eine
 Kennung wird nie wiederverwendet.
 
 Die wichtigsten Register der Basis:
 
-- **Entscheidungen** — jede Projekt-Wahrheit, die ihr
-  festlegt, mit Wahl, Begründung, verworfenen
-  Alternativen und Verweisen. Eine Entscheidung kommt
+- **Entscheidungen** — jede Projekt-Wahrheit, die du
+  mit dem Agenten festlegst, mit Wahl, Begründung,
+  verworfenen Alternativen und Verweisen. Eine
+  Entscheidung kommt
   **erst mit deinem OK** ins Register, direkt als
   „angenommen“; Entwürfe liegen nie im Wiki. Ab dann
   ist ihr Inhalt **eingefroren**: Was sich ändert, wird
@@ -207,7 +209,10 @@ Die wichtigsten Register der Basis:
   Entscheidungen. Eine nicht getroffene Entscheidung
   ist keine Entscheidung, sondern eine Idee mit
   **Auslöser** (Datum oder Zielmarke): Wird der Auslöser
-  fällig, holt der Wächter den Eintrag wieder hervor.
+  fällig, holt der Wächter den Eintrag wieder hervor —
+  der Prüfdurchgang, den der Agent zu festen Anlässen
+  über Register und Zustände laufen lässt (siehe
+  [Arbeitsweise](Arbeitsweise.md), „Wächter“).
 - **Chronologie** (was ist wann passiert) und
   **Fristen** (offene Pflichten mit Fälligkeit, Sektionen
   Offen/Erledigt/Abgelaufen) — beide beim Einlesen von

@@ -11,7 +11,7 @@
 > `Marken-SP-1.md`, `Marken-RP-1.md`), den
 > Steckbriefen `../referenzprozesse/*/Steckbrief.md`
 > und `../referenzprozesse/SP-1-Standardprozess/index.md`
-> (Rollen). Stand der Quellen: Starter-Commit `09dc8cb`
+> (Rollen). Stand der Quellen: Starter-Commit `48e5365`
 > (Version 2.0), erzeugt am 2026-10-28. Dieses Dokument
 > wird nicht von Hand nachgepflegt, sondern zu festen
 > Anlässen vollständig neu aus den Quellen erzeugt;
@@ -70,8 +70,7 @@ Entwicklungsprojekt (SP-1)** und darauf der
 **Entwicklung eines Softwaresystems (RP-1)** — im
 Ordner `referenzprozesse/` heißen die Pakete
 `SP-1-Standardprozess/` und `RP-1-Systementwicklung/`.
-Das
-Einspielen (der Merge, unten) ist beim Bau des Starters
+Das Einspielen (der Merge, unten) ist im Starter schon
 vollzogen; der Regel-Knoten `wiki/Aktivierter-Prozess.md`
 bucht die Vorfestlegungen: aktive Prozesse Basis, SP-1,
 RP-1; die aktiven Commit-Präfixe des Prozesses; die
@@ -180,9 +179,9 @@ bietet der Agent dabei nicht an.
 
 ## Einspielen (Merge)
 
-Beim Bau des Starters wurden SP-1 und RP-1 so
-eingespielt; dasselbe tut der Agent, wenn du einen
-anderen Prozess nennst oder später einen ergänzt. Das
+Im Starter sind SP-1 und RP-1 so eingespielt; dasselbe
+tut der Agent, wenn du einen anderen Prozess nennst
+oder später einen ergänzt. Das
 Einspielen ist eine **Standardaufgabe** — ohne weitere
 Rückfrage, mit eigenem Commit (Präfix
 `Prozess-Merge:`). Die Kette wird Basis-zuerst
@@ -290,7 +289,5 @@ Scaffolding weg und sagen das.
 Klärungen zur Anwendung des Prozesses in deinem Projekt
 werden als Entscheidungen gebucht. Befunde, die den
 Prozess oder den Starter selbst verbessern würden, hält
-der Agent als Ideen-Eintrag fest und meldet sie über
-den Update-Weg an den Betreiber des Starters zurück —
-das Repository, das die `../README.md` nennt. In
+der Agent als Ideen-Eintrag in deinem Projekt fest; in
 `_template/` schreibt er nicht.

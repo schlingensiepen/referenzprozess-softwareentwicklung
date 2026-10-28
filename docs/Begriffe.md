@@ -14,7 +14,7 @@
 > `../Outgoing.md`, `../README.md`, `../INIT.md`,
 > `../migration/MIGRATION.md`, `../upgrade/UPGRADE.md`
 > und `../referenzprozesse/SP-1-Standardprozess/index.md`
-> (Rollen). Stand der Quellen: Starter-Commit `09dc8cb`
+> (Rollen). Stand der Quellen: Starter-Commit `48e5365`
 > (Version 2.0), erzeugt am 2026-10-28. Dieses Dokument
 > wird nicht von Hand nachgepflegt, sondern zu festen
 > Anlässen vollständig neu aus den Quellen erzeugt;
@@ -75,8 +75,10 @@ verknüpfte Vorlage (git-Submodul), beide unter
 Mengen: keine Rückfragen, Unklarheiten werden in
 `Offene Fragen.md` gesammelt und am Ende vorgelegt.
 Die Transformation einer Migration läuft ähnlich:
-autonom bis zur Absicherung, Ungeklärtes sammelt die
-Auffang-Datei `wiki/Migrations-Grundlagen.md`.
+autonom bis zur Vorlage der Ergebnisse in der
+Absicherung — deine Prüfung und die Gesamt-Annahme
+brauchen dich —, Ungeklärtes sammelt die Auffang-Datei
+`wiki/Migrations-Grundlagen.md`.
 
 **Aufnahme-Commit.** Der angekündigte, nicht erfragte
 Commit beim Projektstart und bei der Migration, der
@@ -140,11 +142,12 @@ strukturierten Meldung des Agenten: was getan ist, was
 er als Nächstes tut, wenn du nicht widersprichst, und
 was er von dir braucht.
 
-**Ersatzweg.** Die beim Start gewählte Prüf-Variante
-für den Fall, dass kein Werkzeug ein zweites KI-Modell
-bereitstellt: dasselbe Modell in frischem Kontext (mit
-sichtbarer Einschränkung in der Freigabe) oder du als
-Prüfer. Steht in `Tools.md`.
+**Ersatzweg.** Die Prüf-Variante für den Fall, dass
+kein Werkzeug ein zweites KI-Modell bereitstellt:
+dasselbe Modell in frischem Kontext (mit sichtbarer
+Einschränkung in der Freigabe) oder du als Prüfer.
+Gewählt beim Projektstart, im Fragen-Block der
+Migration oder beim Upgrade; steht in `Tools.md`.
 
 **Erweiterung.** Ein Zusatz-Werkzeug des Agenten — je
 nach Agent MCP-Server (angebundener Werkzeug-Dienst),
@@ -575,6 +578,14 @@ leeren Ordner oder bei der Migration schon im Projekt
 liegt. Vorgefundene Dateien bleiben unverändert; bei
 einer Namenskollision werden sie mit dem Zusatz
 `-vorgefunden` umbenannt und verlinkt.
+
+**Vorlage.** Der Oberbegriff für diesen Starter und
+die allgemeine Vorlage, aus der er abgeleitet ist: das,
+was ein Projekt unter `_template/` einbindet und beim
+Upgrade gegen den neuen Stand derselben Vorlage
+tauscht. „Template“ steht nur in festen Namen —
+`_template/`, `Template-Stand`, der Weg „Template
+aktualisieren“ in der `../README.md`.
 
 **Wächter.** Ein Prüfdurchgang zu festen Anlässen
 (Sessionstart, täglich, auf Anfrage, Meilenstein), der

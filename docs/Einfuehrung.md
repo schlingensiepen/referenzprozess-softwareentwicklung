@@ -7,7 +7,7 @@
 > `../wiki/` (`Aktivierter-Prozess.md`, `Fassaden.md`)
 > und den Steckbriefen
 > `../referenzprozesse/*/Steckbrief.md`. Stand der
-> Quellen: Starter-Commit `09dc8cb` (Version 2.0),
+> Quellen: Starter-Commit `48e5365` (Version 2.0),
 > erzeugt am 2026-10-28. Dieses Dokument wird nicht von
 > Hand nachgepflegt, sondern zu festen Anlässen
 > vollständig neu aus den Quellen erzeugt; Änderungen
@@ -88,9 +88,12 @@ jederzeit per Zuruf wieder einschalten. Mehr dazu in
 
 Dieser Starter ist eine Vorlage für Softwareprojekte,
 in denen ein Mensch und ein KI-Agent strukturiert
-zusammenarbeiten. Er ist eine Variante der allgemeinen
-Projektvorlage, die den Prozess für
-Softwareentwicklung schon mitbringt: den
+zusammenarbeiten. Er ist aus einer allgemeinen
+Projektvorlage abgeleitet — in dieser Erklärung „die
+allgemeine Vorlage“: sie bringt keinen Prozess mit,
+sondern bietet ihn beim Start an; ein Projekt kann
+auch aus ihr stammen. Der Starter bringt den Prozess
+für Softwareentwicklung schon mit: den
 **Standardprozess Entwicklungsprojekt (SP-1)** und
 darauf die **Entwicklung eines Softwaresystems
 (RP-1)** mit Anforderungen, Funktionsbeschreibungen,
@@ -203,23 +206,36 @@ beim Einrichten). Der Agent liest die zugehörige
 Anleitung direkt von der Repo-URL, bevor lokal etwas
 liegt, legt dir seine Fragen gesammelt vor — bei einem
 neuen Projekt und bei der Migration zuerst, wie der
-Starter als `_template/` in dein Projekt kommt: **A**
-als eingefrorene Kopie oder **B** als verknüpfte
-Vorlage — und bietet jeden weiteren Schritt an — nichts
-läuft ungefragt, die Skripte in `setup/` werden nur
-angeboten.
+Starter als `_template/` in dein Projekt kommt: **B**
+als verknüpfte Vorlage (empfohlen) oder **A** als
+eingefrorene Kopie — und bietet jeden weiteren Schritt
+an: Einbindung und die Skripte in `setup/` laufen nur
+nach deiner Zustimmung; Commits kündigt er an, statt
+zu fragen (den Sicherungs- und den Aufnahme-Commit,
+beim Upgrade die Commits je Schritt).
 
-- **Neues Projekt** — im leeren Projektordner. Der
-  Agent bindet den Starter ein, kopiert Regelwerk und
-  vorbereitetes `wiki/` ins Projekt, committet den
-  Startstand, stellt dir einen gesammelten
-  Fragen-Block (Rolle des Repos, ein Repo oder zwei,
-  Kürzel, Commit-Sprache, erste Marke, …), setzt die
-  Antworten um und meldet „Bereit für den ersten
-  Auftrag.“ Liegen schon Dateien im Ordner, deren
-  Namen mit Dateien des Starters kollidieren, fragt er
-  je Datei, was damit geschehen soll — nichts wird
-  überschrieben. Der ganze Ablauf:
+Welcher der beiden ersten Wege gilt, entscheidet, ob
+im Ordner schon eine **Wissensbasis** liegt — Dateien,
+die Projektwissen tragen (eine README mit Inhalt, ein
+Changelog, Aufgabenlisten, Notizen, eine
+Instruktionsdatei für den Agenten): dann ist es eine
+Migration. Fehlt sie, ist es ein neues Projekt, auch
+wenn schon Dateien im Ordner liegen; die bleiben
+liegen, und bei Namensgleichheit mit einer
+Starter-Datei stellt der Agent die Kollisionsfrage.
+Erkennt der Agent den anderen Fall, sagt er es dir.
+
+- **Neues Projekt** — im leeren oder fast leeren
+  Projektordner. Der Agent bindet den Starter ein,
+  kopiert Regelwerk und vorbereitetes `wiki/` ins
+  Projekt, committet den Startstand, stellt dir einen
+  gesammelten Fragen-Block (Rolle des Repos, ein Repo
+  oder zwei, Kürzel, Commit-Sprache, erste Marke, …),
+  setzt die Antworten um und meldet „Bereit für den
+  ersten Auftrag.“ Liegen schon Dateien im Ordner,
+  deren Namen mit Dateien des Starters kollidieren,
+  fragt er je Datei, was damit geschehen soll — nichts
+  wird überschrieben. Der ganze Ablauf:
   [Projektstart](Projektstart.md).
 - **Bestehendes Projekt migrieren** — im Ordner eines
   Projekts, das sein Wissen bisher in verstreuten
@@ -242,7 +258,10 @@ angeboten.
   das schon mit diesem Starter oder mit der
   allgemeinen Vorlage arbeitet, mit oder ohne Prozess.
   Der Agent erkennt den Ausgangsstand am
-  Herkunfts-Vermerk deines Projekts, sichert, ersetzt
+  Herkunfts-Vermerk deines Projekts (dem Abschnitt
+  „Herkunft“ in `wiki/Aktivierter-Prozess.md`; ein
+  Projekt aus Stand 1.0 hat noch keinen, dann fragt
+  er dich nach Vorlage und Version), sichert, ersetzt
   den Inhalt von `_template/` durch den neuen Stand
   **derselben Vorlage**, aus der dein Projekt stammt
   (ein Projekt aus der allgemeinen Vorlage bekommt
@@ -289,24 +308,33 @@ nicht mehr geändert, sondern durch eine neue
 Entscheidung abgelöst — so bleibt datierbar, was wann
 galt. Mehr in [Wiki und Register](Wiki-und-Register.md).
 
-**Stände, Freigaben, Marken.** Wenn ein Ergebnis
-verlässlich sein soll, wird aus dem lebenden Wissen ein
-**Stand** in `output/` gebildet (eingefroren,
-versioniert) und **für einen Zweck freigegeben** —
-etwa „freigegeben für das Zerlegen in Bausteine“. Vor
-der Freigabe eines **Pflicht-Stands** — eines Stands,
-den der Prozess für eine seiner Phasen verlangt —
-prüft ein Prüfer, möglichst ein zweites KI-Modell,
-den Stand gegen seine Vorgänger (Kettenprüfung). Die
-Zwischenziele heißen **Zielmarken**: bei einem
-Softwaresystem ein Release („1.0“, „1.1“); eine Marke
-ist ein Ergebnis, das nach außen geht, kein Datum.
-Jeder Stand gehört zu genau einer Marke; das Produkt
-einer Marke — der Code — wird mit einem git-Tag
-markiert, und der Abschluss einer Marke wird mit einem
-Abschluss-Stand festgehalten. Phasen, die du für eine
-Marke nicht brauchst, lässt du per Verzicht aus. Mehr
-in
+**Stände, Freigaben, Marken.** Die Zwischenziele
+eines Projekts heißen **Zielmarken** (kurz: Marken):
+bei einem Softwaresystem ein Release („1.0“, „1.1“);
+eine Marke ist ein Ergebnis, das nach außen geht,
+kein Datum. Wenn ein Ergebnis verlässlich sein soll,
+wird aus dem lebenden Wissen ein **Stand** in
+`output/` gebildet (eingefroren, versioniert, zu genau
+einer Marke gehörend) und **für einen Zweck
+freigegeben** — etwa „freigegeben für das Zerlegen in
+Bausteine“. Ein Beispiel: Für den Release „1.0“
+entsteht aus dem Register Anforderungen ein
+Anforderungen-Stand; ein Prüfer, möglichst ein
+zweites KI-Modell, prüft ihn gegen die freigegebenen
+Vorgänger derselben Marke (Kettenprüfung), dann gibst
+du ihn frei — „für P4 Beschreiben der Funktion“ —,
+und die nächste Phase darf darauf aufbauen. Solche
+Pflicht-Stände — Stände, die der Prozess für eine
+seiner Phasen verlangt — bilden je Marke eine Kette;
+das Produkt der Marke, der Code, wird mit einem
+git-Tag markiert, und ein Abschluss-Stand hält fest,
+was zur Marke gehört.
+Phasen, die du für eine Marke nicht brauchst, lässt
+du per Verzicht aus. Das Wort „Freigabe“ meint daneben
+auch die gebuchte Erlaubnis für einen zusätzlichen
+Projektordner (eine Ordner-Freigabe). Mehr — auch zu
+Zwischenmarken und Nachträgen, die du beim ersten
+Lesen überspringen darfst — in
 [Stände, Freigaben und Marken](Staende-Freigaben-Marken.md).
 
 **Referenzprozesse.** Ein Prozess bringt für eine
@@ -326,6 +354,11 @@ Regeln dafür in
 [Zusammenarbeit mehrerer Repos](Mehrere-Repos.md).
 
 ## Die Dokumente dieser Erklärung
+
+Für den Anfang genügen diese Einführung und das
+Dokument zu deinem Weg; die Dokumente zu Ständen und
+Marken und zum Upgrade sind dicht und für das
+Nachschlagen geschrieben.
 
 - [Projektstart](Projektstart.md) — was du vorher
   klärst (mit Entscheidungshilfe eingefrorene Kopie

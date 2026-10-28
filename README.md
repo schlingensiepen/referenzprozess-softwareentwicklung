@@ -32,15 +32,18 @@ der Repo-URL, bevor lokal etwas liegt (Raw-Pfad
 auch für jede Datei, auf die eine Anleitung verweist),
 legt dir seine Fragen gesammelt vor — bei einem neuen
 Projekt und bei der Migration zuerst, wie der Starter
-als `_template/` eingebunden wird: **A** als
-eingefrorene Kopie oder **B** als verknüpfte Vorlage
-(git-Submodul) — und bietet jeden weiteren Schritt an;
-nichts läuft ungefragt, die Skripte in `setup/` werden
-nur angeboten.
+als `_template/` eingebunden wird: **B** als
+verknüpfte Vorlage (git-Submodul, empfohlen) oder
+**A** als eingefrorene Kopie — und bietet jeden
+weiteren Schritt an: Einbindung und die Skripte in
+`setup/` laufen nur nach deiner Zustimmung; Commits
+kündigt er an, statt zu fragen.
 
 ### Neues Projekt
 
-Im leeren Projektordner; Anleitung `INIT.md`:
+Im leeren oder fast leeren Projektordner — ohne
+gewachsene Wissensbasis, die gehört in den
+Migrations-Weg; Anleitung `INIT.md`:
 
 ```text
 Richte dieses Verzeichnis als neues Projekt nach der Anleitung unter https://github.com/schlingensiepen/referenzprozess-softwareentwicklung ein.
@@ -49,7 +52,9 @@ Richte dieses Verzeichnis als neues Projekt nach der Anleitung unter https://git
 ### Bestehendes Projekt migrieren
 
 Im Ordner eines Projekts, das bisher ohne diese
-Vorlage arbeitet; Anleitung `migration/MIGRATION.md`.
+Vorlage arbeitet und sein Wissen in verstreuten
+Dateien sammelt (README, Changelog, Aufgabenlisten,
+Notizen); Anleitung `migration/MIGRATION.md`.
 Der Weg ist für Softwareprojekte gedacht; findet der
 Agent keinen Software-Bezug, fragt er dich, ob das der
 richtige Prozess ist oder ob du einen anderen nennst:
@@ -61,12 +66,17 @@ Migriere das Projekt in diesem Verzeichnis nach der Anleitung unter https://gith
 ### Template aktualisieren
 
 Im Ordner eines Projekts, das schon mit dieser Vorlage
-oder mit der allgemeinen Vorlage arbeitet, mit oder
-ohne Prozess; Anleitung `upgrade/UPGRADE.md`. Der
-Agent ersetzt den Inhalt von `_template/` durch den
-neuen Stand **derselben Vorlage**, aus der das Projekt
-stammt (er liest sie aus dem Herkunfts-Vermerk des
-Projekts), das Projekt behält seinen Prozess:
+oder mit der allgemeinen Vorlage arbeitet, aus der
+dieser Starter abgeleitet ist — mit oder ohne Prozess
+(dem Vorgehens-Paket einer Projektart, hier dem für
+Softwareentwicklung); Anleitung `upgrade/UPGRADE.md`.
+Der Agent ersetzt den Inhalt von `_template/` durch
+den neuen Stand **derselben Vorlage**, aus der das
+Projekt stammt; welche das ist und welche Version das
+Projekt hat, liest er aus dem Herkunfts-Vermerk — dem
+Abschnitt „Herkunft“ in `wiki/Aktivierter-Prozess.md`
+(ein Projekt aus Stand 1.0 hat noch keinen, dann
+fragt er). Das Projekt behält seinen Prozess:
 
 ```text
 Hebe das Projekt in diesem Verzeichnis auf den aktuellen Stand nach der Anleitung unter https://github.com/schlingensiepen/referenzprozess-softwareentwicklung.

@@ -12,7 +12,7 @@
 > `Instruktionsdatei-Pflege.md`, `Marken-RP-1.md`,
 > `Vorgehen-SP-1.md` Abschnitt 4a,
 > `templates/Tools-Vorlage.md`). Stand der Quellen:
-> Starter-Commit `52d2218` (Version 2.0), erzeugt am
+> Starter-Commit `48e5365` (Version 2.0), erzeugt am
 > 2026-10-28. Dieses Dokument wird nicht von Hand
 > nachgepflegt, sondern zu festen Anlässen vollständig
 > neu aus den Quellen erzeugt; Änderungen gehören in
@@ -32,10 +32,16 @@ allgemeinen Vorlage arbeitet, das
 - einen **Projektordner**, leer oder fast leer, und
   `git`. Fehlt ein git-Repository, bietet der Agent
   `git init` an; lehnst du ab, ruhen alle Schritte mit
-  Commit-Anteil, bis ein Repo da ist. Ein Ordner mit
-  einer gewachsenen Wissensbasis ist kein Fall für
-  diesen Weg, sondern für die Migration — der Agent
-  sagt es dir;
+  Commit-Anteil, bis ein Repo da ist. „Fast leer“
+  heißt: ohne gewachsene Wissensbasis — ohne Dateien,
+  die Projektwissen tragen (eine README mit Inhalt,
+  ein Changelog, Aufgabenlisten, Notizen, eine
+  Instruktionsdatei); ein Ordner mit solchen Dateien
+  ist kein Fall für diesen Weg, sondern für die
+  Migration — der Agent sagt es dir. Andere
+  vorhandene Dateien bleiben liegen; kollidiert ein
+  Name mit einer Starter-Datei, stellt der Agent die
+  Kollisionsfrage (Schritt 1);
 - einen **KI-Agenten**, der im Projektordner arbeiten
   kann (Claude Code, Cursor, Windsurf oder ein anderer
   — der Starter ist KI-agnostisch) und Dateien von
@@ -273,7 +279,9 @@ Fassaden-Auswahl), fragt er nicht.
 5. **Commit-Sprache** — (A) Projektsprache für alles,
    (B) Sprache folgt Artefakt (Wiki und Dokumente in
    Projektsprache, Code englisch; Vorauswahl bei
-   Codeprojekten), (C) Englisch für alles. Die
+   Codeprojekten), (C) Englisch für alles; die
+   Buchstaben haben mit der Einbindung A/B aus
+   Schritt 0 nichts zu tun. Die
    **Projektsprache** selbst — die Sprache deiner
    Dokumente — ist kein Punkt des Fragen-Blocks: der
    Starter belegt sie in `Styleguide.md` mit Deutsch
@@ -288,7 +296,9 @@ Fassaden-Auswahl), fragt er nicht.
 7. **Rolle** des Projekts: Standalone, Koordinator oder
    Komponente (in der Frage: „Komponent“); entfällt mit
    Startprompt. Bei „Koordinator“ kündigt der Agent an,
-   dass er den Contract-Index aktiviert.
+   dass er den Contract-Index aktiviert — das
+   Verzeichnis der zwischen den Komponenten
+   vereinbarten Schnittstellen.
 8. **Mission und Auftrag** des Projekts — speist das
    Mission Statement und `wiki/Facts.md`.
 9. **Bezeichnung der ersten Marke** — Vorschlag ist

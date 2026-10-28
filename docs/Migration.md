@@ -14,7 +14,7 @@
 > `Standarddateien-Katalog.md`) und
 > `../referenzprozesse/SP-1-Standardprozess/Steckbrief.md`
 > (mitgebrachte Ordner). Stand der Quellen:
-> Starter-Commit `52d2218` (Version 2.0), erzeugt am
+> Starter-Commit `48e5365` (Version 2.0), erzeugt am
 > 2026-10-28. Dieses Dokument wird nicht von Hand
 > nachgepflegt, sondern zu festen Anlässen vollständig
 > neu aus den Quellen erzeugt; Änderungen gehören in
@@ -30,7 +30,10 @@ Changelog, Aufgabenlisten, Architektur-Notizen, eine
 Instruktionsdatei für den Agenten — und jetzt auf
 diesen Starter umsteigt. Der Agent überführt dieses
 Wissen ins `wiki/`, ohne eine vorgefundene Datei zu
-verändern.
+verändern. Diese Wissensbasis ist das Kriterium: Ein
+Ordner ohne solche Dateien ist ein neues Projekt
+([Projektstart](Projektstart.md)), auch wenn schon
+anderes darin liegt.
 
 Zwei Abgrenzungen prüft der Agent vorab:
 
@@ -148,9 +151,12 @@ Starter-Datei einspielen, dann buchen. Inhaltsgleiche
 Dateien sind keine Kollision. Für eine vorgefundene
 `TODO.md` empfiehlt der Agent (c): die Punkte werden
 einsortiert, die Datei bleibt als `TODO-vorgefunden.md`
-und wird von der neuen `TODO.md` verlinkt. Eine
-vorgefundene Instruktionsdatei ist ebenfalls ein
-Kollisionsfall — die neue verlinkt die umbenannte.
+und wird von der neuen `TODO.md` verlinkt. Hat die
+Starter-Datei keinen Platz für einen Link — ein
+umbenanntes `wiki/`, die Instruktionsdatei —, steht
+er in der Auffang-Datei `wiki/Migrations-Grundlagen.md`
+im Abschnitt Herkunft (Phase 3), bei der
+Instruktionsdatei zusätzlich in der neuen.
 
 ## Was du vorher wissen solltest
 
@@ -207,8 +213,8 @@ da“.
    oder eingebetteten fremden Repos committet er nicht,
    beschreibt die Lage und wartet.
 2. **Einbindung** nach deiner Antwort auf die
-   Einbindungs-Frage (**A** eingefrorene Kopie oder
-   **B** verknüpfte Vorlage) — nach dem
+   Einbindungs-Frage (**B** verknüpfte Vorlage,
+   empfohlen, oder **A** eingefrorene Kopie) — nach dem
    Sicherungs-Commit, vor dem Aufnahme-Commit.
 3. **Projektdateien anlegen (Angebot).** Der Agent
    bietet zwei Wege an und kopiert erst nach deiner

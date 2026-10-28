@@ -8,7 +8,7 @@
 > `Init-Choreografie.md`, `Zielmarken.md`,
 > `Kettenpruefung.md`, `Fassaden.md`, `Katalog.md`,
 > `Agent-Berichte.md`). Stand der Quellen:
-> Starter-Commit `52d2218` (Version 2.0), erzeugt am
+> Starter-Commit `48e5365` (Version 2.0), erzeugt am
 > 2026-10-28. Dieses Dokument wird nicht von Hand
 > nachgepflegt, sondern zu festen Anlässen vollständig
 > neu aus den Quellen erzeugt; Änderungen gehören in
@@ -21,7 +21,11 @@ Zurück zur [Einführung](Einfuehrung.md).
 Das Upgrade gilt für jedes Projekt, das aus einer
 Vorlage stammt — aus diesem Starter oder aus der
 allgemeinen Vorlage, mit oder ohne Prozess, mit
-**Herkunfts-Vermerk** oder (Stand 1.0) ohne. Ein
+**Herkunfts-Vermerk** (dem Abschnitt „Herkunft“ in
+`wiki/Aktivierter-Prozess.md`) oder (Stand 1.0) ohne.
+Ein Projekt aus Stand 1.0 erkennst du daran, dass
+`MasterPrompt.md` und `Wiki.md` im Projekt-Root neben
+einem `wiki/` mit `Aktivierter-Prozess.md` liegen. Ein
 Projekt ohne Herkunfts-Vermerk und ohne `_template/`,
 das sein Wissen in verstreuten Dateien sammelt, ist
 kein Upgrade-, sondern ein Migrations-Fall
@@ -33,11 +37,12 @@ waren 1.0 und 1.1 — zusammen „1.x“. Welche Version
 dein Projekt hat, steht in der Zeile `Template-Stand`
 seines Herkunfts-Vermerks; aus derselben Zeile im
 Starter liest der Agent die Zielversion. Ein Projekt
-aus Version 1.x erkennt der Agent an der älteren Form
-des Vermerks (unten, Schritt 0); die Stände 1.0 und
-1.1 tragen in der Quelle die Release-Tags
-`release-1.0` und `release-1.1`, an denen er die alte
-Version abliest.
+aus Version 1.1 erkennt der Agent an der älteren Form
+des Vermerks, eines aus 1.0 daran, dass der Vermerk
+fehlt (unten, Schritt 0); die Stände 1.0 und 1.1
+tragen in der Quelle die Release-Tags `release-1.0`
+und `release-1.1`, an denen er die alte Version
+abliest.
 
 Zwei Dinge stehen fest, bevor etwas geschieht:
 
@@ -299,7 +304,7 @@ führende Ort, das Skript ihre Implementierung.
 | Neue Dateien | jede Datei des neuen Stands, die im Projekt fehlt (Root-Regelwerk, `wiki/` samt Katalog-Einträgen, Mechanik-Knoten, Fassaden, Vorlagen; eine `.gitignore` nur, falls keine da ist), wird angelegt und gesammelt gemeldet — Fassaden, die der aktive Prozess voraussetzt, aktiv, optionale deaktiviert mit Hinweis an dich, abgelöste nur als Hintergrund; eine bestehende Datei wird nie überschrieben |
 | Formalien | Feld-Umbenennungen im Kopf der Knoten, ein abgeschaffter Status-Wert wird umgestellt, Rollen-Knoten bekommen ihre Rollen-Art, der Nachfolger einer Ablösung bekommt den Rückverweis (Einzelheiten unten, „Der Sprung von 1.x auf 2.0“) |
 | Herkunft | die Zeile `Template-Stand: 2.0 seit <Tag des Upgrades>` neu, darunter `Vorher: <alte Version> (bis <Tag des Upgrades>)`; die 1.x-Form wird zur 2.0-Form (Schritt 7 füllt die übrigen Zeilen) |
-| Trefferliste | alles, was der Agent danach kontext-bewusst nachzieht (Schritt 6): Wikilinks auf umbenannte Dateien, alte Kennungen, Pflegezeilen, Marken-Zeiger, Altknoten, alte Ablöse-Vermerke; dazu die Liste der bestehenden Dateien mit Unterschieden, eingeteilt wie in Schritt 5 |
+| Trefferliste | alles, was der Agent danach kontext-bewusst nachzieht (Schritt 6): Wikilinks auf umbenannte Dateien, alte Kennungen, Pflegezeilen, Marken-Zeiger, Altknoten, Contract-Einträge alter Form, alte Ablöse-Vermerke; dazu die Liste der bestehenden Dateien mit Unterschieden, eingeteilt wie in Schritt 5 |
 | Lint | als Trefferliste; maßgeblich ist der Durchgang in Schritt 8 |
 
 Danach Commit „Upgrade: Mechanik“.
