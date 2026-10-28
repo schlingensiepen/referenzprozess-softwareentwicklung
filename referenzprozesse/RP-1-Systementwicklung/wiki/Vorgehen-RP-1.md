@@ -88,9 +88,13 @@ Qualifizierer in Verweisen über Repo-Grenzen
 
 Nach der Freigabe der Tabelle und des Übergabe-Stands
 an die Komponente erzeugt der Koordinator ihren
-**Startprompt**: den Einzeiler des Starters mit den
-Angaben der Tabelle und dem Verweis auf den
-freigegebenen Übergabe-Stand. Woher der Einzeiler
+**Startprompt**: den Einstieg des Koordinators (den
+Start-Satz seiner eigenen Vorlage, mit dem Satz, dass
+es andere Referenzprozesse gibt und der Agent im
+Zweifel den Anwender fragt) mit den Angaben der
+Tabelle und dem Verweis auf den freigegebenen
+Übergabe-Stand; den Referenzprozess der Komponente
+gibt der Startprompt nicht vor. Woher der Einstieg
 kommt, welche Angaben der Startprompt im Einzelnen
 trägt (auch: keine CON-IDs) und wie die Komponente
 ihn im Init liest: [[Init-Choreografie]] §Init mit

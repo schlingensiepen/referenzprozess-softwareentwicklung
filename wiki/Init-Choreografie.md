@@ -71,11 +71,21 @@ Agent vergleicht die neue Template-Quelle unter
 Anwender-Projekt und legt Übernahmen als Vorschlag
 vor. Ein Update ändert die lebenden Dokumente nie
 automatisch; die Übernahme ist immer ein sichtbarer,
-geprüfter Schritt. Ein Update eines bestehenden
+geprüfter Schritt. Dateien, die der neue Stand
+enthält und die im Projekt fehlen (neue Regel-Knoten,
+Fassaden, Kataloge, Vorlagen), sind keine Übernahmen:
+das Update legt sie ohne Rückfrage an und meldet sie
+dem Anwender gesammelt — Fassaden, die der aktive
+Prozess voraussetzt, aktiv, optionale deaktiviert
+(`active: false`) mit Hinweis, dass der Anwender sie
+aktivieren kann; eine bestehende Datei überschreibt
+es nie. Ein Update eines bestehenden
 Projekts läuft nach der Upgrade-Anleitung des
 Starters (`README.md` §Template aktualisieren); die
 Mechanik dieses Abschnitts — Austausch bzw.
-Submodul-Update, Delta-Nachzug, neuer
+Submodul-Update gegen den neuen Stand derselben
+Vorlage, aus der das Projekt stammt (Zeile `Quelle`
+unten), Delta-Nachzug, neue Dateien, neuer
 Herkunfts-Vermerk — ist das, was sie ausführt.
 
 **Herkunfts-Vermerk in [[Aktivierter-Prozess]]**
@@ -114,6 +124,22 @@ Lint liest daraus den Stichtag und die Übernahme-Art:
   Stichtag wandert mit. `Quelle` nennt, woher der
   Stand kommt (Klon und Commit oder Tag); der Lint
   liest sie nicht.
+- **Vorher** (nur nach einem Upgrade, nicht im
+  Code-Block oben, den der Init anlegt): Nach jedem
+  Upgrade auf einen neuen Template-Stand steht unter
+  `Template-Stand` zusätzlich je Sprung eine Zeile
+  `- **Vorher:** <alte Version> (bis JJJJ-MM-TT)` —
+  die alte Version der Vorlage und der Tag des
+  Upgrades; frühere `Vorher`-Zeilen bleiben stehen,
+  so bleibt die Versionsfolge des Projekts lesbar.
+  Direkt darunter steht als Vermerk die
+  Zuordnungstabelle alt → neu, die die
+  Upgrade-Anleitung des Sprungs vorgibt (beim Sprung
+  auf 2.0 die alten zu den neuen Phasennummern); das
+  Entscheidungs-Register bekommt dazu keinen Eintrag.
+  Beides schreibt das Upgrade; Init und Migration
+  schreiben keine `Vorher`-Zeile. Der Lint liest die
+  Zeile und den Vermerk nicht.
 - **Rolle** und **Übernahme-Art** kommen aus dem
   Startprompt (§Init mit Startprompt) oder der
   Rollen-Frage des Prozesses; wird ein Repo erst durch
@@ -444,7 +470,7 @@ Startprompt enthält:
 
 | Angabe | Was der Agent daraus ableitet |
 |---|---|
-| Starter-Einzeiler (Wortlaut und URL: Agenten-Einstieg des Starters, README, Weg „Als Agent“, Einzeiler für ein neues Projekt) | den Init-Weg „neu“ — Ablauf wie in diesem Knoten; den Prozess bringt der Starter vorbefüllt mit, das Prozess-Angebot entfällt |
+| Einstieg des Koordinators: der Start-Satz für ein neues Projekt aus der Vorlage, aus der der Koordinator selbst stammt (Zeile `Quelle` seines Herkunfts-Vermerks, §Phase A0; Wortlaut aus dem Agenten-Einstieg dieser Vorlage, README — aus einem Starter dessen Einzeiler für ein neues Projekt, aus der allgemeinen Vorlage deren Start-Satz), dazu ein Satz, dass es andere Referenzprozesse gibt und der Agent im Zweifel den Anwender fragt | den Init-Weg „neu“ mit der Vorlage des Koordinators — Ablauf wie in diesem Knoten; den Referenzprozess der Komponente gibt der Startprompt **nicht** vor: der Agent prägt den aus, der zum Auftrag der Komponente (Übergabe-Stand) passt — aus der allgemeinen Vorlage über das Prozess-Angebot (§Baustein Prozess-Angebot), aus einer Vorlage mit vorbefülltem Prozess nach deren Init-Anleitung —, und fragt den Anwender, welchen Referenzprozess er ausprägen soll, wenn er sich nicht sicher ist |
 | Rolle **Komponent** | die Entwicklungs-Projekt-Rolle ist vorab festgelegt; die Rollen-Frage entfällt (mit SP-1: `index.md` §5.2), Zeile `Rolle` im Herkunfts-Vermerk von [[Aktivierter-Prozess]] (§Phase A0) |
 | eigener Repo-Name, Pfad und Remote der Komponente (aus der Start-Tabelle des Koordinators, `Vorgehen.md` §3) | die eigene Zeile in §Komponenten der Architektur-Fassade mit Lage im eigenen Repo (das eigene Bauteil, [[Kettenpruefung]] §Freigabe-Ordnung des Koordinators); der eigene Repo-Name ist zugleich der Absender `von:` jeder Nachricht ([[Katalog-message]]) und der Qualifizierer, unter dem andere Repos auf diese Komponente verweisen |
 | Koordinator: Repo-Name und Pfad | der Repo-Name ist der Qualifizierer in Verweisen auf den Koordinator (`<koordinator>/FUNC-012`); Name und Pfad stehen als Lage des Koordinators in §Komponenten der Architektur-Fassade (mit SP-1: `Systemarchitektur.md`) |
@@ -457,7 +483,11 @@ Was der Startprompt vorgibt, legt der Agent im
 Aktion-Block als abgeleitet vor; die zugehörigen
 Fragen stellt er nicht. Nennt der Startprompt weitere
 Antworten (z.B. das Kürzel oder die Commit-Sprache), gilt
-dasselbe. Der
+dasselbe. Die Prozess-Frage gehört nicht dazu: Der
+Referenzprozess der Komponente ist nicht abgeleitet
+(Tabelle oben), auch wenn der Koordinator selbst
+einen bestimmten Prozess fährt — ein Vorhaben kann
+einen Partner mit anderem Prozess brauchen. Der
 Startprompt ist eine Einmal-Instanz in `output/` des
 Koordinators, kein Wiki-Knoten.
 

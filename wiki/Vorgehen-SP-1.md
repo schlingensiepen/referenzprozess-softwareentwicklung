@@ -77,7 +77,9 @@ vertretene Glieder (Tag-Freigabe: `Vorgehen.md` §4
 die ihrerseits den Vorgehensrahmen anwenden
 (`Vorgehen.md` §3, Rekursion in P6). Jede Komponente
 entsteht über denselben Init-Weg wie das Hauptprojekt
-— der Starter ist das Werkzeug der Rekursion; ihr
+— der Einstieg der Vorlage des Koordinators ist das
+Werkzeug der Rekursion; den Referenzprozess der
+Komponente gibt der Startprompt nicht vor; ihr
 Startprompt verweist auf den freigegebenen
 Übergabe-Stand an sie ([[Katalog-Uebergabe]]). Inhalt
 des Startprompts und Ablauf: [[Init-Choreografie]]

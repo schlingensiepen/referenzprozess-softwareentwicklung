@@ -346,11 +346,16 @@ entscheidet sich in P5 (Schnitt).
 
 **Komponenten-Repositories als Template-Instanzen.**
 Jede Komponente ist ein eigenes Template-Repo mit
-SP-1+RP-1 — volle Wiki-Struktur, Register, Fassaden,
-identische Regeln wie beim Koordinator, nur mit
-Komponent-Rolle (Contract-Index deaktiviert,
-`devstate_active.md` beschreibt nur die eigene
-Komponente). Wie ein Komponenten-Repo entsteht
+voller Wiki-Struktur, Registern, Fassaden und eigenem
+Referenzprozess; welchen Prozess eine Komponente
+ausprägt, legt der Startprompt nicht fest (im Zweifel
+fragt ihr Agent den Anwender: [[Init-Choreografie]]
+§Init mit Startprompt). Eine Software-Komponente
+arbeitet typisch mit SP-1+RP-1 und dann mit den
+Regeln des Koordinators, nur mit Komponent-Rolle
+(Contract-Index deaktiviert, `devstate_active.md`
+beschreibt nur die eigene Komponente). Wie ein
+Komponenten-Repo entsteht
 (Start-Tabelle in P6): [[Vorgehen-RP-1]] §2
 Anmerkung P6 — lesen vor dem Start einer Komponente.
 Was der **Startprompt** trägt und wie die Komponente
