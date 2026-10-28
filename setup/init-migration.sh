@@ -13,9 +13,14 @@
 # Skript überschreibt nie eine vorgefundene Datei; eine vorhandene
 # Datei, deren Inhalt mit der Starter-Datei (oder ihrer Variante)
 # identisch ist, ist keine Kollision und wird nur gezählt; jede
-# andere wird ausgelassen und gelistet — die Liste ist der Eingang
-# der Kollisionsfrage im Phase-1-Fragen-Block (je Datei umbenennen
-# und verlinken, integrieren oder beides), nichts wird still
+# andere wird ausgelassen und gelistet. Ein vorgefundener Ordner
+# wiki/, der nicht aus diesem Starter stammt (kein inhaltsgleiches
+# wiki/Init-Choreografie.md), ist EINE Kollision auf Ordner-Ebene:
+# nichts wird hineinkopiert, keine Variante dorthin getauscht. Die
+# Liste ist der Eingang der Kollisionsfrage im Phase-1-Fragen-Block
+# (je Datei oder Ordner umbenennen und verlinken, integrieren oder
+# beides); nach der Antwort benennt der Agent um und lässt das
+# Skript erneut laufen — es ergänzt nur Fehlendes. Nichts wird still
 # ausgelassen. Varianten werden nur gegen Dateien getauscht, die
 # dieser Lauf selbst kopiert hat; ein kollidierendes Varianten-Ziel
 # bleibt unangetastet. Das Skript braucht kein Temp-Verzeichnis und
@@ -46,6 +51,18 @@ if [ "$SRC" = "$DST" ]; then
     exit 1
 fi
 
+# Ordner-Kollision: liegt im Projekt schon ein wiki/, das nicht aus
+# diesem Starter stammt? Erkennungs-Datei ist wiki/Init-Choreografie.md
+# (muss vorhanden und inhaltsgleich sein, sonst ist der Ordner fremd).
+WIKI_MARKER=wiki/Init-Choreografie.md
+WIKI_FREMD=0
+if [ -e "$DST/wiki" ]; then
+    if [ ! -f "$DST/$WIKI_MARKER" ] \
+       || ! cmp -s -- "$SRC/$WIKI_MARKER" "$DST/$WIKI_MARKER"; then
+        WIKI_FREMD=1
+    fi
+fi
+
 # Varianten-Tabelle (MIGRATION.md Phase 0 „Danach eintauschen“):
 # gibt zum Ziel-Pfad den Pfad der Variante relativ zum Starter-Root
 # aus, sonst nichts.
@@ -73,13 +90,22 @@ variant_of() {
     done
     # referenzprozesse/, tools/ und upgrade/ werden NICHT kopiert —
     # sie bleiben in _template/ (Nur-Lese, beide Einbindungs-Modi).
-    ( cd "$SRC" && find wiki -type f | sort )
+    # wiki/ nur, wenn es nicht als fremder Ordner kollidiert.
+    if [ "$WIKI_FREMD" -eq 0 ]; then
+        ( cd "$SRC" && find wiki -type f | sort )
+    fi
 } | {
     COPIED=0
     SAME=0
     SKIPPED=0
     SWAPPED=0
     COLLREL=""
+
+    if [ "$WIKI_FREMD" -eq 1 ]; then
+        COLLREL="wiki/
+"
+        SKIPPED=1
+    fi
 
     while IFS= read -r rel; do
         if [ -e "$DST/$rel" ]; then
@@ -108,8 +134,12 @@ variant_of() {
         COPIED=$((COPIED + 1))
     fi
 
-    # war $1 eine Kollision (vorgefundene Datei mit anderem Inhalt)?
+    # war $1 eine Kollision (vorgefundene Datei mit anderem Inhalt
+    # oder Datei in einem fremden, kollidierenden wiki/)?
     collided() {
+        case $1 in
+            wiki/*) [ "$WIKI_FREMD" -eq 1 ] && return 0 ;;
+        esac
         printf '%s' "$COLLREL" | grep -Fxq -- "$1"
     }
 
@@ -137,11 +167,14 @@ variant_of() {
     echo "Starter-Ausstattung (Migration) kopiert: $COPIED Datei(en), $SWAPPED Variante(n) eingetauscht; schon vorhanden und inhaltsgleich: $SAME."
     if [ -n "$COLLREL" ]; then
         echo ""
-        echo "ACHTUNG — $SKIPPED Kollision(en): vorgefundene Dateien mit anderem Inhalt wurden NICHT überschrieben, die Starter-Datei (bzw. ihre Variante) wurde ausgelassen:"
+        echo "ACHTUNG — $SKIPPED Kollision(en): Vorgefundenes mit anderem Inhalt wurde NICHT überschrieben, die Starter-Datei (bzw. ihre Variante) oder der Starter-Ordner wurde ausgelassen:"
         printf '%s' "$COLLREL" | while IFS= read -r rel; do
             echo "  - $rel"
         done
-        echo "Diese Liste ist der Eingang der Kollisionsfrage im Phase-1-Fragen-Block von migration/MIGRATION.md (je Datei: umbenennen und verlinken, integrieren oder beides); erst nach der Antwort werden die ausgelassenen Starter-Dateien und Varianten eingespielt."
+        if [ "$WIKI_FREMD" -eq 1 ]; then
+            echo "  (wiki/ stammt nicht aus diesem Starter — kein inhaltsgleiches $WIKI_MARKER — und zählt als eine Kollision auf Ordner-Ebene; nichts wurde hineinkopiert, keine Variante dorthin getauscht.)"
+        fi
+        echo "Diese Liste ist der Eingang der Kollisionsfrage im Phase-1-Fragen-Block von migration/MIGRATION.md (je Datei oder Ordner: umbenennen und verlinken, integrieren oder beides). Erst nach der Antwort: Vorgefundenes umbenennen (Vorschlag <Name>-vorgefunden), dann dieses Skript erneut ausführen — es ergänzt nur Fehlendes und tauscht die Varianten ein."
     fi
     echo ""
     echo "Nächster Schritt: den Agenten '$SRC/migration/MIGRATION.md' abarbeiten lassen."

@@ -11,11 +11,16 @@
 # Skript implementiert sie. Kollisionen: das Skript überschreibt
 # nie eine vorhandene Projekt-Datei; eine vorhandene Datei, deren
 # Inhalt mit der Starter-Datei identisch ist, ist keine Kollision
-# und wird nur gezählt; jede andere wird ausgelassen und gelistet —
-# die Liste ist der Eingang der Kollisionsfrage im Fragen-Block
-# von INIT.md (je Datei umbenennen und verlinken, integrieren oder
-# beides), nichts wird still ausgelassen. Das Skript braucht kein
-# Temp-Verzeichnis und schreibt nur in den Projektordner.
+# und wird nur gezählt; jede andere wird ausgelassen und gelistet.
+# Ein vorgefundener Ordner wiki/, der nicht aus diesem Starter
+# stammt (kein inhaltsgleiches wiki/Init-Choreografie.md), ist EINE
+# Kollision auf Ordner-Ebene: nichts wird hineinkopiert. Die Liste
+# ist der Eingang der Kollisionsfrage im Fragen-Block von INIT.md
+# (je Datei oder Ordner umbenennen und verlinken, integrieren oder
+# beides); nach der Antwort benennt der Agent um und lässt das
+# Skript erneut laufen — es ergänzt nur Fehlendes. Nichts wird still
+# ausgelassen. Das Skript braucht kein Temp-Verzeichnis und schreibt
+# nur in den Projektordner.
 #
 # Copyright 2026 Jörn Schlingensiepen
 #
@@ -42,6 +47,18 @@ if [ "$SRC" = "$DST" ]; then
     exit 1
 fi
 
+# Ordner-Kollision: liegt im Projekt schon ein wiki/, das nicht aus
+# diesem Starter stammt? Erkennungs-Datei ist wiki/Init-Choreografie.md
+# (muss vorhanden und inhaltsgleich sein, sonst ist der Ordner fremd).
+WIKI_MARKER=wiki/Init-Choreografie.md
+WIKI_FREMD=0
+if [ -e "$DST/wiki" ]; then
+    if [ ! -f "$DST/$WIKI_MARKER" ] \
+       || ! cmp -s -- "$SRC/$WIKI_MARKER" "$DST/$WIKI_MARKER"; then
+        WIKI_FREMD=1
+    fi
+fi
+
 # Datei-Liste (Kopier-Liste INIT.md Schritt 1) erzeugen und in EINEM
 # Block verarbeiten — Zähler und Kollisions-Liste leben im selben
 # Subshell-Kontext, keine Temp-Dateien nötig.
@@ -53,12 +70,21 @@ fi
     done
     # referenzprozesse/, tools/ und upgrade/ werden NICHT kopiert —
     # sie bleiben in _template/ (Nur-Lese, beide Einbindungs-Modi).
-    ( cd "$SRC" && find wiki -type f | sort )
+    # wiki/ nur, wenn es nicht als fremder Ordner kollidiert.
+    if [ "$WIKI_FREMD" -eq 0 ]; then
+        ( cd "$SRC" && find wiki -type f | sort )
+    fi
 } | {
     COPIED=0
     SAME=0
     SKIPPED=0
     COLLREL=""
+
+    if [ "$WIKI_FREMD" -eq 1 ]; then
+        COLLREL="wiki/
+"
+        SKIPPED=1
+    fi
 
     while IFS= read -r rel; do
         if [ -e "$DST/$rel" ]; then
@@ -88,11 +114,14 @@ fi
     echo "Starter-Startausstattung (frisch) kopiert: $COPIED Datei(en); schon vorhanden und inhaltsgleich: $SAME."
     if [ -n "$COLLREL" ]; then
         echo ""
-        echo "ACHTUNG — $SKIPPED Kollision(en): vorhandene Dateien mit anderem Inhalt wurden NICHT überschrieben, die Starter-Datei wurde ausgelassen:"
+        echo "ACHTUNG — $SKIPPED Kollision(en): Vorgefundenes mit anderem Inhalt wurde NICHT überschrieben, die Starter-Datei bzw. der Starter-Ordner wurde ausgelassen:"
         printf '%s' "$COLLREL" | while IFS= read -r rel; do
             echo "  - $rel"
         done
-        echo "Diese Liste ist der Eingang der Kollisionsfrage im Fragen-Block von INIT.md (je Datei: umbenennen und verlinken, integrieren oder beides); erst nach der Antwort werden die ausgelassenen Starter-Dateien eingespielt."
+        if [ "$WIKI_FREMD" -eq 1 ]; then
+            echo "  (wiki/ stammt nicht aus diesem Starter — kein inhaltsgleiches $WIKI_MARKER — und zählt als eine Kollision auf Ordner-Ebene; nichts wurde hineinkopiert.)"
+        fi
+        echo "Diese Liste ist der Eingang der Kollisionsfrage im Fragen-Block von INIT.md (je Datei oder Ordner: umbenennen und verlinken, integrieren oder beides). Erst nach der Antwort: Vorgefundenes umbenennen (Vorschlag <Name>-vorgefunden), dann dieses Skript erneut ausführen — es ergänzt nur Fehlendes."
     fi
     echo ""
     echo "Nächster Schritt: den Agenten '$SRC/INIT.md' abarbeiten lassen."

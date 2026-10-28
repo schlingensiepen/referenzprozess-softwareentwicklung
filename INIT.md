@@ -233,13 +233,18 @@ Grundsätze:
 
 Das Skript überschreibt nichts, lässt die
 kollidierenden Starter-Dateien aus und listet sie;
-die Liste ist der Eingang der Kollisionsfrage im
-Fragen-Block (Schritt 3 Nr. 11): je Datei (a), (b)
-oder (c) mit deiner Empfehlung. Erst nach der Antwort
-benennst du um und spielst die ausgelassenen
-Starter-Dateien ein (Schritt 4). `.gitignore` ist
-kein Kollisionsfall — sie wird nur kopiert, wenn
-keine vorhanden ist. Ein Verzeichnis mit gewachsener
+ein vorgefundenes `wiki/`, das nicht aus diesem
+Starter stammt (kein inhaltsgleiches
+`wiki/Init-Choreografie.md`), ist **eine** Kollision
+auf Ordner-Ebene — nichts wird hineinkopiert. Die
+Liste ist der Eingang der Kollisionsfrage im
+Fragen-Block (Schritt 3 Nr. 11): je Datei oder Ordner
+(a), (b) oder (c) mit deiner Empfehlung. Erst nach der
+Antwort benennst du um (bestätigter Name) und spielst
+die ausgelassenen Starter-Dateien ein — Skript erneut
+ausführen (es ergänzt nur Fehlendes) oder von Hand
+(Schritt 4). `.gitignore` ist kein Kollisionsfall —
+sie wird nur kopiert, wenn keine vorhanden ist. Ein Verzeichnis mit gewachsener
 Wissensbasis ist kein Fall für diesen Weg, sondern
 für die Migration (`migration/MIGRATION.md`); sag es
 dem Anwender, wenn du so etwas vorfindest.

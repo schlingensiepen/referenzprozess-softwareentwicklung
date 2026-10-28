@@ -371,12 +371,19 @@ Historie sauber „vorher“ von „Starter da“.
    Handkopie überschreiben nichts, lassen die
    kollidierende Starter-Datei aus und listen sie —
    auch ein Varianten-Ziel, das kollidiert, wird nicht
-   eingetauscht. Die Liste ist der Eingang der
-   Kollisionsfrage im Fragen-Block (Phase 1 Nr. 8);
-   erst nach der Antwort benennst du um und spielst
-   die ausgelassenen Starter-Dateien samt Varianten
-   ein. `.gitignore` ist kein Kollisionsfall — sie
-   wird nur kopiert, wenn keine vorhanden ist.
+   eingetauscht. Ein vorgefundenes `wiki/`, das nicht
+   aus diesem Starter stammt (kein inhaltsgleiches
+   `wiki/Init-Choreografie.md`), ist **eine** Kollision
+   auf Ordner-Ebene: nichts wird hineinkopiert, keine
+   Variante dorthin getauscht. Die Liste ist der
+   Eingang der Kollisionsfrage im Fragen-Block (Phase 1
+   Nr. 8); erst nach der Antwort benennst du um
+   (bestätigter Name) und spielst die ausgelassenen
+   Starter-Dateien samt Varianten ein — Skript erneut
+   ausführen (es ergänzt nur Fehlendes und tauscht die
+   Varianten) oder von Hand. `.gitignore` ist kein
+   Kollisionsfall — sie wird nur kopiert, wenn keine
+   vorhanden ist.
 
    Danach der **Aufnahme-Commit** — umfasst
    Einbindung (bei Modus A die komplette Kopie unter
