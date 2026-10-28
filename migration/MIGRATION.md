@@ -469,15 +469,33 @@ und nichts, was schon vorfestgelegt ist (siehe
    zum Vorgefundenen — willst du mir einen anderen
    nennen?“ Keine Liste. Nennt der Anwender einen
    anderen Prozess, geht die Transformation in die
-   Struktur dieses Prozesses: Basis-Wiki und
-   Prozess-Skelette aus `_template/referenzprozesse/`
-   nach [[Init-Choreografie]] §Phase A0 und §Baustein
-   Prozess-Angebot (ein geplanter Prozess im
-   Basis-Only-Modus) ersetzen das kopierte
-   Software-`wiki/`; die Varianten und das Mapping
-   gelten sinngemäß mit den Fassaden des gewählten
-   Prozesses, die Auffangregel `Migrations-Grundlagen`
-   bleibt. Der Starter bleibt `_template/`.
+   Struktur dieses Prozesses; der Starter bleibt
+   `_template/`:
+   - Das kopierte Software-`wiki/` ersetzt du durch
+     das Basis-Wiki und die Skelette des gewählten
+     Prozesses aus `_template/referenzprozesse/` nach
+     [[Init-Choreografie]] §Phase A0 und §Baustein
+     Prozess-Angebot (ein geplanter Prozess:
+     Basis-Only-Modus).
+   - `Aktivierter-Prozess` und `Commit-Sprache`
+     entstehen neu aus dem Basis-Bootstrap
+     `InterneMechanik.md`; in den Herkunfts-Vermerk
+     übernimmst du `Template-Stand`, `Quelle` und
+     `Anbindungs-Modus` aus der Variante, `Prozess` ist
+     der gewählte, `Rolle` kommt aus Nr. 5; in
+     `Commit-Sprache` trägst du den Vorschlag aus Nr. 4
+     ein.
+   - Von den übrigen Varianten gilt der jeweilige
+     Unterschied sinngemäß für ihr Pendant im neuen
+     `wiki/`: `devstate_active.md`, `Zielmarken`
+     (Übernahme-Marke), `WorkspaceManager-Kontrakt`
+     (du übernimmst selbst), `InterneMechanik` (Verweis
+     auf diese Anleitung).
+   - Im Mapping (Phase 3) nimmt eine Zeile, deren Ziel
+     es im gewählten Prozess nicht gibt, die Fassade
+     dieses Prozesses mit demselben Zweck; fehlt eine
+     solche, greift die Auffangregel
+     `Migrations-Grundlagen`.
 2. **Wissensbasis-Dateien bestätigen:** Liste alle
    Dateien/Ordner auf, die du als bisherige
    Wissensträger identifizierst (lies dazu nur

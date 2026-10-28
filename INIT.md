@@ -465,8 +465,13 @@ Marke und sein Anlage-Datum ([[Zielmarken]] §Meta;
   der Init der allgemeinen Vorlage
   (`_template/MasterPrompt.md` §5.3); der Starter
   bleibt `_template/`, spätere Stände kommen über
-  seinen Upgrade-Weg. Die Punkte unten gelten dann
-  sinngemäß für den gewählten Prozess.
+  seinen Upgrade-Weg. Von den Punkten unten entfällt
+  dann, was RP-1 oder SP-1 voraussetzt (Rolle
+  Koordinator/Komponent, Contract-Index); Herkunft,
+  erste Marke, `Tools.md`, Instruktionsdatei und die
+  Buchungen in [[Commit-Sprache]] (entsteht aus dem
+  Basis-Bootstrap `InterneMechanik.md`) und
+  [[WorkspaceManager-Kontrakt]] (Basis-Wiki) bleiben.
 - **Erste Marke** anlegen — Bootstrap
   `_template/referenzprozesse/base/bootstrap/Zielmarken.md`
   abarbeiten: ein Eintrag im Marken-Dreiklang mit
