@@ -6,12 +6,24 @@
 > `../Wiki.md` und `../Vorgehen.md`, dem vorbereiteten
 > `../wiki/` (`Aktivierter-Prozess.md`, `Fassaden.md`)
 > und den Steckbriefen
-> `../referenzprozesse/*/Steckbrief.md`; erzeugt am
-> 2026-10-28 aus dem Starter in Version 2.0. Dieses
-> Dokument wird nicht von Hand nachgepflegt, sondern zu
-> festen Anlässen vollständig neu aus den Quellen
-> erzeugt. Änderungen gehören in die Quellen, nicht
-> hierher.
+> `../referenzprozesse/*/Steckbrief.md`. Stand der
+> Quellen: Starter-Commit `09dc8cb` (Version 2.0),
+> erzeugt am 2026-10-28. Dieses Dokument wird nicht von
+> Hand nachgepflegt, sondern zu festen Anlässen
+> vollständig neu aus den Quellen erzeugt; Änderungen
+> gehören in die Quellen.
+
+Diese Erklärung ist für dich geschrieben — einen
+Menschen, der ein Softwareprojekt zusammen mit einem
+KI-Agenten führen will und diesen Starter dafür
+nutzt. Sie setzt kein Vorwissen voraus. Willst du
+sofort loslegen, nimm den passenden Satz aus der
+`../README.md` und lies das Dokument zu deinem Weg
+([Projektstart](Projektstart.md),
+[Migration](Migration.md) oder [Upgrade](Upgrade.md));
+willst du zuerst verstehen, worauf du dich einlässt,
+lies hier weiter — am Ende steht die Liste aller
+Dokumente dieser Erklärung.
 
 ## Es gibt ein `wiki/` — und warum
 
@@ -88,6 +100,13 @@ Projektstart gibt es deshalb kein Prozess-Angebot;
 der Agent fragt nur nach, wenn der Software-Prozess
 nicht zum Vorhaben passt (unten, „Die drei Wege“).
 
+Der Starter trägt die **Versionsnummer 2.0** (die
+`../README.md` nennt sie). Diese Nummer ist der
+Template-Stand, den jedes Projekt aus dem Starter in
+seinem Herkunfts-Vermerk im Wiki führt; frühere Stände
+waren 1.0 und 1.1. Ein Projekt auf einem älteren Stand
+holt den neuen über den Weg „Upgrade“.
+
 Der Starter besteht aus:
 
 - einem **Regelwerk** für den Agenten:
@@ -100,7 +119,10 @@ Der Starter besteht aus:
 - dem **vorbereiteten `wiki/`** als Kopier-Quelle
   (oben);
 - **`referenzprozesse/`** — allen Prozess-Vorlagen als
-  Nur-Lese-Quelle, auch denen für andere Projektarten;
+  Nur-Lese-Quelle, auch denen für andere Projektarten
+  (der Software-Prozess liegt dort als
+  `RP-1-Systementwicklung/` auf
+  `SP-1-Standardprozess/`);
 - den drei **Anleitungen** `INIT.md`,
   `migration/MIGRATION.md` und `upgrade/UPGRADE.md`,
   die der Agent liest, nie kopiert;
@@ -119,6 +141,10 @@ Instruktionsdatei (z.B. `CLAUDE.md` oder
 lädt. Beschriebene Abläufe (Unteragenten starten,
 Dateien konvertieren, git bedienen) setzt jeder Agent
 mit seinen eigenen Werkzeugen um und hält fest, wie.
+Der Starter ist deutschsprachig — Regelwerk,
+Anleitungen und die Fragen des Agenten; die Sprache
+deiner Projekt-Dokumente ist mit Deutsch vorbelegt und
+lässt sich im Projekt ändern.
 
 **Wo der Starter im Projekt liegt.** Der Starter wird
 nicht selbst zum Projekt; er wird in dein Projekt
@@ -168,14 +194,20 @@ Die Arbeitsfelder, die der Starter abdeckt:
 
 Du startest den Agenten **im Projektordner** und gibst
 ihm einen von drei Sätzen; die Sätze stehen zum
-Herauskopieren in der `../README.md`. Der Agent liest
-die zugehörige Anleitung direkt von der Repo-URL,
-bevor lokal etwas liegt, legt dir seine Fragen
-gesammelt vor — bei einem neuen Projekt und bei der
-Migration zuerst, wie der Starter als `_template/` in
-dein Projekt kommt — und bietet jeden weiteren Schritt
-an — nichts läuft ungefragt, die Skripte in `setup/`
-werden nur angeboten.
+Herauskopieren in der `../README.md` unter „Loslegen“
+— je ein Unterabschnitt „Neues Projekt“, „Bestehendes
+Projekt migrieren“ und „Template aktualisieren“;
+daneben nennt die README, was du brauchst (git, einen
+Agenten mit Lese-Zugriff auf die Repo-URL, Internet
+beim Einrichten). Der Agent liest die zugehörige
+Anleitung direkt von der Repo-URL, bevor lokal etwas
+liegt, legt dir seine Fragen gesammelt vor — bei einem
+neuen Projekt und bei der Migration zuerst, wie der
+Starter als `_template/` in dein Projekt kommt: **A**
+als eingefrorene Kopie oder **B** als verknüpfte
+Vorlage — und bietet jeden weiteren Schritt an — nichts
+läuft ungefragt, die Skripte in `setup/` werden nur
+angeboten.
 
 - **Neues Projekt** — im leeren Projektordner. Der
   Agent bindet den Starter ein, kopiert Regelwerk und
@@ -205,16 +237,17 @@ werden nur angeboten.
   Software-Prozess der richtige ist oder ob du einen
   anderen nennst. Der ganze Ablauf:
   [Migration](Migration.md).
-- **Projekt auf den aktuellen Stand heben** — im
-  Ordner eines Projekts, das schon mit diesem Starter
-  oder mit der allgemeinen Vorlage arbeitet, mit oder
-  ohne Prozess. Der Agent erkennt den Ausgangsstand
-  am Herkunfts-Vermerk deines Projekts, sichert,
-  ersetzt den Inhalt von `_template/` durch den neuen
-  Stand **derselben Vorlage**, aus der dein Projekt
-  stammt (ein Projekt aus der allgemeinen Vorlage
-  bekommt deren neuen Stand, nicht den Starter),
-  stellt Formalien um, legt neue Dateien an, legt dir
+- **Template aktualisieren** (das Projekt auf den
+  aktuellen Stand heben) — im Ordner eines Projekts,
+  das schon mit diesem Starter oder mit der
+  allgemeinen Vorlage arbeitet, mit oder ohne Prozess.
+  Der Agent erkennt den Ausgangsstand am
+  Herkunfts-Vermerk deines Projekts, sichert, ersetzt
+  den Inhalt von `_template/` durch den neuen Stand
+  **derselben Vorlage**, aus der dein Projekt stammt
+  (ein Projekt aus der allgemeinen Vorlage bekommt
+  deren neuen Stand, nicht den Starter), stellt
+  Formalien um, legt neue Dateien an, legt dir
   Übernahmen in die lebenden Dokumente als Vorschlag
   vor und lässt das Ergebnis absichern. Das Projekt
   behält seinen Prozess. Der ganze Ablauf:
@@ -298,8 +331,9 @@ Regeln dafür in
   klärst (mit Entscheidungshilfe eingefrorene Kopie
   oder verknüpfte Vorlage), die Einbindung, die Kopie
   der Projektdateien, der Fragen-Block Punkt für
-  Punkt, die Umsetzung, was danach im Projekt liegt,
-  der Sessionstart und wie Dokumente hereinkommen.
+  Punkt, die Umsetzung, der erste Auftrag, was danach
+  im Projekt liegt, der Sessionstart und wie Dokumente
+  hereinkommen.
 - [Migration](Migration.md) — wann ein Projekt ein
   Migrations-Fall ist, die Sicherung, die
   Kollisionsfrage, der Fragen-Block, die Übernahme
@@ -325,7 +359,8 @@ Regeln dafür in
   — die Phasen des Software-Prozesses, was ein Stand
   ist, die Freigabe-Formel, Kettenprüfung und Tag der
   Implementierung, Zielmarken, Zwischenmarken,
-  Marken-Wechsel und Abschluss-Stand, Scaffolding.
+  Marken-Wechsel und Abschluss-Stand, Nachträge,
+  Scaffolding.
 - [Referenzprozesse](Referenzprozesse.md) — Aufbau eines
   Prozess-Pakets, was SP-1 und RP-1 mitbringen, welche
   Prozesse es sonst gibt, die Prozess-Nachfrage, ein
