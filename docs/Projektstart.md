@@ -37,10 +37,10 @@ allgemeinen Vorlage arbeitet, das
   kann (Claude Code, Cursor, Windsurf oder ein anderer
   — der Starter ist KI-agnostisch) und Dateien von
   einer Repo-URL lesen darf;
-- **Internet-Zugriff auf GitHub** für die Einbindung —
-  für die verknüpfte Vorlage dauerhaft beim Klonen des
-  Projekts, für die eingefrorene Kopie nur einmal beim
-  Einrichten.
+- **Internet-Zugriff auf GitHub** beim Einrichten der
+  Einbindung; bei der verknüpften Vorlage auch, wenn
+  jemand dein Projekt später klont und die Vorlage
+  mitholt.
 
 Ob ein Konvertierungs-Werkzeug (WorkspaceManager)
 vorhanden ist, musst du vorher nicht klären — der Agent
