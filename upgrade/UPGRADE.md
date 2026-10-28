@@ -162,13 +162,16 @@ Vorschlag für den Weg (Skript oder von Hand).
   `release-1.1`; `git ls-remote --tags <Quelle>` bzw.
   `git -C _template tag --points-at <Pin>`), ist das
   die alte Version; in Modus B liest das Skript sie so
-  selbst. Sonst fragst du den Anwender, mit welchem
-  Stand das Projekt angelegt wurde (Anhaltspunkt: Diff
-  der Regelwerks-Dateien gegen die Stände der
-  Vorlage), und gibst seine Angabe dem Skript mit
-  `--vorher`; weiß er es nicht genau, gilt seine
-  Angabe (etwa `1.x`) — das Skript schreibt keine
-  geratene Version. Nennt `Template-Stand` die
+  selbst, in Modus A gibst du die abgelesene Version
+  dem Skript mit `--vorher` (dort liest es nur die
+  Zeile `Template-Stand`). Sonst fragst du den
+  Anwender, mit welchem Stand das Projekt angelegt
+  wurde (Anhaltspunkt: Diff der Regelwerks-Dateien
+  gegen die Stände der Vorlage), und gibst seine
+  Angabe dem Skript ebenso mit `--vorher`; weiß er es
+  nicht genau, gilt seine Angabe (etwa `1.x`) — das
+  Skript schreibt keine geratene Version. Nennt
+  `Template-Stand` die
   Zielversion schon, ist es kein Sprung — ohne Zeile
   `Vorher` trägt das Projekt den Stand seit seiner
   Anlage, mit `Vorher` ist der Sprung vollzogen —:
@@ -260,8 +263,10 @@ aus `_template/` und die Anleitung aus
 Die folgenden Schritte sind reine Mechanik — Inhalte
 ändern sie nicht. Für ein Projekt aus diesem Starter
 führt sie `sh _template/setup/upgrade.sh` aus (mit
-`--vorher <alte Version>`, wenn Schritt 0 sie erfragt
-hat) — aus dem Projektordner, nach dem Tausch und
+`--vorher <alte Version>`, wenn Schritt 0 sie
+ermittelt hat — abgelesen oder erfragt; ohne die
+Angabe hält das Skript bei einem 1.x-Stand in Modus A
+an) — aus dem Projektordner, nach dem Tausch und
 seinem Commit (Schritt 2); `--nur-pruefen`
 zeigt vorher, was es täte, auch vor der Sicherung —
 vor dem Tausch aus einem Klon des Starters außerhalb
@@ -323,7 +328,11 @@ Vorlage, die Einträge aus dem Projekt; Trennpunkt ist
 die Überschrift des Eintrags-Abschnitts am
 Zeilenanfang (in [[Zielmarken]] `## Marken`), nicht
 ihre erste Erwähnung — `## Meta` nennt sie schon im
-Text. Neue Dateien
+Text. Nennt die Gliederung des neuen Kopfs einen
+Eintrags-Abschnitt, den das Projekt noch nicht hat
+(SP-1 2.0: `## Fehlerbehebungen` in [[Anforderungen]]),
+legst du ihn leer an — er ist Regelwerks-Text, kein
+Projekt-Teil (G2). Neue Dateien
 sind keine Übernahmen (Schritt 3). Regel für die
 Vorlage: Gleicht die lebende Kopie dem alten Stand der
 Vorlage (Modus A: `_template/` im Sicherungs-Commit;
