@@ -8,22 +8,24 @@ Creative Commons Attribution 4.0 International License
 (CC BY 4.0). Attribution: Jörn Schlingensiepen,
 https://github.com/schlingensiepen/referenzprozess-softwareentwicklung
 
-EXCEPTION — source code in setup/:
-The shell scripts in the setup/ directory are licensed
-under the Apache License, Version 2.0
-(http://www.apache.org/licenses/LICENSE-2.0). Each
-script carries the corresponding license header.
+EXCEPTION — source code in setup/ and tools/:
+The shell scripts in the setup/ and tools/ directories
+are licensed under the Apache License, Version 2.0
+(http://www.apache.org/licenses/LICENSE-2.0). The
+scripts in setup/ carry the corresponding license
+header; tools/lint.sh is covered by this notice.
 
 Der Inhalt dieses Repositories steht unter der Lizenz
 Creative Commons Namensnennung 4.0 International
 (CC BY 4.0). Namensnennung: Jörn Schlingensiepen,
 https://github.com/schlingensiepen/referenzprozess-softwareentwicklung
 
-AUSNAHME — Quelltext in setup/:
-Die Shell-Skripte im Ordner setup/ stehen unter der
-Apache License, Version 2.0
-(http://www.apache.org/licenses/LICENSE-2.0); jeder
-Skript-Kopf trägt den entsprechenden Lizenz-Vermerk.
+AUSNAHME — Quelltext in setup/ und tools/:
+Die Shell-Skripte in den Ordnern setup/ und tools/
+stehen unter der Apache License, Version 2.0
+(http://www.apache.org/licenses/LICENSE-2.0); die
+Skripte in setup/ tragen den Lizenz-Vermerk im
+Skript-Kopf, tools/lint.sh deckt dieser Hinweis.
 
 The full text of the CC BY 4.0 license follows.
 
