@@ -12,20 +12,25 @@ lesen** (Raw-Pfad
 `https://raw.githubusercontent.com/schlingensiepen/referenzprozess-softwareentwicklung/main/<pfad>`,
 auch für jede Datei, auf die es verweist; Wiki-Verweise
 `[[Name]]` meinen `wiki/Name.md`); sobald `_template/`
-den neuen Stand trägt (Schritt 2), liest du von dort.
+den neuen Stand trägt (Schritt 2), liest du von dort —
+bei einem Projekt aus der allgemeinen Vorlage aus dem
+Lese-Klon (Absatz „Projekt aus der allgemeinen
+Vorlage“ unten).
 
-Diese Anleitung gilt für jedes Projekt mit einem
-Herkunfts-Vermerk — aus diesem Starter oder aus der
-allgemeinen Vorlage, mit oder ohne Prozess. **Was in
+Diese Anleitung gilt für jedes Projekt, das aus einer
+Vorlage stammt — aus diesem Starter oder aus der
+allgemeinen Vorlage, mit oder ohne Prozess, mit
+Herkunfts-Vermerk oder (Stand 1.0) ohne. **Was in
 `_template/` landet, ist der neue Stand derselben
 Vorlage, aus der das Projekt stammt**; das Projekt
 behält seinen Prozess. Bei einem Projekt aus der
 allgemeinen Vorlage ist dieses Dokument nur Anleitung
 (das Skript in Schritt 3 gilt für Projekte aus diesem
-Starter), das Ziel bleibt die allgemeine Vorlage.
-Projekte ohne Software-Prozess gehen denselben Weg;
-Schritte, die P-Phasen oder RP-1 voraussetzen,
-entfallen dort. Hat das Projekt keinen
+Starter), das Ziel bleibt die allgemeine Vorlage; wo
+du dann liest und woher neue Dateien kommen, sagt der
+Absatz unten. Projekte ohne Software-Prozess gehen
+denselben Weg; Schritte, die P-Phasen oder RP-1
+voraussetzen, entfallen dort. Hat das Projekt keinen
 Herkunfts-Vermerk und kein `_template/` und sammelt es
 sein Wissen in verstreuten Dateien, ist es keine
 Upgrade-, sondern ein Migrations-Fall
@@ -43,11 +48,10 @@ steht, entscheiden sie:
   allem anderen, bleibt der alte Stand von `_template/`
   in der Git-Geschichte, überschreibt das Upgrade keine
   bestehende Datei des Projekts (Änderungen daran sind
-  Vorschläge, Schritt 5), bleiben Altbestände lesbar
-  (Bestandsschutz, die Überführung wird angeboten) und
-  bleiben historische Einträge, alte Ablöse-Vermerke
-  und alte Ideen-Einträge „Fassaden-Kandidat …,
-  vertagt“ unverändert stehen. Darum auch kein Upgrade
+  Vorschläge, Schritt 5) und bleiben Altbestände
+  lesbar — etwa historische Einträge und alte
+  Ablöse-Vermerke (Bestandsschutz; die Überführung
+  wird angeboten). Darum auch kein Upgrade
   (und kein Prozess-Upgrade), solange eine
   Zwischenmarke läuft: zwei Arbeitslinien
   auf einer Struktur, die sich unter beiden ändert —
@@ -88,13 +92,48 @@ Vorlage bleibt die Vorlage; neue Dateien ohne
 Rückfrage). Alles andere sind Beispiele unter den
 Grundsätzen.
 
-**Keine Ausführung ohne Zustimmung:** Tausch von
-`_template/` und Skript sind Angebote an den Anwender —
-du nennst, was du tun willst (bei Kommandos: das exakte
-Kommando), und handelst erst nach seiner Antwort.
-Ausgenommen sind die Commits, die du in einem Satz
-ankündigst und ausführst: der Sicherungs-Commit
-(Schritt 1) und die Commits je Schritt; für sie gelten
+**Projekt aus der allgemeinen Vorlage** — die Regel
+„dieselbe Vorlage bleibt die Vorlage“ in Orten:
+
+- **Anleitung und Sprung-Datei** (diese Datei und
+  `upgrade/1.x-nach-2.0.md`) liest du aus einem
+  vorübergehenden Klon des Starters außerhalb des
+  Projekts, nur zum Lesen — dem **Lese-Klon**
+  (`git clone --depth 1 <Repo-URL oben> <Ordner
+  außerhalb>`; nach dem Upgrade löschst du ihn). Denn
+  der neue Stand der allgemeinen Vorlage unter
+  `_template/` trägt weder `upgrade/` noch `setup/`
+  noch `INIT.md`. Wo diese Anleitung
+  `_template/upgrade/…` oder `_template/INIT.md`
+  nennt, liest du im Lese-Klon; das Skript entfällt,
+  du gehst den Weg von Hand.
+- **Neue Dateien** (Schritt 3 und 4) kommen aus dem
+  neuen `_template/`, zusammengeführt nach dem
+  Merge-Ablauf `Wiki.md` §11.3: die Basis aus
+  `referenzprozesse/base/wiki/`, dazu
+  `referenzprozesse/<Prozess>/wiki/` des aktiven
+  Prozesses (ohne Prozess nur die Basis); welche
+  Fassaden der Prozess voraussetzt, sagt sein
+  Steckbrief §Mitgebrachte Fassaden. Wo diese
+  Anleitung `_template/wiki/` nennt, sind das diese
+  Ordner.
+- **Ausgangsstand ohne Herkunfts-Vermerk** (Stand 1.0
+  kannte ihn nicht): Vorlage und Version erfragst du
+  (Grundsätze); Anhaltspunkt ist ein Diff der
+  Regelwerks-Dateien des Projekts gegen den passenden
+  Stand der Vorlage. Die Einbindungs-Frage (Schritt 0
+  und 2) nennt als Quelle die Vorlage aus
+  `## Herkunft` bzw. die vom Anwender genannte, nicht
+  die Repo-URL des Starters.
+
+**Zustimmung:** Die Übersicht in Schritt 0 mit deinem
+Vorschlag für den Weg ist die eine Frage vor der
+Arbeit; mit der Antwort des Anwenders führst du
+Tausch, Skript und Schritte aus — der Anwender stößt
+nur an. Das Skript bleibt ein Angebot (Schritt 0, zwei
+Wege). Jedes Kommando nennst du vorher exakt; Commits
+kündigst du in einem Satz an: der Sicherungs-Commit
+(Schritt 1) und die Commits je Schritt, für sie gelten
 die Schutzregeln aus Schritt 1.
 
 **Werkzeug-Adaption:** Subagenten, Reviews und Commits
@@ -120,33 +159,40 @@ Vorschlag für den Weg (Skript oder von Hand).
     [[Init-Choreografie]] §Phase A0).
   - **1.x-Form:** Feld „Template-Herkunft“ (Quelle und
     Stand) im Knoten, kein `## Herkunft`; Prozess aus
-    „Gewählter Prozess“, Rolle aus „RP-1-Rolle“.
+    „Gewählter Prozess“, Rolle aus „RP-1-Rolle“ —
+    fehlt die Zeile, fragst du.
+  - **Ohne Vermerk** (Stand 1.0): Vorlage und Version
+    erfragen (Absatz „Projekt aus der allgemeinen
+    Vorlage“).
 - **Anbindungs-Modus:** **B**, wenn `.gitmodules` einen
   Eintrag für `_template` trägt (`git submodule status
-  _template` zeigt den Pin; die Version aus `git -C
-  _template describe --tags --always`); **A**, wenn
-  `_template/` ein gewöhnlicher Ordner ohne eigenes
-  `.git` ist (Version aus der Zeile `Quelle` bzw. dem
-  Feld „Template-Herkunft“; fehlt sie, aus
-  `_template/README.md` oder dem Vergleich mit den
-  Release-Tags der Vorlage).
+  _template` zeigt den Pin); **A**, wenn `_template/`
+  ein gewöhnlicher Ordner ohne eigenes `.git` ist.
+- **Alte Version:** aus der Zeile `Template-Stand`
+  (2.0-Form) oder aus einem Release-Tag der Quelle
+  (Modus B: `git -C _template describe --tags
+  --always`). Ein 1.x-Stand nennt sie nicht — das Feld
+  „Template-Herkunft“ trägt nur einen Commit, Tags gibt
+  es dort nicht —, dann fragst du den Anwender, mit
+  welchem Stand das Projekt angelegt wurde (etwa
+  `1.1`; Anhaltspunkt: Diff der Regelwerks-Dateien
+  gegen die Stände der Vorlage), und gibst sie dem
+  Skript mit `--vorher`; das Skript schreibt keine
+  geratene Version.
 - **Vorlage:** aus der Zeile `Quelle` bzw. dem Feld
   „Template-Herkunft“, bei Modus B zusätzlich aus der
   Submodul-URL. Nennt sie diesen Starter
   (`referenzprozess-softwareentwicklung`), ist das
   Skript nutzbar; nennt sie die allgemeine Vorlage,
   gehst du den Weg von Hand mit deren neuem Stand.
-- **Fallback — Ausgangsstand erfragen:** Ist die
-  Version nicht ablesbar (ungefülltes Feld, kein
-  `_template/`), frage den Anwender nach dem Stand, mit
-  dem das Projekt angelegt wurde; Anhaltspunkt ist ein
-  Diff der Regelwerks-Dateien des Projekts gegen den
-  Tag `release-1.0` der Vorlage. **Fehlt `_template/`**
-  (ein 1.0-Projekt direkt aus der allgemeinen Vorlage),
-  fragst du nach Vorlage und Einbindung wie beim Init
-  (Einbindungs-Frage aus `INIT.md` Schritt 0, Modus A
-  oder B) und legst `_template/` in Schritt 2 an. Ist
-  die Herkunft auch dann nicht erkennbar, fragst du.
+- **Fehlt `_template/`** (ein 1.0-Projekt direkt aus
+  der allgemeinen Vorlage): du fragst nach Vorlage und
+  Einbindung wie beim Init (Einbindungs-Frage aus
+  `INIT.md` Schritt 0, Modus A oder B — mit der Quelle
+  aus dem Herkunfts-Vermerk bzw. der Antwort des
+  Anwenders statt der dortigen Repo-URL) und legst
+  `_template/` in Schritt 2 an. Ist die Herkunft auch
+  dann nicht erkennbar, fragst du.
 - **Laufende Marke und Zwischenmarke:** aus
   [[Zielmarken]] — welche Marke `in-progress` trägt und
   ob es eine Zwischenmarke ist (Grundsätze oben); hat
@@ -155,10 +201,11 @@ Vorschlag für den Weg (Skript oder von Hand).
 - **Angebot der zwei Wege** (Projekt aus diesem
   Starter): **(a)** das Skript `setup/upgrade.sh` für
   die Mechanik (empfohlen: deterministisch, ändert
-  Inhalte nicht, listet Treffer für dich) oder **(b)**
-  dieselben Schritte von Hand nach Schritt 3; (b) ist
-  zugleich der Fallback, wenn das Skript nicht lauffähig
-  ist. Der Anwender wählt.
+  Inhalte nicht, listet Treffer für dich; Aufruf nach
+  dem Tausch aus `_template/setup/`, Schritt 3) oder
+  **(b)** dieselben Schritte von Hand nach Schritt 3;
+  (b) ist zugleich der Fallback, wenn das Skript nicht
+  lauffähig ist. Der Anwender wählt.
 
 ## 1. Sicherung
 
@@ -169,7 +216,9 @@ Schutzregeln: Ist nichts zu committen, gilt der aktuelle
 `HEAD` als Sicherung (kein leerer Commit); ignorierte
 Dateien bleiben ignoriert (nie `git add -f`);
 offensichtlich sensible oder sehr große Dateien (> 50 MB)
-unter den ungetrackten lässt du aus und nennst sie;
+unter den ungetrackten lässt du aus und nennst sie —
+sie bleiben ungetrackt liegen, das Skript nennt sie
+und lässt sie unberührt;
 fehlt die git-Identität, fragst du danach; bei
 laufendem Merge oder Rebase, abweisendem Hook oder
 verlangter Signatur hältst du an und beschreibst die
@@ -195,34 +244,33 @@ nennst du vorher:
   dann `_template/` durch die Kopie ohne `.git` ersetzen.
   Die alte Kopie bleibt in der Git-Geschichte des
   Sicherungs-Commits — das Ur-Versions-Archiv geht nicht
-  verloren. Bei einem Projekt aus diesem Starter
-  übernimmt das Skript den Tausch (Schritt 3, Aufruf aus
-  dem Klon).
-- **Ohne `_template/`** (Fallback aus Schritt 0):
-  Einbindung nach der Antwort des Anwenders wie in
-  `INIT.md` Schritt 0, mit dem neuen Stand.
+  verloren.
+- **Ohne `_template/`** (Schritt 0): Einbindung nach
+  der Antwort des Anwenders wie in `INIT.md` Schritt 0,
+  mit dem neuen Stand und der Quelle aus Schritt 0.
 
 Danach ein eigener Commit „Vorlage auf Stand 2.0
 gesetzt“ (bei Modus A einschließlich der kompletten
-Kopie). Ab hier liest du Anleitung und Regelwerk aus
-`_template/`.
+Kopie). Ab hier liest du Regelwerk und neue Dateien
+aus `_template/` und die Anleitung aus
+`_template/upgrade/` (allgemeine Vorlage: Lese-Klon).
 
 ## 3. Mechanik: Skript oder von Hand
 
 Die folgenden Schritte sind reine Mechanik — Inhalte
 ändern sie nicht. Für ein Projekt aus diesem Starter
-führt sie `sh <neuer Stand>/setup/upgrade.sh --vorher
-<alte Version>` aus (aus dem Projektordner; `<neuer
-Stand>` ist der Klon aus Schritt 2 oder, wenn
-`_template/` den neuen Stand schon trägt,
-`_template`); `--nur-pruefen` zeigt vorher, was es
-täte. Von Hand gehst du dieselbe Liste durch; sie ist
-der führende Ort, das Skript ihre Implementierung.
+führt sie `sh _template/setup/upgrade.sh --vorher
+<alte Version>` aus — aus dem Projektordner, nach dem
+Tausch und seinem Commit (Schritt 2); `--nur-pruefen`
+zeigt vorher, was es täte, auch vor der Sicherung.
+Ein zweiter Lauf ändert nichts mehr. Von Hand gehst
+du dieselbe Liste durch; sie ist der führende Ort, das
+Skript ihre Implementierung.
 
 | Schritt | Was geschieht |
 |---|---|
-| Vorprüfung | Sicherungs-Commit vorhanden (`git status --porcelain` leer), kein laufender Merge; `_template/` und Modus erkannt; Vorlage ist dieser Starter |
-| Tausch | Modus B Submodul neu setzen, Modus A Kopie ersetzen (Schritt 2); nicht erreichbare Quelle → Abbruch mit Meldung |
+| Vorprüfung | Sicherungs-Commit vorhanden (keine Änderung an getrackten Dateien; ungetrackte Dateien, die Schritt 1 ausgelassen hat, bleiben unberührt und werden genannt), kein laufender Merge; `_template/` trägt den neuen Stand, Modus erkannt; Vorlage ist dieser Starter; alte Version bekannt (Schritt 0) |
+| Tausch | geschehen in Schritt 2 — das Skript stellt nur fest, dass `_template/` den neuen Stand trägt |
 | Umbenennungen | `wiki/Verwendungs-Rollen.md` → `wiki/Rollen.md`; `wiki/Knotentypen.md` → `wiki/Katalog.md` (Dateiwechsel; Inhalt kommt in Schritt 5 und 6); Dateinamen mit Umlaut oder ß → ae/oe/ue/ss (z.B. `Projekt-Praefixe.md`, `Geschaeftsbeziehungen.md`); per `git mv`, nie über eine vorhandene Datei |
 | Neue Dateien | jede Datei des neuen Stands, die im Projekt fehlt (Root-Regelwerk, `wiki/` samt Katalog-Einträgen, Mechanik-Knoten, Fassaden, Vorlagen), wird angelegt und gesammelt gemeldet — Fassaden, die der aktive Prozess voraussetzt, aktiv, optionale deaktiviert (`active: false`) mit Hinweis an den Anwender; eine bestehende Datei wird nie überschrieben |
 | Formalien | im Frontmatter `subtype:` → `requirement_type:`, `superseded-by:` → `superseded_by:`, Status `umgesetzt-wartet-auf-Prüfung` → `umgesetzt` mit Vermerk „Prüfung offen“, `rolle_art: verwendungsrolle` an `role`-Knoten (Details: `1.x-nach-2.0.md`) |
@@ -259,7 +307,12 @@ Vorschlag** vor — gesammelt, je Datei mit dem, was sich
 §Phase A0 „Delta-Nachzug“). Eine bestehende Datei
 ändert sich nie automatisch; projekt-eigene Einträge
 bleiben, Regelwerks-Text wird übernommen. Neue Dateien
-sind keine Übernahmen (Schritt 3). Dazu:
+sind keine Übernahmen (Schritt 3). Regel für die
+Vorlage: Gleicht die lebende Kopie dem alten Stand von
+`_template/` (im Sicherungs-Commit), hat das Projekt
+sie nie verändert — solche Dateien schlägst du als
+eine Gruppe zur Übernahme vor; nur Dateien mit
+projekt-eigenen Änderungen einzeln. Dazu:
 
 - **Instruktionsdatei** (`CLAUDE.md` o.ä.) nach
   MasterPrompt §8.3 / [[Instruktionsdatei-Pflege]]
@@ -311,7 +364,8 @@ Abschnitt `## Herkunft` von [[Aktivierter-Prozess]]
   Stands), `Anbindungs-Modus`, `Prozess`, `Rolle`,
   `Übernahme-Art` — aus Schritt 0 bzw. 5; bei der
   1.x-Form wird das Feld „Template-Herkunft“ zur Zeile
-  `Quelle`.
+  `Quelle`; ohne Vermerk (Stand 1.0) legst du den
+  Abschnitt mit den Antworten aus Schritt 0 an.
 
 Commit „Upgrade: Herkunft“.
 
@@ -331,9 +385,9 @@ Commit „Upgrade: Herkunft“.
    ausdrücklich als schwächere Absicherung benannt):
    > Prüfe das Upgrade im Projekt `<Projekt>` auf
    > Template-Stand 2.0: (1) Vollständigkeit — jede
-   > Position aus `_template/upgrade/UPGRADE.md`
+   > Position aus `<Anleitungs-Ort>/UPGRADE.md`
    > Schritt 3 bis 7 und aus
-   > `_template/upgrade/1.x-nach-2.0.md` umgesetzt oder
+   > `<Anleitungs-Ort>/1.x-nach-2.0.md` umgesetzt oder
    > als Angebot berichtet? (2) Treue — Inhalte
    > unverändert, nur Formalien und Kennungen
    > umgestellt, Altbestände lesbar? (3) Links —
@@ -345,6 +399,9 @@ Commit „Upgrade: Herkunft“.
    > Projekt-Root: keine FEHLER. Schreibe genau einen
    > Bericht mit Ampel (grün/gelb/rot) und nummerierten
    > Befunden samt Fundstelle. Kein Commit.
+   `<Anleitungs-Ort>` ist `_template/upgrade`, bei
+   einem Projekt aus der allgemeinen Vorlage der
+   Lese-Klon mit `/upgrade`.
    Jeden Bericht zuerst ablegen ([[Agent-Berichte]]),
    dann zusammenfassen. **Beide grün → weiter. Sonst:
    nacharbeiten, Commit, Kurz-Re-Check beider Prüfer —
@@ -381,6 +438,7 @@ Kette: fehlende Pflicht-Stände meldet die
 [[Kettenpruefung]] vor der nächsten Freigabe, du bietest
 sie an. Jedes neue Element trägt `zielmarke:` und sein
 Anlage-Datum; der Bestand bleibt ohne beides — nichts
-wird nachgetragen. Diese Anleitung liegt nur in
-`_template/upgrade/` und wird nicht kopiert. Ab hier
-gilt der normale Betrieb nach MasterPrompt.
+wird nachgetragen. Diese Anleitung liegt nur im
+Starter (`_template/upgrade/` bzw. Lese-Klon) und
+wird nicht kopiert. Ab hier gilt der normale Betrieb
+nach MasterPrompt.
