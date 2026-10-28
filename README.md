@@ -82,6 +82,12 @@ fragt er). Das Projekt behält seinen Prozess:
 Hebe das Projekt in diesem Verzeichnis auf den aktuellen Stand nach der Anleitung unter https://github.com/schlingensiepen/referenzprozess-softwareentwicklung.
 ```
 
+**Rückmeldung an die Vorlage:** Findet der Agent etwas,
+das die Vorlage selbst verbessern würde, hält er es im
+Projekt als Ideen-Eintrag fest. Gemeldet wird es als
+Issue im GitHub-Repo dieses Starters:
+https://github.com/schlingensiepen/referenzprozess-softwareentwicklung/issues
+
 ## Verstehen: die Erklärung für Menschen
 
 Was der Starter ist, warum ein Projekt damit ein
