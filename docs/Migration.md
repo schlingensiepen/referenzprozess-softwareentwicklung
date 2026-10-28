@@ -8,13 +8,17 @@
 > `wiki/WorkspaceManager-Kontrakt.md`,
 > `wiki/InterneMechanik.md`), `../INIT.md` (Schritt 0),
 > `../setup/init-migration.sh` (als Implementierung der
-> Kopier-Liste), `../README.md` und dem vorbereiteten
+> Kopier-Liste), `../README.md`, dem vorbereiteten
 > `../wiki/` (`Zielmarken.md`, `Entscheidungen.md`,
 > `Agent-Berichte.md`, `Glossar Review.md`,
-> `Standarddateien-Katalog.md`); erzeugt am 2026-10-28
-> aus dem Starter in Version 2.0. Dieses Dokument wird
-> nicht von Hand nachgepflegt, sondern zu festen
-> Anlässen neu aus den Quellen erzeugt.
+> `Standarddateien-Katalog.md`) und
+> `../referenzprozesse/SP-1-Standardprozess/Steckbrief.md`
+> (mitgebrachte Ordner). Stand der Quellen:
+> Starter-Commit `09dc8cb` (Version 2.0), erzeugt am
+> 2026-10-28. Dieses Dokument wird nicht von Hand
+> nachgepflegt, sondern zu festen Anlässen vollständig
+> neu aus den Quellen erzeugt; Änderungen gehören in
+> die Quellen.
 
 Zurück zur [Einführung](Einfuehrung.md).
 
@@ -122,9 +126,9 @@ darfst gesammelt antworten („alles wie empfohlen“,
 - **(b) komplett integrieren** — ihr Inhalt geht
   vollständig an seinen Ort im Wiki oder in die
   Starter-Datei; gelöscht wird nur auf deinen
-  ausdrücklichen Wunsch, sonst bleibt die Datei bis
-  dahin umbenannt liegen; der Agent empfiehlt nie von
-  sich aus das Löschen;
+  ausdrücklichen Wunsch — sagst du ihn nicht, fragt der
+  Agent nach und lässt die Datei bis dahin umbenannt
+  liegen; er empfiehlt nie von sich aus das Löschen;
 - **(c) integrieren und alte Fassung behalten** —
   Inhalt wie (b), die Datei zusätzlich wie (a).
 
@@ -196,8 +200,9 @@ da“.
    oder eingebetteten fremden Repos committet er nicht,
    beschreibt die Lage und wartet.
 2. **Einbindung** nach deiner Antwort auf die
-   Einbindungs-Frage — nach dem Sicherungs-Commit, vor
-   dem Aufnahme-Commit.
+   Einbindungs-Frage (**A** eingefrorene Kopie oder
+   **B** verknüpfte Vorlage) — nach dem
+   Sicherungs-Commit, vor dem Aufnahme-Commit.
 3. **Projektdateien anlegen (Angebot).** Der Agent
    bietet zwei Wege an und kopiert erst nach deiner
    Zustimmung: das Kopier-Skript
@@ -221,7 +226,12 @@ da“.
    hineinkopiert, keine Variante dorthin getauscht.
    Nach deiner Antwort im Fragen-Block benennt der Agent
    um und lässt das Skript erneut laufen oder kopiert
-   von Hand.
+   von Hand; der zweite Lauf ergänzt nur Fehlendes, und
+   Wiki-Dateien, die das Projekt inzwischen bearbeitet
+   hat (etwa den Herkunfts-Vermerk), meldet er getrennt
+   als „vom Projekt bearbeitet“ und lässt sie
+   unverändert — keine Kollision, keine Variante
+   dorthin.
 4. **Herkunft vermerken.** Nach der Kopie, vor dem
    Aufnahme-Commit, schreibt der Agent in den Abschnitt
    `## Herkunft` von `wiki/Aktivierter-Prozess.md`:
@@ -257,7 +267,10 @@ Starter vorfestlegt, fragt er nicht.
    geht die Transformation in die Struktur dieses
    Prozesses: Das kopierte Software-Wiki ersetzt der
    Agent durch das Basis-Wiki und das Paket des
-   gewählten Prozesses aus `_template/referenzprozesse/`;
+   gewählten Prozesses aus `_template/referenzprozesse/`
+   — bei einem nur geplanten Prozess allein durch das
+   Basis-Wiki (siehe
+   [Referenzprozesse](Referenzprozesse.md), „Geplant“);
    Herkunfts-Vermerk, Übernahme-Marke und die
    Unterschiede der Varianten gelten sinngemäß für
    ihre Pendants; im Mapping (Phase 3) nimmt eine
@@ -289,21 +302,37 @@ Starter vorfestlegt, fragt er nicht.
    reguläre Frage kommt in Phase 5 — ein Wechsel
    während der Migration vermischt Transformation und
    Übersetzung.
-5. **Rolle** des Projekts: Standalone, Koordinator
-   (mehrere Komponenten-Repos unter diesem Projekt)
-   oder Komponente. Bei Koordinator kündigt der Agent
-   an, dass er in Phase 5 den Contract-Index aktiviert.
+5. **Rolle** des Projekts: Standalone (ein einzelnes
+   Repo, der Standardfall), Koordinator (mehrere
+   Komponenten-Repos unter diesem Projekt) oder
+   Komponente (ein Teil-Projekt eines Koordinators);
+   was die Rollen bedeuten, steht in
+   [Zusammenarbeit mehrerer Repos](Mehrere-Repos.md).
+   Bei Koordinator kündigt der Agent an, dass er in
+   Phase 5 den Contract-Index aktiviert.
 6. **Übernahme-Marke.** Die Migration legt als erste
    Marke `Uebernahme-JJJJ-MM-TT` an (Datum ist der
    Übernahme-Tag; Benennung „Übernahme des
    vorgefundenen Stands“). Der Agent erfragt die
    Beschreibung: die vorgefundene Version, falls es
    eine gibt (etwa „ausgeliefert als 3.4“).
-7. **Bestands-Ordner.** Der Agent listet die
+7. **Ordner-Freigaben.** Der Agent listet die
    vorhandenen Root-Ordner (`src/`, `data/` …) und
    schlägt vor, sie in Phase 3 als Freigaben zu buchen
-   — je ein Eintrag im Entscheidungs-Register. `tools/`
-   ist Standard-Ordner und braucht keine Freigabe.
+   — je ein Eintrag im Entscheidungs-Register (eine
+   Ordner-Freigabe ist die gebuchte Erlaubnis, einen
+   zusätzlichen Ordner im Projekt zu führen). Ebenso
+   bucht er die Ordner, die der Software-Prozess
+   mitbringt (`src/`, `tests/`, `ci/`, `deploy/`,
+   `docs/`), wie es der Projektstart tut; ein
+   vorgefundener Ordner gleichen Namens ist Bestand
+   unter dieser Freigabe. Ein vorgefundenes `docs/`
+   ist ein Sonderfall: es ist handgeschrieben, die
+   Freigabe des Prozesses erklärt `docs/` aber zum
+   Ordner für Dokumente, die aus dem Wiki abgeleitet
+   werden — wie beides zusammengeht, fragt dich der
+   Agent. `tools/` ist Standard-Ordner und braucht
+   keine Freigabe.
 8. **Kollisionsfrage** aus Phase 0, falls es
    Kollisionen gab.
 
@@ -332,14 +361,16 @@ Etappe. Dabei gilt:
   Anlage-Datum — sie gelten ab ihrer Annahme für jede
   Marke; der Lint meldet das fehlende Feld als Hinweis,
   nachgetragen wird nichts. Was die Migration **neu**
-  anlegt (die Freigaben der Bestands-Ordner, die
-  Gesamt-Annahme, die Entscheidungen aus Phase 5),
-  trägt die Übernahme-Marke und sein Anlage-Datum.
+  anlegt (die Ordner-Freigaben, die Gesamt-Annahme,
+  die Entscheidungen aus Phase 5), trägt die
+  Übernahme-Marke und sein Anlage-Datum.
 - **Keine erfundenen Daten.** Niemals rekonstruierte
   Datumsangaben, Zahlen oder Fakten. Einschätzungen
   sind erlaubt — etwa die Status-Wahl nach dem, was
   Code oder Vorgefundenes belegt; im Zweifel „offen“
-  und der Fall in die Auffang-Datei.
+  (bei Entscheidungen „angenommen“, denn das
+  Entscheidungs-Register kennt kein „offen“) und der
+  Fall in die Auffang-Datei.
 - **Nichts löschen.** Die alten Wissensbasis-Dateien
   bleiben unverändert liegen, als eingefrorene
   Nachweis-Schicht. Aufräumen ist ein Vorhaben nach der
@@ -404,9 +435,10 @@ Aufgabenliste hatte: sie verlinkt jede vorgefundene
 Datei mit offenen Arbeiten, je mit einer kurzen Angabe,
 was die Datei enthält und wohin ihre Punkte eingeordnet
 wurden; eine umbenannte `TODO-vorgefunden.md` steht
-darunter. Dazu bucht er die Freigaben der
-Bestands-Ordner, ergänzt `Tools.md`, aktualisiert
-`devstate_active.md` und committet.
+darunter. Dazu bucht er die Ordner-Freigaben aus
+Phase 1 (Bestands-Ordner und mitgebrachte Ordner),
+ergänzt `Tools.md`, aktualisiert `devstate_active.md`
+und committet.
 
 ## Phase 4 — die Absicherung
 
@@ -484,7 +516,9 @@ gefragt. Entscheidungen daraus tragen die
    vorgefundene README bleibt; der Agent schlägt dir
    vor, dort die Einstiege zu ergänzen
    (Instruktionsdatei, `wiki/`, diese Erklärung unter
-   `_template/docs/Einfuehrung.md`).
+   `_template/docs/Einfuehrung.md` und der Weg zu
+   späteren Ständen unter `_template/README.md`,
+   Abschnitt „Template aktualisieren“).
 9. **Lint** ohne Fehler; Hinweise zu Bestand ohne Feld
    sind erwartet.
 10. Abschluss-Commit. `_template/` bleibt dauerhaft
