@@ -14,10 +14,12 @@
 > `Standarddateien-Katalog.md`) und
 > `../referenzprozesse/SP-1-Standardprozess/Steckbrief.md`
 > (mitgebrachte Ordner). Stand der Quellen:
-> Starter-Commit `959026c` (Version 2.0). Dieses
+> Starter-Commit `06af8e2` (Version 2.0). Dieses
 > Dokument ist aus den Quellen abgeleitet und wird bei
 > Änderungen der Quellen auf deren Stand nachgezogen
-> (zuletzt am 2026-10-28); eigene Inhalte bekommt es
+> (zuletzt am 2026-10-28, nachgezogen auf `06af8e2`:
+> Hinweis des Skripts nach einem Wiederholungslauf);
+> eigene Inhalte bekommt es
 > nicht — Änderungen gehören in die Quellen.
 
 Zurück zur [Einführung](Einfuehrung.md).
@@ -249,7 +251,9 @@ da“.
    hat (etwa den Herkunfts-Vermerk), meldet er getrennt
    als „vom Projekt bearbeitet“ und lässt sie
    unverändert — keine Kollision, keine Variante
-   dorthin.
+   dorthin; sein Hinweis am Ende führt dann nach Phase 1
+   „Antworten einarbeiten“, nicht noch einmal zu
+   Herkunfts-Vermerk und Aufnahme-Commit.
 4. **Herkunft vermerken.** Nach der Kopie, vor dem
    Aufnahme-Commit, schreibt der Agent in den Abschnitt
    `## Herkunft` von `wiki/Aktivierter-Prozess.md`:

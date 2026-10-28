@@ -8,11 +8,14 @@
 > `Init-Choreografie.md`, `Zielmarken.md`,
 > `Kettenpruefung.md`, `Fassaden.md`, `Katalog.md`,
 > `Agent-Berichte.md`). Stand der Quellen:
-> Starter-Commit `959026c` (Version 2.0). Dieses
+> Starter-Commit `06af8e2` (Version 2.0). Dieses
 > Dokument ist aus den Quellen abgeleitet und wird bei
 > Änderungen der Quellen auf deren Stand nachgezogen
-> (zuletzt am 2026-10-28); eigene Inhalte bekommt es
-> nicht — Änderungen gehören in die Quellen.
+> (zuletzt am 2026-10-28, nachgezogen auf `06af8e2`:
+> alte Version mit `--vorher`, Einträge ohne
+> Detail-Knoten, neue Eintrags-Abschnitte); eigene
+> Inhalte bekommt es nicht — Änderungen gehören in die
+> Quellen.
 
 Zurück zur [Einführung](Einfuehrung.md).
 
@@ -196,11 +199,14 @@ Vorschlag für den Weg (Skript oder von Hand).
   das Submodul **vor** dem Tausch gepinnt war: liegt er
   genau auf einem Release-Tag der Quelle, ist das die
   alte Version; bei der verknüpften Vorlage liest das
-  Skript sie so selbst. Sonst fragt der Agent dich, mit
+  Skript sie so selbst, bei der eingefrorenen Kopie
+  gibt der Agent die abgelesene Version dem Skript mit
+  (`--vorher`; dort liest es nur die Zeile
+  `Template-Stand`). Sonst fragt der Agent dich, mit
   welchem Stand das Projekt angelegt wurde (etwa
-  `1.1`), und gibt deine Angabe dem Skript mit; weißt du
-  es nicht genau, gilt deine Angabe (etwa `1.x`) — das
-  Skript schreibt keine geratene Version.
+  `1.1`), und gibt deine Angabe dem Skript ebenso mit;
+  weißt du es nicht genau, gilt deine Angabe (etwa
+  `1.x`) — das Skript schreibt keine geratene Version.
 - **Projekt schon auf dem aktuellen Stand:** Nennt
   `Template-Stand` schon die Zielversion, gibt es keinen
   Sprung — ohne Zeile `Vorher` trägt dein Projekt den
@@ -287,7 +293,9 @@ führt sie das Skript aus:
 `sh _template/setup/upgrade.sh` aus dem Projektordner,
 nach dem Tausch und seinem Commit (mit `--vorher
 <alte Version>`, wenn der Agent sie in Schritt 0
-erfragt hat). `--nur-pruefen` zeigt vorher, was es
+ermittelt hat — abgelesen oder erfragt; ohne die
+Angabe hält das Skript bei einem 1.x-Stand mit
+eingefrorener Kopie an). `--nur-pruefen` zeigt vorher, was es
 täte, auch vor der Sicherung — vor dem Tausch aus
 einem Klon des Starters außerhalb des Projekts, weil
 das alte `_template/` eines 1.x-Projekts das Skript
@@ -349,6 +357,11 @@ die Einträge aus dem Projekt; getrennt wird an der
 Überschrift des Eintrags-Abschnitts am Zeilenanfang
 (in den Zielmarken `## Marken`), nicht an ihrer ersten
 Erwähnung, denn `## Meta` nennt sie schon im Text.
+Nennt die Gliederung des neuen Kopfs einen
+Eintrags-Abschnitt, den dein Projekt noch nicht hat
+(in 2.0 `## Fehlerbehebungen` im Register
+Anforderungen), legt der Agent ihn leer an — er ist
+Regelwerks-Text, kein Projekt-Teil.
 Neue Dateien sind keine
 Übernahmen — die hat Schritt 3 angelegt.
 
@@ -447,7 +460,12 @@ unverändert):
   `[[REQ-001]]`), löst in 2.0 nur noch über einen
   Alias auf; der Agent schreibt ihn als Link auf die
   Datei mit der Kennung als Anzeigetext — ein Alias
-  auf die eigene Kennung ist kein Ausweg.
+  auf die eigene Kennung ist kein Ausweg. Hat der
+  Eintrag keinen Detail-Knoten, gibt es keine Datei:
+  Der Verweis wird zur Kennung ohne Link, wie die
+  Register Fehlermeldungen und Anforderungen es für
+  Verweise auf Einträge vorsehen — auch in
+  eingefrorenen Einträgen.
 - **Katalog statt Knotentypen:** Für jeden
   projekt-eigenen Typ entsteht ein eigener
   Katalog-Eintrag (Muster ist ein mitgelieferter
@@ -472,6 +490,12 @@ unverändert):
 - **Fehlerbericht wird Fehlermeldung:** jeder
   `BR`-Eintrag wird mit gleicher Nummer ein
   `BUG`-Eintrag mit Alias; Verweise wie bei `SPEC`.
+  Ohne Detail-Knoten gibt es keinen Ort für den Alias:
+  Die alte Kennung steht als Vermerk am Eintrag, jeder
+  Verweis auf ihn — auch ein eingefrorener — wird zur
+  Kennung ohne Link, und die Auslöser-Zeile eines
+  solchen Eintrags geht in den Klammer-Zusatz seiner
+  Status-Zeile.
 - **Pflegezeile** „Stand:“ der Fassaden wird
   „Bearbeitungsstand:“ — nur die Pflegezeile; „Stand“
   als eingefrorenes Dokument in `output/` bleibt.
