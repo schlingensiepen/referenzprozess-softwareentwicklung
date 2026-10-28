@@ -2,7 +2,7 @@
 
 > **Herkunft:** abgeleitet aus `../INIT.md`,
 > `../README.md`, `../MasterPrompt.md` (Abschnitte 1,
-> 2, 5.3, 8), `../setup/init-frisch.sh` (als
+> 2, 5.3 und 8), `../setup/init-frisch.sh` (als
 > Implementierung der Kopier-Liste) und dem
 > vorbereiteten `../wiki/` (`Aktivierter-Prozess.md`,
 > `Init-Choreografie.md`, `Fassaden.md`,
@@ -10,10 +10,13 @@
 > `WorkspaceManager-Kontrakt.md`,
 > `Two-Repo-Submodul-Muster.md`,
 > `Instruktionsdatei-Pflege.md`, `Marken-RP-1.md`,
-> `templates/Tools-Vorlage.md`); erzeugt am 2026-10-28
-> aus dem Starter in Version 2.0. Dieses Dokument wird
-> nicht von Hand nachgepflegt, sondern zu festen
-> Anlässen neu aus den Quellen erzeugt.
+> `Vorgehen-SP-1.md` Abschnitt 4a,
+> `templates/Tools-Vorlage.md`). Stand der Quellen:
+> Starter-Commit `09dc8cb` (Version 2.0), erzeugt am
+> 2026-10-28. Dieses Dokument wird nicht von Hand
+> nachgepflegt, sondern zu festen Anlässen vollständig
+> neu aus den Quellen erzeugt; Änderungen gehören in
+> die Quellen.
 
 Zurück zur [Einführung](Einfuehrung.md).
 
@@ -42,8 +45,11 @@ allgemeinen Vorlage arbeitet, das
   jemand dein Projekt später klont und die Vorlage
   mitholt.
 
-Ob ein Konvertierungs-Werkzeug (WorkspaceManager)
-vorhanden ist, musst du vorher nicht klären — der Agent
+Ein **WorkspaceManager** ist ein eigenständiges
+Programm, das Originaldokumente in Markdown umwandelt
+und Versand-Dateien erzeugt; es gehört nicht zum
+Starter, und der Starter legt kein bestimmtes fest. Ob
+du eines hast, musst du vorher nicht klären — der Agent
 fragt danach und übernimmt die Aufgabe sonst selbst.
 
 ## Was du vorher klärst
@@ -78,8 +84,11 @@ sich nur, worüber du nachdenken musst:
   Repo, der Standardfall), **Koordinator** (das Repo,
   das ein System in Komponenten zerlegt) oder
   **Komponente** (dann startest du mit dem Startprompt
-  deines Koordinators, und die Frage entfällt). Mehr
-  in [Zusammenarbeit mehrerer Repos](Mehrere-Repos.md).
+  deines Koordinators, und die Frage entfällt). In
+  seiner Frage schreibt der Agent „Komponent“ — das
+  Regelwerk benutzt diese Form; gemeint ist dasselbe.
+  Mehr in
+  [Zusammenarbeit mehrerer Repos](Mehrere-Repos.md).
 - **Ein Repo oder zwei?** Zwei nur, wenn Arbeit und
   vorzeigbares Produkt getrennte Historien bekommen
   sollen (etwa Produkt öffentlich, Arbeit privat).
@@ -103,20 +112,22 @@ Der Agent liest `INIT.md` direkt von der Repo-URL und
 stellt dir **als allererste Frage** die
 Einbindungs-Frage: Wie soll die Vorlage in dein Projekt
 kommen? Sie landet in beiden Fällen im Ordner
-`_template/` und wird dort nie verändert.
+`_template/` und wird dort nie verändert. Die Frage
+nennt die beiden Möglichkeiten mit den Buchstaben
+**B** und **A**:
 
-- **Verknüpfte Vorlage** — der Agent bindet den Starter
-  als git-Submodul unter `_template/` ein. Dein Projekt
-  pinnt damit einen bestimmten Stand und kann neuere
-  Stände später gezielt ziehen. Schlägt das Einbinden
-  fehl (kein Netz, URL nicht erreichbar), meldet er es,
-  und du entscheidest: erneut versuchen, andere URL,
-  eingefrorene Kopie oder Abbruch.
-- **Eingefrorene Kopie** — der Agent klont den Starter
-  nach `_template/`, liest den Stand ab (Commit und
-  Tag) und entfernt das git-Verzeichnis der Kopie. Die
-  Kopie ist gewöhnlicher Projekt-Inhalt: Nur-Lese, wird
-  mit dem Projekt committet und nie gelöscht — das
+- **B — verknüpfte Vorlage** — der Agent bindet den
+  Starter als git-Submodul unter `_template/` ein. Dein
+  Projekt pinnt damit einen bestimmten Stand und kann
+  neuere Stände später gezielt ziehen. Schlägt das
+  Einbinden fehl (kein Netz, URL nicht erreichbar),
+  meldet er es, und du entscheidest: erneut versuchen,
+  andere URL, eingefrorene Kopie oder Abbruch.
+- **A — eingefrorene Kopie** — der Agent klont den
+  Starter nach `_template/`, liest den Stand ab (Commit
+  und Tag) und entfernt das git-Verzeichnis der Kopie.
+  Die Kopie ist gewöhnlicher Projekt-Inhalt: Nur-Lese,
+  wird mit dem Projekt committet und nie gelöscht — das
   Archiv des Stands, mit dem dein Projekt begann.
 
 Fehlt ein git-Repository, gehört `git init` mit in
@@ -155,31 +166,44 @@ Arbeitsstands-Zettel des Agenten. Diese Kopien sind
 **lebende Dokumente** deines Projekts — sie dürfen sich
 vom Starter entfernen.
 
-**Nie kopiert** werden `referenzprozesse/`, `tools/`,
-`upgrade/`, `README.md`, `INIT.md`, `migration/`,
-`docs/`, `setup/` und `LICENSE` — sie bleiben in
-`_template/` lesbar; den Lint ruft der Agent aus
-`_template/tools/` auf, diese Erklärung liest du unter
+**Nie kopiert** werden `referenzprozesse/`, `upgrade/`,
+`INIT.md`, `migration/`, `docs/`, `setup/`, `LICENSE`,
+die `README.md` des Starters (deine Projekt-README legt
+der Agent in Schritt 5 neu an) und `tools/` — der
+Lint-Kern des Starters, den der Agent aus
+`_template/tools/` aufruft; nicht zu verwechseln mit
+dem Projekt-Ordner `tools/` für deine eigenen Skripte
+(unten, „Was danach im Projekt liegt“). Alles bleibt
+in `_template/` lesbar; diese Erklärung liest du unter
 `_template/docs/`.
+
+Läuft das Skript ein zweites Mal — etwa nach der
+Kollisionsfrage —, ergänzt es nur Fehlendes.
+Wiki-Dateien, die dein Projekt seit der ersten Kopie
+bearbeitet hat (etwa den Herkunfts-Vermerk), meldet es
+getrennt als „vom Projekt bearbeitet“ und lässt sie
+unverändert; sie sind keine Kollision.
 
 **Kollisionen.** Liegt im Ordner schon eine Datei oder
 ein Ordner, deren Name mit etwas kollidiert, das der
-Agent kopiert oder anlegt, bleibt die Starter-Datei
-zunächst ausgelassen, und der Agent stellt dir im
-Fragen-Block (Schritt 3, Punkt 11) je Fall die
-**Kollisionsfrage** mit drei Möglichkeiten und einer
-Empfehlung mit Grund — du darfst gesammelt antworten
-(„alles wie empfohlen“):
+Agent kopiert (die Kopier-Liste) oder später anlegt
+(`TODO.md`, `README.md`, die Instruktionsdatei,
+`Tools.md`), bleibt die Datei des Starters zunächst
+ausgelassen, und der Agent stellt dir im Fragen-Block
+(Schritt 3, Punkt 11) je Fall die **Kollisionsfrage**
+mit drei Möglichkeiten und einer Empfehlung mit Grund —
+du darfst gesammelt antworten („alles wie empfohlen“):
 
 - **(a) umbenennen und nur verlinken** — die Datei
-  bleibt umbenannt und unverändert liegen, die
-  Starter-Datei wird angelegt und verlinkt sie;
+  bleibt umbenannt und unverändert liegen, die Datei
+  des Starters wird kopiert bzw. angelegt und verlinkt
+  sie;
 - **(b) komplett integrieren** — ihr Inhalt geht in die
-  Starter-Datei oder an einen Ort im Wiki, den der
+  Datei des Starters oder an einen Ort im Wiki, den der
   Agent vorschlägt; gelöscht wird nur auf deinen
-  ausdrücklichen Wunsch, sonst bleibt die Datei bis
-  dahin umbenannt liegen; der Agent empfiehlt nie von
-  sich aus das Löschen;
+  ausdrücklichen Wunsch — sagst du ihn nicht, fragt der
+  Agent nach und lässt die Datei bis dahin umbenannt
+  liegen; er empfiehlt nie von sich aus das Löschen;
 - **(c) integrieren und alte Fassung behalten** —
   Inhalt wie (b), die Datei zusätzlich wie (a).
 
@@ -200,13 +224,15 @@ samt Einbindung (bei der eingefrorenen Kopie
 einschließlich `_template/`) — angekündigt, nicht
 erfragt: „Setup: Starter-Stand aufgenommen“. Liegen
 außer den kopierten Dateien noch andere im Ordner,
-nimmt er nur die freigegebenen auf und nennt dir den
-Rest. Ignorierte Dateien bleiben ignoriert; eine
-fehlende git-Identität erfragt er, statt sie zu
-setzen; bei einem abweisenden Hook oder verlangter
-Signatur hält er an und beschreibt die Lage. Das
-Remote-Ziel richtet er jetzt noch nicht ein — das ist
-ein Punkt im Fragen-Block.
+nimmt er nur die Starter-Kopie und `_template/` auf und
+nennt dir den Rest — der kommt nach der Kollisionsfrage
+mit deinem ersten eigenen Commit (Schritt 5) ins Repo.
+Ignorierte Dateien bleiben ignoriert; eine fehlende
+git-Identität erfragt er, statt sie zu setzen; bei
+einem abweisenden Hook oder verlangter Signatur hält er
+an und beschreibt die Lage. Das Remote-Ziel richtet er
+jetzt noch nicht ein — das ist ein Punkt im
+Fragen-Block.
 
 ## Schritt 3 — der Fragen-Block
 
@@ -247,10 +273,11 @@ Fassaden-Auswahl), fragt er nicht.
    (B) Sprache folgt Artefakt (Wiki und Dokumente in
    Projektsprache, Code englisch; Vorauswahl bei
    Codeprojekten), (C) Englisch für alles. Die
-   Projektsprache selbst — die Sprache deiner Dokumente
-   — wird nicht abgefragt: der Starter setzt in
-   `Styleguide.md` Deutsch; eine andere Sprache legst
-   du in `Styleguide-project.md` fest.
+   **Projektsprache** selbst — die Sprache deiner
+   Dokumente — ist kein Punkt des Fragen-Blocks: der
+   Starter belegt sie in `Styleguide.md` mit Deutsch
+   vor; willst du eine andere, legst du sie in
+   `Styleguide-project.md` fest, das vorgeht.
 6. **Ersatzweg für Prüfungen** — nur, wenn der Agent
    aus seiner Umgebung kein Werkzeug nennen kann, über
    das ein zweites KI-Modell prüft: entweder prüft
@@ -258,9 +285,9 @@ Fassaden-Auswahl), fragt er nicht.
    Einschränkung in jeder Freigabe) oder du prüfst
    selbst. Die Wahl steht in `Tools.md`.
 7. **Rolle** des Projekts: Standalone, Koordinator oder
-   Komponente; entfällt mit Startprompt. Bei
-   „Koordinator“ kündigt der Agent an, dass er den
-   Contract-Index aktiviert.
+   Komponente (in der Frage: „Komponent“); entfällt mit
+   Startprompt. Bei „Koordinator“ kündigt der Agent an,
+   dass er den Contract-Index aktiviert.
 8. **Mission und Auftrag** des Projekts — speist das
    Mission Statement und `wiki/Facts.md`.
 9. **Bezeichnung der ersten Marke** — Vorschlag ist
@@ -269,18 +296,23 @@ Fassaden-Auswahl), fragt er nicht.
    [Stände, Freigaben und Marken](Staende-Freigaben-Marken.md),
    „Zielmarken“).
 10. **Remote-Ziel**, falls nicht ableitbar.
-11. **Kollisionsfrage** aus Schritt 1, falls es
-    Kollisionen gab.
+11. **Kollisionsfrage** aus Schritt 1 — für kopierte
+    Dateien ebenso wie für die, die Schritt 4 und 5
+    anlegen —, falls es Kollisionen gab.
 
-**Mit Startprompt (Rolle Komponente).** Startest du als
-Komponente eines Koordinators, beginnt dessen
-Startprompt mit demselben Satz wie oben, und der Agent
-legt alles, was der Startprompt vorgibt, als abgeleitet
-vor, ohne es zu fragen: Rolle, Repo-Name, Pfad und
-Remote, Pfad des Koordinators, Übernahme-Art, Start
-und Transport, Verweis auf den Übergabe-Stand. Den
-Referenzprozess gibt der Startprompt **nicht** vor —
-dafür gilt Punkt 1.
+**Mit Startprompt (Rolle Komponente).** Stammt dein
+Koordinator aus diesem Starter, beginnt sein Startprompt
+mit demselben Satz wie oben und sagt in einem Satz,
+dass es andere Referenzprozesse gibt und der Agent im
+Zweifel fragt. Alles, was der Startprompt vorgibt, legt
+der Agent als abgeleitet vor, ohne es zu fragen: Rolle,
+Repo-Name, Pfad und Remote, Pfad des Koordinators,
+Übernahme-Art, Start und Transport, Verweis auf den
+Übergabe-Stand. Den Referenzprozess gibt der Startprompt
+**nicht** vor — dafür gilt Punkt 1. Was ein Startprompt
+ist und was er enthält:
+[Zusammenarbeit mehrerer Repos](Mehrere-Repos.md),
+„Startprompt“.
 
 ## Schritt 4 — die Umsetzung
 
@@ -292,17 +324,27 @@ beim Anlegen die laufende Marke und sein Anlage-Datum.
 - **Kollisionen:** umbenennen, dann die ausgelassenen
   Starter-Dateien einspielen (Skript erneut — es
   ergänzt nur Fehlendes — oder von Hand); bei (a) und
-  (c) verlinkt die Starter-Datei die umbenannte; hat
-  sie keinen Platz dafür, steht der Link in der
-  Projekt-README. Links in vorgefundenen Dateien zieht
-  der Agent nicht nach; bricht einer, nennt er die
-  Stelle.
+  (c) verlinkt die Starter-Datei die umbenannte. Hat
+  sie keinen Platz dafür — ein umbenanntes `wiki/`, die
+  Instruktionsdatei —, steht der Link in der
+  Projekt-README unter den Einstiegen, bei der
+  Instruktionsdatei zusätzlich in der neuen; die neue
+  `TODO.md` verlinkt eine umbenannte
+  `TODO-vorgefunden.md`. Bei (b) und (c) überträgt der
+  Agent den Inhalt an den vereinbarten Ort. Links in
+  vorgefundenen Dateien zieht er nicht nach; bricht
+  einer, nennt er die Stelle.
 - **Anderer Prozess** (Punkt 1): das vorbereitete
   `wiki/` wird ersetzt durch das Basis-Wiki und das
   Paket des gewählten Prozesses aus
-  `_template/referenzprozesse/`; der Starter bleibt
-  `_template/`. Was RP-1 oder SP-1 voraussetzt (etwa
-  die Rolle), entfällt.
+  `_template/referenzprozesse/` — bei einem nur
+  geplanten Prozess allein durch das Basis-Wiki (siehe
+  [Referenzprozesse](Referenzprozesse.md), „Geplant“);
+  der Starter bleibt `_template/`. Was RP-1 oder SP-1
+  voraussetzt (etwa die Rolle), entfällt. Wo bei einer
+  Komponente ohne Architektur-Fassade die eigene Zeile,
+  die Lage des Koordinators und die Nachbarn stehen,
+  legt die Vorlage nicht fest — der Agent fragt dich.
 - **Erste Marke** im Register `wiki/Zielmarken.md` mit
   der Bezeichnung aus Punkt 9, Zustand `in-progress`;
   keine Marke trägt `current`, solange keine
@@ -315,7 +357,8 @@ beim Anlegen die laufende Marke und sein Anlage-Datum.
   bei einer Komponente die `Übernahme-Art`.
 - **Buchungen:** Commit-Sprache, Betriebs-Konfiguration
   des WorkspaceManagers, die Freigaben der Ordner, die
-  der Software-Prozess mitbringt, als Einträge im
+  der Software-Prozess mitbringt (`src/`, `tests/`,
+  `ci/`, `deploy/`, `docs/`), als Einträge im
   Entscheidungs-Register, die Wahl „ein Repo oder
   zwei“.
 - **`Tools.md`** aus der Kopiervorlage: Prüf-Werkzeuge
@@ -326,9 +369,19 @@ beim Anlegen die laufende Marke und sein Anlage-Datum.
   aktiviert. **Rolle Komponente:** die eigene Zeile und
   die Lage des Koordinators in der Architektur-Fassade.
 - **Mission Statement und Facts** aus ihren
-  Einmal-Anweisungen (den Bootstraps in
-  `_template/referenzprozesse/base/bootstrap/`, die nie
-  ins Projekt kopiert werden).
+  **Einmal-Anweisungen** — im Starter heißen sie
+  Bootstraps und liegen in
+  `_template/referenzprozesse/base/bootstrap/`; der
+  Agent arbeitet sie dort ab und kopiert sie nie ins
+  Projekt. Dass das Mission Statement aktiv ist, ist
+  Vorauswahl des Starters und wird nicht gefragt. Nach
+  den Buchungen folgt zum Schluss dieses Schritts erst
+  das **Konzept-Angebot** — der Agent sichtet
+  mitgelieferte Sammlungen von Vorgehens-Konzepten und
+  schlägt dir vor, welche zu deinem Projekt passen
+  (ohne Netz entfällt die Liste, ohne Unteragenten die
+  Empfehlung; er sagt es dazu) —, dann der Dialog zum
+  **Mission Statement** mit einem Entwurf aus Punkt 8.
 - **Instruktionsdatei** des Agenten (z.B. `CLAUDE.md`)
   nach dem MasterPrompt, einschließlich des
   Grundgesetzes „das `wiki/` ist die Quelle der
@@ -340,8 +393,9 @@ beim Anlegen die laufende Marke und sein Anlage-Datum.
 - Die **Projekt-README** (Kurzbeschreibung, Einstiege,
   Instruktionsdatei; Verweis auf diese Erklärung unter
   `_template/docs/Einfuehrung.md` und für spätere
-  Stände auf `_template/README.md`) und **`TODO.md`**
-  (deine offenen Punkte; sie verlinkt eine in Schritt 4
+  Stände auf `_template/README.md`, Abschnitt
+  „Template aktualisieren“) und **`TODO.md`** (deine
+  offenen Punkte; sie verlinkt eine in Schritt 4
   umbenannte `TODO-vorgefunden.md`) entstehen — der
   Starter liefert sie nicht mit.
 - Ein **Chronologie-Eintrag** hält fest, dass das
@@ -354,16 +408,35 @@ beim Anlegen die laufende Marke und sein Anlage-Datum.
 - **Erster eigener Commit**, danach Push auf das Remote
   aus dem Fragen-Block.
 
-Ab hier gilt der normale Betrieb: „Bereit für den
-ersten Auftrag.“ Bei einem Entwicklungsprozess weist
-der Agent zusätzlich auf die Vorlagen-Kette der
-Setup-Entscheidungen als nächsten Schritt hin — die
-gebündelte Klärung der technischen Grundentscheidungen,
-bevor die erste Fachlogik entsteht (erklärt in
+`INIT.md` liegt nur im Starter und bleibt in
+`_template/` lesbar; es gibt keinen Selbst-Abbau.
+
+## Der erste Auftrag
+
+Ab hier gilt der normale Betrieb: der Agent meldet
+„Bereit für den ersten Auftrag.“ und wartet. Bei einem
+Entwicklungsprozess weist er zusätzlich auf die
+**Vorlagen-Kette** der Setup-Entscheidungen als
+nächsten Schritt hin — die gebündelte Klärung der
+technischen Grundentscheidungen, bevor die erste
+Fachlogik entsteht (erklärt in
 [Stände, Freigaben und Marken](Staende-Freigaben-Marken.md),
-„Scaffolding“). `INIT.md` liegt nur im Starter und
-bleibt in `_template/` lesbar; es gibt keinen
-Selbst-Abbau.
+„Scaffolding“). Die Kette beginnt mit einem Fahrplan,
+der dir zeigt, welche Entscheidungen anstehen, und der
+ersten Vorlage „Git und Ablage“.
+
+Ein typischer erster Auftrag ist deshalb:
+
+> Zeig mir den Fahrplan für das Scaffolding und leg mir
+> die erste Vorlage vor.
+
+Du kannst aber auch mit Material beginnen: Lege
+Lastenhefte, Protokolle oder Altdokumentation in `raw/`
+ab (unten, „Dokumente einbringen“) — beim nächsten
+Sessionstart erkennt der Agent die neuen Originale und
+bietet die Übernahme ins Wiki an. Jeder andere Auftrag
+geht genauso; der Agent fragt bei Unklarheit nach,
+statt zu raten.
 
 ## Was danach im Projekt liegt
 
@@ -393,14 +466,18 @@ Im Projekt-Root:
   Dokumentquellen anbindest (unten).
 
 Dazu `_template/` (Nur-Lese), die Standardordner
-(`raw/`, `input/`, `research/`, `tools/`, `output/`,
-`overview/`, `wiki/`, `outgoing/`) und das `wiki/` mit
-allen Fassaden des Software-Zuschnitts, den
+(`raw/`, `input/`, `research/`, `tools/` — der
+Projekt-Ordner für eigene Skripte des Agenten,
+registriert in `Tools.md` —, `output/`, `overview/`,
+`wiki/`, `outgoing/`) und das `wiki/` mit allen
+Fassaden des Software-Zuschnitts, den
 Katalog-Einträgen, den Regel-Knoten und den beiden
 Vorgehens-Dokumenten `Vorgehen-SP-1.md` und
-`Vorgehen-RP-1.md`. Zweck, Mitliefer-Status und
-Anlage-Zeitpunkt jeder Standarddatei beschreibt
-`../wiki/Standarddateien-Katalog.md`.
+`Vorgehen-RP-1.md`. Die Liste oben nennt den Zweck
+jeder Datei; wann sie entsteht und ob der Starter sie
+mitliefert, führt `../wiki/Standarddateien-Katalog.md`
+je Datei auf — für den Alltag musst du dort nicht
+nachlesen.
 
 ## Was der Agent beim Sessionstart tut
 
@@ -414,10 +491,11 @@ ersten Mal kommen die Schritte oben hinzu.
   Fassaden-Landkarte, `wiki/Facts.md` (mit Vorrang für
   die Stolpersteine), `Styleguide-chat.md`,
   `Offene Fragen.md`, `wiki/Fristen.md`, `Tools.md`
-  und `TODO.md`; die übrigen Fassaden registriert er
-  und liest sie bei Bedarf. `wiki/Mission Statement.md`
-  liest er nicht automatisch — es ist für Menschen und
-  fremde Agenten gedacht.
+  und `TODO.md` vollständig; die übrigen aktiven
+  Fassaden registriert er und liest sie bei Bedarf.
+  `wiki/Mission Statement.md` liest er nicht
+  automatisch — es ist für Menschen und fremde Agenten
+  gedacht.
 - **Abgleiche.** Fehlende oder veraltete Umwandlungen
   von `raw/` nach `input/`, Dokumente ohne Wiki-Knoten,
   abgelaufene Fristen, fällige Register-Einträge,
@@ -443,9 +521,9 @@ ersten Mal kommen die Schritte oben hinzu.
   Quellen außerhalb des Projekts (z.B. einen
   Netzlaufwerk-Ordner), je mit Name und Pfad. `raw/`
   gilt automatisch als Quelle.
-- **Umwandlung nach `input/`.** Ein **WorkspaceManager**
-  — ein externes Programm, das du startest, nicht der
-  Agent — wandelt jede Originaldatei genau einmal in
+- **Umwandlung nach `input/`.** Der WorkspaceManager —
+  das externe Programm von oben, das du startest, nicht
+  der Agent — wandelt jede Originaldatei genau einmal in
   eine Markdown-Datei um: `raw/` nach `input/raw/`, jede
   weitere Quelle nach `input/<name>/`. Hast du kein
   solches Werkzeug, übernimmt der Agent die Umwandlung
