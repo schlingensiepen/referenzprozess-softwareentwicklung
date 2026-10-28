@@ -31,6 +31,10 @@
 # danach der Lint-Kern. Was das Skript nicht tut: Wikilinks und
 # Kennungen nachziehen (kontext-bewusst durch den Agenten, kein sed),
 # Inhalte zusammenführen, committen, ungetrackte Dateien anfassen.
+# Schlägt ein Schreibvorgang fehl (git mv, mv, mkdir, cp, Schreiben
+# einer Datei), bricht das Skript mit Rückgabewert 1 ab — die
+# Schleifen laufen in der Haupt-Shell (Here-Dokumente, keine
+# Pipe-Blöcke), damit das Ende nie einen Teil-Lauf verdeckt.
 # POSIX-sh; erwartet git, awk, sed, grep, find, cmp.
 #
 # Optionen:
@@ -163,12 +167,16 @@ fi
 # Prozess: der Starter ist mit RP-1 auf SP-1 vorbefüllt; nur dafür legt
 # das Skript neue Dateien an (Fassaden, die der aktive Prozess
 # voraussetzt). Gelesen wird der zuerst genannte Prozess der Zeile
-# `Prozess` (2.0-Form, ## Herkunft), sonst der Zeile „Gewählter Prozess“.
-PROZESS=""
-for z in '^- \*\*Prozess:\*\*' '^- \*\*Gewählter Prozess:\*\*'; do
-    [ -z "$PROZESS" ] || break
-    PROZESS=$(grep "$z" "$AP" | head -n 1 | grep -o '[RS]P-[0-9][0-9]*' | head -n 1 || true)
-done
+# `Prozess` (2.0-Form, ## Herkunft); nur wenn diese Zeile fehlt oder
+# noch den Platzhalter „offen“ trägt, den dieses Skript bei der
+# 1.x-Form schreibt (Schritt 7 füllt ihn), gilt die Zeile „Gewählter
+# Prozess“ der 1.x-Form — eine stehengebliebene alte Zeile neben einer
+# gefüllten Zeile `Prozess` zählt nicht.
+PROZESS_ZEILE=$(grep '^- \*\*Prozess:\*\*' "$AP" | head -n 1)
+case $PROZESS_ZEILE in
+    ""|*"**Prozess:** offen"*) PROZESS_ZEILE=$(grep '^- \*\*Gewählter Prozess:\*\*' "$AP" | head -n 1) ;;
+esac
+PROZESS=$(printf '%s\n' "$PROZESS_ZEILE" | grep -o '[RS]P-[0-9][0-9]*' | head -n 1 || true)
 if [ "$PROZESS" != RP-1 ]; then
     fehler "Prozess des Projekts ist nicht der Software-Prozess des Starters (RP-1 auf SP-1): ${PROZESS:-keine Zeile Prozess bzw. Gewählter Prozess mit einem Prozess-Kürzel} — das Skript legt nur dessen Dateien an. Weg von Hand: UPGRADE.md Schritt 3, neue Dateien aus _template/referenzprozesse/ (Basis und aktiver Prozess, Wiki.md §11.3)."
 fi
@@ -422,110 +430,115 @@ printf '\n'
 # ---------------------------------------------------------------------
 
 printf 'Neue Dateien des neuen Stands%s\n' "$([ "$PRUEFEN" -eq 1 ] && printf ' (Vorschau)')"
-{
-    for f in MasterPrompt.md Wiki.md Vorgehen.md Reviewmuster.md \
-             Outgoing.md Styleguide.md Styleguide-md.md \
-             Styleguide-wiki.md; do
-        printf '%s\n' "$f"
-    done
-    # referenzprozesse/, tools/, upgrade/, migration/, docs/, setup/ bleiben
-    # in _template/ (Nur-Lese); devstate_active.md ist Projekt-Inhalt.
-    ( cd "$NEU" && find wiki -type f | sort )
-} | {
-    NEUANG=0; GLEICH=0; DELTA=""; OPTIONAL=""; ABGELOEST=""
-    while IFS= read -r rel; do
-        if [ "$PRUEFEN" -eq 1 ] && printf '%s' "$UMBENANNT" | grep -q "	$rel\$"; then
-            printf '  = %s (nach der Umbenennung vorhanden — Delta-Nachzug)\n' "$rel"
+# Liste vorab, Schleife per Here-Dokument in dieser Shell: ein Fehler
+# von mkdir oder cp beendet so das Skript (nicht nur eine Unter-Shell).
+# referenzprozesse/, tools/, upgrade/, migration/, docs/, setup/ bleiben
+# in _template/ (Nur-Lese); devstate_active.md ist Projekt-Inhalt.
+NEULISTE=$(printf '%s\n' MasterPrompt.md Wiki.md Vorgehen.md Reviewmuster.md \
+                         Outgoing.md Styleguide.md Styleguide-md.md Styleguide-wiki.md
+           cd "$NEU" && find wiki -type f | sort)
+NEUANG=0; GLEICH=0; DELTA=""; OPTIONAL=""; ABGELOEST=""
+while IFS= read -r rel; do
+    [ -n "$rel" ] || continue
+    if [ "$PRUEFEN" -eq 1 ] && printf '%s' "$UMBENANNT" | grep -q "	$rel\$"; then
+        printf '  = %s (nach der Umbenennung vorhanden — Delta-Nachzug)\n' "$rel"
+        DELTA="${DELTA}${rel}
+"
+    elif [ -e "$DST/$rel" ]; then
+        if cmp -s -- "$NEU/$rel" "$DST/$rel"; then
+            GLEICH=$((GLEICH + 1))
+        else
             DELTA="${DELTA}${rel}
 "
-        elif [ -e "$DST/$rel" ]; then
-            if cmp -s -- "$NEU/$rel" "$DST/$rel"; then
-                GLEICH=$((GLEICH + 1))
+        fi
+    else
+        if [ "$PRUEFEN" -eq 0 ]; then
+            case $rel in */*) mkdir -p "$DST/${rel%/*}" || fehler "mkdir für $rel fehlgeschlagen — Lage prüfen (Rechte?), dann erneut aufrufen." ;; esac
+            cp -- "$NEU/$rel" "$DST/$rel" || fehler "Kopie von $rel fehlgeschlagen — Lage prüfen (Rechte?), dann erneut aufrufen."
+        fi
+        NEUANG=$((NEUANG + 1))
+        printf '  + %s\n' "$rel"
+        if sed -n '2,/^---$/p' "$NEU/$rel" | grep -q '^active: false'; then
+            # abgelöste Fassaden (active: false mit Verweis auf den
+            # Nachfolger) sind nicht aktivierbar, nur Hintergrund
+            if sed -n '2,/^---$/p' "$NEU/$rel" | grep -q -E '^active: false.*abgelöst durch'; then
+                ABGELOEST="${ABGELOEST}${rel}
+"
             else
-                DELTA="${DELTA}${rel}
+                OPTIONAL="${OPTIONAL}${rel}
 "
-            fi
-        else
-            if [ "$PRUEFEN" -eq 0 ]; then
-                case $rel in */*) mkdir -p "$DST/${rel%/*}" || fehler "mkdir für $rel fehlgeschlagen" ;; esac
-                cp -- "$NEU/$rel" "$DST/$rel" || fehler "Kopie von $rel fehlgeschlagen"
-            fi
-            NEUANG=$((NEUANG + 1))
-            printf '  + %s\n' "$rel"
-            if sed -n '2,/^---$/p' "$NEU/$rel" | grep -q '^active: false'; then
-                # abgelöste Fassaden (active: false mit Verweis auf den
-                # Nachfolger) sind nicht aktivierbar, nur Hintergrund
-                if sed -n '2,/^---$/p' "$NEU/$rel" | grep -q -E '^active: false.*abgelöst durch'; then
-                    ABGELOEST="${ABGELOEST}${rel}
-"
-                else
-                    OPTIONAL="${OPTIONAL}${rel}
-"
-                fi
             fi
         fi
-    done
-    if [ ! -e "$DST/.gitignore" ] && [ -e "$NEU/.gitignore" ]; then
-        if [ "$PRUEFEN" -eq 0 ]; then cp -- "$NEU/.gitignore" "$DST/.gitignore" || fehler "Kopie von .gitignore fehlgeschlagen"; fi
-        NEUANG=$((NEUANG + 1)); printf '  + .gitignore\n'
     fi
-    printf '  angelegt: %s; vorhanden und inhaltsgleich: %s\n' "$NEUANG" "$GLEICH"
-    if [ -n "$OPTIONAL" ]; then
-        printf '  Hinweis an den Anwender — neue Fassaden liegen deaktiviert bereit (active: false), Aktivierung per Zuruf:\n'
-        printf '%s' "$OPTIONAL" | sed 's/^/    - /'
-    fi
-    if [ -n "$ABGELOEST" ]; then
-        printf '  abgelöste Fassaden (bleiben deaktiviert, der Nachfolger ist aktiv):\n'
-        printf '%s' "$ABGELOEST" | sed 's/^/    - /'
-    fi
-    printf '\n'
-    if [ -n "$DELTA" ]; then
-        # Einteilung nach UPGRADE.md Schritt 5: gleicht die lebende Kopie
-        # dem alten Stand der Vorlage, hat das Projekt sie nie verändert
-        # (eine Gruppe); sonst einzeln. Ohne alten Stand: nicht eingeteilt.
-        GRUPPE=""; EINZELN=""; OFFEN=""
-        while IFS= read -r rel; do
-            [ -n "$rel" ] || continue
-            if alte_fassung "$rel" | cmp -s -- - "$DST/$rel"; then
-                GRUPPE="${GRUPPE}${rel}
+done <<EOF
+$NEULISTE
+EOF
+if [ ! -e "$DST/.gitignore" ] && [ -e "$NEU/.gitignore" ]; then
+    if [ "$PRUEFEN" -eq 0 ]; then cp -- "$NEU/.gitignore" "$DST/.gitignore" || fehler "Kopie von .gitignore fehlgeschlagen — Lage prüfen (Rechte?), dann erneut aufrufen."; fi
+    NEUANG=$((NEUANG + 1)); printf '  + .gitignore\n'
+fi
+printf '  angelegt: %s; vorhanden und inhaltsgleich: %s\n' "$NEUANG" "$GLEICH"
+if [ -n "$OPTIONAL" ]; then
+    printf '  Hinweis an den Anwender — neue Fassaden liegen deaktiviert bereit (active: false), Aktivierung per Zuruf:\n'
+    printf '%s' "$OPTIONAL" | sed 's/^/    - /'
+fi
+if [ -n "$ABGELOEST" ]; then
+    printf '  abgelöste Fassaden (bleiben deaktiviert, der Nachfolger ist aktiv):\n'
+    printf '%s' "$ABGELOEST" | sed 's/^/    - /'
+fi
+printf '\n'
+if [ -n "$DELTA" ]; then
+    # Einteilung nach UPGRADE.md Schritt 5: gleicht die lebende Kopie
+    # dem alten Stand der Vorlage, hat das Projekt sie nie verändert
+    # (eine Gruppe); sonst einzeln. Ohne alten Stand: nicht eingeteilt.
+    GRUPPE=""; EINZELN=""; OFFEN=""
+    while IFS= read -r rel; do
+        [ -n "$rel" ] || continue
+        if alte_fassung "$rel" | cmp -s -- - "$DST/$rel"; then
+            GRUPPE="${GRUPPE}${rel}
 "
-            elif alte_fassung "$rel" >/dev/null; then
-                EINZELN="${EINZELN}${rel}
+        elif alte_fassung "$rel" >/dev/null; then
+            EINZELN="${EINZELN}${rel}
 "
-            else
-                OFFEN="${OFFEN}${rel}
+        else
+            OFFEN="${OFFEN}${rel}
 "
-            fi
-        done <<EOF
+        fi
+    done <<EOF
 $DELTA
 EOF
-        printf 'Delta-Nachzug — bestehende Dateien, die vom neuen Stand abweichen (nie automatisch; Übernahmen als Vorschlag, UPGRADE.md Schritt 5):\n'
-        if [ -n "$GRUPPE" ]; then
-            printf '  vom Projekt nie verändert (gleich dem alten Stand der Vorlage) — als eine Gruppe vorschlagen:\n'
-            printf '%s' "$GRUPPE" | sed 's/^/    - /'
-        fi
-        if [ -n "$EINZELN" ]; then
-            printf '  mit projekt-eigenen Änderungen — einzeln vorschlagen (Regelwerks-Text aus der Vorlage, Einträge des Projekts bleiben):\n'
-            printf '%s' "$EINZELN" | sed 's/^/    - /'
-        fi
-        if [ -n "$OFFEN" ]; then
-            printf '  alter Stand der Vorlage nicht ablesbar — einzeln vergleichen:\n'
-            printf '%s' "$OFFEN" | sed 's/^/    - /'
-        fi
-        printf '\n'
+    printf 'Delta-Nachzug — bestehende Dateien, die vom neuen Stand abweichen (nie automatisch; Übernahmen als Vorschlag, UPGRADE.md Schritt 5):\n'
+    if [ -n "$GRUPPE" ]; then
+        printf '  vom Projekt nie verändert (gleich dem alten Stand der Vorlage) — als eine Gruppe vorschlagen:\n'
+        printf '%s' "$GRUPPE" | sed 's/^/    - /'
     fi
-}
+    if [ -n "$EINZELN" ]; then
+        printf '  mit projekt-eigenen Änderungen — einzeln vorschlagen (Regelwerks-Text aus der Vorlage, Einträge des Projekts bleiben):\n'
+        printf '%s' "$EINZELN" | sed 's/^/    - /'
+    fi
+    if [ -n "$OFFEN" ]; then
+        printf '  alter Stand der Vorlage nicht ablesbar — einzeln vergleichen:\n'
+        printf '%s' "$OFFEN" | sed 's/^/    - /'
+    fi
+    printf '\n'
+fi
 
 # ---------------------------------------------------------------------
 # 5 Formalien im Frontmatter (1.x-nach-2.0.md Abschnitt 1)
 # ---------------------------------------------------------------------
 
 printf 'Formalien%s\n' "$([ "$PRUEFEN" -eq 1 ] && printf ' (Vorschau)')"
-{
-find "$DST/wiki" -type f -name '*.md' | sort | while IFS= read -r f; do
+# Schleifen per Here-Dokument in dieser Shell (kein Pipe-Block): ein
+# Fehler beim Schreiben beendet das Skript. FORMALIEN_N zählt die
+# ausgegebenen Zeilen für „keine“.
+FORMALIEN_N=0
+WIKI_DATEIEN=$(find "$DST/wiki" -type f -name '*.md' | sort)
+while IFS= read -r f; do
+    [ -n "$f" ] || continue
     grep -q -E '^subtype:|^superseded-by:|^superseded_by:[ \t]*[^ \t[]|umgesetzt-wartet-auf-Prüfung|^type: role$' "$f" || continue
     if head -n 1 "$f" | grep -q "$(printf '\r')"; then
         printf '  CRLF: %s — Zeilenenden CR LF, Formalien nicht umgestellt (von Hand oder nach Umstellung auf LF)\n' "${f#"$DST/"}"
+        FORMALIEN_N=$((FORMALIEN_N + 1))
         continue
     fi
     tmp="$TMPD/formalien"
@@ -569,16 +582,24 @@ find "$DST/wiki" -type f -name '*.md' | sort | while IFS= read -r f; do
         }' "$f" > "$tmp"
     if ! cmp -s -- "$f" "$tmp"; then
         printf '  %s\n' "${f#"$DST/"}"
-        [ "$PRUEFEN" -eq 0 ] && { cat -- "$tmp" > "$f" || fehler "Schreiben von ${f#"$DST/"} fehlgeschlagen"; }
+        FORMALIEN_N=$((FORMALIEN_N + 1))
+        [ "$PRUEFEN" -eq 0 ] && { cat -- "$tmp" > "$f" || fehler "Schreiben von ${f#"$DST/"} fehlgeschlagen — Lage prüfen (Rechte?), dann erneut aufrufen."; }
     fi
     rm -f "$tmp"
-done
+done <<EOF
+$WIKI_DATEIEN
+EOF
 # Ablösung beidseitig: `supersedes:` am Nachfolger (YAML-Header, vom Freeze
 # ausgenommen) — 1.x kannte nur superseded-by am abgelösten Knoten
-abloesungen | while IFS='	' read -r alt neu; do
+ABLOESUNGEN=$(abloesungen)
+while IFS='	' read -r alt neu; do
     [ -n "$alt" ] && [ -n "$neu" ] || continue
     nf=$(find "$DST/wiki" -type f -name '*.md' -exec grep -l -E "^id:[ 	]*${neu}[ 	]*\$" {} + 2>/dev/null | sort | head -n 1)
-    [ -n "$nf" ] || { printf '  %s: Nachfolger %s ohne Detail-Knoten — supersedes von Hand prüfen\n' "$alt" "$neu"; continue; }
+    if [ -z "$nf" ]; then
+        printf '  %s: Nachfolger %s ohne Detail-Knoten — supersedes von Hand prüfen\n' "$alt" "$neu"
+        FORMALIEN_N=$((FORMALIEN_N + 1))
+        continue
+    fi
     tmp="$TMPD/supersedes"
     awk -v alt="$alt" '
         NR == 1 && $0 == "---" { fm = 1; print; next }
@@ -600,15 +621,14 @@ abloesungen | while IFS='	' read -r alt neu; do
         { print }' "$nf" > "$tmp"
     if ! cmp -s -- "$nf" "$tmp"; then
         printf '  %s (supersedes: %s ergänzt)\n' "${nf#"$DST/"}" "$alt"
-        [ "$PRUEFEN" -eq 0 ] && { cat -- "$tmp" > "$nf" || fehler "Schreiben von ${nf#"$DST/"} fehlgeschlagen"; }
+        FORMALIEN_N=$((FORMALIEN_N + 1))
+        [ "$PRUEFEN" -eq 0 ] && { cat -- "$tmp" > "$nf" || fehler "Schreiben von ${nf#"$DST/"} fehlgeschlagen — Lage prüfen (Rechte?), dann erneut aufrufen."; }
     fi
     rm -f "$tmp"
-done
-} | {
-    n=0
-    while IFS= read -r l; do printf '%s\n' "$l"; n=$((n + 1)); done
-    [ "$n" -gt 0 ] || printf '  keine\n'
-}
+done <<EOF
+$ABLOESUNGEN
+EOF
+[ "$FORMALIEN_N" -gt 0 ] || printf '  keine\n'
 printf '\n'
 
 # ---------------------------------------------------------------------
@@ -628,7 +648,7 @@ elif [ "$HV_FORM" = 2.0 ]; then
         awk -v ts="$TS" -v vz="$VZ" '
             /^- \*\*Template-Stand:\*\*/ && !done { print ts; print vz; done = 1; next }
             { print }' "$AP" > "$TMPD/ap"
-        cat -- "$TMPD/ap" > "$AP" || fehler "Schreiben von wiki/Aktivierter-Prozess.md fehlgeschlagen"
+        cat -- "$TMPD/ap" > "$AP" || fehler "Schreiben von wiki/Aktivierter-Prozess.md fehlgeschlagen — Lage prüfen (Rechte?), dann erneut aufrufen."
     fi
 else
     QUELLE_NEU="offen — Repo-URL und Commit bzw. Tag des neuen Stands (UPGRADE.md Schritt 7)"
@@ -653,7 +673,7 @@ else
             /^## Bezüge/ && !done { block(); done = 1 }
             { print }
             END { if (!done) { print ""; block() } }' "$AP" > "$TMPD/ap"
-        cat -- "$TMPD/ap" > "$AP" || fehler "Schreiben von wiki/Aktivierter-Prozess.md fehlgeschlagen"
+        cat -- "$TMPD/ap" > "$AP" || fehler "Schreiben von wiki/Aktivierter-Prozess.md fehlgeschlagen — Lage prüfen (Rechte?), dann erneut aufrufen."
     fi
 fi
 printf '\n'
