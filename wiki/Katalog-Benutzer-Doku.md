@@ -97,7 +97,9 @@ verankert.
   Werkstatt, [[Two-Repo-Submodul-Muster]]); die
   freigegebene Version zusätzlich als Kopie in
   `docs/user/` des Produkts mit dem Herkunfts-Kopf
-  nach SP-1 `index.md` §4.11.
+  nach SP-1 `index.md` §4.11; die Kopie trägt den
+  Dateinamen des Stands mit Version (ebenda: Name der
+  Kopie, vorgefundene Ableitung).
 - **Herkunft:** `herkunft` führt zusätzlich den Tag der
   Implementierung und den Testbericht (TRES), an dem
   die Freigabe hängt (Eintragsformat:

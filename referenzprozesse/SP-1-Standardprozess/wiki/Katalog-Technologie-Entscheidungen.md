@@ -43,7 +43,11 @@ Anwender-`wiki/` kopiert und in [[Katalog]] verankert.
   [[Katalog-Contract-Index#Rollen eines CON in der Kette]]).
   Angenommene DEC der Marke ohne `decision_type:` legt
   die Ableitungsprüfung ([[Einfrieren-und-Abloesen]]
-  §Ableitungsprüfung) mit vor, je DEC mit den
+  §Ableitungsprüfung) mit vor — Freigabe-Einträge
+  (auch Ordner-Freigaben und Tag-Freigaben),
+  Verzichts-Einträge und Marken-Wechsel-Einträge
+  ([[Entscheidungen]] Meta) sind keine Kandidaten und
+  werden weder vorgelegt noch ausgewiesen —, je DEC mit den
   Möglichkeiten **einordnen** (als
   Technologie-Entscheidung in den Stand) oder
   **weglassen** (keine Technologie-Entscheidung); die

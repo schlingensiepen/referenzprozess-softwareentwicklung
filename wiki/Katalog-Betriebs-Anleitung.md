@@ -95,7 +95,9 @@ Anwender-`wiki/` kopiert und in [[Katalog]] verankert.
   ([[Two-Repo-Submodul-Muster]]); die freigegebene
   Version zusätzlich als Kopie in `docs/ops/` des
   Produkts mit dem Herkunfts-Kopf nach SP-1 `index.md`
-  §4.11.
+  §4.11; die Kopie trägt den Dateinamen des Stands mit
+  Version (ebenda: Name der Kopie, vorgefundene
+  Ableitung).
 - **Herkunft:** `herkunft` führt den Deploy-Stand der
   Umgebung mit Version (Eintragsformat:
   [[Einfrieren-und-Abloesen]] §Stand).

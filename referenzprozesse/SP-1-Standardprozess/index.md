@@ -533,7 +533,14 @@ freigegebene Stand bleibt in `output/` der Werkstatt,
 die Kopie des selbsttragenden Stands (z.B. die
 Betriebs-Anleitung in `docs/ops/`) liegt in `docs/`
 des Produkts. Im Ein-Repo-Fall liegen beide im selben
-Repo.
+Repo. **Name der Kopie:** der Dateiname des Stands mit
+Version (`<Datum> - Betriebs-Anleitung -
+<Umgebung>_VV_TLA.md`); jede freigegebene Version hat
+so ihre eigene Kopie, nichts wird überschrieben. Eine
+**vorgefundene Ableitung** in `docs/` (außerhalb der
+Kette entstanden, etwa vor einem Upgrade) bleibt
+unverändert als Nachweis liegen — weder überschrieben
+noch umbenannt; die Kopie des Stands liegt daneben.
 
 - **Struktur:** Unterordner je Bedarf —
   `docs/developer/` (Entwickler-Doku), `docs/user/`
