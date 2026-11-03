@@ -30,9 +30,12 @@ Phase P8 „Spezifizieren“.
   Bauteile. Ein Koordinator ohne eigene Bauteile führt
   dieses Register leer.
 - **Verortung je Repo:** jedes Repo führt seine eigenen
-  Spezifikationen — der Koordinator die
-  **Gesamtspezifikation** (für eigene Bauteile), jede
-  Komponente ihre **Teilspezifikation**. Die Kette
+  Spezifikationen — der Koordinator und das
+  Standalone-Projekt die **Gesamtspezifikation** (für
+  eigene Bauteile), jede Komponente ihre
+  **Teilspezifikation**. „Gesamt“ und „Teil“ sind
+  Rolle des Repos und Eigenschaft des Stands, kein
+  Merkmal je Element. Die Kette
   entsteht über qualifizierte Verweise
   (`<repo>/SPEC-NNN`, Qualifizierer = Repo-Name);
   kein geteilter Kanonizitäts-Split nötig.
@@ -41,6 +44,16 @@ Phase P8 „Spezifizieren“.
   (als Provider wie als Consumer), als Verweise
   `<koordinator>/CON-NNN` — dort sind sie Bauvorgabe
   (Register [[Contract-Index]]).
+- **Eintritt und Lese-Klammer:** ein SPEC-Element
+  legt der Agent als `offen` an; es bleibt bearbeitbar,
+  bis es einzeln angenommen wird oder mit der Freigabe
+  des ersten Stands, der es verweist
+  ([[Einfrieren-und-Abloesen]] §Eintrittsregel). Bis
+  zur Bildung des Stands ist **diese Fassade die
+  Lese-Klammer** der Phase P8 — sie listet jedes
+  Element mit Link und Status, und der Agent benennt
+  sie dem Anwender so; Ablauf bis zur Freigabe:
+  [[Lebenslauf-eines-Stands]].
 - **Freigabe:** Freigabestände gehen als versionierte
   Datei (`_VV_TLA`) nach `output/`; der
   Freigabe-Eintrag im Entscheidungs-Register nennt
@@ -52,8 +65,10 @@ Phase P8 „Spezifizieren“.
   §Fehlende und vertretene Glieder — lesen, bevor auf
   P8 verzichtet wird.
 - **Eintragsformat:** `### SPEC-NNN — <Kurzsatz>` mit
-  Feldern Gegenstand (Gesamt/Teil, ggf. Komponente
-  bzw. Bauteil) / Status + status_date / Angelegt
+  Feldern Gegenstand (nur der beschriebene Gegenstand,
+  z.B. „Auth-Modul“, „Datenmodell“ — nicht „Gesamt“
+  oder „Teil“: das ist die Rolle des Repos, §Verortung
+  je Repo) / Status + status_date / Angelegt
   (Anlage-Datum `JJJJ-MM-TT`, Pflichtfeld seit 2.0 am
   Eintrag ohne Detail-Knoten, sonst `datum:` im
   Detail-Knoten; [[Katalog]] §Typ-Konventionen) /

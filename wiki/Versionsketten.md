@@ -34,6 +34,9 @@ Regeln:
 - Es gibt keine Lücken in der Versionsnummerierung.
 - Vor Weiterarbeit prüft die KI, ob eine neuere
   Version mit User-TLA vorliegt.
+- Bei einem Stand: §Versionen eines Stands — die
+  Kette eines Stands kennt keinen „Entwurf“ und kein
+  „finalisiert“, Korrekturen gehen in die Elemente.
 
 **Snapshots in `overview/`** folgen derselben
 Versionskette — siehe `Wiki.md`.
@@ -58,9 +61,32 @@ Keine neue Version entsteht bei:
 - Lesen oder Analysieren
 - Verschieben oder Kopieren ohne Änderung
 
+## Versionen eines Stands
+
+Für einen **Stand** (abgeleitetes Dokument in
+`output/`, [[Einfrieren-und-Abloesen]] §Stand) gilt die
+Versionskette mit einer Abgrenzung: Der Inhalt eines
+wiki-verweisenden Stands lebt in seinen Elementen,
+nicht in der Datei. Eine Korrektur vor der Freigabe
+geht deshalb in die Elemente, und der Agent bildet
+daraus die nächste Version (`VV`+1) derselben
+Ketten-ID; die vorige Version bleibt ohne Freigabe
+liegen. Erstellt der User eine eigene Version
+(`_VV_<TLA>`), arbeitet die KI auf dieser Basis weiter,
+indem sie die Änderungen in die Elemente überträgt und
+die nächste Version bildet — ein wiki-verweisender
+Stand wird nicht in der Datei fortgeschrieben. Der
+Ablauf im Ganzen: [[Lebenslauf-eines-Stands]]. Neue
+Versionen eines Stands gibt es nur innerhalb seiner
+Marke ([[Einfrieren-und-Abloesen]] §Stand, „Stand je
+Marke“).
+
 ## Bezüge
 
 - Fassaden-Eintrag: [[InterneMechanik]]
+- Versionen eines Stands, Korrektur vor der Freigabe:
+  [[Lebenslauf-eines-Stands]],
+  [[Einfrieren-und-Abloesen]] §Stand
 - Verweise mit Link-Beschreibung: MasterPrompt
   §4.3–4.5;
   Grundprinzip und TLA: MasterPrompt §4.1/§4.2

@@ -110,18 +110,22 @@ jedes Feld anpassen.
   und Build; sie entstehen dort direkt und werden
   nicht abgeleitet; ihre Festlegungen werden im Wiki
   gebucht. Dazu die
-  selbsttragenden Dokumente als Ableitungen, darunter
-  die Betriebs-Anleitung für Menschen in `docs/ops/`
-  (mit SP-1: Dokumenttyp Betriebs-Anleitung,
-  Abgrenzung `docs/` gegen `output/` in SP-1
+  selbsttragenden Dokumente — die Kopien der
+  selbsttragenden Doku-Stände in `docs/developer/`,
+  `docs/user/` und `docs/ops/` (mit SP-1: Dokumenttypen
+  Entwickler-Doku, Benutzer-Doku, Betriebs-Anleitung;
+  der freigegebene Stand selbst bleibt in `output/` der
+  Werkstatt) und selbsttragende Ableitungen
+  (Abgrenzung `docs/` gegen `output/` in SP-1
   `index.md` §4.11).
 - **Schleuse** (die übrigen Meta-Felder):
   - **Auslöser:** je Dokumenttyp die Auslöser-Zeile
     seines Katalog-Eintrags ([[Katalog]],
     Dokumenttyp-Block). Standard für Dokumente, die
     das Produkt beschreiben: die Freigabe eines Stands
-    „für P11 Ausliefern“ — für die Betriebs-Anleitung
-    die Freigabe des Deploy-Stands — oder Zuruf.
+    „für P13 Ausliefern“ oder Zuruf; für die drei
+    Doku-Stände die Doku-Abfrage ([[Kettenpruefung]]
+    §Kette).
   - **Transformations-Regel:** vollständige
     Neu-Erzeugung aus dem Wiki, kein Nachpflegen;
     wiki-verweisend → selbsttragend (Wikilinks und

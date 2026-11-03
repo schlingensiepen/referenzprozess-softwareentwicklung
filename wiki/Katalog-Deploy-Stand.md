@@ -8,7 +8,7 @@ process: SP-1
 
 **Ich bin neu in SP-1.** Dokumenttyp-Eintrag: der
 Pflicht-Stand „Deploy-Stand je Umgebung zu Marke M“
-der Phase P11 (Kennung `deploy-stand`), abgeleitet aus
+der Phase P13 (Kennung `deploy-stand`), abgeleitet aus
 dem DEPL-Register ([[Katalog-Deployments]]).
 Es gibt ihn je Zielumgebung (warum: Zwei Achsen in
 der `## Meta` von [[Deployments]]). Beim Prozess-Merge (Wiki.md
@@ -17,12 +17,14 @@ Anwender-`wiki/` kopiert und in [[Katalog]] verankert.
 
 ### deploy-stand
 
-- **Zweck:** „für P11 Ausliefern“ — die Auslieferung
+- **Zweck:** „für P13 Ausliefern“ — die Auslieferung
   in diese Umgebung darf den Stand als verlässliche
-  Grundlage nehmen; seine Freigabe löst die Ableitung
-  der Betriebs-Anleitung aus
-  ([[Katalog-Betriebs-Anleitung]]).
-- **Phase:** P11
+  Grundlage nehmen; sein freigegebener Stand ist
+  Quell-Stand und Vorbedingung der Betriebs-Anleitung
+  seiner Umgebung ([[Katalog-Betriebs-Anleitung]]),
+  deren Zeitpunkt und Form die Doku-Abfrage
+  entscheidet, nicht die Freigabe.
+- **Phase:** P13
 - **Verbindlichkeit:** pflicht (je Zielumgebung) —
   beim **Koordinator** für alle Komponenten seiner
   §Komponenten-Zeilen, der den Gesamt-Deploy
@@ -33,7 +35,13 @@ Anwender-`wiki/` kopiert und in [[Katalog]] verankert.
 - **Grad:** wiki-verweisend
 - **Auslöser:** Standard, je Umgebung (Testbericht
   als Vorbedingung: [[Kettenpruefung]] §Code-Glieder;
-  Lint-Anteil DEPL: §Lint-Anteil). Weist der
+  Lint-Anteil DEPL: §Lint-Anteil). In der
+  Freigabe-Ordnung stehen Entwickler-Doku und
+  Benutzer-Doku vor ihm: fehlt eines ohne Verzicht,
+  warnt der Agent, und der Freigabe-Eintrag nennt das
+  fehlende Glied als Einschränkung „Doku folgt“ —
+  keine Blockade ([[Kettenpruefung]] §Kette,
+  Doku-Glieder). Weist der
   Testbericht nicht bestandene oder blockierte
   Testfälle aus, legt der Agent die Freigabe trotzdem
   vor und der Anwender entscheidet — Einschränkung im
@@ -45,7 +53,11 @@ Anwender-`wiki/` kopiert und in [[Katalog]] verankert.
   in der Auslieferung — Fix-Anforderung auf einen
   Deploy, [[Anforderungen]] „Fehlerbehebungen“: sie ist
   mit der Freigabe des Stands umgesetzt) —; je Umgebung
-  gilt der jüngste.
+  gilt der jüngste, und jeder weitere Stand derselben
+  Umgebung ist der Anlass einer neuen Version ihrer
+  Betriebs-Anleitung (Zeile der Doku-Abfrage für diese
+  Umgebung nachgestellt: [[Kettenpruefung]] §Kette,
+  Doku-Abfrage).
   Weiterer Stand zu einer abgeschlossenen Marke
   (Nachtrag-Fall: eine neue Umgebung, oder eine
   Umgebung mit freigegebenem Deploy-Stand, die anders
@@ -53,9 +65,11 @@ Anwender-`wiki/` kopiert und in [[Katalog]] verankert.
   als Nachtrag am Marken-Eintrag gebucht, seine
   Freigabe steht als Formel in der Nachtragszeile —
   kein eigener Freigabe-Eintrag, keine Ablösung — und
-  wirkt wie jede Deploy-Stand-Freigabe (Auslöser der
-  Betriebs-Anleitung, Pflicht-Freigabe dieser
-  Umgebung); sie ist kein Meilenstein-Anlass
+  wirkt wie jede Deploy-Stand-Freigabe (Pflicht-Freigabe
+  dieser Umgebung für Lint und Vollständigkeits-Scan;
+  Zeitpunkt und Form der Betriebs-Anleitung dieser
+  Umgebung entscheidet die nachgestellte Zeile der
+  Doku-Abfrage); sie ist kein Meilenstein-Anlass
   ([[Meilenstein-und-T2]]). Seine Quell-Elemente — die
   DEPL der neuen Umgebung bzw. die neuen DEPL und die
   Nachfolger abgelöster DEPL der anders ausgerollten
@@ -78,7 +92,11 @@ Anwender-`wiki/` kopiert und in [[Katalog]] verankert.
   Entscheidungen (DEC) zum Deployment aus
   [[Entscheidungen]] — jeweils Elemente der Marke mit
   Status `angenommen`, `in-umsetzung`, `umgesetzt`
-  oder `abgeschlossen` (nicht verworfen; für die Marke
+  oder `abgeschlossen`, DEPL und SPEC an einer
+  vorgelegten, noch nicht freigegebenen Version auch
+  `offen` — im Kopf ausgewiesen, mit der Freigabe
+  angenommen ([[Einfrieren-und-Abloesen]]
+  §Ableitungsprüfung) — (nicht verworfen; für die Marke
   nicht abgelöst — ein Element mit Status `abgelöst`
   gehört dazu, solange sein Nachfolger für die Marke
   nicht gilt, [[Einfrieren-und-Abloesen]] §Stand; mit

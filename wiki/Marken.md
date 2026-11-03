@@ -92,7 +92,11 @@ der Anwender:
   sondern ein weiterer Deploy-Stand — nach dem
   Abschluss ein Nachtrag an der abgeschlossenen Marke;
   je Umgebung gilt der jüngste ([[Zielmarken]] §Meta,
-  Nachtrag).
+  Nachtrag). Ebenso ein Doku-Stand der Marke, der in
+  der Doku-Abfrage „später“ erhielt und erst nach dem
+  Wechsel freigegeben wird: eine Doku ändert weder
+  Produkt noch Spezifikation — Nachtrag, keine Marke
+  ([[Kettenpruefung]] §Kette, Doku-Abfrage).
 - **Ein Ereignis beim Empfänger**, das das Projekt in
   eine neue Lage bringt (Revision eingelegt, Zuschlag
   erteilt, Bescheid ergangen): eine Ereignis-Marke

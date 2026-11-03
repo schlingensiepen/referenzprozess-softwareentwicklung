@@ -36,10 +36,15 @@ ARC-Register (§Festlegungen) und die Lage-Entität
   Entscheidungen und Funktionsbeschreibungen; eine
   Wahl mit Alternativen (Muster, Technologie,
   Bibliothek) bleibt eine DEC in [[Entscheidungen]].
-  ARC-Elemente werden mit dem Anwender-OK angenommen
-  und sind ab dann eingefroren
-  ([[Einfrieren-und-Abloesen]]); eine Änderung ist
-  eine Ablösung. Ihr Typ `architecture-description`
+  Ein ARC-Element legt der Agent als `offen` an; es
+  bleibt bearbeitbar, bis es einzeln angenommen wird
+  oder mit der Freigabe des ersten Stands, der es
+  verweist, und ist ab dann eingefroren
+  ([[Einfrieren-und-Abloesen]] §Eintrittsregel); eine
+  Änderung ist dann eine Ablösung. Bis zur Bildung des
+  Stands ist diese Fassade die Lese-Klammer der Phase
+  P5 ([[Lebenslauf-eines-Stands]]). Ihr Typ
+  `architecture-description`
   ist der SP-1-Typ ([[Katalog-Systemarchitektur]]).
 - **Architekturdokument:** der Stand der Phase P5;
   Zweck-Freigaben der Architektur binden sich an

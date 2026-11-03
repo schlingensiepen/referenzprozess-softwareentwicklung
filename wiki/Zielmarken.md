@@ -351,7 +351,21 @@ active: true   # kann nicht deaktiviert werden — Zielmarken ist Pflicht-Fassad
      Kette (unten) — als Register- und TODO-Punkte
      vorlegen — erledigen oder auf die nächste bzw.
      eine spätere Marke verschieben (Anwender-Entscheid
-     je Punkt). Verschieben heißt: an einem noch nicht
+     je Punkt). Dazu jeden **noch nicht freigegebenen
+     Doku-Stand** aus der Doku-Abfrage (Entwickler-Doku,
+     Benutzer-Doku, Betriebs-Anleitung je Umgebung;
+     [[Kettenpruefung]] §Kette, Doku-Abfrage) — mit
+     „jetzt“ wie mit „später“, und jedes Doku-Glied ohne
+     Zeile der Abfrage (etwa eine nach der Abfrage
+     hinzugekommene Umgebung): bei „jetzt“ ist die
+     Vorlage zur Freigabe vor dem Wechsel Pflicht (eine
+     Betriebs-Anleitung „jetzt“ kann keine Einschränkung
+     „Doku folgt“ tragen); bei „später“ gibt der Anwender
+     vor dem Wechsel frei oder entscheidet erneut
+     „später“ — dann wird der Stand nach dem Wechsel als
+     Nachtrag gebucht (Nachtrag unten), der Wechsel
+     wartet nicht; eine fehlende Zeile stellt der Agent
+     hier nach. Verschieben heißt: an einem noch nicht
      eingefrorenen Element (offener oder aufgeschobener
      Eintrag eines Registers mit `Freeze ab:
      angenommen`) das Feld umhängen; ein eingefrorenes
@@ -1073,7 +1087,11 @@ active: true   # kann nicht deaktiviert werden — Zielmarken ist Pflicht-Fassad
   für eine **neue Umgebung** oder für eine Umgebung,
   die zu dieser Marke schon einen freigegebenen
   Deploy-Stand hat und **anders ausgerollt** wird
-  (unten) —, wird er als **Vermerk
+  (unten) —, oder wird ein **Doku-Stand** der Marke
+  (Entwickler-Doku, Benutzer-Doku, Betriebs-Anleitung),
+  der in der Doku-Abfrage „später“ erhielt, erst nach
+  dem Wechsel freigegeben („Nachtrag eines
+  Doku-Stands“ unten), wird er als **Vermerk
   am Marken-Eintrag** mit seiner Freigabe gebucht: die
   Freigabe steht als Formel im Nachtrag, wie beim
   Nachtrag „Tag korrigiert“ (unten), nicht als eigener
@@ -1086,7 +1104,7 @@ active: true   # kann nicht deaktiviert werden — Zielmarken ist Pflicht-Fassad
   eines Deploy-Stands** (dieser Absatz ist der führende
   Ort des Formats):
   `- **Vermerk <Datum>:** Nachtrag: Stand <Datei mit
-  Version> von Deploy-Stand, freigegeben für P11
+  Version> von Deploy-Stand, freigegeben für P13
   Ausliefern zu Marke <M>, freigegeben vom Anwender
   <Datum>[; Nachweise: …][; Einschränkung: …]` —
   `<Datei mit Version>` ist die Stand-Datei mit Version
@@ -1102,7 +1120,7 @@ active: true   # kann nicht deaktiviert werden — Zielmarken ist Pflicht-Fassad
   Freigabe-Formel aus Vorgehen.md §4: die Stand-Datei
   an der Stelle der Version x, „Deploy-Stand“ an der
   Stelle des Dokumenttyps), der Zweck
-  „für P11 Ausliefern“ (SP-1 `Katalog-Deploy-Stand`),
+  „für P13 Ausliefern“ (SP-1 `Katalog-Deploy-Stand`),
   „zu Marke M“ wiederholt die Marke aus dem Kopf des
   Stands und ist im Nachtrag immer gesetzt, damit er für
   sich lesbar ist; danach die Nachweise des Feld-Sets,
@@ -1172,11 +1190,42 @@ active: true   # kann nicht deaktiviert werden — Zielmarken ist Pflicht-Fassad
   am Produkt — auch eine neue Spezifikation zur
   Pipeline —, ist das kein Nachtrag, sondern eine neue
   Marke (unten). Die Freigabe im Nachtrag wirkt wie jede
-  Deploy-Stand-Freigabe: Auslöser der Betriebs-Anleitung
-  und Pflicht-Freigabe der Umgebung für Lint und
-  Vollständigkeits-Scan. Der Lint erkennt sie an der
+  Deploy-Stand-Freigabe: Pflicht-Freigabe der Umgebung
+  für Lint und Vollständigkeits-Scan; Zeitpunkt und
+  Form der Betriebs-Anleitung dieser Umgebung
+  entscheidet die mit der Vorlage des Deploy-Stands
+  nachgestellte Zeile der Doku-Abfrage
+  ([[Kettenpruefung]] §Kette, Doku-Abfrage), nicht die
+  Freigabe; ihre Zeilen-DEC trägt `zielmarke: M` wie
+  jede Entscheidung, die nur diese Umgebung betrifft.
+  **Nachtrag eines Doku-Stands** (dieser Absatz ist der
+  führende Ort des Formats): Wird eine Entwickler-Doku,
+  Benutzer-Doku oder Betriebs-Anleitung, die in der
+  Doku-Abfrage „später“ erhielt, nach dem Marken-Wechsel
+  zu M freigegeben, steht ihre Freigabe in derselben
+  Form:
+  `- **Vermerk <Datum>:** Nachtrag: Stand <Datei mit
+  Version> von <Dokumentname>, freigegeben für <Zweck>
+  zu Marke <M>, freigegeben vom Anwender <Datum>[;
+  Nachweise: …][; Einschränkung: …]` — ⟨Artefakt⟩ ist
+  der Dokumentname des Katalog-Eintrags
+  (Entwickler-Doku, Benutzer-Doku, Betriebs-Anleitung),
+  der Zweck „für P13 Ausliefern“ bzw. „für P15
+  Betreiben“; die Stand-Datei einer Betriebs-Anleitung
+  trägt die Umgebung als Gegenstand wie der
+  Deploy-Stand (`<Datum> - Betriebs-Anleitung -
+  <Umgebung>_VV_TLA`). Nachweise: `review-report` der
+  Kettenprüfung, M6-Bericht, Testbericht. Der Stand
+  trägt `marke: M`; der Abschluss-Stand bleibt und ist
+  durch ihn nicht überholt; der Nachtrag zählt für Lint
+  und Vollständigkeits-Scan als Pflicht-Freigabe des
+  Doku-Glieds (bei der Betriebs-Anleitung der
+  Umgebung); kein Meilenstein-Anlass, kein Auslöser der
+  Release-Notes. Vor dem Wechsel wäre dieselbe Freigabe
+  ein gewöhnlicher Freigabe-Eintrag. Der Lint erkennt
+  die Freigabe im Nachtrag an der
   Formel, ordnet sie der Marke des Eintrags zu, zählt
-  sie als Pflicht-Freigabe P11 und als Freigabe des
+  sie als Pflicht-Freigabe P13 und als Freigabe des
   Stands und erwartet keine abgelöste Freigabe; einen
   Nachtrag zu einem Deploy-Stand ohne Formel, eine Formel
   ohne „Nachtrag:“ am Anfang, eine andere Marke, eine
@@ -1276,7 +1325,7 @@ active: true   # kann nicht deaktiviert werden — Zielmarken ist Pflicht-Fassad
   Der Lint liest je Umgebung den jüngsten Deploy-Stand
   (die Umgebung aus `umgebung` im Kopf der Stand-Datei,
   sonst aus dem Gegenstand des Dateinamens), zählt die
-  Pflicht-Freigabe P11 der Umgebung einmal und meldet
+  Pflicht-Freigabe P13 der Umgebung einmal und meldet
   eine Nachtragszeile für eine Umgebung mit
   freigegebenem Deploy-Stand nicht; eine zweite
   Ketten-ID für dieselbe Umgebung zu der Marke nennt er
@@ -1297,7 +1346,7 @@ active: true   # kann nicht deaktiviert werden — Zielmarken ist Pflicht-Fassad
   Abschluss-Stand und Nachtrags-Vermerke zusammen (der
   Lint liest von den Nachträgen den Nachtrag „Tag
   korrigiert“ und die Nachtragszeile eines
-  Deploy-Stands). **Keine Freigabe im Nachtrag ist ein
+  Deploy-Stands oder eines Doku-Stands). **Keine Freigabe im Nachtrag ist ein
   Meilenstein-Anlass** und keine löst eine T2-Runde
   aus (mit SP-1: `Meilenstein-und-T2`) — die Marke ist
   abgeschlossen, ihr Meilenstein Marken-Abschluss mit

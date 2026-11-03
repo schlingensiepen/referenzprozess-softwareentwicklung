@@ -11,20 +11,29 @@ Register; welche Typen es gibt, welche Klasse und
 welchen Freeze-Zeitpunkt sie tragen, steht je Typ im
 [[Katalog]] (Katalog-Einträge, lint-lesbare Zeilen);
 welche Glieder in welcher Reihenfolge freigegeben
-werden, steht in [[Kettenpruefung]]. Lesen vor der
+werden, steht in [[Kettenpruefung]]; die Abfolge vom
+ersten Element bis nach der Freigabe eines Stands in
+[[Lebenslauf-eines-Stands]]. Lesen vor der
 Bildung eines Stands, vor jeder Ablösung und beim
 Anlegen eines Register-Elements.
 
 ## Zweck
 
 **Kernsatz:** Ein Stand wird nur aus Eingefrorenem
-gebildet. Elemente sind ab ihrem Freeze-Zeitpunkt
-eingefroren und werden nur vollständig unter neuer ID
-abgelöst — ausdrücklich auch Entscheidungen (DEC). Was
-nicht von selbst eingefroren ist (nicht abgenommene
-Elemente, lebende Quellen), wird für den Stand kopiert
-oder vom Stand als nicht berücksichtigt ausgewiesen
-(§Ableitungsprüfung, §Kopien).
+**freigegeben.** Mit der Freigabe eines Stands sind
+alle verwiesenen Elemente eingefroren — was bei der
+Vorlage noch `offen` ist (§Eintrittsregel, Sammelzustand
+`offen`), nimmt der Agent im Freigabe-Zug an; der
+Kernsatz der Freigabe selbst („Stand X für Zweck Y“)
+steht in `Vorgehen.md` §4. Elemente sind ab ihrem
+Freeze-Zeitpunkt eingefroren und werden nur
+vollständig unter neuer ID abgelöst — ausdrücklich
+auch Entscheidungen (DEC); die Ablösung wirkt ab der
+Marke des Nachfolgers (§Ablösung). Was nicht von
+selbst eingefroren ist (lebende Quellen; Elemente, die
+der Anwender nicht annimmt), wird für den Stand
+kopiert oder vom Stand als nicht berücksichtigt
+ausgewiesen (§Ableitungsprüfung, §Kopien).
 
 **Phasen ordnen Freigaben, nicht Arbeit.** Ein Element
 jedes Registers darf jederzeit entstehen und
@@ -263,18 +272,38 @@ beschreibt, nicht ein Element.
 
 ## Eintrittsregel
 
-- Ein Element kommt erst mit Anwender-OK ins Register,
-  direkt als `angenommen`. **Entwürfe liegen nie unter
-  `wiki/`;** der Ort ist frei (Session, Scratch).
-- Ausnahme sind Register mit **Sammelzustand** (die
-  Sammelzustand-Zeile im [[Katalog]] sagt `ja`; z.B.
-  REQ, BUG, IDEA): dort darf ein Eintrag `offen` oder
+Welche der drei Formen ein Register hat, sagt die
+Sammelzustand-Zeile seines Katalog-Eintrags
+([[Katalog]] §Typ-Konventionen); der Ablauf vom ersten
+Element bis zur Freigabe: [[Lebenslauf-eines-Stands]].
+
+- **Eintritts-Register** (Sammelzustand-Zeile `nein`;
+  DEC und CON, TRES als Nachweis): Ein Element kommt
+  erst mit Anwender-OK ins Register, direkt als
+  `angenommen` — das OK ist die Entscheidung bzw. die
+  Freigabe des Providers. **Entwürfe solcher Elemente
+  liegen nie unter `wiki/`;** der Ort ist frei
+  (Session, Scratch). Kein `trigger`.
+- **Sammel-Register mit `offen` und `aufgeschoben`**
+  (Sammelzustand-Zeile `ja`; z.B. REQ, BUG, IDEA, NEED,
+  SCEN): dort darf ein Eintrag `offen` oder
   `aufgeschoben` sein. Register-Wächter und
-  Marken-Trigger arbeiten nur auf diesen
-  Sammel-Registern; `trigger` ist dort Kann-Feld (nur
-  bei `aufgeschoben`). Register ohne Sammelzustand
-  sind Eintritts-Register: Einträge beginnen bei
-  `angenommen`, kein `trigger`.
+  Marken-Trigger arbeiten **nur** auf diesen
+  Registern; `trigger` ist dort Kann-Feld (nur bei
+  `aufgeschoben`).
+- **Sammel-Register mit `offen` ohne `aufgeschoben`**
+  (Sammelzustand-Zeile `offen`; die beschreibenden
+  Register FUNC, ARC, SPEC, TEST und DEPL): Der Agent
+  legt ein Element als `offen` im `wiki/` an. Bis zur
+  Annahme ist es bearbeitbar — eine Klärung ändert das
+  Element, offene Punkte stehen im Element —, und es
+  wird **einzeln angenommen** (wenn andere Arbeit darauf
+  baut) **oder gesammelt mit der Freigabe** des ersten
+  Stands, der es verweist (§Ableitungsprüfung). Erst
+  damit friert es ein (`Freeze ab: angenommen`); was
+  eingefroren ist, ändert nur eine Ablösung. Kein
+  `aufgeschoben`, kein `trigger`, keine Wächter: Es
+  gibt nichts zu reaktivieren.
 - **Eine nicht getroffene Entscheidung ist keine DEC,
   sondern eine IDEA.** DEC bleibt Eintritts-Register
   ohne `offen`/`aufgeschoben`. Eine zurückgestellte
@@ -292,20 +321,56 @@ beschreibt, nicht ein Element.
 
 - Der **Dreiklang** je Register: Fassade → Element
   (Freeze, Ablösung, `zielmarke:`) → **Stand je
-  Dokumenttyp**. Ein Stand ist ein wiki-verweisendes
-  abgeleitetes Dokument in `output/` und Träger der
-  Freigabe; Glied der Kette ist der Dokumenttyp, nicht
+  Dokumenttyp**. Ein Stand ist ein abgeleitetes
+  Dokument in `output/` und Träger der Freigabe, mit
+  **einem von zwei Graden** (Grad-Zeile des
+  Katalog-Eintrags; Grade: MasterPrompt §9.6):
+  **wiki-verweisend** (der Leser hat Repo-Zugang; die
+  Regel für die Glieder P1–P10 und den Deploy-Stand)
+  oder **selbsttragend** (am Stück an Empfänger ohne
+  Wiki-Zugang; mit SP-1 die Doku-Glieder
+  Entwickler-Doku, Benutzer-Doku und
+  Betriebs-Anleitung). Glied der Kette ist der
+  Dokumenttyp, nicht
   das Register. Register und Dokumenttypen stehen n:m
   (ein Stand filtert mehrere Register, ein Register
-  speist mehrere Stände).
+  speist mehrere Stände). Der Kernsatz der Freigabe
+  gilt für beide Grade wörtlich (Vorgehen.md §4): Ein
+  **selbsttragender Stand** verweist auf keine
+  Elemente, sondern nennt seine Quell-Stände in
+  `herkunft`; was er trägt, ist aus eingefrorenen
+  Quell-Ständen ausformuliert — seine Freigabe friert
+  nichts Neues ein, „Stand aus den Elementen“ heißt
+  bei ihm: aus den Elementen, die seine Quell-Stände
+  verweisen. Er trägt keine Register-IDs und keine
+  Wikilinks und braucht keine Kopien lebender Quellen
+  (§Kopien), weil er alles inline trägt; Kopien in
+  seinen Quell-Ständen (etwa die Zielumgebung im
+  Deploy-Stand) liest er von dort.
 - Stände sind immer gleich gebaut, mit Merkmal
   **pflicht** (der Prozess braucht sie; Zweck = Phase)
   oder **optional** (der Anwender beauftragt; freier
   Zweck; Angebots-Auslöser). Was ein Dokumenttyp
   filtert, steht in seinem Katalog-Eintrag.
+- **Ablauf:** wann der Stand gebildet wird (Angebot
+  bei Vollständigkeit oder Zuruf), dass die Vorlage an
+  den Anwender der Stand selbst ist, wie vor der
+  Freigabe korrigiert wird und was im Freigabe-Zug
+  geschieht: [[Lebenslauf-eines-Stands]] — lesen vor
+  der Bildung.
 - **Dateiname:** ein Stand folgt dem Namensschema für
   `output/` (MasterPrompt §3.1 mit der Weglassregel
-  §3.2); Dokumentname ist der Name des Dokumenttyps
+  §3.2): `<Datum> - <Dokumentname>[ - <Gegenstand>]_VV_TLA.md`.
+  **Absender und Empfänger entfallen** — sie treffen
+  bei einem Stand nicht zu —, und die **Marke steht nur
+  im Kopf** (`marke`, unten), nicht im Namen. Namen
+  versionierter Dokumente tragen **keine Status-Wörter**
+  wie „Entwurf“, „final“ oder „freigegeben“: Die
+  Ketten-ID ist unveränderlich (MasterPrompt §3.8), ein
+  Status-Wort bliebe für immer stehen; ob und wofür ein
+  Stand freigegeben ist, steht nur im Freigabe-Eintrag
+  (MasterPrompt §3.9). Dokumentname ist der Name des
+  Dokumenttyps
   (`Katalog-<Name>.md`, z.B. `Anforderungen-Stand`).
   Gibt es innerhalb einer Marke mehrere Stände eines
   Dokumenttyps (z.B. Deploy-Stand je Umgebung,
@@ -328,7 +393,12 @@ beschreibt, nicht ein Element.
   Marke. Für eine neue Marke entsteht ein neues
   Dokument mit neuer Ketten-ID (eigenes Anfangsdatum);
   neue Versionen derselben Ketten-ID (`VV`) gibt es nur
-  innerhalb einer Marke — als Neu-Stand nach der
+  innerhalb einer Marke — als **Korrektur vor der
+  Freigabe** bei jedem Stand (die Korrektur geht in die
+  Elemente, die neue Version bildet sie ab, die vorige
+  bleibt ohne Freigabe liegen, die Freigabe trifft die
+  jüngste; [[Lebenslauf-eines-Stands]] Schritt 6), als
+  Neu-Stand nach der
   Überholt-Regel, ohne Prozess beim Abschluss-Stand
   nach einer Tag-Korrektur (vor wie nach seiner
   Freigabe, [[Kettenpruefung]] §Kette) und auf
@@ -346,12 +416,16 @@ beschreibt, nicht ein Element.
   wenn das Produkt seit ihm unverändert ist
   ([[Kettenpruefung]] §Kette, Übernahme aus der
   Vormarke; Übernahme des Tags und der Lieferung).
-- **Herkunftszeile im Kopf jedes Stands:** Marke,
-  Datum, Zweck und die Vorgänger-Stände mit Version. Die
-  verwiesenen Elemente stehen im Text, als ID (ein
-  Wikilink ist zulässig), nicht im Volltext: der Stand
-  ist wiki-verweisend, eingefrorene Elemente werden
-  verwiesen, nicht kopiert (§Kopien). **Jede ID im Text
+- **Herkunftszeile im Kopf jedes Stands** (beider
+  Grade): Marke,
+  Datum, Zweck und die Vorgänger-Stände mit Version. Bei
+  einem wiki-verweisenden Stand stehen die
+  verwiesenen Elemente im Text, als ID (ein
+  Wikilink ist zulässig), nicht im Volltext:
+  eingefrorene Elemente werden
+  verwiesen, nicht kopiert (§Kopien); ein
+  selbsttragender Stand nennt keine ID (oben,
+  Dreiklang). **Jede ID im Text
   eines Stands ist ein Verweis** — so liest sie der
   Lint. Ein Stand nennt deshalb keine ID, die für seine
   Marke abgelöst ist (Marken-Regel unten), auch nicht
@@ -386,7 +460,14 @@ beschreibt, nicht ein Element.
     Version, [[Kettenpruefung]] §Kette) —, und, wo die
     Kette es verlangt, der Tag der
     Implementierung und der Testbericht (TRES); leer,
-    wenn der Stand keinen Vorgänger hat.
+    wenn der Stand keinen Vorgänger hat. Bei einem
+    selbsttragenden Stand sind die Quell-Stände seines
+    Dokumenttyp-Eintrags darunter — aus ihnen ist er
+    ausformuliert, und der Lint liest sie hier
+    ([[Kettenpruefung]] §Lint-Anteil); ein
+    Änderungsdokument nennt die Vollfassung zusätzlich
+    im Kopf-Feld `basis` (Form wie ein Stand-Eintrag
+    hier; [[Kettenpruefung]] §Regel, Änderungsdokument).
 
   **Eintragsformat von `herkunft`:** je Bezug ein
   Listen-Eintrag — ein Stand als Dateiname mit
@@ -482,9 +563,18 @@ beschreibt, nicht ein Element.
   Überlagerung nach einer Freigabe).
 - Nach außen entsteht aus einem Stand bei Bedarf eine
   **selbsttragende Ableitung** (z.B. Testplan →
-  Durchführungs-Instanz, Deploy-Stand →
-  Betriebs-Anleitung, Abschluss-Stand → Release-Notes);
-  Grade und Link-Regel: MasterPrompt §9.6.
+  Durchführungs-Instanz, Abschluss-Stand →
+  Release-Notes) — oder der Stand ist selbst
+  selbsttragend und geht nach außen (Deploy-Stand →
+  Betriebs-Anleitung als Pflicht-Stand P15;
+  Architekturdokument, Technologie-Entscheidungen,
+  Spezifikation, Tag → Entwickler-Doku; Konzept,
+  Anforderungen, Funktionsbeschreibung, Tag →
+  Benutzer-Doku; mit SP-1). Ein selbsttragender Stand
+  liegt als freigegebene Version `_VV_TLA` in `output/`
+  und als Kopie in `docs/` des Produkts (SP-1
+  `index.md` §4.11); Grade und Link-Regel: MasterPrompt
+  §9.6.
 
 ## Ableitungsprüfung
 
@@ -505,13 +595,34 @@ nicht abgenommenem Punkt:
 - **trotzdem alles** (Momentaufnahme, nicht
   freigabefähig).
 
-Form im Kopf des Stands: eine Zeile direkt unter dem
-Titel, `Nicht berücksichtigt (offen): <ID>, …`; eine
+Bei `offen`en Elementen der beschreibenden Register
+(Sammelzustand `offen`, §Eintrittsregel) darf die Wahl
+„annehmen“ **im Freigabe-Zug** liegen: Eine vorgelegte,
+noch nicht freigegebene Version des Stands verweist
+sie wie angenommene Elemente und weist sie im Kopf
+aus; mit der Freigabe nimmt der Agent sie an, und sie
+frieren ein (§Zweck). Für `offen`e oder
+`aufgeschoben`e Elemente der Sammel-Register mit
+`aufgeschoben` (REQ, IDEA, NEED, SCEN) bleibt es bei
+den drei Möglichkeiten oben — annehmen vor der
+Bildung, weglassen oder Momentaufnahme.
+
+Form im Kopf des Stands: je eine Zeile direkt unter dem
+Titel — `Nicht berücksichtigt (offen): <ID>, …` für
+Weggelassenes; `Offen (Annahme im Freigabe-Zug): <ID>,
+…` für verwiesene `offen`e Elemente der beschreibenden
+Register (die Zeile entfällt in der freigegebenen
+Version nicht, sie dokumentiert, was mit der Freigabe
+angenommen wurde); eine
 Momentaufnahme trägt dort die Zeile
 `Momentaufnahme (trotzdem alles), nicht freigabefähig`.
+Der Lint prüft den Verweis-Satz an freigegebenen
+Ständen und liest die Ausweis-Zeile an einer
+vorgelegten Version ([[Kettenpruefung]] §Lint-Anteil).
 
 Festgehalten wird die Wahl im Register (annehmen) bzw.
-im Stand (weglassen, trotzdem alles). Ein
+im Stand (weglassen, trotzdem alles, Annahme im
+Freigabe-Zug). Ein
 weggelassener Punkt wird nur ausgewiesen, nicht
 kopiert; kopiert wird ein nicht abgenommener Punkt nur
 bei „trotzdem alles“ (§Kopien). Bei vielen Punkten
@@ -678,6 +789,8 @@ nichts, ist ein Nachtrag am Marken-Eintrag möglich
   [[Katalog]]
 - Reihenfolge und Prüfung der Freigaben:
   [[Kettenpruefung]]
+- Abfolge vom ersten Element bis nach der Freigabe:
+  [[Lebenslauf-eines-Stands]]
 - Marken, Zeiger, Wechsel-Prozedur, Nachtrag:
   [[Zielmarken]]
 - Freigabe-Buchung: [[Entscheidungen]] (Meta);

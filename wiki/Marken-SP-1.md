@@ -35,7 +35,10 @@ die Bezeichnung nennt der Anwender.
   Fehlerbehebung nach dem Abschluss eine Patch-Marke
   („2.0.1“); dieselbe Ausbaustufe in einer weiteren
   Zielumgebung ein Nachtrag an der abgeschlossenen
-  Marke ([[Marken]] §Wann eine neue Marke beginnt).
+  Marke, ebenso ein Doku-Stand, der in der Doku-Abfrage
+  „später“ erhielt und erst nach dem Wechsel
+  freigegeben wird ([[Marken]] §Wann eine neue Marke
+  beginnt; [[Kettenpruefung]] §Kette, Doku-Abfrage).
 - Je Marke gilt die Kette der Pflicht-Stände mit Tag
   und Abschluss-Stand ([[Kettenpruefung]] §Kette);
   Phasen mit Pflicht-Stand, die eine Marke nicht
@@ -68,9 +71,13 @@ der damit
 die T2-Runde des Wächters auslöst
 ([[Meilenstein-und-T2]]). Beide
 Ebenen bleiben; eine Arbeits-Einheit wird nicht zur
-Marke, nur weil sie abgeschlossen ist. Eine Freigabe im
+Marke, nur weil sie abgeschlossen ist. Die Freigabe
+jedes Pflicht-Stands der Kette — auch der Doku-Stände
+P11, P12 und P15 — ist ein eigener Meilenstein-Anlass.
+Eine Freigabe im
 Nachtrag zu einer abgeschlossenen Marke (§3: dieselbe
-Ausbaustufe in einer weiteren Zielumgebung; die
+Ausbaustufe in einer weiteren Zielumgebung; ein
+Doku-Stand mit „später“; die
 Tag-Korrektur) ist kein Meilenstein-Anlass — die Marke
 ist abgeschlossen, ihr Meilenstein mit dem Wechsel
 erreicht ([[Meilenstein-und-T2]]).

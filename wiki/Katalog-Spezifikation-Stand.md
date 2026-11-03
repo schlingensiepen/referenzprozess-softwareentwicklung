@@ -29,7 +29,11 @@ verankert.
   [[Kettenpruefung]] §Lint-Anteil).
 - **Quell-Register und Filter:** [[Spezifikationen]]
   — SPEC der Marke mit Status `angenommen`,
-  `in-umsetzung`, `umgesetzt` oder `abgeschlossen`
+  `in-umsetzung`, `umgesetzt` oder `abgeschlossen`, an
+  einer vorgelegten, noch nicht freigegebenen Version
+  auch `offen` — im Kopf ausgewiesen, mit der Freigabe
+  angenommen ([[Einfrieren-und-Abloesen]]
+  §Ableitungsprüfung) —
   (nicht verworfen; für die Marke nicht abgelöst —
   eine SPEC mit Status `abgelöst` gehört dazu, solange
   ihr Nachfolger für die Marke nicht gilt,

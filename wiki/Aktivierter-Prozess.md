@@ -39,7 +39,7 @@ type: internal-rule
 ## Herkunft
 
 - **Template-Stand:** offen — der Init schreibt
-  `2.0 seit JJJJ-MM-TT` (Tag des Inits, Stichtag des
+  `2.1 seit JJJJ-MM-TT` (Tag des Inits, Stichtag des
   Bestandsschutzes)
 - **Quelle:** offen — Repo-URL und Commit bzw. Tag;
   bei Modus A der Stand der Einmal-Kopie unter

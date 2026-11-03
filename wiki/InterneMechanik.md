@@ -209,6 +209,21 @@ _(mitgelieferte Basis-Prozeduren)_
   plus der Basis-Präfix-Katalog; Kadenz- und
   Sprach-Substanz bleibt in MasterPrompt §6.
 
+### [[Lebenslauf-eines-Stands]]
+
+- **Typ:** internal-procedure
+- **Kurzform:** Ablauf vom ersten Element bis nach
+  der Freigabe eines Stands in acht Schritten
+  (Erarbeiten `offen`er Elemente, Lese-Klammer
+  Fassade, Bildung auf Angebot oder Zuruf, Prüfung vor
+  der Vorlage, Vorlage des Stands selbst, Korrektur in
+  die Elemente mit neuer Version, Freigabe mit Annahme
+  der verwiesenen Elemente, Überholt und Übernahme)
+  samt Arten der Abweichung; Mechanik bleibt an den
+  führenden Orten. Lesen, sobald in einer Phase das
+  erste Element entsteht, und vor der Bildung eines
+  Stands.
+
 ## internal-concept
 
 _(mitgelieferte Basis-Konzepte; vom Agenten bei

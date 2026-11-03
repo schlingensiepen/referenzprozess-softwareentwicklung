@@ -24,14 +24,20 @@ Bei T2 läuft die **volle Wächter-Runde C4 bis C8**
 nur C5. Meilenstein-Anlässe:
 
 - **Freigabe eines Pflicht-Stands der Kette** (der
-  Phasen P1–P11 einer Marke, die nicht abgeschlossen
-  ist; der Abschluss-Stand ist ausgenommen, nächster
+  Phasen P1–P15 einer Marke, die nicht abgeschlossen
+  ist — einschließlich Entwickler-Doku (P11),
+  Benutzer-Doku (P12) und Betriebs-Anleitung je
+  Umgebung (P15): sie sind Glieder der Kette wie jedes
+  andere, ihre Freigabe ein Reifezustand der laufenden
+  Arbeit; der Abschluss-Stand ist ausgenommen, nächster
   Anlass) — Vorbedingung der Freigabe ist die
   [[Kettenpruefung]]; der Meilenstein ist die Freigabe
   selbst, der Wächter läuft danach. **Keine Freigabe im
   Nachtrag zu einer abgeschlossenen Marke ist ein
   Anlass** — weder die Tag-Freigabe einer Tag-Korrektur
   noch die Freigabe eines nachgetragenen Deploy-Stands
+  noch die Freigabe eines Doku-Stands, der in der
+  Doku-Abfrage „später“ erhielt
   ([[Zielmarken]] §Meta, Nachtrag): die Marke ist
   abgeschlossen, ihr Meilenstein Marken-Abschluss ist
   mit dem Wechsel erreicht, am Produkt ändert sich
@@ -78,7 +84,12 @@ keine Ausgabe.
   (T2-Trigger).
 - **Koordinator-Agent:** hat die Freigaben seiner
   eigenen Pflicht-Stände als Meilensteine; das
-  Koordinator-Aggregat ist P10+P11. **Komponenten-
+  Koordinator-Aggregat P10+P13 benennt nur, welche
+  Phasen er für das Gesamtsystem führt (Testplan-Stand
+  des Integrationstests, Deploy-Stände), es bündelt
+  keine Meilensteine — auch seine Doku-Glieder P11 und
+  P12, die dazwischen liegen, sind je ein eigener
+  Anlass. **Komponenten-
   Freigaben erreichen den Koordinator immer per
   Nachricht** — Lieferung (der Tag der Komponente, P9;
   übernommene Lieferung und Zwischen-Koordinator:

@@ -19,7 +19,13 @@ active: true   # Pflicht durch SP-1 (der Konzept-Stand filtert die Szenarien; Wi
 - **Sammel-Register:** ein Szenario darf `offen` oder
   `aufgeschoben` sein, bevor es angenommen ist
   ([[Einfrieren-und-Abloesen]] §Eintrittsregel); ab
-  `angenommen` ist es eingefroren.
+  `angenommen` ist es eingefroren. Bis zur Bildung des
+  Stands, der Szenarien filtert („Kette nach vorn“,
+  unten), ist diese Fassade — zusammen mit
+  [[Bedarfe]] — die **Lese-Klammer** der Phase: sie
+  listet jedes Szenario mit Link und Status, und der
+  Agent benennt sie dem Anwender so; Ablauf bis zur
+  Freigabe: [[Lebenslauf-eines-Stands]].
 - **Rollen:** jedes Szenario nennt die beteiligten
   Rollen per `rollen:`; die Rollen sind im
   Rollen-Register definiert ([[Rollen]]) und werden

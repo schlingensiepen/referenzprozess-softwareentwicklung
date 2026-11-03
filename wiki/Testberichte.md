@@ -35,12 +35,15 @@ nach dem Testplan der Phase P10.
   und Format: [[Einfrieren-und-Abloesen]] §Stand;
   lesen beim Anlegen eines Testberichts. Die Herkunft
   ist zugleich die Angabe zur Reproduzierbarkeit.
-- **Wofür er gebraucht wird:** die Freigabe von P10
-  nach P11 hängt am Testbericht
+- **Wofür er gebraucht wird:** die Freigaben nach P10
+  hängen am Testbericht — die der Doku-Stände
+  Entwickler-Doku (P11) und Benutzer-Doku (P12) wie die
+  des Deploy-Stands (P13)
   ([[Kettenpruefung]] §Code-Glieder).
 - **Nicht Bestandenes:** Weist der Testbericht nicht
   bestandene oder blockierte Testfälle aus, legt der
-  Agent die Freigabe für P11 trotzdem vor — mit dem
+  Agent die Freigabe für P13 — und die der Doku-Stände
+  P11 und P12 — trotzdem vor — mit dem
   Testbericht und den offenen BUG; der Anwender
   entscheidet ([[Berichten-statt-Blockieren]]). Gibt
   er trotz offener BUG frei, nennt der
@@ -48,8 +51,8 @@ nach dem Testplan der Phase P10.
   (`## Meta` von [[Entscheidungen]],
   Freigabe-Einträge). Dabei bietet der Agent einen
   Fehlerstand an ([[Katalog-Fehlerstand]]); er bleibt
-  optional. Bei einer Komponente ohne eigenes P11 und
-  bei P11 ohne Zielumgebung: [[Kettenpruefung]]
+  optional. Bei einer Komponente ohne eigenes P13 und
+  bei P13 ohne Zielumgebung: [[Kettenpruefung]]
   §Code-Glieder.
 - **Abgrenzung:** wie Testläufe ohne Testplan und
   normale Läufe belegt werden: Testergebnis-Regel in

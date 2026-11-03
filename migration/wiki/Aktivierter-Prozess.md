@@ -39,7 +39,7 @@ type: internal-rule
 ## Herkunft
 
 - **Template-Stand:** offen — die Migration schreibt
-  `2.0 seit JJJJ-MM-TT` (Übernahme-Tag, Stichtag des
+  `2.1 seit JJJJ-MM-TT` (Übernahme-Tag, Stichtag des
   Bestandsschutzes; Übernommenes bleibt Bestand)
 - **Quelle:** offen — Repo-URL und Commit bzw. Tag;
   bei Modus A der Stand der Einmal-Kopie unter

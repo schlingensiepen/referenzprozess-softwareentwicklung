@@ -188,8 +188,12 @@ Katalog-Einträge nach genau diesen Regeln.
   von Typ gilt und was ab dem Freeze gilt:
   [[Einfrieren-und-Abloesen]] §Freeze und Ausnahmen.
 - **Sammelzustand-Zeile:** `- **Sammelzustand:** ja` |
-  `nein` — nur bei Klasse Element. Was `ja` und `nein`
-  für Status, Wächter und `trigger` bedeuten:
+  `offen` | `nein` — nur bei Klasse Element. `ja`:
+  Sammel-Register mit `offen` und `aufgeschoben`;
+  `offen`: Sammel-Register mit `offen` ohne
+  `aufgeschoben` (die beschreibenden Register); `nein`:
+  Eintritts-Register. Was die Werte für Status, Wächter
+  und `trigger` bedeuten:
   [[Einfrieren-und-Abloesen]] §Eintrittsregel.
 - **Präfix-Zeile:** `- **Präfix:**` mit dem Präfix in
   Code-Spanne (`` `XXX` ``) oder `` `—` `` (auch der
@@ -241,19 +245,21 @@ Katalog-Einträge nach genau diesen Regeln.
   `Marken-Abschluss` oder `—`)
   · **Verbindlichkeit** (`pflicht` — der Prozess
   braucht den Stand — oder `optional` — der Anwender
-  beauftragt) · **Grad** (`wiki-verweisend` für einen
-  Stand, `selbsttragend` für eine Ableitung aus einem
-  Stand; Grade: MasterPrompt §9.6) · **Auslöser** (die
+  beauftragt) · **Grad** (`wiki-verweisend` oder
+  `selbsttragend` — ein Stand hat einen von beiden
+  Graden, eine Ableitung aus einem Stand ist
+  selbsttragend; Grade: MasterPrompt §9.6,
+  [[Einfrieren-und-Abloesen]] §Stand) · **Auslöser** (die
   einzige Regelstelle für den Auslöser dieses Typs;
   die Zeile beginnt mit `Standard`,
   `Angebots-Auslöser:` oder `eigener Auslöser:`, siehe
   unten) · **Quell-Register und Filter** (welche
   Register mit welchem Filter in den Stand eingehen
-  und was kopiert wird; bei selbsttragenden
-  Ableitungen der Quell-Stand) · **Pflichtfelder**
+  und was kopiert wird; bei selbsttragenden Ständen
+  und Ableitungen die Quell-Stände) · **Pflichtfelder**
   (die Kopf-Felder des Dokuments: `type: <kennung>`
-  und die Herkunftszeile — bei Ständen `marke`,
-  `zweck`, `herkunft`, `datum` (seit 2.0), bei
+  und die Herkunftszeile — bei Ständen beider Grade
+  `marke`, `zweck`, `herkunft`, `datum` (seit 2.0), bei
   selbsttragenden Ableitungen
   `marke` und `quell_stand`; Bedeutung der Felder:
   [[Einfrieren-und-Abloesen]] §Stand) · **Ablage**.
@@ -264,14 +270,27 @@ Katalog-Einträge nach genau diesen Regeln.
   §Stand, §Klassen). Nachweis einer Prüfung ist nie
   ein Dokumenttyp, sondern ein `review-report`.
 - **Auslöser-Zeile, Standard:** `Standard` heißt bei
-  einem Pflicht-Stand: Freigabe in der Ordnung der
+  einem Pflicht-Stand: **Bildung** auf Angebot des
+  Agenten, sobald er die Elemente des Dokumenttyps für
+  vollständig hält, oder auf Zuruf des Anwenders
+  ([[Lebenslauf-eines-Stands]] Schritt 3); **Freigabe**
+  in der Ordnung der
   Kette nach der Kettenprüfung gegen alle
   freigegebenen Vorgänger der Marke
-  ([[Kettenpruefung]]); bei einer selbsttragenden
-  Ableitung, die das Produkt beschreibt: die Freigabe
-  eines Stands „für P11 Ausliefern“ oder Zuruf, davor
-  das Pflicht-Angebot des Agenten. Nach `Standard`
-  nennt die Zeile nur, was der Typ zusätzlich hat.
+  ([[Kettenpruefung]]); „spätestens im Freigabe-Zug“
+  (Vorgehen.md §4, Stand-Zwang) bleibt die Untergrenze
+  der Bildung. Bei einer selbsttragenden
+  Ableitung, die das Produkt beschreibt, heißt
+  `Standard`: die Freigabe
+  eines Stands „für P13 Ausliefern“ oder Zuruf, davor
+  das Pflicht-Angebot des Agenten; die selbsttragenden
+  Doku-Stände der Kette (mit SP-1 Entwickler-Doku,
+  Benutzer-Doku, Betriebs-Anleitung) haben statt des
+  Standards den eigenen Auslöser Doku-Abfrage
+  ([[Kettenpruefung]] §Kette). Nach `Standard`
+  nennt die Zeile nur, was der Typ zusätzlich hat —
+  das engt den Anlass ein (Vorbedingung, z.B. der
+  Testplan nach dem Tag; eigener Auslöser; Angebot).
   Optionale Stände tragen einen
   `Angebots-Auslöser:`; Ableitungen und Pflicht-Stände
   mit eigenem Anlass (z.B. der Abschluss-Stand in der
@@ -450,7 +469,8 @@ Element-Typ.
 
 Je Dokumenttyp ein Eintrag (Dokumenttyp-Block). Die
 Basis bringt die Marken-Typen mit; die Glieder der
-Kette P1–P11 bringt der aktive Prozess als
+Kette P1–P15 — darunter die selbsttragenden
+Doku-Stände — bringt der aktive Prozess als
 Dokumenttyp-Einträge mit (Abschnitt
 §Prozess-mitgebrachte Einträge). Reihenfolge und
 Prüfung der Freigaben: [[Kettenpruefung]].
@@ -553,7 +573,7 @@ Eintrag eine Zeile wie oben, mit Zusatz
 Prozess-spezifische Typen werden nicht in der Basis
 geführt. Das gilt für Register-, Dokumenttyp- und
 Einzeltyp-Einträge gleichermaßen; die
-Dokumenttyp-Einträge der Kette P1–P11 bringt SP-1
+Dokumenttyp-Einträge der Kette P1–P15 bringt SP-1
 mit, RP-1 präzisiert sie als Ergänzung im jeweiligen
 Abschnitt.)_
 
@@ -642,18 +662,27 @@ Abschnitt.)_
 - [[Katalog-Testplan]] — Pflicht-Stand P10
   (`testplan`); lesen vor einem Testdurchgang
   (Prozess-mitgebracht (SP-1)).
-- [[Katalog-Deploy-Stand]] — Pflicht-Stand P11 je
+- [[Katalog-Entwickler-Doku]] — Pflicht-Stand P11
+  (`entwickler-doku`, selbsttragend); lesen, sobald
+  die Doku-Abfrage zur Marke ansteht und vor der
+  Bildung der Entwickler-Doku (Prozess-mitgebracht
+  (SP-1)).
+- [[Katalog-Benutzer-Doku]] — Pflicht-Stand P12
+  (`benutzer-doku`, selbsttragend); lesen, sobald die
+  Doku-Abfrage zur Marke ansteht und vor der Bildung
+  der Benutzer-Doku (Prozess-mitgebracht (SP-1)).
+- [[Katalog-Deploy-Stand]] — Pflicht-Stand P13 je
   Zielumgebung (`deploy-stand`); lesen vor einer
   Auslieferung (Prozess-mitgebracht (SP-1)).
 - [[Katalog-Fehlerstand]] — optionaler Stand über die
   Fehler zur Marke (`fehlerstand`); lesen, wenn über
   die Auslieferung entschieden wird
   (Prozess-mitgebracht (SP-1)).
-- [[Katalog-Betriebs-Anleitung]] — selbsttragende
-  Ableitung für Installation und Betrieb
-  (`betriebs-anleitung`, optional); lesen, wenn eine
-  Umgebung durch Fremde betrieben wird
-  (Prozess-mitgebracht (SP-1)).
+- [[Katalog-Betriebs-Anleitung]] — Pflicht-Stand P15
+  je Zielumgebung (`betriebs-anleitung`,
+  selbsttragend, aus dem Deploy-Stand der Umgebung);
+  lesen, sobald der Deploy-Stand einer Umgebung
+  freigegeben ist (Prozess-mitgebracht (SP-1)).
 - [[Katalog-Uebergabe-Dokument]] — selbsttragende
   Ableitung aus der Übergabe für eine Komponente ohne
   Wiki-Zugang (`uebergabe-dokument`, optional); lesen,

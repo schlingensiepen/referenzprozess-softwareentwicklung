@@ -24,19 +24,26 @@ heißt Marken-Abschluss, das Dokument Abschluss-Stand
   Funktionsbeschreibung, Architektur, Übergaben je
   Komponente, Technologie-Entscheidungen,
   Spezifikation, Tag der Implementierung, Testplan
-  und Testbericht, Deploy-Stände — soweit das Repo
+  und Testbericht, Entwickler-Doku, Benutzer-Doku,
+  Deploy-Stände und Betriebs-Anleitungen je Umgebung —
+  soweit das Repo
   das Glied führt oder ein Vertreter an seiner Stelle
   steht: [[Kettenpruefung]] §Fehlende und vertretene
-  Glieder). Aus der Vormarke übernommene Stände —
+  Glieder; ein Doku-Glied mit „später“ aus der
+  Doku-Abfrage steht als offener Punkt des
+  Vollständigkeits-Scans und nach dem Wechsel als
+  Nachtrag, ebenda §Kette). Aus der Vormarke
+  übernommene Stände —
   und der übernommene Tag, wenn das Produkt seit ihm
-  unverändert ist — stehen darin mit dem Vermerk
+  unverändert ist, und ein Doku-Stand mit „gar nicht
+  (Übernahme)“ — stehen darin mit dem Vermerk
   „übernommen aus <Vormarke>“; mit der Freigabe des
   Abschluss-Stands ist die Übernahme bestätigt
   ([[Kettenpruefung]] §Kette, Übernahme aus der
   Vormarke sowie Übernahme des Tags und der
   Lieferung). Bei einer Komponente listet der
   Abschluss-Stand die Glieder, die sie führt (bis
-  P10; P11 nur mit eigener Zielumgebung —
+  P11; P12, P13 und P15 nur mit eigener Zielumgebung —
   [[Kettenpruefung]] §Fehlende und vertretene
   Glieder), und geht mit dem Marken-Abschluss an den
   Koordinator. In einem Projekt ohne Prozess listet
@@ -85,10 +92,13 @@ heißt Marken-Abschluss, das Dokument Abschluss-Stand
   [[Zielmarken]] §Meta (Nachtrag) — lesen, wenn nach
   dem Abschluss ein Stand hinzukommt. Erhält ein
   Deploy-Stand, den der Abschluss-Stand in `herkunft`
-  nennt, im Nachtrag eine neue Version, bleibt der
+  nennt, im Nachtrag eine neue Version, oder wird ein
+  Doku-Stand mit „später“ erst im Nachtrag freigegeben,
+  bleibt der
   Abschluss-Stand eingefroren und ist dadurch nicht
   überholt — Lint und Vollständigkeits-Scan lesen den
-  Verweis auf die jüngste Version
+  Verweis auf die jüngste Version bzw. Abschluss-Stand
+  und Nachtrag zusammen
   ([[Einfrieren-und-Abloesen]] §Überholt-Regel).
 - **Pflichtfelder:** `type: abschluss-stand`, `marke`,
   `datum` (seit 2.0), `zweck`, `herkunft` (Herkunftszeile:

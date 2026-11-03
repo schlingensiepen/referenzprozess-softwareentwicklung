@@ -29,7 +29,11 @@ Ergänzung unten.
 - **Quell-Register und Filter:**
   [[Funktionsbeschreibungen]] — FUNC der Marke mit
   Status `angenommen`, `in-umsetzung`, `umgesetzt`
-  oder `abgeschlossen` (nicht verworfen; für die Marke
+  oder `abgeschlossen`, an einer vorgelegten, noch
+  nicht freigegebenen Version auch `offen` — im Kopf
+  ausgewiesen, mit der Freigabe angenommen
+  ([[Einfrieren-und-Abloesen]] §Ableitungsprüfung)
+  — (nicht verworfen; für die Marke
   nicht abgelöst — eine FUNC mit Status `abgelöst`
   gehört dazu, solange ihr Nachfolger für die Marke
   nicht gilt, [[Einfrieren-und-Abloesen]] §Stand; mit

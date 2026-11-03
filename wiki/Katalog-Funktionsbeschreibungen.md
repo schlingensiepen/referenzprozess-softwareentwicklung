@@ -37,7 +37,10 @@ eigenen Typ an.
   [[Katalog-Funktionsbeschreibung-Stand]]
 - **Klasse:** Element
 - **Freeze ab:** angenommen
-- **Sammelzustand:** nein
+- **Sammelzustand:** offen (Vorstatus `offen` ohne
+  `aufgeschoben`; Annahme einzeln oder im Freigabe-Zug
+  des ersten Stands, der das Element verweist —
+  [[Einfrieren-und-Abloesen]] §Eintrittsregel)
 - **Pflichtfelder:** `type: function-description`, `id`
   (Format `FUNC-NNN`), `status` (Werte nach
   [[Register-Lebenszyklus]]), `status_date`, `datum`
@@ -53,12 +56,12 @@ eigenen Typ an.
   `superseded_by` (Liste), `ueberlagert` (Liste; nur
   an einem Element einer Sackgasse, [[Katalog]]
   §Typ-Konventionen), `alias` (Liste). Kein
-  `trigger`: Eintritts-Register ohne
-  `offen`/`aufgeschoben`.
+  `trigger`: Sammelzustand `offen` ohne
+  `aufgeschoben`, nichts zu reaktivieren.
 - **Dokumenttypen:**
   [[Katalog-Funktionsbeschreibung-Stand]],
   [[Katalog-Architekturdokument]], [[Katalog-Uebergabe]]
-- **Beispielname:** `FUNC-001 Gesamt-Funktionsbeschreibung.md`
+- **Beispielname:** `FUNC-001 Datei hochladen.md`
 - **Kanonizität:** Wahrheit bei Status-Drift liegt in
   `wiki/Funktionsbeschreibungen.md` (Wiki.md §1.1a).
 - **Struktur-Konventionen:** `## Meta` der Fassade

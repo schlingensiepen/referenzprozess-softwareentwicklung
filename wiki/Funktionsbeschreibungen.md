@@ -25,12 +25,15 @@ der Phase P4 „Beschreiben der Funktion“.
   dieser Fassade, sondern der [[Spezifikationen]]
   (P8).
 - **Verortung je Repo:** jedes Repo führt seine eigenen
-  Funktionsbeschreibungen — der Koordinator die
+  Funktionsbeschreibungen — der Koordinator und das
+  Standalone-Projekt die
   **Gesamt-Funktionsbeschreibung**, jede Komponente
   ihre **Teil-Funktionsbeschreibung** (bei
   Übernahme-Art Auftrag vertritt der Übergabe-Stand
   des Koordinators dieses Glied: [[Kettenpruefung]]
-  §Fehlende und vertretene Glieder). Die Kette
+  §Fehlende und vertretene Glieder). „Gesamt“ und
+  „Teil“ sind Rolle des Repos und Eigenschaft des
+  Stands, kein Merkmal je Element. Die Kette
   entsteht über qualifizierte Verweise
   (`<repo>/FUNC-NNN`, Qualifizierer = Repo-Name);
   kein geteilter Kanonizitäts-Split nötig.
@@ -43,6 +46,16 @@ der Phase P4 „Beschreiben der Funktion“.
   übrigen Phasen auf einen CON verweisen:
   [[Katalog-Contract-Index#Rollen eines CON in der Kette]]
   — lesen bei einem Schnitt in Komponenten.
+- **Eintritt und Lese-Klammer:** ein FUNC-Element legt
+  der Agent als `offen` an; es bleibt bearbeitbar, bis
+  es einzeln angenommen wird oder mit der Freigabe des
+  ersten Stands, der es verweist
+  ([[Einfrieren-und-Abloesen]] §Eintrittsregel). Bis
+  zur Bildung des Stands ist **diese Fassade die
+  Lese-Klammer** der Phase P4 — sie listet jedes
+  Element mit Link und Status, und der Agent benennt
+  sie dem Anwender so; Ablauf bis zur Freigabe:
+  [[Lebenslauf-eines-Stands]].
 - **Freigabe:** freigegeben wird ein Stand, beim
   Koordinator wie bei einer Komponente mit demselben
   Zweck „für P5 Zerlegen in Bausteine“; Filter, Ablage
@@ -51,7 +64,10 @@ der Phase P4 „Beschreiben der Funktion“.
   der Freigabe. Der Freigabe-Eintrag im
   Entscheidungs-Register nennt Stand und Zweck.
 - **Eintragsformat:** `### FUNC-NNN — <Kurzsatz>` mit
-  Feldern Gegenstand (Gesamt/Teil, ggf. Komponente) /
+  Feldern Gegenstand (nur der beschriebene Gegenstand,
+  z.B. „Dienst Usage“, „Datenmodell“ — nicht „Gesamt“
+  oder „Teil“: das ist die Rolle des Repos, §Verortung
+  je Repo) /
   Status + status_date / Angelegt (Anlage-Datum
   `JJJJ-MM-TT`, Pflichtfeld seit 2.0 am Eintrag ohne
   Detail-Knoten, sonst `datum:` im Detail-Knoten;

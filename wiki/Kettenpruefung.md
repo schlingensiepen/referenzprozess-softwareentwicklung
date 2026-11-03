@@ -10,7 +10,10 @@ freigegeben werden. Dieser Knoten beschreibt den
 Mechanismus einmal; die Prozess-Templates nennen in
 ihren Dokumenttyp-Einträgen ([[Katalog]]) nur Glieder
 und Reihenfolge — streng analog zu
-[[Einfrieren-und-Abloesen]]. Lesen vor jeder Freigabe
+[[Einfrieren-und-Abloesen]]. Wo die Prüfung im Ablauf
+eines Stands liegt (vor der Vorlage an den Anwender)
+und was davor und danach geschieht:
+[[Lebenslauf-eines-Stands]]. Lesen vor jeder Freigabe
 eines Pflicht-Stands.
 
 ## Kette
@@ -145,6 +148,204 @@ eines Pflicht-Stands.
   nach dem Tag freigegeben, ohne Ausnahme (beim
   Koordinator ohne eigene Bauteile vertreten die
   Lieferungen den Tag).
+- **Doku-Glieder** (dieser Absatz und der nächste sind
+  der führende Ort der Regel): Die Kette trägt drei
+  Glieder, deren Stand **selbsttragend** ist
+  ([[Einfrieren-und-Abloesen]] §Stand, Grad) — mit
+  SP-1 die **Entwickler-Doku** (P11, „für P13
+  Ausliefern“), die **Benutzer-Doku** (P12, „für P13
+  Ausliefern“) und die **Betriebs-Anleitung je
+  Zielumgebung** (P15, „für P15 Betreiben“); welche
+  Quell-Stände sie ausformulieren, sagt ihr
+  Dokumenttyp-Eintrag. **Ordnung:** Entwickler-Doku und
+  Benutzer-Doku stehen in der Freigabe-Ordnung **vor**
+  dem Deploy-Stand (P13) — fehlt eines ohne Verzicht,
+  warnt der Agent, und der Freigabe-Eintrag des
+  Deploy-Stands nennt das fehlende Glied als
+  Einschränkung („Doku folgt“), keine Blockade (oben,
+  Freigabe-Ordnung als Warnung). Die Betriebs-Anleitung
+  steht **hinter** ihrem Quell-Stand: Sie wird erst nach
+  der Freigabe des Deploy-Stands ihrer Umgebung
+  freigegeben; ein weiterer Deploy-Stand derselben
+  Umgebung ist der Anlass einer neuen Version ihrer
+  Betriebs-Anleitung. Vorbedingung der Entwickler-Doku
+  und der Benutzer-Doku ist der Testbericht wie beim
+  Deploy-Stand (§Code-Glieder). Jedes Doku-Glied ist
+  per Verzichts-DEC je Marke verzichtbar, bei der
+  Betriebs-Anleitung je Umgebung (§Fehlende und
+  vertretene Glieder); ein freigegebener Doku-Stand der
+  Vormarke gilt weiter, solange er nicht überholt ist
+  (unten, Übernahme aus der Vormarke). Die Freigabe
+  jedes Doku-Stands einer nicht abgeschlossenen Marke
+  ist ein Meilenstein-Anlass wie bei jedem
+  Pflicht-Stand (mit SP-1: `Meilenstein-und-T2`).
+  Welche Doku-Glieder Koordinator, Komponente und
+  Standalone-Projekt führen: §Fehlende und vertretene
+  Glieder, §Komponenten-Kette nach Übernahme-Art.
+- **Doku-Abfrage** (ein Mechanismus für die drei
+  Doku-Glieder; der Prozess bindet ihn in seinem
+  Vorgehen ein, mit SP-1 `Vorgehen-SP-1.md` §2): Sobald
+  der **Tag der Implementierung** der Marke gesetzt ist
+  (Glied P9 — erst dann ist der Umfang der Änderung
+  bekannt; beim Koordinator ohne eigene Bauteile
+  vertreten die Lieferungen den Tag — der Zeitpunkt ist
+  die Buchung der letzten zur Marke erwarteten
+  Lieferung, §Fehlende und vertretene Glieder,
+  §Freigabe-Ordnung des Koordinators), legt der Agent
+  dem Anwender **einmal je
+  Marke** die Doku-Abfrage vor: eine Tabelle mit je
+  einer Zeile für Entwickler-Doku, Benutzer-Doku und
+  Betriebs-Anleitung **je Zielumgebung** — bei einer
+  Komponente ohne eigene Zielumgebung nur die Zeile
+  Entwickler-Doku, bei einer Komponente mit eigener
+  Zielumgebung alle Zeilen wie bei einem
+  Standalone-Projekt —, mit den Spalten Zeitpunkt,
+  Form, Empfehlung des Agenten und Begründung. Die
+  Arbeit an einer Doku darf früher beginnen (Zwei
+  Ordnungen, oben); die Abfrage entscheidet
+  Freigabe-Zeitpunkt und Form. Der Deploy-Stand selbst
+  ist nicht Teil der Abfrage; die Betriebs-Anleitung
+  folgt ihm. Die Abfrage ist die Auslöser-Zeile der
+  drei Dokumenttyp-Einträge und ersetzt für sie den
+  Standard-Auslöser ([[Katalog]] §Typ-Konventionen,
+  Auslöser-Zeile).
+  **Dimension Zeitpunkt:** **jetzt** — Freigabe vor der
+  Auslieferung, in der Ordnung der Kette (Normalfall);
+  **später** — Auslieferung zuerst, der Deploy-Stand
+  wird mit der Einschränkung „Doku folgt“ freigegeben,
+  die Doku spätestens zum Marken-Abschluss (unten);
+  **gar nicht** — der Agent unterscheidet **Übernahme**
+  (für diese Leser hat sich nichts geändert; der
+  freigegebene Stand der Vormarke gilt weiter, solange
+  er nicht überholt ist, und der Abschluss-Stand weist
+  ihn mit „übernommen aus <Vormarke>“ aus) von
+  **Verzicht** (es soll keinen Stand geben; mit
+  Begründung, Buchung unten). Für die
+  Betriebs-Anleitung, die hinter ihrem Quell-Stand
+  steht, heißt **jetzt**: Freigabe nach dem
+  freigegebenen Deploy-Stand ihrer Umgebung und vor
+  dem Marken-Abschluss; **später**: der
+  Marken-Abschluss wartet nicht auf sie, ihre Freigabe
+  steht nach dem Wechsel als Nachtrag (unten); eine
+  Einschränkung „Doku folgt“ am Deploy-Stand gibt es
+  für sie nicht, weil er vor ihr freigegeben ist.
+  **Dimension Form** (bei „jetzt“ und „später“):
+  **Änderungsdokument** — benennt die Änderungen
+  gegenüber der Vollfassung für diese Leser und trägt
+  im Kopf das Feld `basis:` mit der Vollfassung
+  (Stand-Datei mit Version, in der Form des Feld-Sets
+  „Verweise“ eines Freigabe-Eintrags); es ist
+  **kumulativ**: ein weiteres Änderungsdokument zur
+  selben Vollfassung enthält die früheren Änderungen
+  wieder und überholt das frühere als neuer Stand, so
+  dass Vollfassung plus ein Änderungsdokument immer
+  genügen (Prüfung: §Regel, Änderungsdokument);
+  **Einarbeitung** — eine neue Vollfassung, geänderte
+  Kapitel neu aus dem Wiki erzeugt, übrige Kapitel
+  unverändert aus der Vollfassung übernommen;
+  **komplett neu** — eine neue Vollfassung,
+  vollständig aus dem Wiki erzeugt. In allen Formen
+  stammt jeder Text aus dem Wiki bzw. aus den
+  Quell-Ständen, nichts wird von Hand nachgezogen
+  (MasterPrompt §9.6 „Neu ableiten statt nachpflegen“),
+  und Kettenprüfung und Verständnis-Check M6
+  (`Reviewmuster.md`) gehen über das **ganze**
+  Dokument.
+  **Empfehlungs-Heuristik** des Agenten (aus Umfang und
+  Art der Änderung; der Anwender entscheidet): erste
+  Marke, Bruch-Marke oder neue Struktur des Produkts →
+  komplett neu; übliche Folge-Marke → Einarbeitung;
+  Patch- oder Zwischenmarke mit kleiner Änderung →
+  Änderungsdokument; ab zwei Änderungsdokumenten seit
+  der letzten Vollfassung → Einarbeitung; dringender
+  Fix → später; nichts für diese Leser sichtbar → gar
+  nicht (Übernahme). Erste Marke nach einem Upgrade,
+  das die Doku-Glieder einführt → komplett neu;
+  vorgefundene Dokumente in `docs/` bleiben als
+  Nachweis liegen. Eine beim Upgrade laufende Marke,
+  deren Tag schon gesetzt ist, erhält die Abfrage mit
+  dem Upgrade nachgeholt; ein zu ihr schon
+  freigegebener Deploy-Stand bleibt freigegeben, die
+  Doku-Zeilen stehen dann auf „später“ oder „gar
+  nicht“, und ein fehlendes Doku-Glied ist Warnung,
+  keine Blockade.
+  **Buchung:** Das Ergebnis der Abfrage wird **je Zeile
+  als eigene DEC** gebucht — je Doku-Art, bei der
+  Betriebs-Anleitung je Umgebung — mit Zeitpunkt, Form
+  und Begründung; Gegenstand
+  `Doku-Entscheidung zu Marke <M>: <Dokumentname>[ –
+  <Umgebung>] — <Zeitpunkt>, <Form>`; die Tabelle der
+  Abfrage steht als Nachweis im Anlass der ersten
+  dieser DECs, die übrigen verweisen darauf. Vorlage
+  der Abfrage (Beispiel, Folge-Marke 1.1 mit einer
+  Zielumgebung):
+
+  | Doku-Art | Zeitpunkt | Form | Empfehlung | Begründung |
+  |---|---|---|---|---|
+  | Entwickler-Doku | jetzt / später / gar nicht | Änderungsdokument / Einarbeitung / komplett neu | jetzt, Einarbeitung | übliche Folge-Marke; zwei Kapitel (Persistenz, Build) betroffen |
+  | Benutzer-Doku | jetzt / später / gar nicht | Änderungsdokument / Einarbeitung / komplett neu | gar nicht (Übernahme) | für Benutzer nichts Sichtbares geändert; Stand 1.0 gilt weiter |
+  | Betriebs-Anleitung – Produktion | jetzt / später / gar nicht | Änderungsdokument / Einarbeitung / komplett neu | jetzt, Änderungsdokument | eine neue Umgebungsvariable; Vollfassung 1.0 als `basis:` |
+
+  Die Zeilen-DECs dazu: `Doku-Entscheidung zu Marke 1.1:
+  Entwickler-Doku — jetzt, Einarbeitung`;
+  `Doku-Entscheidung zu Marke 1.1: Benutzer-Doku — gar
+  nicht (Übernahme)` mit dem übernommenen Stand;
+  `Doku-Entscheidung zu Marke 1.1: Betriebs-Anleitung –
+  Produktion — jetzt, Änderungsdokument`. Eine Zeile
+  **„gar nicht (Verzicht)“** ist eine gewöhnliche
+  Verzichts-DEC mit `decision_type: verzicht`,
+  `zielmarke:` und `phase:` mit **genau einer** Phase
+  (P11 oder P12); für die Betriebs-Anleitung ist der
+  Verzicht ein Verzicht auf P15 **je Umgebung**: die
+  Verzichts-DEC trägt zusätzlich `umgebung:` mit dem
+  Namen der Umgebung aus der Entitäts-Fassade der
+  Zielumgebungen — dasselbe Feld wie DEPL und die
+  Fix-Anforderung auf einen Deploy —, je Umgebung eine
+  Verzichts-DEC (§Lint-Anteil, Verzicht;
+  [[Entscheidungen]] Meta „Verzichts-Einträge“). Zeilen
+  **„gar nicht (Übernahme)“** sind kein Verzicht: ihre
+  DEC nennt den übernommenen Stand der Vormarke mit
+  Version, der Abschluss-Stand weist ihn aus. Zeilen
+  „jetzt“ und „später“: ihre DEC ist die
+  Doku-Entscheidung; die Freigaben der Doku-Stände
+  bleiben eigene Freigabe-Einträge ([[Entscheidungen]]
+  Meta „Freigabe-Einträge“). Eine Zeilen-DEC, die erst
+  nach dem Marken-Abschluss entsteht (später
+  hinzukommende Umgebung, unten), trägt `zielmarke: M`
+  wie jede DEC, die nur eine nachgetragene Umgebung
+  betrifft ([[Zielmarken]] §Meta, Nachtrag).
+  **„Später“ und Nachtrag:** Ein Doku-Stand mit
+  „später“ wird spätestens zum Marken-Abschluss
+  freigegeben — der Vollständigkeits-Scan der
+  Wechsel-Prozedur legt ihn als offenen Punkt vor, auch
+  eine Betriebs-Anleitung mit „später“; entscheidet der
+  Anwender dort erneut „später“, wird der Doku-Stand
+  nach dem Wechsel als **Nachtrag** am Marken-Eintrag
+  gebucht: seine Freigabe steht als Formel in der
+  Nachtragszeile, kein eigener Freigabe-Eintrag, keine
+  Ablösung — derselbe Mechanismus wie beim
+  nachgetragenen Deploy-Stand (Format: [[Zielmarken]]
+  §Meta, Nachtrag); der Abschluss-Stand bleibt und ist
+  dadurch nicht überholt; kein Meilenstein-Anlass, kein
+  Auslöser der Release-Notes.
+  **Später hinzukommende Umgebung:** Kommt nach der
+  Abfrage eine Zielumgebung hinzu — vor oder nach dem
+  Marken-Abschluss — oder entsteht zu einer Umgebung
+  ein weiterer Deploy-Stand, stellt der Agent mit der
+  Vorlage dieses Deploy-Stands die Zeile
+  Betriebs-Anleitung für diese Umgebung nach (Zeitpunkt,
+  Form, Heuristik wie oben); das Ergebnis ist eine DEC
+  wie jede Zeile. Die Abfrage je Marke bleibt eine; die
+  Nachfrage je Umgebung ist ihre Fortsetzung, kein
+  zweiter Mechanismus.
+  **Release-Notes bleiben unverändert**
+  ([[Katalog-Release-Notes]]): Sie sagen, **was** sich
+  geändert hat; ein Änderungsdokument sagt, **wie** man
+  das Geänderte benutzt, ändert oder betreibt. Beides
+  nebeneinander ist keine Redundanz. **Ohne Prozess**
+  gibt es keine Phasen und keine Doku-Abfrage (oben,
+  Projekt ohne Prozess); der Agent bietet Doku-Stände
+  dann nur auf Zuruf an (optionaler Stand).
 - **Übernahme aus der Vormarke:** Ein freigegebener
   Pflicht-Stand der Vormarke gilt für die Folge-Marke
   weiter, solange er nicht überholt ist
@@ -296,9 +497,46 @@ nicht nur gegen den direkten Vorgänger — auf drei
 Dinge:
 
 - **Widerspruch** — der Stand widerspricht einem
-  Vorgänger;
+  Vorgänger; geprüft gegen **alle** freigegebenen
+  Vorgänger der Marke;
 - **Abdeckung** — alles vom Vorgänger ist aufgegriffen;
-- **Unbegründetes** — Inhalt, den kein Vorgänger trägt.
+  geprüft nur gegen die **Quell-Stände bzw.
+  Quell-Register seines Dokumenttyp-Eintrags** —
+  Quell-Stände dürfen aus Komponenten-Repos stammen,
+  qualifiziert als `<repo>/<Dateiname>` (die
+  Entwickler-Doku der Komponenten für die Gesamtsicht
+  des Koordinators); sie zählen dann als Vorgänger
+  auch für den Widerspruch, und fehlt ein Quell-Stand
+  (abgeleitet entfallen, §Fehlende und vertretene
+  Glieder), genügen die übrigen —: die
+  Benutzer-Doku deckt Konzept, Anforderungen und
+  Funktionsbeschreibung ab, nicht die Spezifikation;
+  die Betriebs-Anleitung den Deploy-Stand ihrer
+  Umgebung; der Testplan die REQ und FUNC über
+  `prueft:`;
+- **Unbegründetes** — eine **neue Sachaussage**, die
+  kein Vorgänger trägt (eine Funktion, eine
+  Eigenschaft, eine Grenze, die das Produkt laut
+  Vorgängern nicht hat). **Darstellung** — Anleitungen,
+  Beispiele, Erklärungen, Gliederung, Bilder,
+  Schritt-für-Schritt-Wege — ist erlaubt und kein
+  Befund, solange sie keine neue Sachaussage enthält;
+  das gilt für selbsttragende Stände ebenso wie für
+  wiki-verweisende.
+
+**Änderungsdokument** (Form eines Doku-Stands nach der
+Doku-Abfrage, §Kette): Es benennt die Änderungen
+gegenüber der Vollfassung unter `basis:` kumulativ, so
+dass Vollfassung plus ein Änderungsdokument immer
+genügen. Die Abdeckung wird nur für den **Zuwachs seit
+der Vollfassung** geprüft — die Elemente der
+Quell-Stände, die seit der Vollfassung hinzugekommen
+oder abgelöst sind (`zielmarke:` der Marken seit der
+Vollfassung); auf Widerspruch wird zusätzlich gegen die
+Vollfassung unter `basis:` geprüft, damit Vollfassung
+und Änderungsdokument zusammen gelesen keinen
+Widerspruch ergeben. Der Lint liest `basis:` als
+Verweis auf die Stand-Datei mit Version (§Lint-Anteil).
 
 Die **freigegebenen Vorgänger** liest der Agent aus
 dem Register [[Entscheidungen]]: es sind die Stände
@@ -336,9 +574,23 @@ in §Fehlende und vertretene Glieder.
 Die Prüfung ist **Pflicht vor jeder Freigabe eines
 Pflicht-Stands**; optionale Stände werden nur auf
 Anfrage geprüft; der Abschluss-Stand wird nur auf
-Vollständigkeit geprüft. Verweise eines Stands zeigen nur auf
-eingefrorene Knoten, die für die Marke gelten
-(Marken-Regel in [[Einfrieren-und-Abloesen]]).
+Vollständigkeit geprüft. **Zeitpunkt:** Bei einem
+Pflicht-Stand läuft die Prüfung durch das zweite
+Modell **vor der Vorlage** an den Anwender, so dass er
+den `review-report` mit dem Stand erhält; wird der
+Stand vor der Freigabe korrigiert (Korrektur in die
+Elemente, neue Version — [[Lebenslauf-eines-Stands]]
+Schritt 6), läuft eine **neue Runde nur über die
+geänderten Elemente**, mit Ergebnis wie im
+§Reviewer-Anteil. **Verweise eines freigegebenen
+Stands** zeigen nur auf eingefrorene Knoten, die für
+die Marke gelten (Marken-Regel in
+[[Einfrieren-und-Abloesen]]); eine vorgelegte, noch
+nicht freigegebene Version darf `offen`e Elemente der
+beschreibenden Register (Sammelzustand `offen`)
+verweisen und weist sie im Kopf aus — mit der Freigabe
+nimmt der Agent sie an ([[Einfrieren-und-Abloesen]]
+§Ableitungsprüfung).
 
 ## Lint-Anteil (Mechanik)
 
@@ -383,11 +635,40 @@ Vollständigkeit der Abdeckung beurteilt der Reviewer:
   (§Komponenten-Kette nach Übernahme-Art).
 - Welche CON eine SPEC abdecken muss, steht im
   Katalog-Eintrag `contract`.
+- **Verweis-Satz:** An einem **freigegebenen** Stand
+  (Freigabe-Eintrag oder Nachtragszeile, unten) meldet
+  der Lint jedes verwiesene Element, das noch `offen`
+  oder `aufgeschoben` ist und mit der Annahme
+  einfriert, als Fehler — ein Stand wird nur aus
+  Eingefrorenem freigegeben. An einer **vorgelegten**,
+  noch nicht freigegebenen Version sind ausgewiesene
+  `offen`e Elemente der beschreibenden Register
+  (Sammelzustand `offen`) kein Befund; fehlt ein
+  solches Element in der Zeile `Offen (Annahme im
+  Freigabe-Zug): …` unter dem Titel, ist das ein
+  Hinweis, ebenso ein verwiesenes `offen`es oder
+  `aufgeschoben`es Element eines Sammel-Registers mit
+  `aufgeschoben` (annehmen, weglassen oder
+  Momentaufnahme — [[Einfrieren-und-Abloesen]]
+  §Ableitungsprüfung). Ein in der Zeile `Nicht
+  berücksichtigt (offen): …` ausgewiesenes Element ist
+  kein Verweis des Stands. Geprüft werden Elemente mit
+  Detail-Knoten und Fassaden-Einträge ohne Knoten
+  gleichermaßen; den Status liest der Lint aus dem
+  Fassaden-Eintrag.
 - **Freigabe-Einträge** erkennt der Lint an der
   kanonischen Formel im Gegenstand des Eintrags
   ([[Entscheidungen]] Meta „Freigabe-Einträge“); den
   Zweck liest er an der Phasen-Angabe `Pn` (bzw.
-  `Pn/Pm`), den Tag
+  `Pn/Pm`) — nur bei einem eingefrorenen Eintrag vor dem
+  Stichtag (Bestand; etwa aus einem 2.0-Projekt), dessen
+  Nummer keine Phase des Katalog-Zwecks trifft, am
+  Tätigkeitsnamen: „für P11 Ausliefern“ liest sich als
+  P13 Ausliefern, „für P13 Betreiben“ als P15 Betreiben
+  (die Nummer wird dann nicht gelesen, die
+  Zuordnungstabelle nicht gebraucht); ein Eintrag ab dem
+  Stichtag nennt Nummer und Tätigkeitsname der aktuellen
+  Zählung, eine falsche Nummer ist ein Hinweis —, den Tag
   am ⟨Artefakt⟩ „Implementierung“ mit Zweck P10
   (Vorgehen.md §4). Eine Abweichung vom Wortlaut
   meldet er als **Hinweis**; ein **Fehler** ist sie
@@ -398,8 +679,11 @@ Vollständigkeit der Abdeckung beurteilt der Reviewer:
   das ein Hinweis. Daraus prüft er
   die **Freigabe-Ordnung** (§Kette) — ein fehlender
   früherer Pflicht-Stand ohne Verzicht ist eine
-  Warnung, die fehlende Tag-Bedingung des
-  Testplan-Stands ein Fehler — und die **Übernahme**
+  Warnung, auch ein fehlendes Doku-Glied P11 oder P12
+  vor dem Deploy-Stand („Doku folgt“); die fehlende
+  Tag-Bedingung des Testplan-Stands ein Fehler; die
+  Betriebs-Anleitung einer Umgebung zählt erst nach dem
+  freigegebenen Deploy-Stand dieser Umgebung — und die **Übernahme**
   aus der Vormarke (Vorgänger eines Stands darf der
   übernommene Stand der Vormarke sein; ein
   übernommener Tag und eine übernommene Lieferung
@@ -423,9 +707,19 @@ Vollständigkeit der Abdeckung beurteilt der Reviewer:
   Bauteil (§Freigabe-Ordnung des Koordinators).
 - **Verzicht** erkennen Lint und Kettenprüfung an einer
   DEC mit `decision_type: verzicht`, `zielmarke:` und
-  `phase: Pn`; für diese Marke entfallen der
+  `phase: Pn` — mit **genau einer** Phase; für diese
+  Marke entfallen der
   Pflicht-Stand der Phase und seine Lint-Pflichten
-  (z.B. die SPEC-Pflicht bei P8). `phase: P9` ist kein
+  (z.B. die SPEC-Pflicht bei P8). Der Verzicht auf die
+  Betriebs-Anleitung gilt **je Umgebung**: die
+  Verzichts-DEC mit `phase: P15` trägt zusätzlich
+  `umgebung:` mit dem Namen der Umgebung aus der
+  Entitäts-Fassade der Zielumgebungen (der Lint prüft
+  den Namen wie bei DEPL), Schlüssel sind Marke, Phase
+  und Umgebung; Lint und Kettenprüfung zählen die
+  Betriebs-Anleitung dieser Umgebung dann nicht als
+  Pflicht-Stand; `phase: P15` ohne `umgebung:` ist kein
+  Verzicht, der Lint meldet einen Hinweis. `phase: P9` ist kein
   zulässiger Verzicht (der Tag markiert das Produkt in
   jedem Projekt, §Kette); eine solche DEC meldet der
   Lint als **Fehler**. Ohne diese Felder gilt kein
@@ -447,9 +741,30 @@ Koordinators gilt als gedeckt, sobald sie in einem
 freigegebenen Übergabe-Stand an eine Komponente steht;
 die SPEC entsteht bei der Komponente.
 
+**Selbsttragende Stände:** Die Abdeckung prüft der Lint
+nur entlang der Felder oben; bei einem selbsttragenden
+Stand (Doku-Glieder, §Kette) liest er die Quell-Stände
+und den Testbericht aus `herkunft`
+([[Einfrieren-und-Abloesen]] §Stand) und bei einem
+Änderungsdokument die Vollfassung aus `basis:` (Form
+wie im Feld „Verweise“ eines Freigabe-Eintrags,
+[[Entscheidungen]] Meta „Freigabe-Einträge“). Ein
+freigegebener Pflicht-Stand der Phasen P11–P13 —
+Entwickler-Doku, Benutzer-Doku, Deploy-Stand — nennt den
+Testbericht in `herkunft` (§Code-Glieder; fehlt er:
+Hinweis); die Betriebs-Anleitung nennt den Deploy-Stand
+ihrer Umgebung, ihre `marke` kommt aus ihm (fehlt er oder
+gehört er zu einer anderen Umgebung: Hinweis; weicht die
+Marke ab: Fehler). Die Präzisierung der Abdeckung in
+§Regel betrifft die Reviewer-Seite.
+
 ## Reviewer-Anteil (Inhalt)
 
-Widerspruch und Unbegründetes prüft ein Reviewer
+Widerspruch und Unbegründetes nach §Regel — eine neue
+Sachaussage ist ein Befund, Darstellung nicht — prüft
+ein Reviewer, dazu die Vollständigkeit der Abdeckung
+gegen die Quell-Stände des Dokumenttyp-Eintrags (der
+Lint prüft nur „mindestens einer“, §Lint-Anteil)
 (Prüf-Modell ≠ Bau-Modell, MasterPrompt §5.6). Das
 zweite Modell kommt zuerst über ein Werkzeug
 (Peer-Agent, externes Modell; Wahl nach Vorgehen.md
@@ -460,14 +775,23 @@ Bau-Modell“ im Freigabe-Eintrag oder Anwender als
 Prüfer (`Reviewmuster.md` §2 Schleife 2, lesen vor
 jeder Prüf-Beauftragung). Ergebnis
 ist ein `review-report` ([[Katalog-review-report]]),
-auf den die Freigabe des Stands zeigt. Die Freigabe
+auf den die Freigabe des Stands zeigt; der Anwender
+erhält ihn mit dem Stand, weil die Prüfung vor der
+Vorlage läuft (§Regel). Nach einer Korrektur vor der
+Freigabe prüft die neue Runde nur die geänderten
+Elemente; ihr `review-report` nennt den der vorigen
+Runde als Vorgänger (`Reviewmuster.md` §2 Schleife 4).
+Die Freigabe
 selbst wird als DEC gebucht ([[Entscheidungen]], Meta
 „Freigabe-Einträge“).
 
 ## Code-Glieder
 
 - **P9 → P10:** Tests grün **plus Code-Review** als
-  Vorbedingung. Das Code-Review ist die Kettenprüfung
+  Vorbedingung. Mit dem gesetzten Tag legt der Agent
+  die Doku-Abfrage vor, wenn der Prozess Doku-Glieder
+  führt (§Kette, Doku-Abfrage; mit SP-1 immer). Das
+  Code-Review ist die Kettenprüfung
   des Glieds P9 nach §Regel: gegen alle freigegebenen
   Vorgänger der Marke, darunter die SPEC, wenn es sie
   gibt; eine eigene Regel für das Code-Review gibt es
@@ -492,22 +816,39 @@ selbst wird als DEC gebucht ([[Entscheidungen]], Meta
   Tag-Freigabe einer Tag-Korrektur nach dem
   Marken-Wechsel bei gleichem Inhalt steht als Formel
   im Nachtrag „Tag korrigiert“ am Marken-Eintrag, die
-  Freigabe eines nachgetragenen Deploy-Stands in dessen
-  Nachtragszeile — kein eigener Eintrag, keine Ablösung
+  Freigabe eines nachgetragenen Deploy-Stands und die
+  eines Doku-Stands mit „später“ (§Kette, Doku-Abfrage)
+  in deren Nachtragszeile — kein eigener Eintrag, keine
+  Ablösung
   einer früheren Freigabe (§Kette, Tag-Korrektur mit
   Prozess nach dem Wechsel; [[Zielmarken]] §Meta,
   Nachtrag; [[Entscheidungen]] Meta „Freigabe-Einträge“,
   Ausnahme). Name, wer den Tag
   setzt und dass er nie verschoben wird: Vorgehen.md
   §4 „Freigabe per Tag“ — lesen vor dem ersten Tag.
-- **P10 → P11:** ein Testbericht (TRES) zum
+- **P10 → P11, P12, P13:** ein Testbericht (TRES) zum
   Testplan-Stand; Nicht-Bestandenes erzeugt BUG mit der
-  `marke` des Testberichts. Träger
-  der Freigabe für P11 ist der Deploy-Stand je
+  `marke` des Testberichts. **Der Testbericht ist
+  Vorbedingung auch für Entwickler-Doku (P11) und
+  Benutzer-Doku (P12)**, wie für den Deploy-Stand: Die
+  Doku beschreibt das getestete Produkt der Marke;
+  die Arbeit an ihr darf früher beginnen, die Freigabe
+  nicht. Weist der Testbericht nicht bestandene oder
+  blockierte Testfälle aus, legt der Agent die Freigabe
+  eines Doku-Stands trotzdem vor; der Anwender
+  entscheidet, und der Freigabe-Eintrag nennt die
+  offenen BUG als Einschränkung — wie unten beim
+  Deploy-Stand. Bei einer Komponente ohne eigene
+  Zielumgebung ist ihr Testbericht Vorbedingung ihrer
+  Entwickler-Doku (§Komponenten-Kette nach
+  Übernahme-Art); über die Freigabe des Deploy-Stands
+  trotz ihrer offenen BUG entscheidet der Koordinator
+  (unten). Träger
+  der Freigabe für P13 ist der Deploy-Stand je
   Zielumgebung (mit SP-1 der Dokumenttyp-Eintrag
   `Katalog-Deploy-Stand`; er wird gebildet, sobald eine
   Zielumgebung eingetragen ist — ohne Zielumgebung
-  entfällt P11, §Fehlende und vertretene Glieder; ein
+  entfällt P13, §Fehlende und vertretene Glieder; ein
   Deploy-Stand, der nach dem Marken-Wechsel zu der
   abgeschlossenen Marke hinzukommt — für eine neue
   Umgebung oder für eine Umgebung, die anders
@@ -519,7 +860,7 @@ selbst wird als DEC gebucht ([[Entscheidungen]], Meta
   Änderung ist Betrieb ohne neuen Stand, [[Zielmarken]]
   §Meta, Nachtrag). Weist
   der Testbericht nicht bestandene oder blockierte
-  Testfälle aus, legt der Agent die Freigabe für P11
+  Testfälle aus, legt der Agent die Freigabe für P13
   trotzdem vor — mit dem Testbericht und den offenen
   BUG; der Anwender entscheidet
   ([[Berichten-statt-Blockieren]]). Gibt er trotz
@@ -527,13 +868,15 @@ selbst wird als DEC gebucht ([[Entscheidungen]], Meta
   offenen BUG als Einschränkung ([[Entscheidungen]]
   Meta „Freigabe-Einträge“); der Agent bietet dabei
   einen Fehlerstand an, der optional bleibt. Bei
-  einer Komponente ohne eigenes P11 fällt diese
+  einer Komponente ohne eigenes P13 fällt diese
   Freigabe aus der Regel heraus (§Fehlende und
   vertretene Glieder): ihre offenen BUG bleiben im
   Register, der Testbericht in ihrem Abschluss-Stand
-  weist sie aus, und über P11 entscheidet der
+  weist sie aus, die Komponente nennt sie als
+  Einschränkung im Freigabe-Eintrag ihrer
+  Entwickler-Doku, und über P13 entscheidet der
   Koordinator, der die Deploy-Stände führt. Ebenso
-  bei P11 ohne Zielumgebung (ebenda): die offenen BUG
+  bei P13 ohne Zielumgebung (ebenda): die offenen BUG
   bleiben im Register und im Abschluss-Stand
   ausgewiesen; der Vollständigkeits-Scan legt sie beim
   Marken-Abschluss vor ([[Zielmarken]] §Meta
@@ -562,16 +905,20 @@ Fehlens:
 
 | Glied | Wie es fehlt | Grundlage |
 |---|---|---|
-| jede Phase mit Pflicht-Stand, für eine Marke | **Verzicht:** Pflicht-Stand der Phase und seine Lint-Pflichten entfallen für diese Marke; die Freigabe-Ordnung geht über die Phase hinweg; spätere Glieder prüfen gegen die übrigen freigegebenen Vorgänger. Bei P8 bleibt der Verzicht dem Fall „baut, will aber keine SPEC“ vorbehalten (in kleinen Projekten darf P8 auch schmal bleiben). **Nicht verzichtbar ist der Tag (P9):** er markiert das Produkt in jedem Projekt (§Kette), und die Tag-Bedingung des Testplan-Stands gilt ohne Ausnahme (eine DEC mit `phase: P9` meldet der Lint, §Lint-Anteil) | Verzichts-DEC mit `decision_type: verzicht`, `zielmarke:` der Marke und `phase: Pn` |
+| jede Phase mit Pflicht-Stand, für eine Marke | **Verzicht:** Pflicht-Stand der Phase und seine Lint-Pflichten entfallen für diese Marke; die Freigabe-Ordnung geht über die Phase hinweg; spätere Glieder prüfen gegen die übrigen freigegebenen Vorgänger. Bei P8 bleibt der Verzicht dem Fall „baut, will aber keine SPEC“ vorbehalten (in kleinen Projekten darf P8 auch schmal bleiben). Bei den Doku-Gliedern P11 und P12 ist der Verzicht die Zeile „gar nicht (Verzicht)“ der Doku-Abfrage (§Kette). **Nicht verzichtbar ist der Tag (P9):** er markiert das Produkt in jedem Projekt (§Kette), und die Tag-Bedingung des Testplan-Stands gilt ohne Ausnahme (eine DEC mit `phase: P9` meldet der Lint, §Lint-Anteil) | Verzichts-DEC mit `decision_type: verzicht`, `zielmarke:` der Marke und `phase: Pn` (genau eine Phase) |
+| P15 je Umgebung (Betriebs-Anleitung) | **Verzicht je Umgebung:** die Betriebs-Anleitung dieser Umgebung entfällt für die Marke, die der übrigen Umgebungen bleibt Pflicht; die Zeile „gar nicht (Verzicht)“ der Doku-Abfrage für diese Umgebung (§Kette). Ohne `umgebung:` ist die DEC kein Verzicht (§Lint-Anteil) | Verzichts-DEC mit `decision_type: verzicht`, `zielmarke:`, `phase: P15` und `umgebung:` (Name aus der Entitäts-Fassade der Zielumgebungen), je Umgebung eine |
+| P11, P12, P15, für eine Marke | **Übernahme aus der Vormarke** — kein Fehlen: die Zeile „gar nicht (Übernahme)“ der Doku-Abfrage; der freigegebene Doku-Stand der Vormarke gilt weiter wie jeder übernommene Stand (§Kette, Übernahme aus der Vormarke) und steht im Abschluss-Stand mit „übernommen aus <Vormarke>“ | Zeilen-DEC der Doku-Abfrage, die den übernommenen Stand nennt |
 | P2 | **kein Glied:** mit SP-1 hat P2 keinen Pflicht-Stand (SP-1 `index.md` §3.2; ob eine Phase ein Glied trägt, legt die Phasentabelle des aktiven Prozesses fest) — bei Koordinator, Komponente und Standalone gleich; es gibt nichts zu vertreten | Dokumenttyp-Einträge des aktiven Prozesses |
+| P14 | **kein Glied:** mit SP-1 hat P14 keinen Pflicht-Stand (wie P2) | Dokumenttyp-Einträge des aktiven Prozesses |
 | P6 ohne Schnitt in Komponenten | **abgeleitet entfallen:** ohne Komponenten gibt es keine Übergabe (Standalone; Koordinator-Repo, dessen §Komponenten nur das eigene Repo führt) | §Komponenten der Architektur-Fassade; Dokumenttyp-Eintrag `uebergabe` (mit SP-1) |
 | P7, P8 beim Koordinator | **abgeleitet entfallen,** wenn der Koordinator keine eigenen Bauteile hat — keine Verzichts-DEC nötig | §Komponenten der Architektur-Fassade: keine Zeile mit Lage im eigenen Repo (§Freigabe-Ordnung des Koordinators) |
 | P9 (Tag) beim Koordinator ohne eigene Bauteile | **vertreten durch** die gebuchten Lieferungen aller Komponenten der Marke; die Tag-Bedingung des Testplan-Stands gilt für die Lieferungen. Wo ein Dokumenttyp-Eintrag „den Tag der Implementierung“ in `herkunft` verlangt (Testplan-Stand, Testbericht, Deploy-Stand), stehen dort die Lieferungs-Tags als `<repo>/<tag>` ([[Einfrieren-und-Abloesen]] §Stand). Ein Zwischen-Koordinator ohne eigene Bauteile liefert nach oben an Stelle des Tags den Verweis auf seine Zielmarken-Fassade (§Komponenten-Kette nach Übernahme-Art, Zwischen-Koordinator) | Abschnitt „Zuliefernde Komponenten“ am Marken-Eintrag ([[Zielmarken]]), gespeist aus den Lieferungs-Nachrichten ([[Katalog-message]]) |
-| P1 der Komponente (Übernahme-Art selbstständig) | **vertreten durch** den freigegebenen Übergabe-Stand des Koordinators (er ersetzt den Konzept-Stand); Pflicht-Stände ab P3 | Übergabe-Stand (Wurzel der Kette, §Komponenten-Kette nach Übernahme-Art) |
-| P1–P4 der Komponente (Übernahme-Art Auftrag) | **vertreten durch** den freigegebenen Übergabe-Stand — einschließlich des P4-Glieds der CON, in denen die Komponente Provider ist; Pflicht-Stände ab P5. Ein neuer CON oder eine Änderung über den Übergabe-Stand hinaus ist ein Rücklauf an den Koordinator | Übergabe-Stand (§Komponenten-Kette nach Übernahme-Art) |
+| P11, P12 beim Koordinator ohne eigene Bauteile | **kein Fehlen:** Gesamtsicht der Entwickler-Doku (P11) und Benutzer-Doku (P12) bleiben seine Glieder — sie beschreiben das Gesamtsystem; Vorbedingung ist sein Testbericht über die Lieferungen (§Freigabe-Ordnung des Koordinators). Die Gesamtsicht nimmt die Entwickler-Doku der Komponenten auf (§Komponenten-Kette nach Übernahme-Art) | Dokumenttyp-Einträge der Doku-Stände (mit SP-1) |
+| P1 der Komponente (Übernahme-Art selbstständig) | **vertreten durch** den freigegebenen Übergabe-Stand des Koordinators (er ersetzt den Konzept-Stand); Pflicht-Stände ab P3. Als Quell-Stand eines Doku-Glieds der Komponente tritt der Übergabe-Stand an die Stelle des Konzept-Stands | Übergabe-Stand (Wurzel der Kette, §Komponenten-Kette nach Übernahme-Art) |
+| P1–P4 der Komponente (Übernahme-Art Auftrag) | **vertreten durch** den freigegebenen Übergabe-Stand — einschließlich des P4-Glieds der CON, in denen die Komponente Provider ist; Pflicht-Stände ab P5. Als Quell-Stand eines Doku-Glieds der Komponente tritt er an die Stelle von Konzept, Anforderungen und Funktionsbeschreibung. Ein neuer CON oder eine Änderung über den Übergabe-Stand hinaus ist ein Rücklauf an den Koordinator | Übergabe-Stand (§Komponenten-Kette nach Übernahme-Art) |
 | P6 der Komponente | **abgeleitet entfallen,** wenn die Komponente nicht weiter zerlegt wird | §Komponenten der Komponente: keine weiteren Komponenten |
-| P11 der Komponente | **abgeleitet entfallen:** Deploy-Stände und DEPL führt der Koordinator mit dem Gesamt-Deploy für alle Komponenten seiner §Komponenten-Zeilen — bei einem Zwischen-Koordinator für ihn und seine Komponenten (§Komponenten-Kette nach Übernahme-Art, Zwischen-Koordinator); die Kette der Komponente endet mit P10 (offene BUG aus ihrem Testbericht: §Code-Glieder). **Ausnahme:** eine Komponente mit eigener Zielumgebung (unabhängig ausgeliefert) führt P11 und ihre DEPL selbst | Entitäts-Fassade der Zielumgebungen und §Komponenten (§Komponenten-Kette nach Übernahme-Art) |
-| P11 ohne Zielumgebung | **abgeleitet entfallen:** Deploy-Stände gibt es je Zielumgebung; führt das Repo, das P11 trägt, keine Zielumgebung, gibt es keinen Deploy-Stand und keine DEPL-Pflicht | Entitäts-Fassade der Zielumgebungen (mit SP-1): kein Eintrag |
+| P12, P13, P15 der Komponente | **abgeleitet entfallen:** Benutzer-Doku (P12), Deploy-Stände und DEPL (P13) und Betriebs-Anleitungen (P15) führt der Koordinator — bzw. das Standalone-Projekt, das Koordinator mit einem Bauteil ist — mit dem Gesamt-Deploy für alle Komponenten seiner §Komponenten-Zeilen, bei einem Zwischen-Koordinator für ihn und seine Komponenten (§Komponenten-Kette nach Übernahme-Art, Zwischen-Koordinator); die Kette der Komponente endet mit P11, der Entwickler-Doku für ihr Bauteil „für P13 Ausliefern“, die die Gesamtsicht des Koordinators aufnimmt (offene BUG aus ihrem Testbericht: §Code-Glieder). **Ausnahme:** eine Komponente mit eigener Zielumgebung (unabhängig ausgeliefert) führt wie ein Standalone-Projekt die Benutzer-Doku (P12), P13 mit ihren DEPL und die Betriebs-Anleitung ihrer Umgebung (P15) selbst — wer unabhängig ausliefert, hat eigene Benutzer und betreibt, was er ausliefert; ihre Doku-Abfrage hat alle Zeilen (§Kette), „gar nicht“ bleibt je Marke möglich | Entitäts-Fassade der Zielumgebungen und §Komponenten (§Komponenten-Kette nach Übernahme-Art) |
+| P13, P15 ohne Zielumgebung | **abgeleitet entfallen:** Deploy-Stände und Betriebs-Anleitungen gibt es je Zielumgebung; führt das Repo, das P13 trägt, keine Zielumgebung, gibt es keinen Deploy-Stand, keine DEPL-Pflicht und keine Betriebs-Anleitung | Entitäts-Fassade der Zielumgebungen (mit SP-1): kein Eintrag |
 
 Für jedes dieser Glieder gilt: Fehlt es auf eine
 dieser Arten oder gibt es das Glied nicht (P2), löst
@@ -609,13 +956,40 @@ Koordinator:
   Tags und der Lieferung). Den Integrationstest des
   Gesamtsystems führt der Koordinator;
   Teil-Integrationstests sind Arbeit, keine Freigabe.
-- **P11 und die DEPL** liegen beim Koordinator mit
+- **P13 und die DEPL** liegen beim Koordinator mit
   dem Gesamt-Deploy für alle Komponenten seiner
   §Komponenten-Zeilen (Deploy-Stände je Zielumgebung),
   auch für einen Zwischen-Koordinator und dessen
   Komponenten; die Ausnahme der Komponente mit eigener
   Zielumgebung steht in §Fehlende und vertretene
   Glieder.
+- **Doku-Glieder:** Die **Gesamtsicht der
+  Entwickler-Doku** (P11), die **Benutzer-Doku** (P12)
+  und die **Betriebs-Anleitungen** je Zielumgebung
+  (P15) liegen beim Koordinator — auch ohne eigene
+  Bauteile; Vorbedingung von P11 und P12 ist sein
+  Testbericht über die Lieferungen (§Code-Glieder). Die
+  Gesamtsicht nimmt die Entwickler-Doku jeder
+  Komponente auf — als Kopie der ausgelieferten Datei
+  oder als Anhang, selbsttragend, kein Verweis auf eine
+  Datei im Komponenten-Repo (MasterPrompt §9.6) —,
+  auch die einer Komponente mit eigener Zielumgebung;
+  die Entwickler-Doku-Stände der Komponenten sind
+  Quell-Stände der Gesamtsicht (SP-1
+  `Katalog-Entwickler-Doku.md`). Fehlt die
+  Entwickler-Doku einer Komponente („später“ oder
+  Verzicht in ihrer Doku-Abfrage), legt der
+  Koordinator die Gesamtsicht trotzdem vor und weist
+  die Lücke aus; der Freigabe-Eintrag nennt sie als
+  Einschränkung „Teil-Doku <Komponente> fehlt“
+  ([[Entscheidungen]] Meta „Freigabe-Einträge“; wie
+  bei offenen BUG einer Komponente, §Code-Glieder).
+  Wird die Teil-Doku nachgeholt, legt der Koordinator
+  in seiner Doku-Abfrage dafür eine Zeile für die
+  Gesamtsicht vor (neue Version oder
+  Änderungsdokument) — eine Nachfrage wie bei einer
+  später hinzukommenden Umgebung (§Kette).
+  In seiner Doku-Abfrage stehen alle Zeilen (§Kette).
 
 Was die Herkunftszeile des Testberichts (TRES) beim
 Koordinator trägt: [[Einfrieren-und-Abloesen]] §Stand.
@@ -649,13 +1023,23 @@ Zerlegung. Wann eine FUNC des Koordinators durch die
 Delegation).
 
 **Ende der Kette.** Die Komponente führt ihre Kette
-bis P10: Nach ihrem Tag (der Lieferung an den
+bis P11: Nach ihrem Tag (der Lieferung an den
 Koordinator, Vorgehen.md §3a) bildet sie einen
-Testplan-Stand und belegt den Durchgang mit einem
-Testbericht (§Code-Glieder). P11 und die DEPL liegen
-beim Koordinator; nur eine Komponente mit eigener
-Zielumgebung führt sie selbst (§Fehlende und
-vertretene Glieder). Ihr Abschluss-Stand listet die
+Testplan-Stand, belegt den Durchgang mit einem
+Testbericht (§Code-Glieder) und bildet die
+**Entwickler-Doku für ihr Bauteil** (P11); deren
+Freigabe trägt den Zweck „für P13 Ausliefern“ — die
+Lieferung an den, der P13 führt —, ihr Testbericht ist
+deren Vorbedingung, und offene BUG stehen als
+Einschränkung im Freigabe-Eintrag. In ihrer
+Doku-Abfrage steht deshalb nur die Zeile
+Entwickler-Doku (§Kette). Benutzer-Doku (P12), P13 mit
+den DEPL und Betriebs-Anleitungen (P15) liegen beim
+Koordinator, der die Entwickler-Doku der Komponente in
+seine Gesamtsicht aufnimmt (§Freigabe-Ordnung des
+Koordinators); nur eine Komponente mit eigener
+Zielumgebung führt P12, P13 und P15 selbst (§Fehlende
+und vertretene Glieder). Ihr Abschluss-Stand listet die
 Glieder, die sie führt, und geht mit dem
 Marken-Abschluss an den Koordinator
 ([[Katalog-Abschluss-Stand]]).
@@ -681,12 +1065,16 @@ Unter-Komponenten wie ein Koordinator
 sich wie beim Koordinator nach eigenen Bauteilen —
 ohne eigene Bauteile entfallen P7 und P8 abgeleitet,
 und die Lieferungen vertreten ihr Glied P9 (§Fehlende
-und vertretene Glieder). Ihre Kette endet mit P10;
-P11 und die DEPL für sie und ihre Unter-Komponenten
-führt der übergeordnete Koordinator mit dem
-Gesamt-Deploy — außer bei eigener Zielumgebung: dann
-führt sie P11 und die DEPL für sich und ihre
-Unter-Komponenten selbst (ihr Teilbaum).
+und vertretene Glieder). Ihre Kette endet mit P11: Sie
+führt für ihren Teilbaum die Entwickler-Doku wie eine
+Komponente — ihre Gesamtsicht nimmt die
+Entwickler-Doku ihrer Unter-Komponenten auf —;
+Benutzer-Doku (P12), P13 und die DEPL sowie die
+Betriebs-Anleitungen (P15) für sie und ihre
+Unter-Komponenten führt der übergeordnete Koordinator
+mit dem Gesamt-Deploy — außer bei eigener Zielumgebung:
+dann führt sie P12, P13 und die DEPL sowie P15 für
+sich und ihre Unter-Komponenten selbst (ihr Teilbaum).
 **DEPL der Unter-Komponenten:** Beim übergeordneten
 Koordinator stehen die Unter-Komponenten nicht als
 eigene Zeilen in §Komponenten (sie würden sonst zu
@@ -787,6 +1175,8 @@ Vorbedingung“ in [[Berichten-statt-Blockieren]]).
 - Fassaden-Eintrag: [[InterneMechanik]]
 - Freeze, Ablösung, Stand, Überholt-Regel:
   [[Einfrieren-und-Abloesen]]
+- Ablauf eines Stands, Lage der Prüfung darin:
+  [[Lebenslauf-eines-Stands]]
 - Glieder je Prozess: Dokumenttyp-Einträge im
   [[Katalog]]; Phasen und Übernahme-Arten: Vorgehen.md
   §3
