@@ -55,11 +55,25 @@ Anwender-`wiki/` kopiert und in [[Katalog]] verankert.
   `zweck`, `herkunft`, `datum` (seit 2.0) (Herkunftszeile und
   Datum des Stands: [[Einfrieren-und-Abloesen]]
   §Stand)
-- **Ablage:** `output/`, versioniert (`_VV_TLA`).
+- **Ablage:** `output/`, versioniert (`_VV_TLA`); in
+  einer Folge-Marke mit eigenem Tag wird dieselbe
+  Ketten-ID als Folge-Version mit `marke:` der
+  Folge-Marke fortgeführt ([[Einfrieren-und-Abloesen]]
+  §Stand).
 - **Herkunft:** `herkunft` führt zusätzlich den Tag
   der Implementierung, nach dem der Stand freigegeben
-  wird (Eintragsformat: [[Einfrieren-und-Abloesen]]
-  §Stand).
+  wird — den Tag der eigenen Marke; der Tag-Name steht
+  ohne Auszeichnung (Eintragsformat:
+  [[Einfrieren-und-Abloesen]] §Stand). Hat eine
+  Folge-Marke einen eigenen Tag, gilt der Testplan-Stand
+  der Vormarke für sie nicht als übernommen: eigene
+  Freigabe „für P10 Testen zu Marke M“ als
+  Folge-Version, bei unveränderten TEST-Elementen und
+  unverändertem Test-Setup mit unverändertem Text
+  (Empfehlung des Agenten; [[Kettenpruefung]] §Kette,
+  Folge-Marke mit eigenem Tag). Ohne eigenen Tag bleibt
+  die Übernahme, der Testbericht der Vormarke gilt
+  weiter.
 - **Nachweis:** der Testbericht (TRES,
   [[Testberichte]]) zu einem Durchgang nach diesem
   Stand; was er als Vorbedingung der Doku-Stände P11

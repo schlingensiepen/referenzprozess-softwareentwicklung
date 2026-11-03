@@ -392,7 +392,7 @@ Element bis zur Freigabe: [[Lebenslauf-eines-Stands]].
 - **Stand je Marke:** Ein Stand gehört zu genau einer
   Marke. Für eine neue Marke entsteht ein neues
   Dokument mit neuer Ketten-ID (eigenes Anfangsdatum);
-  neue Versionen derselben Ketten-ID (`VV`) gibt es nur
+  neue Versionen derselben Ketten-ID (`VV`) gibt es
   innerhalb einer Marke — als **Korrektur vor der
   Freigabe** bei jedem Stand (die Korrektur geht in die
   Elemente, die neue Version bildet sie ab, die vorige
@@ -404,13 +404,26 @@ Element bis zur Freigabe: [[Lebenslauf-eines-Stands]].
   Freigabe, [[Kettenpruefung]] §Kette) und auf
   Anwender-Entscheidung nach einer Überlagerung, die
   einen freigegebenen Stand der Sackgasse trifft
-  ([[Zielmarken]] §Meta „Zwischenmarke“); versionierte
+  ([[Zielmarken]] §Meta „Zwischenmarke“) — und, als
+  **einziger Fall über die Marken-Grenze, als
+  Folge-Version:** Testplan-Stand, Deploy-Stand und
+  Betriebs-Anleitung werden in einer Folge-Marke mit
+  eigenem Tag als neue Version derselben Ketten-ID mit
+  `marke:` der Folge-Marke fortgeführt — der Gegenstand
+  bleibt derselbe, es wechseln Marke und Grundlage;
+  ihre Freigabe löst die der Vormarken-Version
+  marken-bezogen ab ([[Kettenpruefung]] §Kette,
+  Folge-Marke mit eigenem Tag); versionierte
   Dokumente in `output/` werden nie überschrieben, auch
-  nicht vor ihrer Freigabe ([[Versionsketten]]). Sonst
-  hielten Lint und
-  Register-Wächter („jüngste Version je Ketten-ID“)
-  den Stand der Vormarke für verdrängt, obwohl er für
-  seine Marke gültig bleibt. Gilt ein Stand der
+  nicht vor ihrer Freigabe ([[Versionsketten]]). Lint
+  und Register-Wächter lesen „jüngste Version je
+  Ketten-ID“ **je Marke**: die jüngste Version, deren
+  `marke` für die geprüfte Marke gilt (entlang der
+  Vormarken-Kette); die Version der Vormarke bleibt für
+  ihre Marke gültig und wird durch die Folge-Version
+  nicht verdrängt — ein Stand der Vormarke, der sie in
+  `herkunft` nennt (ihr Abschluss-Stand), ist dadurch
+  nicht überholt. Gilt ein Stand der
   Vormarke für die Folge-Marke weiter, wird er
   übernommen, nicht neu gebildet; ebenso der Tag,
   wenn das Produkt seit ihm unverändert ist
@@ -711,6 +724,21 @@ nicht überholt.
 Der Lint liest das nicht (er kennt die Freigabe eines
 Tags nicht als Element); der Agent prüft es bei der
 Buchung der Korrektur und beim Marken-Wechsel.
+**Folge-Marke mit eigenem Tag:** Hat die Folge-Marke
+eine eigene Tag-Freigabe, ist der Tag der Vormarke für
+sie nicht das Glied P9 — ein Testplan-Stand oder
+Deploy-Stand der Vormarke, der ihn in `herkunft` nennt,
+ist für die Folge-Marke überholt, und die
+Betriebs-Anleitung über diesem Deploy-Stand ist es als
+Vorgänger-Stand; sie werden nicht übernommen, sondern
+als Folge-Version fortgeführt ([[Kettenpruefung]]
+§Kette, Folge-Marke mit eigenem Tag). Für
+Entwickler-Doku und Benutzer-Doku ist der Tag der
+Vormarke in `herkunft` kein Überholt-Grund — ihre
+Übernahme bleibt die ausdrückliche Wahl der
+Doku-Abfrage —, und der Tag-Grund wird über ihre
+Vorgänger-Stände nicht an sie weitergegeben. Diesen
+Grund liest der Lint (Tag-Freigaben je Marke).
 **Ältere Version in `herkunft` nach dem Nachtrag:**
 Nennt ein Stand einer abgeschlossenen Marke — der
 Abschluss-Stand — in `herkunft` eine ältere Version
@@ -739,14 +767,17 @@ gegen die Folge-Marke geprüft — ein Stand kann für
 seine Marke gültig und für die Folge-Marke überholt
 sein; dann wird er nicht übernommen, sondern für die
 Folge-Marke neu gebildet (neues Dokument, neue
-Ketten-ID, §Stand). **„Überholt“
+Ketten-ID, §Stand — bei Testplan-Stand, Deploy-Stand
+und Betriebs-Anleitung einer Folge-Marke mit eigenem
+Tag als Folge-Version derselben Ketten-ID). **„Überholt“
 wird abgeleitet, nicht gebucht:** der Lint berechnet
 es, der Register-Wächter C5 meldet es laufend
 (MasterPrompt §5.3), nicht erst beim Marken-Wechsel.
 Die Antwort ist ein neuer Stand, dessen Freigabe-DEC
 die alte per `supersedes:` ablöst (Neu-Ableitung;
 innerhalb der Marke als neue Version `VV` derselben
-Ketten-ID). Der Neu-Stand ist ein Stand wie jeder
+Ketten-ID, über die Marken-Grenze nur als
+Folge-Version). Der Neu-Stand ist ein Stand wie jeder
 andere: eigene
 Ableitungsprüfung, eigene Kopien, bei einem
 Pflicht-Stand eigene Kettenprüfung mit eigenem
@@ -756,7 +787,9 @@ nichts, ist ein Nachtrag am Marken-Eintrag möglich
 ([[Zielmarken]]).
 
 - **Lint:** Er beurteilt je Stand die jüngste Version
-  (höchste `VV` derselben Ketten-ID), freigegeben oder
+  (höchste `VV` derselben Ketten-ID, je Marke — eine
+  Folge-Version verdrängt die Version der Vormarke
+  nicht, §Stand), freigegeben oder
   nicht; für die Überholt-Berechnung liest er keine
   Freigabe (wofür er Freigabe-Einträge liest:
   [[Kettenpruefung]] §Lint-Anteil). Gilt der

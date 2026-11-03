@@ -71,7 +71,11 @@ verankert.
   (Code, Hilfe-Ausgabe, Konfiguration), nicht aus
   weiteren Ständen; Architekturdokument und
   Entwickler-Doku sind keine Quell-Stände der
-  Benutzer-Doku; bei einer Komponente mit
+  Benutzer-Doku — `herkunft` nennt sie trotzdem als
+  Vorgänger-Stände (alle freigegebenen Pflicht-Stände
+  früherer Phasen, [[Einfrieren-und-Abloesen]] §Stand),
+  die Abdeckung der Kettenprüfung gilt nur gegen die
+  Quell-Stände; bei einer Komponente mit
   eigener Zielumgebung tritt der Übergabe-Stand an die
   Stelle der Glieder, die er vertritt
   ([[Kettenpruefung]] §Fehlende und vertretene

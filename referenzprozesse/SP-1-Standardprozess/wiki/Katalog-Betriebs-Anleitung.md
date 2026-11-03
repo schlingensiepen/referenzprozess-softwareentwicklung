@@ -39,8 +39,13 @@ Anwender-`wiki/` kopiert und in [[Katalog]] verankert.
   Zielumgebung ([[Kettenpruefung]] §Fehlende und
   vertretene Glieder). Je Marke und Umgebung per
   Doku-Abfrage verzichtbar (Verzichts-DEC mit
-  `phase: P15` und `umgebung:`) oder aus der Vormarke
-  übernommen (Auslöser).
+  `phase: P15` und `umgebung:`) oder — nur ohne eigenen
+  Tag der Marke — aus der Vormarke übernommen
+  (Auslöser); mit eigenem Tag ist die Betriebs-Anleitung
+  der Vormarke für die Marke überholt und wird als
+  Folge-Version derselben Ketten-ID mit eigener
+  Freigabe fortgeführt ([[Kettenpruefung]] §Kette,
+  Folge-Marke mit eigenem Tag).
 - **Grad:** selbsttragend
 - **Auslöser:** eigener Auslöser: die **Doku-Abfrage**
   zur Marke, Zeile je Zielumgebung — sie entscheidet
@@ -49,6 +54,11 @@ Anwender-`wiki/` kopiert und in [[Katalog]] verankert.
   Einarbeitung / komplett neu); Mechanismus, Heuristik
   und Buchung je Zeile: [[Kettenpruefung]] §Kette
   (Doku-Abfrage) — lesen, sobald der Tag gesetzt ist.
+  Hat die Marke einen eigenen Tag, stellt die Abfrage
+  die Zeile ohne die Wahl „gar nicht (Übernahme)“; bei
+  unverändertem Betrieb empfiehlt der Agent „jetzt,
+  Einarbeitung“ mit leerem Zuwachs als Folge-Version
+  (ebenda, Folge-Marke mit eigenem Tag).
   Der Stand steht **hinter** seinem Quell-Stand: er
   wird erst nach der Freigabe des Deploy-Stands seiner
   Umgebung freigegeben — „jetzt“ heißt nach diesem

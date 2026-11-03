@@ -264,6 +264,23 @@ ausgelieferten Produkts.
 „Fehlerbehebungen“; Marke der Meldung:
 `Fehlermeldungen.md` §Meta „Zielmarke“
 
+### Folge-Version
+
+**English:** successor version
+
+Neue Version derselben Ketten-ID in einer Folge-Marke
+mit eigenem Tag — bei Testplan-Stand, Deploy-Stand und
+Betriebs-Anleitung, die für die Folge-Marke nicht als
+übernommen gelten, weil sie am Tag der Vormarke hängen;
+der einzige Fall einer neuen Version über die
+Marken-Grenze, mit `marke:` der Folge-Marke, dem neuen
+Tag in `herkunft` und eigener Freigabe, bei
+unverändertem Inhalt mit unverändertem Text.
+
+**Verankert in:** [[Kettenpruefung]] §Kette
+(Folge-Marke mit eigenem Tag); Ketten-ID und Marke:
+[[Einfrieren-und-Abloesen]] §Stand
+
 ### Implementierung
 
 **English:** implementation
@@ -503,7 +520,10 @@ Folge-Marke weitergilt, solange er nicht überholt ist:
 er wird nicht neu gebildet und nicht neu freigegeben
 und zählt in der Freigabe-Ordnung als Pflicht-Stand der
 Folge-Marke. Der Abschluss-Stand der Folge-Marke weist
-ihn mit „übernommen aus <Vormarke>“ aus.
+ihn mit „übernommen aus <Vormarke>“ aus. Hat die
+Folge-Marke einen eigenen Tag, werden Testplan-Stand,
+Deploy-Stand und Betriebs-Anleitung nicht übernommen,
+sondern als Folge-Version fortgeführt.
 
 **Verankert in:** [[Einfrieren-und-Abloesen]] §Stand
 („Stand je Marke“) und [[Zielmarken]] §Meta

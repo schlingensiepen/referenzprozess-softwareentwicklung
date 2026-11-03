@@ -759,6 +759,21 @@ treffer '^phase:[ 	]*P1[123][ 	]*$' 'Verzichts-DECs mit alter Phasennummer P11/P
 treffer 'für P11 Ausliefern|für P12 Produzieren|für P13 Betreiben' 'Freigaben und Nachträge mit alten Phasennummern — bleiben, der Lint liest den Zweck am Tätigkeitsnamen (2.0-nach-2.1.md Abschnitt 3); Regelwerks-Text in Fassaden-Köpfen kommt mit dem Delta-Nachzug (UPGRADE.md Schritt 5)' wiki
 [ -d "$DST/docs" ] && printf '  docs/ vorgefunden — bleibt als Nachweis liegen; der erste Doku-Stand entsteht über die Doku-Abfrage (2.0-nach-2.1.md Abschnitt 2 und 3)\n'
 [ "$IN_PROGRESS" -eq 1 ] || printf '  Zielmarken: Zustandszeile in-progress nicht gefunden — Zielmarken selbst lesen; fehlt eine laufende Marke, vom Anwender benennen lassen und anlegen (vor dem Lint, UPGRADE.md Schritt 4)\n'
+# Laufende Marke mit Tag (2.0-nach-2.1.md Abschnitt 2): Tag-Freigabe „Stand <Tag>
+# von Implementierung, freigegeben für P10 Testen zu Marke <M>“ zur Marke mit
+# Zustand in-progress — die Doku-Abfrage wird mit dem Upgrade nachgeholt, und
+# Testplan-Stand, Deploy-Stände und Betriebs-Anleitungen der Vormarke gelten
+# für sie nicht als übernommen (Folge-Version, eigene Freigaben P10/P13/P15)
+if [ "$IN_PROGRESS" -eq 1 ]; then
+    LAUFEND=$(awk '/^### /{m=$2} /^- \*\*Zustand:\*\* *in-progress/{print m; exit}' "$DST/wiki/Zielmarken.md" 2>/dev/null)
+    if [ -n "$LAUFEND" ] && [ -f "$DST/wiki/Entscheidungen.md" ]; then
+        if grep -q -E "von Implementierung, freigegeben für P10 [^,]*zu Marke $(printf '%s' "$LAUFEND" | sed 's/[.[\\*^$]/\\&/g')([^0-9.]|$)" "$DST/wiki/Entscheidungen.md"; then
+            printf '  laufende Marke %s trägt den Tag der Implementierung — Doku-Abfrage mit dem Upgrade nachholen (je Zeile eine DEC); Testplan-Stand, Deploy-Stände und Betriebs-Anleitungen der Vormarke gelten für sie nicht als übernommen: eigene Freigaben für P10 Testen, P13 Ausliefern und P15 Betreiben als Folge-Version, bei unverändertem Inhalt mit unverändertem Text (2.0-nach-2.1.md Abschnitt 2)\n' "$LAUFEND"
+        else
+            printf '  laufende Marke %s ohne Tag-Freigabe — die Doku-Abfrage kommt regulär mit dem Tag (2.0-nach-2.1.md Abschnitt 2)\n' "$LAUFEND"
+        fi
+    fi
+fi
 printf '\n'
 
 # ---------------------------------------------------------------------

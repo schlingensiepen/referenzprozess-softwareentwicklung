@@ -561,6 +561,11 @@ active: true   # kann nicht deaktiviert werden — Zielmarken ist Pflicht-Fassad
      das Produkt seit ihm unverändert ist und die
      Stände, auf denen er beruht, übernommen werden
      (ebenda, Übernahme des Tags und der Lieferung).
+     Bekommt die neue Marke einen eigenen Tag, werden
+     Testplan-Stand, Deploy-Stände und
+     Betriebs-Anleitungen nicht übernommen, sondern
+     als Folge-Versionen mit eigener Freigabe
+     fortgeführt (ebenda, Folge-Marke mit eigenem Tag).
      Der Agent legt vor, welche Stände und ob der Tag
      übernommen werden und welche Stände für die neue
      Marke überholt sind (Lint-Lauf, Marken-Bezug der

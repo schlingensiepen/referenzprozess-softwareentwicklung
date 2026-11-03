@@ -41,7 +41,15 @@ heißt Marken-Abschluss, das Dokument Abschluss-Stand
   Abschluss-Stands ist die Übernahme bestätigt
   ([[Kettenpruefung]] §Kette, Übernahme aus der
   Vormarke sowie Übernahme des Tags und der
-  Lieferung). Bei einer Komponente listet der
+  Lieferung). Für Testplan-Stand, Deploy-Stände und
+  Betriebs-Anleitungen gibt es den Vermerk nur, wenn
+  die Marke keinen eigenen Tag hat: mit eigenem Tag
+  führt der Abschluss-Stand ihre Folge-Versionen als
+  eigene Stände mit eigener Freigabe — eine Zeile
+  „übernommen aus <Vormarke>“ für einen solchen Stand
+  meldet der Lint als Fehler, an einer abgeschlossenen
+  Marke als Hinweis (ebenda, Folge-Marke mit eigenem
+  Tag). Bei einer Komponente listet der
   Abschluss-Stand die Glieder, die sie führt (bis
   P11; P12, P13 und P15 nur mit eigener Zielumgebung —
   [[Kettenpruefung]] §Fehlende und vertretene

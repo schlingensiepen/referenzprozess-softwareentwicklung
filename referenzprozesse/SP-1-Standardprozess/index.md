@@ -552,7 +552,12 @@ noch umbenannt; die Kopie des Stands liegt daneben.
   gilt das wiki. Hat sein Dokumenttyp einen
   Katalog-Eintrag (die drei Doku-Stände), trägt es
   zusätzlich dessen Herkunftszeile
-  ([[Einfrieren-und-Abloesen]] §Stand).
+  ([[Einfrieren-und-Abloesen]] §Stand). Die Kopie
+  eines Doku-Stands ist deshalb inhaltsgleich, nicht
+  byte-gleich mit dem Stand in `output/`: Frontmatter
+  (mit der Herkunftszeile) und Text bleiben
+  unverändert, der Herkunfts-Kopf steht als erste
+  Zeile nach dem Frontmatter.
 - **Neu-Ableitung statt Pflege:** `docs/`-Dokumente
   werden nicht von Hand nachgezogen, sondern zu ihrem
   Auslöser aus dem wiki bzw. aus ihren Quell-Ständen

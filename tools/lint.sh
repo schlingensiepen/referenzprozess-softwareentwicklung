@@ -159,9 +159,10 @@
 #     Deploy-Stand seiner Umgebung als Quell-Stand: fehlt er, Hinweis, andere
 #     Umgebung Hinweis, andere Marke Fehler MARKE-HERKUNFT; ein freigegebener
 #     Pflicht-Stand der Phasen P11–P13 ohne Testbericht TRES-NNN in
-#     `herkunft`: Hinweis; ein freigegebener Testplan-Stand (P10) ohne den
-#     Tag seiner Marke in `herkunft` — gelesen gegen die Tag-Freigaben der
-#     Marke, ohne Tag-Freigabe nicht geprüft: Hinweis; eine Kopie im
+#     `herkunft`: Hinweis; ein freigegebener Pflicht-Stand der Phasen P10–P13
+#     ohne den Tag seiner Marke in `herkunft` — gelesen gegen die
+#     Tag-Freigaben der Marke, ohne Auszeichnung, ohne Tag-Freigabe nicht
+#     geprüft: Hinweis; eine Kopie im
 #     Kopien-Ordner eines Stands (`<Ketten-ID>_VV_TLA/<Name>.md`, die
 #     Setup-Kopie des Testberichts) nur darauf, ob der Stand des Ordners in
 #     output/ liegt; `basis:` eines Änderungsdokuments als Stand-Datei
@@ -169,7 +170,10 @@
 #     ohne Version, anderer Dokumenttyp oder der Stand selbst: Hinweis),
 #     Marke je Ketten-ID, `datum`,
 #     überholt mit Marken-Bezug (auch für die laufende Marke bei Ständen
-#     der Vormarke; ein Vorgänger in `herkunft` mit jüngerer Version
+#     der Vormarke — bei eigenem Tag der laufenden Marke sind Testplan-Stand
+#     und Deploy-Stand der Vormarke mit dem alten Tag in `herkunft` und die
+#     Betriebs-Anleitung darüber für sie überholt: Folge-Version; jüngste
+#     Version je Ketten-ID und Marke; ein Vorgänger in `herkunft` mit jüngerer Version
 #     derselben Marke wird bei abgeschlossener Marke als jüngste Version
 #     gelesen — Nachtrag), Verweise, Consumer-Status, Verweis-Satz (ein
 #     freigegebener Stand verweist nur auf Eingefrorenes — ein verwiesenes
@@ -204,7 +208,11 @@
 #     je Marke mit Übernahme aus den Vormarken (Stände und — bei
 #     unverändertem Produkt — der Tag auf Basis der für die Vormarke
 #     wirksamen Pflicht-Stände; Hinweis, der entfällt, wenn der
-#     Abschluss-Stand die Übernahme ausweist), Verzicht und Rolle des Repos
+#     Abschluss-Stand die Übernahme ausweist; Testplan-Stand, Deploy-Stand
+#     und Betriebs-Anleitung nur ohne Tag-Freigabe zur Marke — sonst Hinweis
+#     „für M überholt, keine Übernahme“ und eine Zeile „übernommen aus“ für
+#     sie im Abschluss-Stand als Fehler, abgeschlossene Marke Hinweis),
+#     Verzicht und Rolle des Repos
 #     (Koordinator, Komponente, Komponente und Koordinator, Standalone,
 #     unbekannt; die Doku-Glieder wie jede Phase: Komponente ohne eigene
 #     Zielumgebung bis P11 — ohne P12, P13, P15 —, mit eigener Zielumgebung
@@ -1281,7 +1289,7 @@ function freienv(lst, u,  n2, j, fa2, l) {
 # Marken-Regel wie `freigilt`)? ALTM2: die Vormarke, deren Stand für M
 # überholt ist (Meldung mit Grund)
 function vorg_env(M, k, u,   mi, mm, M2, fl2, n2, fa, j) {
-  ALTM2 = ""
+  ALTM2 = ""; ALTR = ""
   if (((M, k) in frei) && freienv(freif[M, k], u) != "") return 1
   mi = midx(M)
   if (mi > 0) for (mm = mi - 1; mm >= 1; mm--) {
@@ -1289,7 +1297,7 @@ function vorg_env(M, k, u,   mi, mm, M2, fl2, n2, fa, j) {
     fl2 = freienv(freigilt(M2, k, M), u); if (fl2 == "") continue
     n2 = split(fl2, fa, "\t")
     for (j = 1; j <= n2; j++) if (fa[j] != "" && ueberholt(fa[j], M) == "") return 1
-    if (ALTM2 == "") ALTM2 = M2
+    if (ALTM2 == "") { ALTM2 = M2; ALTR = ((fa[1] SUBSEP M) in uebt) ? " (Folge-Marke mit eigenem Tag: Folge-Version derselben Ketten-ID mit eigener Freigabe zu " M ", bei unverändertem Inhalt mit unverändertem Text)" : "" }
   }
   return 0
 }
@@ -1321,7 +1329,36 @@ function stand_offen(f, id, t, cs,   sz) {
   else if (sz == "offen" && cs == "offen") { if (!((f, id) in soff)) hin("STAND-OFFEN", f, id " ist `offen` und in der Zeile „Offen (Annahme im Freigabe-Zug): …“ unter dem Titel nicht ausgewiesen — eine vorgelegte Version weist verwiesene `offen`e Elemente der beschreibenden Register aus (Einfrieren-und-Abloesen §Ableitungsprüfung)") }
   else hin("STAND-OFFEN", f, id " hat Status `" cs "` (Sammel-Register mit `aufgeschoben`) — vor der Bildung annehmen, weglassen (Zeile „Nicht berücksichtigt (offen): …“) oder Momentaufnahme (Einfrieren-und-Abloesen §Ableitungsprüfung); so nicht freigabefähig")
 }
-function ueberholt(f, M,   key, j, g0, n, i, w, p, r, harr, q) {
+# Tag-Name ohne Auszeichnung (Backticks, Anführungszeichen) für den Vergleich
+function tagnorm(w) { gsub(/[`"']/, "", w); return trim(w) }
+# Jüngste Version der Ketten-ID von f mit derselben Marke wie f (Einfrieren-und-
+# Abloesen §Stand: „jüngste Version je Ketten-ID“ je Marke — eine Folge-Version
+# verdrängt die Version der Vormarke nicht)
+function jv(f) { return neufm[kid(f), trim(fmget(f, "marke"))] }
+# Überholt-Grund „Tag der Vormarke in `herkunft` bei eigenem Tag der Folge-Marke“
+# (Einfrieren-und-Abloesen §Überholt-Regel; Kettenpruefung §Kette, Folge-Marke
+# mit eigenem Tag): Stand f einer früheren Marke — Testplan-Stand (P10) oder
+# Deploy-Stand (P13) — nennt in `herkunft` einen Tag-Namen aus der Tag-Freigabe
+# einer früheren Marke, und die geprüfte Marke M hat eine eigene Tag-Freigabe:
+# für M überholt (keine Übernahme). Nur für eine nicht abgeschlossene Marke M
+# (abgeschlossene Marken bleiben unberührt; die Übernahme-Zeile in ihrem
+# Abschluss-Stand ist dort ein Hinweis). Rückgabe: Grund oder ""
+function tagueb(f, M,   Mf, ph, n, i, w, mm, M2, nt, q, mta, harr) {
+  if (M == "" || !(M in tagx) || tagx[M] == "" || (M in abgeschl) || midx(M) == 0) return ""
+  Mf = trim(fmget(f, "marke")); if (Mf == "" || Mf == M || midx(Mf) == 0 || midx(Mf) >= midx(M)) return ""
+  ph = phnum(stand[f]); if (ph != 10 && ph != 13) return ""
+  n = vals(f, "herkunft", harr)
+  for (i = 1; i <= n; i++) {
+    w = tagnorm(harr[i]); if (w == "" || (OUTP w) in stand) continue
+    for (mm = 1; mm < midx(M); mm++) {
+      M2 = markn[mm]; if (!(M2 in tagx) || tagx[M2] == "") continue
+      nt = split(tagx[M2], mta, "\t")
+      for (q = 1; q <= nt; q++) if (mta[q] != "" && w == tagnorm(mta[q])) return "Tag " w " der Vormarke " M2 " in `herkunft` — " M " hat einen eigenen Tag, der Tag der Vormarke ist für " M " nicht das Glied P9 (Folge-Version statt Übernahme)"
+    }
+  }
+  return ""
+}
+function ueberholt(f, M,   key, j, g0, n, i, w, p, r, harr, q, ph) {
   key = f SUBSEP M
   if (key in uebm) return uebm[key]
   uebm[key] = ""
@@ -1329,12 +1366,19 @@ function ueberholt(f, M,   key, j, g0, n, i, w, p, r, harr, q) {
     g0 = stref[f, j]
     if (fmget(g0, "superseded_by") != "" && nachfolger_gilt(g0, M)) { uebm[key] = idof[g0] " abgelöst, Nachfolger gilt für " M; return uebm[key] }
   }
+  r = tagueb(f, M); if (r != "") { uebm[key] = r; uebt[key] = 1; return r }
+  # der Tag-Grund wird über Vorgänger-Stände nur an Testplan-Stand, Deploy-Stand
+  # und Betriebs-Anleitung weitergegeben (P10, P13, P15), nicht an Entwickler-
+  # und Benutzer-Doku (ihre Übernahme bleibt die Wahl der Doku-Abfrage)
+  ph = phnum(stand[f])
   n = vals(f, "herkunft", harr)
   for (i = 1; i <= n; i++) {
     w = harr[i]; p = OUTP w
     if ((p in stand) && kid(w) != kid(f)) {
       q = nachtragversion(f, p); if (q != "") p = q
-      r = ueberholt(p, M); if (r != "") { uebm[key] = "Vorgänger-Stand " w " überholt"; return uebm[key] }
+      r = ueberholt(p, M)
+      if (r != "" && ((p SUBSEP M) in uebt) && ph != 10 && ph != 13 && ph != 15) continue
+      if (r != "") { uebm[key] = "Vorgänger-Stand " w " überholt"; if ((p SUBSEP M) in uebt) uebt[key] = 1; return uebm[key] }
     }
   }
   return ""
@@ -1347,9 +1391,9 @@ function nachtragversion(f, p,   b, dn, q) {
   if (!(trim(fmget(f, "marke")) in abgeschl)) return ""
   b = base(p); dn = b
   if (match(b, /_[0-9][0-9][0-9]*_[A-Za-z][A-Za-z][A-Za-z]$/)) dn = substr(b, 1, RSTART - 1)
-  if (!(dn in neuf)) return ""
-  q = neuf[dn]
-  if (q == p || trim(fmget(q, "marke")) != trim(fmget(p, "marke"))) return ""
+  if (!((dn, trim(fmget(p, "marke"))) in neufm)) return ""
+  q = neufm[dn, trim(fmget(p, "marke"))]
+  if (q == p) return ""
   return q
 }
 # Phase eines Dokumenttyps (Katalog-Zeile `Phase`): P<n> → n, Marken-Abschluss → 99
@@ -1558,8 +1602,8 @@ function freigilt(M2, k, Mx,  n2, j, l, fa2) {
 # (M2 als ganze Bezeichnung) und dem Tag-Namen von M2 oder dem Wort Tag
 # bzw. Implementierung
 function abschluss_tag(M, M2,  dn, ff, j, nj, l, p, c, nt, q, mta, ix, mx) {
-  for (dn in neuf) {
-    ff = neuf[dn]
+  for (dn in neufm) {
+    ff = neufm[dn]
     if (stand[ff] != "abschluss-stand" || trim(fmget(ff, "marke")) != M) continue
     nj = (ff in nmmu) ? nmmu[ff] : 0
     for (j = 1; j <= nj; j++) {
@@ -2349,11 +2393,20 @@ END {
       else if (d != "" && fd != "" && d < fd) hin("STAND-DATUM", f, "`datum: " d "` liegt vor dem Datum der Ketten-ID (" fd ")")
     }
   }
-  # --- Stand je Marke: alle Versionen einer Ketten-ID tragen dieselbe Marke
+  # --- Stand je Marke: alle Versionen einer Ketten-ID tragen dieselbe Marke —
+  # Ausnahme Folge-Version (Einfrieren-und-Abloesen §Stand; Kettenpruefung
+  # §Kette, Folge-Marke mit eigenem Tag): Testplan-Stand, Deploy-Stand und
+  # Betriebs-Anleitung (P10, P13, P15) werden in einer späteren Marke als
+  # höhere Version derselben Ketten-ID fortgeführt (spätere Marke, höhere
+  # Version); eine frühere Marke an einer höheren Version bleibt ein Fehler
   for (f in stand) {
     dn = kid(f); M0 = trim(fmget(f, "marke")); if (M0 == "") continue
     if (!(dn in kidm)) { kidm[dn] = M0; kidf[dn] = f }
-    else if (kidm[dn] != M0) befund("STAND-MARKE", f, "`marke: " M0 "`, die Version " bn(kidf[dn]) " derselben Ketten-ID trägt `marke: " kidm[dn] "` — ein Stand gehört zu genau einer Marke; für eine neue Marke entsteht ein neues Dokument mit neuer Ketten-ID (Einfrieren-und-Abloesen §Stand)")
+    else if (kidm[dn] != M0) {
+      ph = phnum(stand[f])
+      if ((ph == 10 || ph == 13 || ph == 15) && midx(M0) > 0 && midx(kidm[dn]) > 0 && midx(M0) != midx(kidm[dn]) && ((midx(M0) > midx(kidm[dn])) == (vvnum(f) > vvnum(kidf[dn])))) continue
+      befund("STAND-MARKE", f, "`marke: " M0 "`, die Version " bn(kidf[dn]) " derselben Ketten-ID trägt `marke: " kidm[dn] "` — ein Stand gehört zu genau einer Marke; für eine neue Marke entsteht ein neues Dokument mit neuer Ketten-ID (Einfrieren-und-Abloesen §Stand); nur Testplan-Stand, Deploy-Stand und Betriebs-Anleitung einer Folge-Marke mit eigenem Tag führen dieselbe Ketten-ID als höhere Version fort (Folge-Version, Kettenpruefung §Kette)")
+    }
   }
   # Rolle des Repos in der Kette (Kettenpruefung §Fehlende und vertretene
   # Glieder): `fuer_marke:` am Marken-Eintrag = Komponente (auch ohne Zeilen
@@ -2648,6 +2701,10 @@ END {
     b = base(f); dn = b; vv = 0
     if (match(b, /_[0-9][0-9][0-9]*_[A-Za-z][A-Za-z][A-Za-z]$/)) { dn = substr(b, 1, RSTART - 1); split(substr(b, RSTART + 1), v2, "_"); vv = v2[1] + 0 }
     if (!(dn in neu) || vv > neu[dn]) { neu[dn] = vv; neuf[dn] = f }
+    # je Ketten-ID und Marke (Einfrieren-und-Abloesen §Stand: eine Folge-Version
+    # in der Folge-Marke verdrängt die Version der Vormarke nicht)
+    mk = trim(fmget(f, "marke"))
+    if (!((dn, mk) in neum) || vv > neum[dn, mk]) { neum[dn, mk] = vv; neufm[dn, mk] = f }
   }
   # Verweise eines Stands (SREF): `stref` die Elemente mit Detail-Knoten,
   # `strid` die Register-IDs mit Fassaden-Eintrag ohne Knoten (Verweis-Satz,
@@ -2690,8 +2747,8 @@ END {
   # Stand der Vormarke zusätzlich gegen die laufende Marke geprüft — nur
   # Pflicht-Stände ohne den Abschluss-Stand (er wird nie übernommen), und
   # eine Herkunfts-Kette als eine Meldung am ersten überholten Stand.
-  for (dn in neuf) {
-    f = neuf[dn]
+  for (dn in neufm) {
+    f = neufm[dn]
     M = trim(fmget(f, "marke")); mi = midx(M)
     r = ueberholt(f, M)
     if (r != "") hin("UEBERHOLT", f, "Stand ist überholt (" r ") — Meldung für C5")
@@ -2779,8 +2836,8 @@ END {
   # vergessenes Feld (Hinweis); ohne Prozess der Verzicht auf „Tests grün“
   # (Kettenpruefung §Kette, Projekt ohne Prozess) — keine Meldung
   if (maxph > 0) for (f in vzop) hin("VERZICHT", f, "Verzichts-DEC zu Marke " vzop[f] " ohne `phase:` — mit Prozess gilt ein Verzicht nur je Phase `Pn`; so gilt kein Verzicht auf eine Phase (Kettenpruefung §Lint-Anteil)")
-  if (maxph == 0) for (dn in neuf) {
-    f = neuf[dn]
+  if (maxph == 0) for (dn in neufm) {
+    f = neufm[dn]
     if (stand[f] != "abschluss-stand" || (f in mmt)) continue
     M = trim(fmget(f, "marke"))
     hin("ABSCHLUSS-STAND", f, "Abschluss-Stand" ((M != "") ? " zu Marke " M : "") " führt keine Zeile mit dem Tag der Marke — ohne Prozess gibt es keine eigene Tag-Freigabe; der Abschluss-Stand führt den Tag, der das Produkt markiert, und seine Freigabe bestätigt ihn (Kettenpruefung §Kette, Projekt ohne Prozess)")
@@ -3008,7 +3065,7 @@ END {
   # Knoten (`strid`, Typ über das id-Format des Präfix); eine in der Zeile
   # `Nicht berücksichtigt (offen): …` ausgewiesene ID ist kein Verweis (oben).
   for (f in stand) {
-    if (!(f in freist) && neuf[kid(f)] != f) continue
+    if (!(f in freist) && jv(f) != f) continue
     # Testbericht als Vorbedingung (Kettenpruefung §Code-Glieder, P10 → P11,
     # P12, P13): ein freigegebener Pflicht-Stand der Phasen P11–P13 —
     # Entwickler-Doku, Benutzer-Doku, Deploy-Stand — nennt den Testbericht
@@ -3020,17 +3077,20 @@ END {
       for (j = 1; j <= m; j++) if (harr[j] ~ /^([A-Za-z0-9_.-]+\/)?TRES-[0-9]+$/) ok = 1
       if (!ok) hin("HERKUNFT", f, "freigegebener Stand der Phase P" phnum(stand[f]) " (`" stand[f] "`) ohne Testbericht (TRES-NNN) in `herkunft` — der Testbericht ist Vorbedingung der Freigabe von Entwickler-Doku, Benutzer-Doku und Deploy-Stand (Kettenpruefung §Code-Glieder; Zeile Herkunft des Katalog-Eintrags)")
     }
-    # Tag der Implementierung in `herkunft` des Testplan-Stands (SP-1
-    # Katalog-Testplan, Zeile Herkunft; Einfrieren-und-Abloesen §Stand): ein
-    # freigegebener Pflicht-Stand der Phase P10 nennt den Tag seiner Marke —
-    # gelesen gegen die Tag-Namen der Tag-Freigaben dieser Marke (`tagx`);
-    # ohne Tag-Freigabe nicht geprüft (P10 ohne P9 meldet die Freigabe-Ordnung)
-    if ((f in freist) && verb[stand[f]] == "pflicht" && phnum(stand[f]) == 10) {
+    # Tag der Implementierung in `herkunft` (Zeile Herkunft der Katalog-
+    # Einträge Testplan, Entwickler-Doku, Benutzer-Doku, Deploy-Stand;
+    # Einfrieren-und-Abloesen §Stand): ein freigegebener Pflicht-Stand der
+    # Phasen P10–P13 nennt den Tag seiner Marke — gelesen gegen die Tag-Namen
+    # der Tag-Freigaben dieser Marke (`tagx`), ohne Auszeichnung (Backticks,
+    # Anführungszeichen); ohne Tag-Freigabe zur Marke nicht geprüft (P10 ohne
+    # P9 meldet die Freigabe-Ordnung; Koordinator ohne eigene Bauteile:
+    # Lieferungs-Tags). Der Testbericht (TRES) wird nicht geprüft.
+    if ((f in freist) && verb[stand[f]] == "pflicht" && phnum(stand[f]) >= 10 && phnum(stand[f]) <= 13) {
       tm = trim(fmget(f, "marke"))
-      if (tm != "" && tagx[tm] != "") {
+      if (tm != "" && (tm in tagx) && tagx[tm] != "") {
         m = vals(f, "herkunft", harr); ok = 0; tn = split(tagx[tm], tarr, "\t")
-        for (j = 1; j <= m && !ok; j++) for (tq = 1; tq <= tn; tq++) if (tarr[tq] != "" && trim(harr[j]) == trim(tarr[tq])) ok = 1
-        if (!ok) hin("HERKUNFT", f, "freigegebener Stand der Phase P10 (`" stand[f] "`) ohne den Tag der Implementierung zu Marke " tm " in `herkunft` (Tag-Freigabe nennt `" trim(tarr[tn]) "`) — der Testplan-Stand wird nach dem Tag freigegeben und führt ihn in `herkunft` (SP-1 Katalog-Testplan, Zeile Herkunft; Einfrieren-und-Abloesen §Stand)")
+        for (j = 1; j <= m && !ok; j++) for (tq = 1; tq <= tn; tq++) if (tarr[tq] != "" && tagnorm(harr[j]) == tagnorm(tarr[tq])) ok = 1
+        if (!ok) hin("HERKUNFT", f, "freigegebener Stand der Phase P" phnum(stand[f]) " (`" stand[f] "`) ohne den Tag der Implementierung zu Marke " tm " in `herkunft` (Tag-Freigabe nennt `" tagnorm(tarr[tn]) "`) — der Stand wird nach dem Tag freigegeben und führt ihn in `herkunft` (Zeile Herkunft seines Katalog-Eintrags; Einfrieren-und-Abloesen §Stand)")
       }
     }
     for (j = 1; j <= nstref[f]; j++) {
@@ -3068,6 +3128,44 @@ END {
         hin("UEBERLAGERUNG", uf, "Stand der Marke " u5[3] " verweist " u5[2] ", für die laufende Sackgasse " inprog " überlagert durch " u5[4] " — bei der Übernahme in " inprog " Rückfrage an den Anwender: eigener Stand für " inprog " oder belassen (Zielmarken §Meta, Zwischenmarke: Überlagerung nach einer Freigabe); kein Überholt-Grund")
     }
   }
+  # Überholt-Merker neu aufbauen: der Überholt-Grund „Tag der Vormarke in
+  # `herkunft` bei eigenem Tag der Folge-Marke“ braucht die Tag-Freigaben je
+  # Marke (`tagx`), die erst oben gelesen sind. Vormarken-Stände, die aus
+  # diesem Grund für die laufende Marke überholt sind: Hinweis UEBERHOLT
+  # (Meldung für C5) mit der Folge-Version als Antwort
+  split("", uebm); split("", uebt)
+  if (inprog != "" && midx(inprog) > 0) for (dn in neufm) {
+    f = neufm[dn]; M = trim(fmget(f, "marke")); mi = midx(M)
+    if (mi == 0 || mi >= midx(inprog) || stand[f] == "abschluss-stand" || verb[stand[f]] != "pflicht") continue
+    if ((f in uebrg) || (f in uebpar)) continue
+    if ((kid(f), inprog) in neufm) continue   # die Folge-Version zur laufenden Marke liegt schon vor
+    r = ueberholt(f, inprog)
+    if (r != "" && ((f SUBSEP inprog) in uebt)) hin("UEBERHOLT", f, "Stand der Marke " M " ist für die laufende Marke " inprog " überholt (" r ") — nicht übernehmen; Antwort ist die Folge-Version derselben Ketten-ID mit eigener Freigabe zu " inprog ", bei unverändertem Inhalt mit unverändertem Text (Überholt-Regel; Kettenpruefung §Kette, Folge-Marke mit eigenem Tag)")
+  }
+  # Übernahme-Zeile im Abschluss-Stand bei eigenem Tag (Kettenpruefung §Kette,
+  # Folge-Marke mit eigenem Tag; Katalog-Abschluss-Stand): nennt ein
+  # Abschluss-Stand (jüngste Version je Ketten-ID und Marke, freigegeben oder
+  # nicht) einer Marke M mit eigener Tag-Freigabe eine Zeile „übernommen aus
+  # <Vormarke>“ für einen Testplan-Stand, Deploy-Stand oder eine
+  # Betriebs-Anleitung — erkannt an einer Stand-Datei dieser Phasen oder am
+  # Dokumentnamen des Typs in der Zeile —, ist das ein Fehler; an einer
+  # abgeschlossenen Marke (eingefrorener Abschluss-Stand) ein Hinweis
+  if (maxph >= 10) for (dn in neufm) {
+    ff = neufm[dn]
+    if (stand[ff] != "abschluss-stand") continue
+    M = trim(fmget(ff, "marke")); if (M == "" || !(M in tagx) || tagx[M] == "" || midx(M) == 0) continue
+    nj = (ff in nmmu) ? nmmu[ff] : 0
+    for (j = 1; j <= nj; j++) {
+      l = mmu[ff, j]; if (index(l, "bernommen aus ") == 0) continue
+      k = 0; gl = ""
+      for (g in stand) { kx = phnum(stand[g]); if ((kx == 10 || kx == 13 || kx == 15) && index(l, base(g)) > 0) { k = kx; gl = bn(g) } }
+      if (k == 0) for (kx in ppt) if (kx == 10 || kx == 13 || kx == 15) { n2 = split(ppt[kx], ta, ", "); for (q = 1; q <= n2; q++) if (ta[q] != "" && index(tolower(l), tolower(ta[q])) > 0) { k = kx; gl = ta[q] } }
+      if (k == 0) continue
+      msg = "Zeile „übernommen aus“ für `" gl "` (Phase P" k "), aber Marke " M " hat einen eigenen Tag — Testplan-Stand, Deploy-Stand und Betriebs-Anleitung der Vormarke gelten dann nicht als übernommen, sondern werden als Folge-Version derselben Ketten-ID mit eigener Freigabe zu " M " fortgeführt (Kettenpruefung §Kette, Folge-Marke mit eigenem Tag; Katalog-Abschluss-Stand)"
+      if (M in abgeschl) hin("ABSCHLUSS-STAND", ff, msg " — Marke abgeschlossen, Abschluss-Stand eingefroren: nur Hinweis")
+      else err("ABSCHLUSS-STAND", ff, msg)
+    }
+  }
   # Freigabe-Ordnung (Kettenpruefung §Kette): je Pflicht-Freigabe der Phase Pn
   # zu Marke M sind die Pflicht-Stände früherer Phasen freigegeben, aus der
   # Vormarke übernommen (nicht für M überholt) oder per Verzicht ausgelassen;
@@ -3088,9 +3186,9 @@ END {
   # Freigabe-Einträge vor dem Stichtag angelegt sind (`altabg`)
   for (i = 1; i <= nfl; i++) {
     split(fl[i], f5, "\t"); M = f5[1]; n = f5[2] + 0; id = f5[3]; f = f5[4]; sfo = f5[6]
-    if (sfo != "" && (kid(sfo) in neuf) && neuf[kid(sfo)] != sfo && !(neuf[kid(sfo)] in freist) && !(("v", kid(sfo)) in ordseen)) {
+    if (sfo != "" && jv(sfo) != "" && jv(sfo) != sfo && !(jv(sfo) in freist) && !(("v", kid(sfo)) in ordseen)) {
       ordseen["v", kid(sfo)] = 1
-      hin("FREIGABE-STAND", f, id ": freigegeben ist " bn(sfo) ", in output/ liegt die jüngere Version " bn(neuf[kid(sfo)]) " derselben Ketten-ID ohne Freigabe — die Freigabe trifft die jüngste Version (Lebenslauf-eines-Stands Schritt 6; Einfrieren-und-Abloesen §Stand): die jüngere Version prüfen und freigeben (der neue Eintrag löst diesen ab) oder sie zurücknehmen, wenn sie nicht gilt; bis dahin gilt die freigegebene Version")
+      hin("FREIGABE-STAND", f, id ": freigegeben ist " bn(sfo) ", in output/ liegt die jüngere Version " bn(jv(sfo)) " derselben Ketten-ID und Marke ohne Freigabe — die Freigabe trifft die jüngste Version (Lebenslauf-eines-Stands Schritt 6; Einfrieren-und-Abloesen §Stand): die jüngere Version prüfen und freigeben (der neue Eintrag löst diesen ab) oder sie zurücknehmen, wenn sie nicht gilt; bis dahin gilt die freigegebene Version")
     }
     if (!(M in abgeschl) || n == 0) continue
     if (!(M in allalt)) allalt[M] = 1
@@ -3138,7 +3236,7 @@ END {
         if (vorg_env(M, 13, uo)) continue
         if (("s", M, 13, uo, "H") in ordseen) continue
         ordseen["s", M, 13, uo, "H"] = 1
-        hin("FREIGABE-ORDNUNG", f, id " (" g "): kein freigegebener Deploy-Stand der Umgebung „" uo "“ zu Marke " M ((ALTM2 != "") ? " — der Deploy-Stand aus der Vormarke " ALTM2 " ist für " M " überholt, keine Übernahme" : " — weder Freigabe (Eintrag oder Nachtrag) noch Übernahme aus der Vormarke noch Verzicht (`phase: P13`)") "; die Betriebs-Anleitung einer Umgebung wird erst nach dem freigegebenen Deploy-Stand dieser Umgebung freigegeben — Freigabe-Ordnung (Kettenpruefung §Kette, Doku-Glieder)" ((rolle == "unbekannt") ? "; Rolle des Repos nicht erkannt, nur Hinweis" : ""))
+        hin("FREIGABE-ORDNUNG", f, id " (" g "): kein freigegebener Deploy-Stand der Umgebung „" uo "“ zu Marke " M ((ALTM2 != "") ? " — der Deploy-Stand aus der Vormarke " ALTM2 " ist für " M " überholt, keine Übernahme" ALTR : " — weder Freigabe (Eintrag oder Nachtrag) noch Übernahme aus der Vormarke noch Verzicht (`phase: P13`)") "; die Betriebs-Anleitung einer Umgebung wird erst nach dem freigegebenen Deploy-Stand dieser Umgebung freigegeben — Freigabe-Ordnung (Kettenpruefung §Kette, Doku-Glieder)" ((rolle == "unbekannt") ? "; Rolle des Repos nicht erkannt, nur Hinweis" : ""))
         continue
       }
       # P15 je Umgebung (nur vor dem Abschluss-Stand erreicht): für jede
@@ -3159,7 +3257,7 @@ END {
           if (("s", M, 15, ue, "H") in ordseen) continue
           ordseen["s", M, 15, ue, "H"] = 1
           if (((M, 13, ue) in nju) && !((M, 13, ue) in decfs)) { hin("FREIGABE-ORDNUNG", f, id " (" g "): Betriebs-Anleitung (" ppt[15] ") für die Umgebung „" ue "“ zu Marke " M " offen — ihr Deploy-Stand steht im Nachtrag (Zeile " njl[M, 13, ue] "), die Betriebs-Anleitung folgt als Nachtrag oder entfällt per Verzicht (`decision_type: verzicht`, `zielmarke: " M "`, `phase: P15`, `umgebung: " ue "`; Kettenpruefung §Kette, Doku-Abfrage: später hinzukommende Umgebung)"); continue }
-          hin("FREIGABE-ORDNUNG", f, id " (" g "): kein freigegebener Pflicht-Stand der Phase P15 (" ppt[15] ") für die Umgebung „" ue "“ zu Marke " M ((ALTM2 != "") ? " — der Stand aus der Vormarke " ALTM2 " ist für " M " überholt, keine Übernahme" : " — weder Freigabe (Eintrag oder Nachtrag) noch Übernahme aus der Vormarke noch Verzicht (`decision_type: verzicht`, `zielmarke: " M "`, `phase: P15`, `umgebung: " ue "`)") " — Freigabe-Ordnung (Kettenpruefung §Kette; Betriebs-Anleitung je Umgebung hinter ihrem Deploy-Stand, „später“ nach dem Wechsel als Nachtrag)" ((rolle == "unbekannt") ? "; Rolle des Repos nicht erkannt, nur Hinweis" : ""))
+          hin("FREIGABE-ORDNUNG", f, id " (" g "): kein freigegebener Pflicht-Stand der Phase P15 (" ppt[15] ") für die Umgebung „" ue "“ zu Marke " M ((ALTM2 != "") ? " — der Stand aus der Vormarke " ALTM2 " ist für " M " überholt, keine Übernahme" ALTR : " — weder Freigabe (Eintrag oder Nachtrag) noch Übernahme aus der Vormarke noch Verzicht (`decision_type: verzicht`, `zielmarke: " M "`, `phase: P15`, `umgebung: " ue "`)") " — Freigabe-Ordnung (Kettenpruefung §Kette; Betriebs-Anleitung je Umgebung hinter ihrem Deploy-Stand, „später“ nach dem Wechsel als Nachtrag)" ((rolle == "unbekannt") ? "; Rolle des Repos nicht erkannt, nur Hinweis" : ""))
         }
         continue
       }
@@ -3176,7 +3274,7 @@ END {
       # in keinem lesbaren Feld); „Produkt seit dem Tag unverändert“ prüft
       # der Lint nicht — Hinweis einmal je Marke, der entfällt, wenn der
       # Abschluss-Stand von M den Tag mit „übernommen aus M2“ ausweist
-      ok = 0; mi = midx(M); altM2 = ""
+      ok = 0; mi = midx(M); altM2 = ""; altR = ""
       if (k == 9) {
         M2 = ""
         if (mi > 0) for (mm = mi - 1; mm >= 1 && M2 == ""; mm--) if (!(markn[mm] in sackg) && ((markn[mm], 9) in frei)) M2 = markn[mm]
@@ -3199,13 +3297,13 @@ END {
         fl2 = freigilt(M2, k, M); if (fl2 == "") continue   # nur abgelöste Freigaben, deren Nachfolger für M gilt
         n2 = split(fl2, fa, "\t")
         for (j = 1; j <= n2 && !ok; j++) if (fa[j] == "-" || (fa[j] != "" && ueberholt(fa[j], M) == "")) ok = 1
-        if (!ok && altM2 == "") altM2 = M2
+        if (!ok && altM2 == "") { altM2 = M2; altR = ((fa[1] SUBSEP M) in uebt) ? " (Folge-Marke mit eigenem Tag: Folge-Version derselben Ketten-ID mit eigener Freigabe zu " M ", bei unverändertem Inhalt mit unverändertem Text — Kettenpruefung §Kette)" : "" }
       }
       if (ok) continue
       sev = (k == 9 && n == 10 && rolle != "unbekannt") ? "E" : "H"
       if (("s", M, k, sev) in ordseen) continue
       ordseen["s", M, k, sev] = 1
-      if (altM2 != "") msg = id " (" g "): Pflicht-Stand der Phase P" k " (" ppt[k] ") aus der Vormarke " altM2 " ist für " M " überholt — keine Übernahme; zu Marke " M " weder Freigabe noch Verzicht (`decision_type: verzicht`, `zielmarke: " M "`, `phase: P" k "`): für " M " neu bilden und freigeben — Freigabe-Ordnung (Kettenpruefung §Kette)" ((rolle == "unbekannt") ? "; Rolle des Repos nicht erkannt, nur Hinweis" : "")
+      if (altM2 != "") msg = id " (" g "): Pflicht-Stand der Phase P" k " (" ppt[k] ") aus der Vormarke " altM2 " ist für " M " überholt" altR " — keine Übernahme; zu Marke " M " weder Freigabe noch Verzicht (`decision_type: verzicht`, `zielmarke: " M "`, `phase: P" k "`): für " M " neu bilden und freigeben — Freigabe-Ordnung (Kettenpruefung §Kette)" ((rolle == "unbekannt") ? "; Rolle des Repos nicht erkannt, nur Hinweis" : "")
       else msg = id " (" g "): kein freigegebener Pflicht-Stand der Phase P" k " (" ppt[k] ((k == 9 && rolle == "unbekannt") ? " oder Lieferungen" : "") ") zu Marke " M " — weder Freigabe noch Übernahme aus der Vormarke" ((k == 9) ? " (der Tag ist nicht verzichtbar)" : " noch Verzicht (`decision_type: verzicht`, `zielmarke: " M "`, `phase: P" k "`)") " — Freigabe-Ordnung (Kettenpruefung §Kette)" ((rolle == "unbekannt") ? "; Rolle des Repos nicht erkannt, nur Hinweis" : "")
       # Doku-Glieder vor dem Deploy-Stand (Kettenpruefung §Kette, Doku-Glieder):
       # fehlt Entwickler-Doku (P11) oder Benutzer-Doku (P12) ohne Verzicht,
@@ -3569,7 +3667,19 @@ cat <<'EOF'
   Vormarke: jede frühere Marke mit gültiger Pflicht-Freigabe zählt,
   solange der Stand für die geprüfte Marke nicht überholt ist (ist er
   überholt, eine Meldung je Marke und Phase mit dem Grund); der
-  Abschluss-Stand („übernommen aus“) wird für Stände nicht gelesen.
+  Abschluss-Stand („übernommen aus“) wird für Stände nicht gelesen — außer
+  bei eigenem Tag der Marke: eine Zeile „übernommen aus“ für Testplan-Stand,
+  Deploy-Stand oder Betriebs-Anleitung ist dann ein Fehler (abgeschlossene
+  Marke: Hinweis). Folge-Marke mit eigenem Tag (Tag-Freigabe zur geprüften,
+  nicht abgeschlossenen Marke): ein Testplan-Stand oder Deploy-Stand einer
+  früheren Marke, der in `herkunft` einen Tag-Namen aus der Tag-Freigabe
+  einer früheren Marke nennt, ist für sie überholt und wird nicht
+  übernommen, ebenso die Betriebs-Anleitung über ihm (Vorgänger-Stand) —
+  Folge-Version derselben Ketten-ID mit eigener Freigabe; Entwickler-Doku
+  und Benutzer-Doku bleiben davon unberührt (der Tag-Grund wird über ihre
+  Vorgänger nicht an sie weitergegeben). „Jüngste Version je Ketten-ID“
+  liest der Lint je Marke: die Folge-Version verdrängt die Version der
+  Vormarke nicht (Überholt-Berechnung, Marken-Regel, FREIGABE-STAND).
   Übernahme des Tags (unverändertes Produkt): nur der Tag der nächsten
   Vormarke mit Tag-Freigabe, und nur, wenn keiner der für diese
   Vormarke wirksamen Pflicht-Stände der Phasen vor P9 — ihre eigenen
@@ -3735,10 +3845,13 @@ cat <<'EOF'
   Wikilinks auskommt, wird nicht geprüft (eine ID im Text zählt wie bei
   jedem Stand als Verweis); welche Quell-Stände `herkunft` nach dem
   Katalog-Eintrag nennen müsste, nur beim Testbericht (TRES-NNN, Phasen
-  P11–P13, nur am freigegebenen Stand), beim Tag des Testplan-Stands (P10,
-  nur am freigegebenen Stand, nur gegen die Tag-Freigaben seiner Marke)
-  und beim Deploy-Stand der Betriebs-Anleitung (Vorhandensein, Umgebung,
-  Marke) — nicht bei Architektur, Konzept und den übrigen Quell-Ständen;
+  P11–P13, nur am freigegebenen Stand), beim Tag der Stände P10–P13
+  (Testplan, Entwickler-Doku, Benutzer-Doku, Deploy-Stand; nur am
+  freigegebenen Stand, nur gegen die Tag-Freigaben seiner Marke, ohne
+  Auszeichnung verglichen) und beim Deploy-Stand der Betriebs-Anleitung
+  (Vorhandensein, Umgebung, Marke) — nicht bei Architektur, Konzept und
+  den übrigen Quell-Ständen und nicht beim Testbericht (ob seine
+  `herkunft` Testplan-Stand und Tag nennt, prüft der Lint nicht);
   die Setup-Kopie in `herkunft` des Testberichts (`<Ketten-ID>_VV_TLA/
   <Name>.md`) nur darauf, ob der Stand des Ordners in output/ liegt — die
   Kopie selbst, ihr Inhalt und ob sie im Ordner liegt, nicht; Quell-Stände über

@@ -398,6 +398,53 @@ eines Pflicht-Stands.
   zum übernommenen Testplan-Stand weiter; ein neuer
   Durchgang (z.B. nach einer neuen Lieferung) erzeugt
   einen neuen Testbericht.
+  **Folge-Marke mit eigenem Tag — Folge-Version:** Hat
+  die Folge-Marke einen eigenen Tag (das Produkt ist
+  geändert, der Tag wird nicht übernommen — nächster
+  Absatz), gelten der **Testplan-Stand**, der
+  **Deploy-Stand** je Umgebung und die
+  **Betriebs-Anleitung** je Umgebung der Vormarke für
+  sie **nicht als übernommen**: Testplan-Stand und
+  Deploy-Stand nennen in `herkunft` den Tag der
+  Vormarke, der für die Folge-Marke nicht das Glied P9
+  ist — sie sind für die Folge-Marke überholt
+  ([[Einfrieren-und-Abloesen]] §Überholt-Regel, Tag in
+  `herkunft`); die Betriebs-Anleitung ist über ihren
+  Quell-Stand überholt. Alle drei brauchen eine eigene
+  Freigabe zur Folge-Marke („für P10 Testen“, „für P13
+  Ausliefern“, „für P15 Betreiben“ zu Marke M) als
+  **Folge-Version**: eine neue Version derselben
+  Ketten-ID mit `marke: M`, eigenem `datum` und dem Tag
+  der Folge-Marke in `herkunft` — beim Deploy-Stand mit
+  dem Testbericht zu diesem Tag, bei der
+  Betriebs-Anleitung mit der Folge-Version des
+  Deploy-Stands — der einzige Fall einer neuen Version
+  über die Marken-Grenze (ebenda §Stand). Die Freigabe
+  der Folge-Version löst die Freigabe der
+  Vormarken-Version ab; die Ablösung wirkt ab der
+  Folge-Marke, die Vormarke behält Version und
+  Freigabe, ihr Abschluss-Stand ist dadurch nicht
+  überholt. Hat sich außer Tag und Testbericht nichts
+  geändert — dieselben TEST-Elemente und dasselbe
+  Test-Setup, dieselben DEPL der Umgebung, dieselbe
+  SPEC der Pipeline, derselbe Ablauf —, **empfiehlt der
+  Agent, die Folge-Version mit unverändertem Text
+  vorzulegen** (nur der Kopf wechselt) und sagt es in
+  der Vorlage („Inhalt wie Version VV zu <Vormarke>;
+  neu: Tag, Testbericht“); Kettenprüfung und Freigabe
+  laufen wie bei jedem Stand. Für die Betriebs-Anleitung
+  stellt die Doku-Abfrage die Zeile je Umgebung dann
+  ohne die Wahl „gar nicht (Übernahme)“ (oben,
+  Doku-Abfrage); Entwickler-Doku und Benutzer-Doku
+  bleiben bei der ausdrücklichen Wahl der Doku-Abfrage,
+  „gar nicht (Übernahme)“ eingeschlossen — der Tag der
+  Vormarke in ihrer `herkunft` ist für sie kein
+  Überholt-Grund. Ohne eigenen Tag bleibt die
+  Übernahme aller Stände wie oben. Der Lint übernimmt
+  Testplan-Stand, Deploy-Stand und Betriebs-Anleitung
+  aus der Vormarke nur, wenn zur Folge-Marke keine
+  Tag-Freigabe gebucht ist; sonst meldet er das Glied
+  als fehlend (§Lint-Anteil).
 - **Sackgasse** (Zwischenmarke, die in keiner
   Folge-Marke enthalten ist; führender Ort:
   [[Zielmarken]] §Meta, Zwischenmarke): Ein Element der
@@ -465,7 +512,11 @@ eines Pflicht-Stands.
   der Tag nicht weiter: neuer Tag nach der
   Neu-Ableitung. Ist das Produkt geändert, gilt der
   übliche Weg: neuer Tag nach der Projekt-Konvention
-  mit Freigabe und neuer Lieferung. Der Tag einer
+  mit Freigabe und neuer Lieferung — und mit dem
+  eigenen Tag folgen Testplan-Stand, Deploy-Stand und
+  Betriebs-Anleitung der Folge-Marke als
+  Folge-Versionen mit eigener Freigabe (oben,
+  Folge-Marke mit eigenem Tag). Der Tag einer
   Zwischenmarke sitzt auf ihrem eigenen Zweig ab dem
   Tag ihrer Vormarke (Zweig-Konvention in
   `wiki/Facts.md` neben der Tag-Konvention); ist die
@@ -687,7 +738,14 @@ Vollständigkeit der Abdeckung beurteilt der Reviewer:
   aus der Vormarke (Vorgänger eines Stands darf der
   übernommene Stand der Vormarke sein; ein
   übernommener Tag und eine übernommene Lieferung
-  erfüllen die Tag-Bedingung, §Kette). Ohne Prozess
+  erfüllen die Tag-Bedingung, §Kette; Testplan-Stand,
+  Deploy-Stand und Betriebs-Anleitung übernimmt der
+  Lint nur, wenn zur geprüften Marke keine Tag-Freigabe
+  gebucht ist — sonst sind sie für sie überholt, und
+  eine Zeile „übernommen aus <Vormarke>“ für einen
+  solchen Stand im Abschluss-Stand ist ein Fehler, an
+  einer abgeschlossenen Marke ein Hinweis — §Kette,
+  Folge-Marke mit eigenem Tag). Ohne Prozess
   gibt es keine Freigabe-Ordnung; der Lint prüft dann
   nur, ob der Abschluss-Stand den Tag führt (§Kette,
   Projekt ohne Prozess).
@@ -907,7 +965,7 @@ Fehlens:
 |---|---|---|
 | jede Phase mit Pflicht-Stand, für eine Marke | **Verzicht:** Pflicht-Stand der Phase und seine Lint-Pflichten entfallen für diese Marke; die Freigabe-Ordnung geht über die Phase hinweg; spätere Glieder prüfen gegen die übrigen freigegebenen Vorgänger. Bei P8 bleibt der Verzicht dem Fall „baut, will aber keine SPEC“ vorbehalten (in kleinen Projekten darf P8 auch schmal bleiben). Bei den Doku-Gliedern P11 und P12 ist der Verzicht die Zeile „gar nicht (Verzicht)“ der Doku-Abfrage (§Kette). **Nicht verzichtbar ist der Tag (P9):** er markiert das Produkt in jedem Projekt (§Kette), und die Tag-Bedingung des Testplan-Stands gilt ohne Ausnahme (eine DEC mit `phase: P9` meldet der Lint, §Lint-Anteil) | Verzichts-DEC mit `decision_type: verzicht`, `zielmarke:` der Marke und `phase: Pn` (genau eine Phase) |
 | P15 je Umgebung (Betriebs-Anleitung) | **Verzicht je Umgebung:** die Betriebs-Anleitung dieser Umgebung entfällt für die Marke, die der übrigen Umgebungen bleibt Pflicht; die Zeile „gar nicht (Verzicht)“ der Doku-Abfrage für diese Umgebung (§Kette). Ohne `umgebung:` ist die DEC kein Verzicht (§Lint-Anteil) | Verzichts-DEC mit `decision_type: verzicht`, `zielmarke:`, `phase: P15` und `umgebung:` (Name aus der Entitäts-Fassade der Zielumgebungen), je Umgebung eine |
-| P11, P12, P15, für eine Marke | **Übernahme aus der Vormarke** — kein Fehlen: die Zeile „gar nicht (Übernahme)“ der Doku-Abfrage; der freigegebene Doku-Stand der Vormarke gilt weiter wie jeder übernommene Stand (§Kette, Übernahme aus der Vormarke) und steht im Abschluss-Stand mit „übernommen aus <Vormarke>“ | Zeilen-DEC der Doku-Abfrage, die den übernommenen Stand nennt |
+| P11, P12, P15, für eine Marke | **Übernahme aus der Vormarke** — kein Fehlen: die Zeile „gar nicht (Übernahme)“ der Doku-Abfrage; der freigegebene Doku-Stand der Vormarke gilt weiter wie jeder übernommene Stand (§Kette, Übernahme aus der Vormarke) und steht im Abschluss-Stand mit „übernommen aus <Vormarke>“. Bei P15 nur, wenn die Marke keinen eigenen Tag hat — mit eigenem Tag ist die Betriebs-Anleitung der Vormarke für sie überholt, die Zeile hat die Wahl „gar nicht (Übernahme)“ nicht, es folgt die Folge-Version (§Kette, Folge-Marke mit eigenem Tag); bei P11 und P12 bleibt die Wahl auch mit eigenem Tag | Zeilen-DEC der Doku-Abfrage, die den übernommenen Stand nennt |
 | P2 | **kein Glied:** mit SP-1 hat P2 keinen Pflicht-Stand (SP-1 `index.md` §3.2; ob eine Phase ein Glied trägt, legt die Phasentabelle des aktiven Prozesses fest) — bei Koordinator, Komponente und Standalone gleich; es gibt nichts zu vertreten | Dokumenttyp-Einträge des aktiven Prozesses |
 | P14 | **kein Glied:** mit SP-1 hat P14 keinen Pflicht-Stand (wie P2) | Dokumenttyp-Einträge des aktiven Prozesses |
 | P6 ohne Schnitt in Komponenten | **abgeleitet entfallen:** ohne Komponenten gibt es keine Übergabe (Standalone; Koordinator-Repo, dessen §Komponenten nur das eigene Repo führt) | §Komponenten der Architektur-Fassade; Dokumenttyp-Eintrag `uebergabe` (mit SP-1) |

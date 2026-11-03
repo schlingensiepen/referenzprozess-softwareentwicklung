@@ -84,7 +84,16 @@ Anwender-`wiki/` kopiert und in [[Katalog]] verankert.
   Ausrollen ohne Änderung ist Betrieb — kein neuer
   Stand, keine Freigabe. Format und Regel:
   [[Zielmarken]] §Meta (Nachtrag) — lesen, bevor ein
-  solcher Stand gebildet wird.
+  solcher Stand gebildet wird. **Folge-Marke mit
+  eigenem Tag** ist weder Betrieb noch Nachtrag: ihr
+  Produkt ist neu, der Deploy-Stand der Vormarke (mit
+  dem alten Tag in `herkunft`) gilt für sie nicht als
+  übernommen — je Umgebung entsteht die
+  **Folge-Version** mit eigener Freigabe „für P13
+  Ausliefern zu Marke M“, bei unverändertem Ausrollen
+  mit unverändertem Text (Empfehlung des Agenten;
+  [[Kettenpruefung]] §Kette, Folge-Marke mit eigenem
+  Tag). Ohne eigenen Tag bleibt die Übernahme.
 - **Quell-Register und Filter:** DEPL-Elemente der
   Umgebung aus [[Deployments]] (je Umgebung und
   Aspekt, mit `umgebung:` und `komponente:`), dazu die
@@ -119,10 +128,16 @@ Anwender-`wiki/` kopiert und in [[Katalog]] verankert.
   ein weiterer Stand derselben Umgebung zu derselben
   Marke ist eine neue Version dieser Ketten-ID (`VV`
   zählt hoch), es gilt die jüngste ([[Zielmarken]]
-  §Meta, Nachtrag).
+  §Meta, Nachtrag); in einer Folge-Marke mit eigenem
+  Tag wird dieselbe Ketten-ID als Folge-Version mit
+  `marke:` der Folge-Marke fortgeführt — der einzige
+  Fall einer neuen Version über die Marken-Grenze, es
+  gilt die jüngste je Marke ([[Einfrieren-und-Abloesen]]
+  §Stand).
   In der Zwei-Repo-Standardbelegung bleibt er in
   `output/` der Werkstatt ([[Two-Repo-Submodul-Muster]]).
 - **Herkunft:** `herkunft` führt zusätzlich den Tag
   der Implementierung und den Testbericht (TRES), an
-  dem die Freigabe hängt (Eintragsformat:
-  [[Einfrieren-und-Abloesen]] §Stand).
+  dem die Freigabe hängt — immer den Tag und den
+  Testbericht der eigenen Marke, nie den der Vormarke
+  (Eintragsformat: [[Einfrieren-und-Abloesen]] §Stand).
