@@ -20,7 +20,7 @@
 > `Glossar.md`), `../Reviewmuster.md` (Muster M6) sowie
 > `../referenzprozesse/SP-1-Standardprozess/index.md`
 > (Glieder der Kette). Stand der Quellen:
-> Starter-Commit `b5d0eef` (Version 2.1). Dieses
+> Starter-Commit `3a32dbd` (Version 2.1). Dieses
 > Dokument ist aus den Quellen abgeleitet und wird bei
 > Änderungen der Quellen auf deren Stand nachgezogen
 > (zuletzt am 2026-11-03); eigene Inhalte bekommt es

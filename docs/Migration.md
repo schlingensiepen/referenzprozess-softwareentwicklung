@@ -14,10 +14,10 @@
 > `Standarddateien-Katalog.md`) und
 > `../referenzprozesse/SP-1-Standardprozess/Steckbrief.md`
 > (mitgebrachte Ordner). Stand der Quellen:
-> Starter-Commit `b5d0eef` (Version 2.1). Dieses
+> Starter-Commit `3a32dbd` (Version 2.1). Dieses
 > Dokument ist aus den Quellen abgeleitet und wird bei
 > Änderungen der Quellen auf deren Stand nachgezogen
-> (zuletzt am 2026-11-03, nachgezogen auf `b5d0eef`:
+> (zuletzt am 2026-11-03, nachgezogen auf `3a32dbd`:
 > Version 2.1 im Herkunfts-Vermerk, Quellen unverändert
 > seit `c7fbc93`);
 > eigene Inhalte bekommt es

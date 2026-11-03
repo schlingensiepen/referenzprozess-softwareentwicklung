@@ -7,7 +7,7 @@
 > `../wiki/` (`Aktivierter-Prozess.md`, `Fassaden.md`)
 > und den Steckbriefen
 > `../referenzprozesse/*/Steckbrief.md`. Stand der
-> Quellen: Starter-Commit `b5d0eef` (Version 2.1).
+> Quellen: Starter-Commit `3a32dbd` (Version 2.1).
 > Dieses Dokument ist aus den Quellen abgeleitet und
 > wird bei Änderungen der Quellen auf deren Stand
 > nachgezogen (zuletzt am 2026-11-03); eigene Inhalte

@@ -9,15 +9,16 @@
 > `Init-Choreografie.md`, `Zielmarken.md`,
 > `Kettenpruefung.md`, `Fassaden.md`, `Katalog.md`,
 > `Agent-Berichte.md`). Stand der Quellen:
-> Starter-Commit `b5d0eef` (Version 2.1). Dieses
+> Starter-Commit `3a32dbd` (Version 2.1). Dieses
 > Dokument ist aus den Quellen abgeleitet und wird bei
 > Änderungen der Quellen auf deren Stand nachgezogen
-> (zuletzt am 2026-11-03, nachgezogen auf `b5d0eef`:
+> (zuletzt am 2026-11-03, nachgezogen auf `3a32dbd`:
 > Version 2.1, der Sprung von 2.0 auf 2.1, die Kette
 > der Sprünge aus 1.x und die Nacharbeit nach der
 > Abnahme — Lesung alter Nummern je Eintragsart,
 > Doku-Abfrage nach dem Upgrade, abgeschlossene
-> Marken, Stand-Dateien mit Status-Wort); eigene
+> Marken, Stand-Dateien mit Status-Wort, Name der
+> Doku-Kopie in `docs/`); eigene
 > Inhalte bekommt es nicht — Änderungen gehören in die
 > Quellen.
 
@@ -484,7 +485,8 @@ Was dabei geschieht:
   nach dem Upgrade empfiehlt der Agent „komplett neu“;
   vorgefundene Dokumente in `docs/` bleiben als
   Nachweis liegen, die Kopie des neuen Doku-Stands kommt
-  daneben, nichts wird überschrieben oder umbenannt.
+  daneben unter dem Namen des Stands mit Version, nichts
+  wird überschrieben oder umbenannt.
 - **Abgeschlossene Marken** aus 2.0 bleiben
   abgeschlossen; ein Doku-Stand wird für sie nicht
   nachgebaut, und der Lint verlangt für sie keine
