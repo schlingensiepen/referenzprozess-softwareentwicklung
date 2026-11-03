@@ -14,8 +14,8 @@
 > Änderungen der Quellen auf deren Stand nachgezogen
 > (zuletzt am 2026-11-03, nachgezogen auf `2017c75`:
 > Version 2.1, der Sprung von 2.0 auf 2.1, die Kette
-> der Sprünge aus 1.x und die Nacharbeit nach der
-> Abnahme — Lesung alter Nummern je Eintragsart,
+> der Sprünge aus 1.x und die Präzisierungen zum
+> Sprung — Lesung alter Nummern je Eintragsart,
 > Doku-Abfrage nach dem Upgrade, abgeschlossene
 > Marken, Stand-Dateien mit Status-Wort, Name der
 > Doku-Kopie in `docs/`, laufende Marke mit eigenem

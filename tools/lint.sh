@@ -3139,6 +3139,11 @@ END {
     if (mi == 0 || mi >= midx(inprog) || stand[f] == "abschluss-stand" || verb[stand[f]] != "pflicht") continue
     if ((f in uebrg) || (f in uebpar)) continue
     if ((kid(f), inprog) in neufm) continue   # die Folge-Version zur laufenden Marke liegt schon vor
+    # zur laufenden Marke liegt schon eine Pflicht-Freigabe derselben Phase vor
+    # (Eintrag oder Nachtrag; bei Deploy-Stand und Betriebs-Anleitung derselben
+    # Umgebung) — auch unter neuer Ketten-ID (Form 2.0): kein Hinweis
+    ph = phnum(stand[f])
+    if ((inprog, ph) in frei && (!((stand[f] in hatumg) && hatumg[stand[f]]) || freienv(freif[inprog, ph], umgvon(f)) != "")) continue
     r = ueberholt(f, inprog)
     if (r != "" && ((f SUBSEP inprog) in uebt)) hin("UEBERHOLT", f, "Stand der Marke " M " ist für die laufende Marke " inprog " überholt (" r ") — nicht übernehmen; Antwort ist die Folge-Version derselben Ketten-ID mit eigener Freigabe zu " inprog ", bei unverändertem Inhalt mit unverändertem Text (Überholt-Regel; Kettenpruefung §Kette, Folge-Marke mit eigenem Tag)")
   }
@@ -3679,7 +3684,13 @@ cat <<'EOF'
   und Benutzer-Doku bleiben davon unberührt (der Tag-Grund wird über ihre
   Vorgänger nicht an sie weitergegeben). „Jüngste Version je Ketten-ID“
   liest der Lint je Marke: die Folge-Version verdrängt die Version der
-  Vormarke nicht (Überholt-Berechnung, Marken-Regel, FREIGABE-STAND).
+  Vormarke nicht (Überholt-Berechnung, Marken-Regel, FREIGABE-STAND). Der
+  Hinweis UEBERHOLT mit der Folge-Version als Antwort entfällt, sobald zur
+  laufenden Marke eine Pflicht-Freigabe derselben Phase (bei Deploy-Stand
+  und Betriebs-Anleitung derselben Umgebung) vorliegt — auch als eigener
+  Stand unter neuer Ketten-ID. Ob die Freigabe der Folge-Version die
+  Freigabe der Vormarken-Version beidseitig ablöst (`supersedes:` am neuen,
+  `superseded_by:` am alten Eintrag), prüft der Lint nicht.
   Übernahme des Tags (unverändertes Produkt): nur der Tag der nächsten
   Vormarke mit Tag-Freigabe, und nur, wenn keiner der für diese
   Vormarke wirksamen Pflicht-Stände der Phasen vor P9 — ihre eigenen
