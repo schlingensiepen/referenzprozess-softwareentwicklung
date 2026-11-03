@@ -9,10 +9,10 @@
 > `Init-Choreografie.md`, `Zielmarken.md`,
 > `Kettenpruefung.md`, `Fassaden.md`, `Katalog.md`,
 > `Agent-Berichte.md`). Stand der Quellen:
-> Starter-Commit `2017c75` (Version 2.1). Dieses
+> Starter-Commit `d57a174` (Version 2.1). Dieses
 > Dokument ist aus den Quellen abgeleitet und wird bei
 > Änderungen der Quellen auf deren Stand nachgezogen
-> (zuletzt am 2026-11-03, nachgezogen auf `2017c75`:
+> (zuletzt am 2026-11-03, nachgezogen auf `d57a174`:
 > Version 2.1, der Sprung von 2.0 auf 2.1, die Kette
 > der Sprünge aus 1.x und die Präzisierungen zum
 > Sprung — Lesung alter Nummern je Eintragsart,

@@ -9,7 +9,7 @@
 > `Katalog.md`, `Einfrieren-und-Abloesen.md`,
 > `Lebenslauf-eines-Stands.md`, `Glossar.md`,
 > `Standarddateien-Katalog.md`). Stand
-> der Quellen: Starter-Commit `2017c75` (Version 2.1).
+> der Quellen: Starter-Commit `d57a174` (Version 2.1).
 > Dieses Dokument ist aus den Quellen abgeleitet und
 > wird bei Änderungen der Quellen auf deren Stand
 > nachgezogen (zuletzt am 2026-11-03); eigene Inhalte
