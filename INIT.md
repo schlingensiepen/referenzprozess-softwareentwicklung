@@ -435,7 +435,7 @@ Register-Eintrag).
   `current`**, solange keine abgeschlossen ist.
 - **Herkunft** in [[Aktivierter-Prozess]]
   `## Herkunft` (Format: [[Init-Choreografie]]
-  §Phase A0): `Template-Stand: 2.0 seit JJJJ-MM-TT`
+  §Phase A0): `Template-Stand: 2.1 seit JJJJ-MM-TT`
   (Tag des Inits — der Stichtag, den der Lint liest),
   `Quelle` und `Anbindungs-Modus` aus Schritt 0,
   `Rolle` aus Nr. 7 bzw. dem Startprompt,
@@ -508,7 +508,7 @@ Starter und bleibt in `_template/` lesbar.
   Schritt 4 umbenannte `TODO-vorgefunden.md`).
 - **Chronologie-Eintrag** „Projekt aus
   referenzprozess-softwareentwicklung angelegt
-  (Template-Stand 2.0 seit <Datum>, Quelle
+  (Template-Stand 2.1 seit <Datum>, Quelle
   <Commit/Tag>, Modus A/B)“ — Werte wie im
   Herkunfts-Vermerk.
 - `devstate_active.md` nachführen (Zielmarke,

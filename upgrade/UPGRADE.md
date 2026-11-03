@@ -69,8 +69,8 @@ steht, entscheiden sie:
   das Upgrade; du wechselst nicht von dir aus auf eine
   andere Vorlage. Erkennst du am Herkunfts-Vermerk
   eines Nachbar-Repos (Lage aus §Komponenten; Zeile
-  `Template-Stand` fehlt oder nennt 1.x), dass es noch
-  nicht gehoben ist, schreibst du ihm keine Nachricht
+  `Template-Stand` fehlt oder nennt eine ältere
+  Version), dass es noch nicht gehoben ist, schreibst du ihm keine Nachricht
   (es könnte sie weder lesen noch quittieren), sondern
   bittest den Anwender, die Sache wie bisher
   weiterzugeben, und empfiehlst, den Nachbarn bald zu
@@ -89,8 +89,9 @@ Grundsätzen.
 **Projekt aus der allgemeinen Vorlage** — die Regel
 „dieselbe Vorlage bleibt die Vorlage“ in Orten:
 
-- **Anleitung und Sprung-Datei** (diese Datei und
-  `upgrade/1.x-nach-2.0.md`) liest du ab Schritt 0
+- **Anleitung und Sprung-Dateien** (diese Datei und
+  `upgrade/<alt>-nach-<neu>.md`, Schritt 6) liest du ab
+  Schritt 0
   aus einem Klon des Starters außerhalb des Projekts,
   nur zum Lesen — dem **Lese-Klon** (`git clone
   --depth 1 <Repo-URL oben> <Ordner außerhalb>`; nach
@@ -136,11 +137,14 @@ Rolle, laufende Marke, offene Zwischenmarke, dein
 Vorschlag für den Weg (Skript oder von Hand).
 
 - **Herkunfts-Vermerk** in `wiki/Aktivierter-Prozess.md`:
-  - **2.0-Form:** Abschnitt `## Herkunft` mit den Zeilen
+  - **2.0-Form** (seit 2.0, unverändert in 2.1):
+    Abschnitt `## Herkunft` mit den Zeilen
     `Template-Stand` (Version und Stichtag), `Quelle`
     (Repo-URL und Commit bzw. Tag), `Anbindungs-Modus`,
     `Prozess`, `Rolle`, `Übernahme-Art` (Format:
-    [[Init-Choreografie]] §Phase A0).
+    [[Init-Choreografie]] §Phase A0); nach einem
+    früheren Upgrade darunter eine Zeile `Vorher` mit
+    Vermerk.
   - **1.x-Form:** Feld „Template-Herkunft“ (Quelle und
     Stand) im Knoten, kein `## Herkunft`; Prozess aus
     „Gewählter Prozess“, Rolle aus „RP-1-Rolle“ —
@@ -217,7 +221,7 @@ Vorschlag für den Weg (Skript oder von Hand).
 
 Den unveränderten Ausgangszustand committen, **vor** dem
 Tausch — angekündigt, nicht erfragt:
-`git add -A && git commit -m "Sicherung vor Upgrade auf Template-Stand 2.0"`.
+`git add -A && git commit -m "Sicherung vor Upgrade auf Template-Stand 2.1"`.
 Schutzregeln: Ist nichts zu committen, gilt der aktuelle
 `HEAD` als Sicherung (kein leerer Commit); ignorierte
 Dateien bleiben ignoriert (nie `git add -f`);
@@ -252,7 +256,7 @@ nennst du vorher:
   der Antwort des Anwenders wie in `INIT.md` Schritt 0,
   mit dem neuen Stand und der Quelle aus Schritt 0.
 
-Danach ein eigener Commit „Vorlage auf Stand 2.0
+Danach ein eigener Commit „Vorlage auf Stand 2.1
 gesetzt“ (bei Modus A einschließlich der kompletten
 Kopie). Ab hier liest du Regelwerk und neue Dateien
 aus `_template/` und die Anleitung aus
@@ -283,11 +287,11 @@ der führende Ort, das Skript ihre Implementierung.
 |---|---|
 | Vorprüfung | Sicherungs-Commit vorhanden (keine Änderung an getrackten Dateien; ungetrackte Dateien, die Schritt 1 ausgelassen hat, bleiben unberührt und werden genannt), kein laufender Merge; `_template/` trägt den neuen Stand, Modus erkannt; Vorlage ist dieser Starter, Prozess RP-1 auf SP-1; alte Version bekannt (Schritt 0) |
 | Tausch | geschehen in Schritt 2 — das Skript stellt nur fest, dass `_template/` den neuen Stand trägt |
-| Umbenennungen | Dateinamen nach der Tabelle der Sprung-Datei §1 (`Rollen.md`, `Katalog.md`, Umlaute → ae/oe/ue/ss); per `git mv`, nie über eine vorhandene Datei |
+| Umbenennungen | Dateinamen nach der Tabelle der Sprung-Datei §1 (aus 1.x: `Rollen.md`, `Katalog.md`, Umlaute → ae/oe/ue/ss; aus 2.0: keine); per `git mv`, nie über eine vorhandene Datei |
 | Neue Dateien | jede Datei des neuen Stands, die im Projekt fehlt (Root-Regelwerk, `wiki/` samt Katalog-Einträgen, Mechanik-Knoten, Fassaden, Vorlagen; `.gitignore` nur, falls keine da ist), wird angelegt und gesammelt gemeldet — Fassaden, die der aktive Prozess voraussetzt, aktiv, optionale deaktiviert (`active: false`) mit Hinweis an den Anwender, abgelöste nur als Hintergrund; eine bestehende Datei wird nie überschrieben; eine so angelegte Fassade trägt im Frontmatter-Kommentar „beim Upgrade angelegt“ |
-| Formalien | Frontmatter nach der Tabelle der Sprung-Datei §1, einschließlich `supersedes:` am Nachfolger einer Ablösung |
-| Herkunft | Zeile `Template-Stand: 2.0 seit <Tag des Upgrades>` neu, darunter `Vorher: <alte Version> (bis <Tag des Upgrades>)`; 1.x-Form wird zur 2.0-Form (Schritt 7 füllt die übrigen Zeilen) |
-| Trefferliste | alles, was du kontext-bewusst nachziehst (Schritt 6): Wikilinks auf umbenannte Dateien, `SPEC`-/`BR`-Kennungen, Pflegezeilen „Stand:“, Marken-Zeiger, Altknoten, Contract-Fassungen, alte Ablöse-Vermerke; dazu die Delta-Liste der bestehenden Dateien, eingeteilt nach Schritt 5 |
+| Formalien | Frontmatter nach der Tabelle der Sprung-Datei §1 (aus 1.x), einschließlich `supersedes:` am Nachfolger einer Ablösung; aus 2.0 keine |
+| Herkunft | Zeile `Template-Stand: 2.1 seit <Tag des Upgrades>` neu, darunter `Vorher: <alte Version> (bis <Tag des Upgrades>)`; eine frühere `Vorher`-Zeile bleibt darunter stehen; 1.x-Form wird zur 2.0-Form (Schritt 7 füllt die übrigen Zeilen) |
+| Trefferliste | alles, was du kontext-bewusst nachziehst (Schritt 6): aus 1.x Wikilinks auf umbenannte Dateien, `SPEC`-/`BR`-Kennungen, Pflegezeilen „Stand:“, Marken-Zeiger, Altknoten, Contract-Fassungen, alte Ablöse-Vermerke; aus 2.0 Verzichts-DECs und Freigaben mit alten Phasennummern, vorgefundenes `docs/`; dazu die Delta-Liste der bestehenden Dateien, eingeteilt nach Schritt 5 |
 | Lint-Kern | `sh _template/tools/lint.sh` aus dem Projekt-Root — als Trefferliste; maßgeblich ist der Lauf in Schritt 8 |
 
 Danach Commit „Upgrade: Mechanik“ (entfällt, wenn der
@@ -365,13 +369,24 @@ Delta-Nachzug“.
 
 ## 6. Versions-spezifische Schritte
 
-Je Sprung eine Datei `upgrade/<alt>-nach-<neu>.md`; für
-den Sprung aus 1.0 oder 1.1: **`upgrade/1.x-nach-2.0.md`**
-(Phasen-Zuordnung, `SPEC` → `FUNC`, `BR` → `BUG`,
-Katalog statt `Knotentypen.md`, Bestandsschutz, was die
-Trefferliste aus Schritt 3 verlangt). Wikilinks und
-Kennungen ziehst du **kontext-bewusst** nach — kein
-`sed`. Danach Commit.
+Je Sprung eine Datei `upgrade/<alt>-nach-<neu>.md`; du
+gehst alle Sprünge von der alten Version bis zur neuen
+in einem Upgrade nacheinander durch — jede Datei mit
+den Phasennummern ihres Ziel-Stands, die nächste bildet
+sie weiter ab:
+
+- **aus 2.0:** `upgrade/2.0-nach-2.1.md` (Phasen-
+  Zuordnung mit den Doku-Phasen P11 und P12, Lesung
+  alter Freigaben und Verzichts-DECs, Doku-Abfrage für
+  die laufende Marke, Vorstatus `offen`, neue Dateien);
+- **aus 1.0 oder 1.1:** zuerst `upgrade/1.x-nach-2.0.md`
+  (Phasen-Zuordnung, `SPEC` → `FUNC`, `BR` → `BUG`,
+  Katalog statt `Knotentypen.md`, Bestandsschutz, was
+  die Trefferliste aus Schritt 3 verlangt), danach
+  `upgrade/2.0-nach-2.1.md` (dort Abschnitt 4).
+
+Wikilinks und Kennungen ziehst du **kontext-bewusst**
+nach — kein `sed`. Danach Commit.
 
 ## 7. Herkunft nachführen
 
@@ -379,15 +394,19 @@ Abschnitt `## Herkunft` von [[Aktivierter-Prozess]]
 (Format: [[Init-Choreografie]] §Phase A0
 „Herkunfts-Vermerk“):
 
-- `- **Template-Stand:** 2.0 seit JJJJ-MM-TT` — der Tag
+- `- **Template-Stand:** 2.1 seit JJJJ-MM-TT` — der Tag
   des Upgrades; er ist der Stichtag, den der Lint liest
   (neue Pflichtfelder gelten als Fehler nur für
-  Elemente ab diesem Tag).
+  Elemente ab diesem Tag; alte Phasennummern liest er
+  nur an Einträgen vor diesem Tag um, Sprung-Datei
+  `2.0-nach-2.1.md` §3).
 - `- **Vorher:** <alte Version> (bis JJJJ-MM-TT)` —
   direkt darunter; frühere `Vorher`-Zeilen bleiben
   stehen. Direkt unter der Zeile steht als Vermerk die
   Zuordnungstabelle alt → neu, die die Sprung-Datei
-  vorgibt (für 1.x → 2.0: Phasennummern). Ins
+  vorgibt (Phasennummern; je durchlaufenem Sprung ein
+  Vermerk in der Reihenfolge der Sprünge, Wortlaut in
+  der jeweiligen Sprung-Datei §2). Ins
   Entscheidungs-Register kommt kein Eintrag.
 - `Quelle` (Repo-URL und Commit bzw. Tag des neuen
   Stands), `Anbindungs-Modus`, `Prozess`, `Rolle`,
@@ -411,10 +430,12 @@ Commit „Upgrade: Herkunft“.
    es nur ein Modell: frische Agenten desselben Modells,
    ausdrücklich als schwächere Absicherung benannt):
    > Prüfe das Upgrade im Projekt `<Projekt>` auf
-   > Template-Stand 2.0: (1) Vollständigkeit — jede
+   > Template-Stand 2.1: (1) Vollständigkeit — jede
    > Position aus `<Anleitungs-Ort>/UPGRADE.md`
-   > Schritt 3 bis 7 und aus
-   > `<Anleitungs-Ort>/1.x-nach-2.0.md` umgesetzt oder
+   > Schritt 3 bis 7 und aus den Sprung-Dateien
+   > `<Anleitungs-Ort>/<alt>-nach-<neu>.md` des Wegs
+   > (aus 2.0: `2.0-nach-2.1.md`; aus 1.x: `1.x-nach-2.0.md`
+   > und `2.0-nach-2.1.md`) umgesetzt oder
    > als Angebot berichtet? (2) Treue — Inhalte
    > unverändert, nur Formalien und Kennungen
    > umgestellt, Altbestände lesbar? (3) Links —
@@ -447,7 +468,7 @@ Commit „Upgrade: Herkunft“.
 4. Dasselbe Review läuft bei einem **Prozess-Upgrade**
    (Hinzufügen oder Wechsel eines Prozesses, Wiki.md
    §11.5), wenn es bestehende Einträge migriert.
-5. Abschluss-Commit „Upgrade auf Template-Stand 2.0
+5. Abschluss-Commit „Upgrade auf Template-Stand 2.1
    abgeschlossen“; `devstate_active.md` nachführen.
 
 ## Verbund

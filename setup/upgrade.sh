@@ -2,7 +2,9 @@
 # upgrade.sh — hebt ein Projekt, das aus dem Starter
 # referenzprozess-softwareentwicklung stammt, mechanisch auf den Stand
 # des Starters, aus dem dieses Skript stammt (Anleitung:
-# upgrade/UPGRADE.md Schritt 3; Sprung 1.x → 2.0: upgrade/1.x-nach-2.0.md).
+# upgrade/UPGRADE.md Schritt 3; je Sprung eine Datei
+# upgrade/<alt>-nach-<neu>.md — aus 2.0: 2.0-nach-2.1.md, aus 1.x:
+# 1.x-nach-2.0.md und danach 2.0-nach-2.1.md).
 #
 # Aufruf aus dem Projektordner, nachdem _template/ den neuen Stand
 # trägt und der Tausch committet ist (UPGRADE.md Schritt 2):
@@ -229,7 +231,7 @@ if [ -z "$VORHER" ]; then
 fi
 # neue Version: aus dem neuen Stand (Vorbelegung des Herkunfts-Vermerks)
 NACH=$(grep -o '[0-9][0-9]*\.[0-9][0-9]* seit JJJJ-MM-TT' "$SRC/wiki/Aktivierter-Prozess.md" | head -n 1 | cut -d' ' -f1)
-[ -n "$NACH" ] || NACH=2.0
+[ -n "$NACH" ] || NACH=2.1
 # Wiederholungslauf: Template-Stand nennt schon die Zielversion und eine
 # Zeile Vorher steht — der Herkunfts-Vermerk bleibt dann unverändert.
 SCHON=0
@@ -251,6 +253,13 @@ if [ -z "$VORHER" ] && [ "$SCHON" -eq 0 ] && [ "$STAND_GLEICH" -eq 0 ]; then
     [ "$PRUEFEN" -eq 1 ] || fehler "Alte Version nicht ablesbar (keine Zeile Template-Stand, kein Release-Tag genau auf dem Pin vor dem Tausch${SUB_ALT:+: $SUB_ALT}) — den Anwender fragen und --vorher <Version> angeben (UPGRADE.md Schritt 0)."
     VORHER="offen — --vorher <Version> angeben (UPGRADE.md Schritt 0)"
 fi
+# Sprung-Dateien des Wegs (UPGRADE.md Schritt 6): je Sprung eine, der
+# Reihe nach — aus 1.x beide, aus 2.0 nur die letzte
+case $VORHER in
+    1.*) SPRUNG="1.x-nach-2.0.md und 2.0-nach-2.1.md" ;;
+    2.0) SPRUNG="2.0-nach-2.1.md" ;;
+    *)   SPRUNG="<alt>-nach-<neu>.md" ;;
+esac
 
 IN_PROGRESS=0
 [ -f "$DST/wiki/Zielmarken.md" ] && grep -q '^- \*\*Zustand:\*\* *in-progress' "$DST/wiki/Zielmarken.md" && IN_PROGRESS=1
@@ -674,7 +683,7 @@ if [ "$SCHON" -eq 1 ]; then
 elif [ "$STAND_GLEICH" -eq 1 ]; then
     printf '  unverändert — Template-Stand %s steht schon, kein Sprung (keine Zeile Vorher)\n' "$NACH"
 elif [ "$HV_FORM" = 2.0 ]; then
-    printf '  %s\n  %s\n  (Vermerk mit der Zuordnungstabelle direkt unter Vorher: 1.x-nach-2.0.md Abschnitt 2)\n' "$TS" "$VZ"
+    printf '  %s\n  %s\n  (Vermerk mit der Zuordnungstabelle direkt unter Vorher — je Sprung einer, der Reihe nach: %s Abschnitt 2; eine frühere Zeile Vorher bleibt darunter stehen)\n' "$TS" "$VZ" "$SPRUNG"
     if [ "$PRUEFEN" -eq 0 ]; then
         awk -v ts="$TS" -v vz="$VZ" '
             /^- \*\*Template-Stand:\*\*/ && !done { print ts; print vz; done = 1; next }
@@ -715,7 +724,7 @@ printf '\n'
 # 7 Trefferliste für den Agenten (kontext-bewusst nachziehen, kein sed)
 # ---------------------------------------------------------------------
 
-printf 'Trefferliste für den Agenten (1.x-nach-2.0.md Abschnitt 2 und 3)\n'
+printf 'Trefferliste für den Agenten (%s, Abschnitte 2 und 3)\n' "$SPRUNG"
 if [ -n "$UMBENANNT" ]; then
     printf '%s' "$UMBENANNT" | while IFS='	' read -r alt neu; do
         base=${alt##*/}; base=${base%.md}
@@ -732,6 +741,12 @@ treffer '^> \*\*⚠ Abgelöst durch \[\[' 'Ablöse-Vermerke der 1.x-Form — ble
 treffer '^- \*\*Auslöser:\*\*' 'Register-Zeilen mit Auslöser: zum Status umgesetzt (Prüfung offen) — Zeile streichen, Inhalt in den Vermerk des Knotens' wiki 'Prüfung offen — vor dem Upgrade'
 treffer '^- \*\*Zustand:\*\* *current' 'Marken-Zeiger current der 1.x-Form — Zeile Zustand nach 1.x-nach-2.0.md Abschnitt 2 (abgeschlossen, in-progress, künftig)' wiki
 treffer 'Template-Herkunft' 'Herkunfts-Vermerk 1.x-Form — Zeilen Quelle, Prozess, Rolle füllen' wiki
+# Sprung 2.0 → 2.1 (2.0-nach-2.1.md Abschnitt 3): alte Phasennummern an
+# Verzichts-DECs (der Lint liest sie um, Hinweis) und an Freigaben und
+# Nachträgen (am Tätigkeitsnamen gelesen, nichts zu ändern); docs/
+treffer '^phase:[ 	]*P1[123][ 	]*$' 'Verzichts-DECs mit alter Phasennummer P11/P12/P13 — der Lint liest sie als P13/P14/P15, nichts umbuchen (2.0-nach-2.1.md Abschnitt 3)' wiki '^decision_type:[ 	]*verzicht'
+treffer 'für P11 Ausliefern|für P12 Produzieren|für P13 Betreiben' 'Freigaben und Nachträge mit alten Phasennummern — bleiben, der Lint liest den Zweck am Tätigkeitsnamen (2.0-nach-2.1.md Abschnitt 3); Regelwerks-Text in Fassaden-Köpfen kommt mit dem Delta-Nachzug (UPGRADE.md Schritt 5)' wiki
+[ -d "$DST/docs" ] && printf '  docs/ vorgefunden — bleibt als Nachweis liegen; der erste Doku-Stand entsteht über die Doku-Abfrage (2.0-nach-2.1.md Abschnitt 2 und 3)\n'
 [ "$IN_PROGRESS" -eq 1 ] || printf '  Zielmarken: Zustandszeile in-progress nicht gefunden — Zielmarken selbst lesen; fehlt eine laufende Marke, vom Anwender benennen lassen und anlegen (vor dem Lint, UPGRADE.md Schritt 4)\n'
 printf '\n'
 
@@ -749,8 +764,8 @@ if [ "$OHNE_LINT" -eq 0 ] && [ -f "$NEU/tools/lint.sh" ]; then
     printf '\n'
 fi
 if [ "$GEAENDERT" -eq 1 ]; then
-    printf 'Nächster Schritt: Commit „Upgrade: Mechanik“, dann UPGRADE.md Schritt 4 bis 8 mit %s/upgrade/1.x-nach-2.0.md.\n' "$NEU"
+    printf 'Nächster Schritt: Commit „Upgrade: Mechanik“, dann UPGRADE.md Schritt 4 bis 8 mit %s/upgrade/%s.\n' "$NEU" "$SPRUNG"
 else
-    printf 'Dieser Lauf hat nichts geändert (Mechanik schon vollzogen) — kein Commit nötig. Weiter mit UPGRADE.md Schritt 4 bis 8 mit %s/upgrade/1.x-nach-2.0.md, soweit noch offen.\n' "$NEU"
+    printf 'Dieser Lauf hat nichts geändert (Mechanik schon vollzogen) — kein Commit nötig. Weiter mit UPGRADE.md Schritt 4 bis 8 mit %s/upgrade/%s, soweit noch offen.\n' "$NEU" "$SPRUNG"
 fi
 exit 0
