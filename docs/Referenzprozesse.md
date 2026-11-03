@@ -11,10 +11,10 @@
 > `Marken-SP-1.md`, `Marken-RP-1.md`), den Steckbriefen
 > `../referenzprozesse/*/Steckbrief.md` und
 > `../referenzprozesse/SP-1-Standardprozess/index.md`
-> (Rollen). Stand der Quellen: Starter-Commit `959026c`
-> (Version 2.0). Dieses Dokument ist aus den Quellen
+> (Rollen). Stand der Quellen: Starter-Commit `c7fbc93`
+> (Version 2.1). Dieses Dokument ist aus den Quellen
 > abgeleitet und wird bei Änderungen der Quellen auf
-> deren Stand nachgezogen (zuletzt am 2026-10-28);
+> deren Stand nachgezogen (zuletzt am 2026-11-03);
 > eigene Inhalte bekommt es nicht — Änderungen gehören
 > in die Quellen.
 
@@ -89,7 +89,12 @@ einem Schnitt in Komponenten — den Contract-Index (ein
 **Contract** ist eine zwischen Komponenten vereinbarte
 Schnittstelle); dazu ein Vorgehen mit
 Scaffolding-Vorlagen, Meilensteinen und der Kette der
-Pflicht-Stände. Die Rollen Koordinator, Komponente und
+Pflicht-Stände — darin die drei Doku-Stände
+Entwickler-Doku, Benutzer-Doku und Betriebs-Anleitung,
+die für Leser ohne Zugang zum Projekt geschrieben sind
+(siehe
+[Stände, Freigaben und Marken](Staende-Freigaben-Marken.md),
+„Dokumentation“). Die Rollen Koordinator, Komponente und
 Standalone gibt es schon mit SP-1. RP-1 löst einige
 SP-1-Fassaden durch software-spezifische ab
 (Softwaresystemarchitektur statt Systemarchitektur,
@@ -97,9 +102,14 @@ Softwaresystemtest-Setup statt Systemtest-Setup — die
 abgelösten liegen deaktiviert im Wiki und verweisen auf
 ihre Nachfolger) und präzisiert für Software: die Rolle
 je Komponente in der Architektur, die Aushandlung von
-Contracts, den Ablauf des Tag-Setzens; Bedarfe und
-Szenarien haben mit RP-1 die Form der User-Story und
-des Use Case. Die vollständige Beschreibung steht je
+Contracts, den Ablauf des Tag-Setzens und die Sprachen
+der Artefakte (Code und daraus erzeugte API-Doku
+Englisch; die Benutzer-Doku projekt-primär Deutsch,
+weitere Sprachen auf Aufforderung; der erklärende Text
+der Entwickler-Doku in der Projektsprache — die
+API-Doku ist Teil der Entwickler-Doku, nicht ihr
+Ersatz); Bedarfe und Szenarien haben mit RP-1 die Form
+der User-Story und des Use Case. Die vollständige Beschreibung steht je
 Prozess in `../referenzprozesse/<PROZESS>/index.md`.
 
 ## Welche Prozesse es sonst gibt

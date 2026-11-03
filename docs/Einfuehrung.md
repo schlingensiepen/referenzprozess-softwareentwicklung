@@ -7,10 +7,10 @@
 > `../wiki/` (`Aktivierter-Prozess.md`, `Fassaden.md`)
 > und den Steckbriefen
 > `../referenzprozesse/*/Steckbrief.md`. Stand der
-> Quellen: Starter-Commit `959026c` (Version 2.0).
+> Quellen: Starter-Commit `c7fbc93` (Version 2.1).
 > Dieses Dokument ist aus den Quellen abgeleitet und
 > wird bei Änderungen der Quellen auf deren Stand
-> nachgezogen (zuletzt am 2026-10-28); eigene Inhalte
+> nachgezogen (zuletzt am 2026-11-03); eigene Inhalte
 > bekommt es nicht — Änderungen gehören in die Quellen.
 
 Diese Erklärung ist für dich geschrieben — einen
@@ -322,9 +322,16 @@ wird aus dem lebenden Wissen ein **Stand** in
 `output/` gebildet (eingefroren, versioniert, zu genau
 einer Marke gehörend) und **für einen Zweck
 freigegeben** — etwa „freigegeben für das Zerlegen in
-Bausteine“. Ein Beispiel: Für den Release „1.0“
-entsteht aus dem Register Anforderungen ein
-Anforderungen-Stand; ein Prüfer, möglichst ein
+Bausteine“. Eine Freigabe hängt immer an einem Stand,
+nie an einem einzelnen Eintrag; mit ihr frieren die
+Einträge ein, auf die der Stand verweist — einzige
+Freigabe ohne Stand ist der git-Tag, der das Produkt
+einer Marke markiert. Was der Agent dir vorlegt, ist
+der Stand selbst — einen Entwurf daneben gibt es
+nicht; eine Korrektur geht in die Einträge, und der
+Agent bildet eine neue Version. Ein Beispiel: Für den
+Release „1.0“ entsteht aus dem Register Anforderungen
+ein Anforderungen-Stand; ein Prüfer, möglichst ein
 zweites KI-Modell, prüft ihn gegen die freigegebenen
 Vorgänger derselben Marke (Kettenprüfung), dann gibst
 du ihn frei — „für P4 Beschreiben der Funktion“ —,
@@ -333,7 +340,13 @@ Pflicht-Stände — Stände, die der Prozess für eine
 seiner Phasen verlangt — bilden je Marke eine Kette;
 das Produkt der Marke, der Code, wird mit einem
 git-Tag markiert, und ein Abschluss-Stand hält fest,
-was zur Marke gehört.
+was zur Marke gehört. Zur Kette gehören drei Stände,
+die ohne Zugang zum Projekt lesbar sind: die
+Dokumentation für Entwickler, für Benutzer und je
+Umgebung die Betriebs-Anleitung; ob und in welcher
+Form eine Marke sie bekommt, fragt dich der Agent
+einmal je Marke, sobald das Produkt markiert ist
+(Doku-Abfrage).
 Phasen, die du für eine Marke nicht brauchst, lässt
 du per Verzicht aus. Das Wort „Freigabe“ meint daneben
 auch die gebuchte Erlaubnis für einen zusätzlichen
@@ -395,8 +408,11 @@ Nachschlagen geschrieben.
   Ingest, Versionierung, Lint.
 - [Stände, Freigaben und Marken](Staende-Freigaben-Marken.md)
   — die Phasen des Software-Prozesses, was ein Stand
-  ist, die Freigabe-Formel, Kettenprüfung und Tag der
-  Implementierung, Zielmarken, Zwischenmarken,
+  ist und wie sein Lebenslauf vom ersten Eintrag bis
+  zur Freigabe läuft, die Freigabe-Formel,
+  Kettenprüfung und Tag der Implementierung, die
+  Dokumentation für Entwickler, Benutzer und Betrieb
+  mit der Doku-Abfrage, Zielmarken, Zwischenmarken,
   Marken-Wechsel und Abschluss-Stand, Nachträge,
   Scaffolding.
 - [Referenzprozesse](Referenzprozesse.md) — Aufbau eines
@@ -433,7 +449,8 @@ ist der Wortlaut in:
 - `../wiki/` — das vorbereitete Wiki samt Regel-Knoten,
   darunter `Aktivierter-Prozess.md` (die
   Vorfestlegungen des Starters), `Init-Choreografie.md`,
-  `Einfrieren-und-Abloesen.md`, `Kettenpruefung.md`,
+  `Einfrieren-und-Abloesen.md`,
+  `Lebenslauf-eines-Stands.md`, `Kettenpruefung.md`,
   `Zielmarken.md`, `Glossar.md`,
   `Standarddateien-Katalog.md`, `Vorgehen-RP-1.md`,
   `Marken-RP-1.md`;

@@ -7,11 +7,12 @@
 > `Aktivierter-Prozess.md`, `Facts.md`,
 > `Entscheidungen.md`, `InterneMechanik.md`,
 > `Katalog.md`, `Einfrieren-und-Abloesen.md`,
-> `Glossar.md`, `Standarddateien-Katalog.md`). Stand
-> der Quellen: Starter-Commit `959026c` (Version 2.0).
+> `Lebenslauf-eines-Stands.md`, `Glossar.md`,
+> `Standarddateien-Katalog.md`). Stand
+> der Quellen: Starter-Commit `c7fbc93` (Version 2.1).
 > Dieses Dokument ist aus den Quellen abgeleitet und
 > wird bei Änderungen der Quellen auf deren Stand
-> nachgezogen (zuletzt am 2026-10-28); eigene Inhalte
+> nachgezogen (zuletzt am 2026-11-03); eigene Inhalte
 > bekommt es nicht — Änderungen gehören in die Quellen.
 
 Zurück zur [Einführung](Einfuehrung.md).
@@ -195,7 +196,9 @@ Die wichtigsten Register der Basis:
   verworfenen Alternativen und Verweisen. Eine
   Entscheidung kommt
   **erst mit deinem OK** ins Register, direkt als
-  „angenommen“; Entwürfe liegen nie im Wiki. Ab dann
+  „angenommen“; Entwürfe liegen nie im Wiki — der Agent
+  legt dir den Entwurf vor und bucht erst nach deinem
+  OK. Ab dann
   ist ihr Inhalt **eingefroren**: Was sich ändert, wird
   eine neue Entscheidung, die die alte vollständig
   ablöst (beide tragen den Verweis aufeinander); was
@@ -205,6 +208,19 @@ Die wichtigsten Register der Basis:
   verwandten Einträgen und nennt sie. Auch Freigaben
   von Ständen werden hier gebucht (siehe
   [Stände, Freigaben und Marken](Staende-Freigaben-Marken.md)).
+  Diese Eintrittsregel gilt für Entscheidungen und
+  Contracts. Die **beschreibenden Register** eines
+  Prozesses (mit SP-1 Funktionsbeschreibungen,
+  Architektur, Spezifikationen, Testfälle, Deployments)
+  arbeiten anders: Dort legt der Agent einen Eintrag
+  als `offen` im Wiki an, mit seinem Vorschlag und den
+  offenen Punkten im Eintrag selbst; eine Klärung mit
+  dir ändert ihn direkt, bis er angenommen ist —
+  einzeln („ja, so“) oder gesammelt mit der Freigabe
+  des ersten Stands, der ihn verweist. Erst damit ist
+  er eingefroren (siehe
+  [Stände, Freigaben und Marken](Staende-Freigaben-Marken.md),
+  „Was ein Stand ist“).
 - **Ideen** — unverbindliche Ideen und zurückgestellte
   Entscheidungen. Eine nicht getroffene Entscheidung
   ist keine Entscheidung, sondern eine Idee mit
@@ -330,6 +346,17 @@ zweistellige Version, `TLA` das Kürzel des Bearbeiters —
 vor `_VV_TLA` ist die **Ketten-ID** und bleibt über alle
 Versionen gleich; eine Version wird nie überschrieben
 oder gelöscht, eine Änderung ist eine neue Version.
+Bei einem **Stand** entfallen Absender und Empfänger
+immer, und die Marke steht nur in seinem Kopf, nicht
+im Namen; gibt es zu einer Marke mehrere Stände eines
+Typs (je Umgebung, je Komponente), steht der Gegenstand
+im Namen. Status-Wörter wie „Entwurf“, „final“ oder
+„freigegeben“ gehören in keinen Dateinamen in `output/`
+oder `overview/` — die Ketten-ID ist unveränderlich,
+ein solches Wort bliebe für immer stehen; ob und wofür
+ein Stand freigegeben ist, steht nur im
+Freigabe-Eintrag, und der Lint meldet ein solches Wort
+als Hinweis.
 Alles entsteht zunächst als Markdown; in ein anderes
 Format wird erst konvertiert, wenn du den Inhalt für
 abgeschlossen erklärst und es ausdrücklich verlangst.

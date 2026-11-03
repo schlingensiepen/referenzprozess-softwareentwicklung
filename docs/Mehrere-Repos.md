@@ -10,11 +10,12 @@
 > `Init-Choreografie.md`, `Kettenpruefung.md`,
 > `Zielmarken.md`, `Katalog-message.md`,
 > `Contract-Index.md`, `Vorgehen-RP-1.md`,
-> `Glossar.md`). Stand der Quellen: Starter-Commit
-> `959026c` (Version 2.0). Dieses Dokument ist aus den
+> `Vorgehen-SP-1.md` Abschnitt 6,
+> `Katalog-Entwickler-Doku.md`, `Glossar.md`). Stand der Quellen: Starter-Commit
+> `c7fbc93` (Version 2.1). Dieses Dokument ist aus den
 > Quellen abgeleitet und wird bei Änderungen der
 > Quellen auf deren Stand nachgezogen (zuletzt am
-> 2026-10-28); eigene Inhalte bekommt es nicht —
+> 2026-11-03); eigene Inhalte bekommt es nicht —
 > Änderungen gehören in die Quellen.
 
 Zurück zur [Einführung](Einfuehrung.md).
@@ -81,28 +82,39 @@ und klärt mit dir folgende Felder:
 
 Die **Standardbelegung**, die der Agent als Vorgabe
 vorlegt: Quelle sind Wiki, Register und die
-wiki-verweisenden Stände in `output/`; Ziel ist das
+wiki-verweisenden Stände in `output/`, darunter die
+Deploy-Stände; Ziel ist das
 Produkt-Repo, in dem der Tag der Implementierung
 gesetzt wird — Code, Tests und Build entstehen dort
 direkt, ihre Festlegungen werden im Wiki gebucht; dazu
-die selbsttragenden Dokumente als Ableitungen, etwa
-die Betriebs-Anleitung für Menschen in `docs/ops/`.
-Auslöser ist je Dokumenttyp die Freigabe eines Stands
-„für P11 Ausliefern“ (für die Betriebs-Anleitung die
-Freigabe des Deploy-Stands) oder dein Zuruf. Die
+die selbsttragenden Dokumente: die Kopien der drei
+Doku-Stände in `docs/developer/` (Entwickler-Doku),
+`docs/user/` (Benutzer-Doku) und `docs/ops/`
+(Betriebs-Anleitungen) — der freigegebene Stand selbst
+bleibt versioniert in `output/` der Werkstatt — und
+selbsttragende Ableitungen wie Release-Notes.
+Auslöser ist je Dokumenttyp die Auslöser-Zeile seines
+Katalog-Eintrags: für die drei Doku-Stände die
+Doku-Abfrage, für andere Dokumente, die das Produkt
+beschreiben, die Freigabe eines Stands „für P13
+Ausliefern“ oder dein Zuruf (siehe
+[Stände, Freigaben und Marken](Staende-Freigaben-Marken.md),
+„Dokumentation“). Die
 Transformation ist vollständige Neu-Erzeugung aus dem
-Wiki — Wikilinks und Register-Kennungen heraus,
-Begründungen ausgeschrieben — nie Nachpflegen. Die
+Wiki bzw. den Quell-Ständen — Wikilinks und
+Register-Kennungen heraus, Begründungen ausgeschrieben
+— nie Nachpflegen. Die
 Freigabe läuft über die Review-Kette, beim Übertrag ins
 Produkt mit verschärftem Review-Angebot.
 
 **Ein Repo.** Bei „ein Repo“ gelten dieselben Regeln
 ohne Repo-Grenze: selbsttragende Dokumente liegen im
-selben Repo (etwa in `docs/`) und werden zu denselben
-Auslösern vollständig neu erzeugt; Submodul und
-Ableitungs-Regel entfallen. Das `docs/` deines Projekts
-gehört dem Projekt; diese Erklärung bleibt unter
-`_template/docs/`.
+selben Repo (die Kopien der Doku-Stände in `docs/`,
+die Stände selbst in `output/`) und werden zu
+denselben Auslösern vollständig neu erzeugt; Submodul
+und Ableitungs-Regel entfallen. Das `docs/` deines
+Projekts gehört dem Projekt; diese Erklärung bleibt
+unter `_template/docs/`.
 
 **Ankündigungspflicht.** Arbeiten mehrere Beteiligte
 (Mensch und Agenten, mehrere Agenten) an denselben
@@ -200,26 +212,54 @@ Architektur. In beiden Arten vertritt der
 Übergabe-Stand die Architektur nicht: die Komponente
 führt sie selbst (sie darf dünn sein) oder verzichtet je
 Marke per Verzicht darauf wie auf jede andere Phase mit
-Pflicht-Stand. Die Komponente führt ihre Kette bis zum
-Testen: Nach ihrem Tag (der **Lieferung**) bildet sie
-einen Testplan-Stand und belegt den Durchgang mit einem
-Testbericht. Die Auslieferung und die Deployments liegen
-beim Koordinator — außer die Komponente hat eine eigene
-Zielumgebung. Ihr Abschluss-Stand listet die Glieder,
+Pflicht-Stand. Die Komponente führt
+ihre Kette bis zur Entwickler-Doku: Nach ihrem Tag (der
+**Lieferung**) bildet sie einen Testplan-Stand, belegt
+den Durchgang mit einem Testbericht und bildet die
+**Entwickler-Doku für ihr Bauteil** — freigegeben „für
+P13 Ausliefern“, die Lieferung an den, der ausliefert;
+offene Fehler aus ihrem Testbericht stehen als
+Einschränkung in der Freigabe. In ihrer Doku-Abfrage
+steht deshalb nur diese eine Zeile. Benutzer-Doku,
+Auslieferung mit den Deployments und
+Betriebs-Anleitungen liegen beim Koordinator — außer
+die Komponente hat eine eigene Zielumgebung (wird
+unabhängig ausgeliefert): Dann führt sie wie ein
+Standalone-Projekt Benutzer-Doku, Auslieferung und
+Betriebs-Anleitung selbst, und ihre Doku-Abfrage hat
+alle Zeilen. Ihr Abschluss-Stand listet die Glieder,
 die sie führt, und geht mit dem Marken-Abschluss an den
 Koordinator.
 
 **Der Koordinator.** Ohne eigene Bauteile hat er keine
 eigene Technologie-Wahl, Spezifikation und keinen
 eigenen Tag — an die Stelle des Tags treten die
-gebuchten Lieferungen aller Komponenten der Marke.
+gebuchten Lieferungen aller Komponenten der Marke; die
+Doku-Abfrage legt er dann vor, sobald die letzte
+erwartete Lieferung gebucht ist.
 Vorbedingung seines Testplan-Stands sind der eigene
 Tag (falls eigene Bauteile) **und** alle Lieferungen;
 den Integrationstest des Gesamtsystems führt er. Die
 Auslieferung mit den Deploy-Ständen je Zielumgebung
-liegt bei ihm für alle Komponenten. Beim Koordinator
-ist der Contract-Index aktiv; dort führt er die
-vereinbarten Schnittstellen.
+liegt bei ihm für alle Komponenten, ebenso die
+**Gesamtsicht der Entwickler-Doku**, die
+**Benutzer-Doku** und die **Betriebs-Anleitungen** je
+Zielumgebung — Vorbedingung der beiden Doku-Stände ist
+sein Testbericht über die Lieferungen, und jede dieser
+Freigaben ist ein eigener Meilenstein. Die Gesamtsicht
+nimmt die Entwickler-Doku jeder Komponente auf — als
+Kopie der ausgelieferten Datei oder als Anhang, nie als
+Verweis auf eine Datei im Komponenten-Repo —, und die
+Teil-Dokus sind ihre Quell-Stände. Fehlt die
+Entwickler-Doku einer Komponente („später“ oder Verzicht
+in deren Doku-Abfrage), legt der Koordinator die
+Gesamtsicht trotzdem vor und weist die Lücke aus; die
+Freigabe nennt sie als Einschränkung „Teil-Doku fehlt“.
+Kommt die Teil-Doku später, legt er in seiner
+Doku-Abfrage eine Zeile für eine neue Version oder ein
+Änderungsdokument der Gesamtsicht vor.
+Beim Koordinator ist der Contract-Index aktiv; dort
+führt er die vereinbarten Schnittstellen.
 
 ## Nachrichten im Verbund
 
@@ -285,7 +325,10 @@ oben Komponente (**Zwischen-Koordinator**). Nach oben
 liefert sie ihren Tag, wenn sie eigene Bauteile hat;
 sonst den Verweis auf ihre Zielmarken-Fassade, deren
 Tabelle die Lieferungs-Tags ihrer Unter-Komponenten
-trägt. Eine Schnittstelle zwischen zwei Zweigen liegt
+trägt. Ihre Kette endet wie bei jeder Komponente mit
+der Entwickler-Doku — für ihren Teilbaum, die
+Entwickler-Doku ihrer Unter-Komponenten aufgenommen.
+Eine Schnittstelle zwischen zwei Zweigen liegt
 bei der Ebene, die beide kennt.
 
 **Upgrade im Verbund.** Jedes Repo hebt sich selbst auf

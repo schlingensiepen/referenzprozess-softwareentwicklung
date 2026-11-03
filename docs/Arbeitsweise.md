@@ -13,10 +13,10 @@
 > `Standarddateien-Katalog.md`, `Kettenpruefung.md`
 > Abschnitt „Reviewer-Anteil“,
 > `Instruktionsdatei-Pflege.md`). Stand der Quellen:
-> Starter-Commit `959026c` (Version 2.0). Dieses
+> Starter-Commit `c7fbc93` (Version 2.1). Dieses
 > Dokument ist aus den Quellen abgeleitet und wird bei
 > Änderungen der Quellen auf deren Stand nachgezogen
-> (zuletzt am 2026-10-28); eigene Inhalte bekommt es
+> (zuletzt am 2026-11-03); eigene Inhalte bekommt es
 > nicht — Änderungen gehören in die Quellen.
 
 Zurück zur [Einführung](Einfuehrung.md).
@@ -381,8 +381,16 @@ Jedes Review läuft nach festen Regeln, die
   **Richter-Panel** (mehrere Vorschläge, dann Auswahl);
   für Dokumente, die ohne Zugang zum Projekt tragen
   müssen, der **Verständnis-Check** durch einen Leser
-  ohne Repo-Zugang. Die gewählten Muster stehen im
-  Freigabe-Eintrag.
+  ohne Repo-Zugang — er bekommt nur das Dokument,
+  erzählt nach, was er versteht, spielt die Schritte
+  durch und nennt jede Stelle, an der er raten müsste.
+  Vor der Vorlage der drei Doku-Stände (Entwickler-Doku,
+  Benutzer-Doku, Betriebs-Anleitung) ist er Pflicht,
+  über das ganze Dokument, mit der Prüffrage des Typs
+  („Kann ein Fremder das Produkt ohne Rückfrage
+  ändern?“, „… ohne Hilfe benutzen?“, „… ausführen?“);
+  sein Bericht ist Nachweis in der Freigabe. Die
+  gewählten Muster stehen im Freigabe-Eintrag.
 
 ## Versand
 

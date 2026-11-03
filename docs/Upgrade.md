@@ -1,6 +1,7 @@
 # Upgrade — ein Projekt auf den aktuellen Stand heben
 
 > **Herkunft:** abgeleitet aus `../upgrade/UPGRADE.md`,
+> `../upgrade/2.0-nach-2.1.md`,
 > `../upgrade/1.x-nach-2.0.md`, `../setup/upgrade.sh`
 > (als Implementierung der Mechanik), `../INIT.md`
 > (Schritt 0), `../README.md` und dem vorbereiteten
@@ -8,12 +9,12 @@
 > `Init-Choreografie.md`, `Zielmarken.md`,
 > `Kettenpruefung.md`, `Fassaden.md`, `Katalog.md`,
 > `Agent-Berichte.md`). Stand der Quellen:
-> Starter-Commit `06af8e2` (Version 2.0). Dieses
+> Starter-Commit `c7fbc93` (Version 2.1). Dieses
 > Dokument ist aus den Quellen abgeleitet und wird bei
 > Änderungen der Quellen auf deren Stand nachgezogen
-> (zuletzt am 2026-10-28, nachgezogen auf `06af8e2`:
-> alte Version mit `--vorher`, Einträge ohne
-> Detail-Knoten, neue Eintrags-Abschnitte); eigene
+> (zuletzt am 2026-11-03, nachgezogen auf `c7fbc93`:
+> Version 2.1, der Sprung von 2.0 auf 2.1 und die
+> Kette der Sprünge aus 1.x); eigene
 > Inhalte bekommt es nicht — Änderungen gehören in die
 > Quellen.
 
@@ -36,8 +37,8 @@ kein Upgrade-, sondern ein Migrations-Fall
 ([Migration](Migration.md)); der Agent sagt es dir.
 
 **Versionen.** Der Starter trägt die Versionsnummer
-2.0 (die `../README.md` nennt sie); frühere Stände
-waren 1.0 und 1.1 — zusammen „1.x“. Welche Version
+2.1 (die `../README.md` nennt sie); frühere Stände
+waren 1.0 und 1.1 — zusammen „1.x“ — und 2.0. Welche Version
 dein Projekt hat, steht in der Zeile `Template-Stand`
 seines Herkunfts-Vermerks; aus derselben Zeile im
 Starter liest der Agent die Zielversion. Ein Projekt
@@ -120,7 +121,8 @@ sie:
   Upgrade; der Agent wechselt nicht von sich aus auf
   eine andere Vorlage. Erkennt er am Herkunfts-Vermerk
   eines Nachbar-Repos (die Zeile `Template-Stand` fehlt
-  oder nennt 1.x; wo der Nachbar liegt, sagt die
+  oder nennt eine ältere Version; wo der Nachbar liegt,
+  sagt die
   Komponenten-Tabelle der Architektur-Fassade), dass es
   noch nicht gehoben ist,
   schreibt er ihm keine Nachricht (es könnte sie weder
@@ -250,7 +252,7 @@ Vorschlag für den Weg (Skript oder von Hand).
 
 Der Agent committet den unveränderten Ausgangszustand,
 **vor** dem Tausch — angekündigt, nicht erfragt:
-„Sicherung vor Upgrade auf Template-Stand 2.0“. Es
+„Sicherung vor Upgrade auf Template-Stand 2.1“. Es
 gelten dieselben Schutzregeln wie bei der Migration:
 kein leerer Commit, ignorierte Dateien bleiben
 ignoriert, offensichtlich sensible oder sehr große
@@ -279,7 +281,7 @@ Vorlage. Der Agent nennt das exakte Kommando vorher:
   Antwort wie beim Projektstart, mit dem neuen Stand
   und der Quelle aus Schritt 0.
 
-Danach ein eigener Commit „Vorlage auf Stand 2.0
+Danach ein eigener Commit „Vorlage auf Stand 2.1
 gesetzt“ (bei der Kopie einschließlich der kompletten
 Kopie). Ab hier liest der Agent Regelwerk und neue
 Dateien aus `_template/` und die Anleitung aus
@@ -312,9 +314,9 @@ führende Ort, das Skript ihre Implementierung.
 | Tausch | geschehen in Schritt 2 — das Skript stellt nur fest, dass `_template/` den neuen Stand trägt |
 | Umbenennungen | Dateinamen nach der Tabelle der Sprung-Datei (`Rollen.md`, `Katalog.md`, Umlaute in die ae/oe/ue/ss-Form) — per `git mv`, nie über eine vorhandene Datei |
 | Neue Dateien | jede Datei des neuen Stands, die im Projekt fehlt (Root-Regelwerk, `wiki/` samt Katalog-Einträgen, Mechanik-Knoten, Fassaden, Vorlagen; eine `.gitignore` nur, falls keine da ist), wird angelegt und gesammelt gemeldet — Fassaden, die der aktive Prozess voraussetzt, aktiv, optionale deaktiviert mit Hinweis an dich, abgelöste nur als Hintergrund; eine bestehende Datei wird nie überschrieben; eine so angelegte Fassade trägt im Kopf den Vermerk „beim Upgrade angelegt“ |
-| Formalien | Feld-Umbenennungen im Kopf der Knoten, ein abgeschaffter Status-Wert wird umgestellt, Rollen-Knoten bekommen ihre Rollen-Art, der Nachfolger einer Ablösung bekommt den Rückverweis (Einzelheiten unten, „Der Sprung von 1.x auf 2.0“) |
-| Herkunft | die Zeile `Template-Stand: 2.0 seit <Tag des Upgrades>` neu, darunter `Vorher: <alte Version> (bis <Tag des Upgrades>)`; die 1.x-Form wird zur 2.0-Form (Schritt 7 füllt die übrigen Zeilen) |
-| Trefferliste | alles, was der Agent danach kontext-bewusst nachzieht (Schritt 6): Wikilinks auf umbenannte Dateien, alte Kennungen, Pflegezeilen, Marken-Zeiger, Altknoten, Contract-Einträge alter Form, alte Ablöse-Vermerke; dazu die Liste der bestehenden Dateien mit Unterschieden, eingeteilt wie in Schritt 5 |
+| Formalien | nur aus 1.x: Feld-Umbenennungen im Kopf der Knoten, ein abgeschaffter Status-Wert wird umgestellt, Rollen-Knoten bekommen ihre Rollen-Art, der Nachfolger einer Ablösung bekommt den Rückverweis (Einzelheiten unten, „Der Sprung von 1.x auf 2.0“); aus 2.0 keine |
+| Herkunft | die Zeile `Template-Stand: 2.1 seit <Tag des Upgrades>` neu, darunter `Vorher: <alte Version> (bis <Tag des Upgrades>)`; eine frühere `Vorher`-Zeile bleibt darunter stehen; die 1.x-Form wird zur 2.0-Form (Schritt 7 füllt die übrigen Zeilen) |
+| Trefferliste | alles, was der Agent danach kontext-bewusst nachzieht (Schritt 6): aus 1.x Wikilinks auf umbenannte Dateien, alte Kennungen, Pflegezeilen, Marken-Zeiger, Altknoten, Contract-Einträge alter Form, alte Ablöse-Vermerke; aus 2.0 Verzichts-Entscheidungen und Freigaben mit alten Phasennummern, ein vorgefundenes `docs/`; dazu die Liste der bestehenden Dateien mit Unterschieden, eingeteilt wie in Schritt 5 |
 | Lint | als Trefferliste; maßgeblich ist der Durchgang in Schritt 8 |
 
 Danach Commit „Upgrade: Mechanik“ (entfällt, wenn der
@@ -392,21 +394,96 @@ der Quelle über ihr Release-Tag. Dazu:
 Nach deiner Antwort setzt er um und committet
 „Upgrade: Delta-Nachzug“.
 
-## Schritt 6 — der Sprung von 1.x auf 2.0
+## Schritt 6 — die Sprünge
+
+Je Versions-Sprung liegt eine eigene Datei
+`upgrade/<alt>-nach-<neu>.md` im Starter. Sie nennt,
+was der Sprung am Bestand ändert — mechanisch durch
+das Skript und kontext-bewusst durch den Agenten, jede
+Stelle einzeln mit Blick auf den Kontext, kein
+pauschales Suchen-und-Ersetzen — und was unter
+Bestandsschutz bleibt. Der Agent geht alle Sprünge von
+der Version deines Projekts bis zur neuen in **einem**
+Upgrade nacheinander durch: aus 2.0 nur
+`upgrade/2.0-nach-2.1.md`; aus 1.0 oder 1.1 zuerst
+`upgrade/1.x-nach-2.0.md` (mit den Phasennummern seines
+Ziel-Stands 2.0) und danach `upgrade/2.0-nach-2.1.md`,
+dessen Tabelle die Nummern weiter abbildet.
+
+### Der Sprung von 2.0 auf 2.1
+
+Was 2.1 ändert: Die Phasenfolge des Software-Prozesses
+hat fünfzehn Phasen — **P11 Dokumentieren für
+Entwickler** und **P12 Dokumentieren für Benutzer**
+sind neu, je mit einem Pflicht-Stand; Ausliefern,
+Produzieren und Betreiben rücken auf P13, P14, P15, und
+die Betriebs-Anleitung je Umgebung ist Pflicht-Stand
+der P15. Ob und in welcher Form eine Marke ihre
+Dokumentation bekommt, entscheidet die Doku-Abfrage
+einmal je Marke (siehe
+[Stände, Freigaben und Marken](Staende-Freigaben-Marken.md),
+„Dokumentation“). Die beschreibenden Register
+(Funktionsbeschreibungen, Architektur, Spezifikationen,
+Testfälle, Deployments) haben den Vorstatus „offen“:
+ein Eintrag bleibt bearbeitbar, bis er angenommen wird
+oder mit der Freigabe des ersten Stands, der ihn
+nennt. Kennungen und Dateinamen ändern sich nicht.
+
+Was dabei geschieht:
+
+- **Das Skript** schreibt die Zeilen `Template-Stand`
+  und `Vorher` (Schritt 7) und legt die neuen Dateien
+  an: den Mechanik-Knoten „Lebenslauf eines Stands“
+  und die beiden Katalog-Einträge Entwickler-Doku und
+  Benutzer-Doku. Umbenennungen oder Feld-Umstellungen
+  gibt es nicht.
+- **Phasen-Zuordnung.** P1 bis P10 unverändert; P11
+  und P12 neu ohne Vorgänger; alt P11 Ausliefern → P13,
+  P12 Produzieren → P14, P13 Betreiben → P15. Die
+  Tabelle steht als Vermerk im Herkunfts-Vermerk direkt
+  unter der Zeile `Vorher`; ins Entscheidungs-Register
+  kommt kein Eintrag. Eingefrorene Einträge aus der
+  Zeit vor dem Anheben bleiben, wie sie sind: Freigaben
+  („für P11 Ausliefern“) liest der Lint am
+  Tätigkeitsnamen, Verzichts-Entscheidungen mit alten
+  Nummern über die Tabelle — nur, wenn sie vor dem Tag
+  des Upgrades angelegt sind, und nur, solange das
+  Projekt auf 2.1 steht; eine Verzichts-Entscheidung
+  ohne lesbares Anlage-Datum liest er in der neuen
+  Zählung und sagt es als Hinweis (heilen lässt sich
+  das durch eine ablösende Entscheidung mit der neuen
+  Nummer). Ein alter Verzicht auf „P13 Betreiben“ ohne
+  Umgebung gilt für alle Umgebungen der Marke. Neue
+  Freigaben nennen Nummer **und** Tätigkeitsname der
+  neuen Zählung; eine neue Freigabe mit alter Nummer
+  meldet der Lint als Hinweis und zählt sie nicht.
+- **Delta-Nachzug** (Schritt 5) bringt die neuen
+  Regeltexte in die lebenden Kopien: Vorgehen mit
+  fünfzehn Phasen, Kettenprüfung mit Doku-Abfrage,
+  Zielmarken mit dem Nachtrag eines Doku-Stands, der
+  Katalog mit den beiden neuen Einträgen,
+  InterneMechanik mit dem Lebenslauf eines Stands.
+- **Laufende Marke.** Trägt sie schon den Tag der
+  Implementierung, holt der Agent die Doku-Abfrage mit
+  dem Upgrade nach; ein schon freigegebener Deploy-Stand
+  bleibt freigegeben, die Doku-Zeilen stehen dann auf
+  „später“ oder „gar nicht“, ein fehlendes Doku-Glied
+  ist eine Warnung, keine Blockade. Für die erste Marke
+  nach dem Upgrade empfiehlt der Agent „komplett neu“;
+  vorgefundene Dokumente in `docs/` bleiben als
+  Nachweis liegen.
+- **Abgeschlossene Marken** aus 2.0 bleiben
+  abgeschlossen; ein Doku-Stand wird für sie nicht
+  nachgebaut.
+
+### Der Sprung von 1.x auf 2.0
 
 Diesen Abschnitt brauchst du nur, wenn dein Projekt
 aus Version 1.0 oder 1.1 stammt; ein Projekt, das
-schon mit 2.0 angelegt wurde, überspringt ihn.
-
-Je Versions-Sprung liegt eine eigene Datei
-`upgrade/<alt>-nach-<neu>.md` im Starter; für ein
-Projekt aus Version 1.0 oder 1.1 ist das
-`upgrade/1.x-nach-2.0.md`. Sie nennt, was der Sprung am
-Bestand ändert — mechanisch durch das Skript und
-kontext-bewusst durch den Agenten, jede Stelle einzeln
-mit Blick auf den Kontext, kein pauschales
-Suchen-und-Ersetzen — und was unter Bestandsschutz
-bleibt.
+schon mit 2.0 angelegt wurde, überspringt ihn. Die
+Phasennummern in diesem Abschnitt sind die des
+Ziel-Stands 2.0; der Sprung auf 2.1 (oben) bildet sie
+weiter ab.
 
 Ein paar Wörter, die dabei fallen: Register-Einträge
 tragen Kennungen mit Präfix — in 1.x hießen
@@ -599,16 +676,18 @@ Danach Commit.
 Im Abschnitt `## Herkunft` von
 `wiki/Aktivierter-Prozess.md` steht danach:
 
-- `Template-Stand: 2.0 seit JJJJ-MM-TT` — der Tag des
+- `Template-Stand: 2.1 seit JJJJ-MM-TT` — der Tag des
   Upgrades; er ist der Stichtag, den der Lint liest:
   neue Pflichtfelder gelten als Fehler nur für
-  Elemente ab diesem Tag;
+  Elemente ab diesem Tag, alte Phasennummern liest er
+  nur an Einträgen vor diesem Tag um;
 - `Vorher: <alte Version> (bis JJJJ-MM-TT)` — direkt
   darunter; frühere `Vorher`-Zeilen bleiben stehen,
   ein Projekt sammelt so seine Versionsfolge. Direkt
   unter der Zeile steht als Vermerk die
   Zuordnungstabelle alt → neu, die die Sprung-Datei
-  vorgibt (für 1.x → 2.0 die Phasennummern);
+  vorgibt (Phasennummern; je durchlaufenem Sprung ein
+  Vermerk in der Reihenfolge der Sprünge);
 - `Quelle` (Repo-URL und Stand des neuen Stands),
   `Anbindungs-Modus`, `Prozess`, `Rolle`,
   `Übernahme-Art`; bei der 1.x-Form wird das Feld
@@ -655,7 +734,7 @@ Commit „Upgrade: Herkunft“.
 4. Dasselbe Review läuft bei einem **Prozess-Upgrade**
    (Hinzufügen oder Wechsel eines Prozesses), wenn es
    bestehende Einträge migriert.
-5. Abschluss-Commit „Upgrade auf Template-Stand 2.0
+5. Abschluss-Commit „Upgrade auf Template-Stand 2.1
    abgeschlossen“; `devstate_active.md` wird
    nachgeführt.
 

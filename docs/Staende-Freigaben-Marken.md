@@ -13,14 +13,17 @@
 > `Fehlermeldungen.md`, `Anforderungen.md`,
 > `Deployments.md`, `Katalog-Deploy-Stand.md`,
 > `Katalog-Deployments.md`, `Katalog-Fehlerstand.md`,
+> `Katalog-Entwickler-Doku.md`, `Katalog-Benutzer-Doku.md`,
+> `Katalog-Betriebs-Anleitung.md`,
+> `Lebenslauf-eines-Stands.md`,
 > `Meilenstein-und-T2.md`, `Katalog-Release-Notes.md`,
-> `Glossar.md`) sowie
+> `Glossar.md`), `../Reviewmuster.md` (Muster M6) sowie
 > `../referenzprozesse/SP-1-Standardprozess/index.md`
 > (Glieder der Kette). Stand der Quellen:
-> Starter-Commit `959026c` (Version 2.0). Dieses
+> Starter-Commit `c7fbc93` (Version 2.1). Dieses
 > Dokument ist aus den Quellen abgeleitet und wird bei
 > Änderungen der Quellen auf deren Stand nachgezogen
-> (zuletzt am 2026-10-28); eigene Inhalte bekommt es
+> (zuletzt am 2026-11-03); eigene Inhalte bekommt es
 > nicht — Änderungen gehören in die Quellen.
 
 Zurück zur [Einführung](Einfuehrung.md).
@@ -36,7 +39,7 @@ Das Modell ist eine Checkliste — der Agent fragt „hast
 du das schon bedacht?“, und du antwortest „ja, dort“,
 „nein, überspringen“ oder „machen wir jetzt“.
 
-Die Belegung der Phasen P1 bis P13 mit dem
+Die Belegung der Phasen P1 bis P15 mit dem
 Software-Prozess dieses Starters (so, wie
 `wiki/Vorgehen-RP-1.md` sie festlegt):
 
@@ -52,9 +55,11 @@ Software-Prozess dieses Starters (so, wie
 | P8 | Spezifizieren | Spezifikation-Stand — die Bauanleitung nach Schnitt und Technologie-Stack, umsetzbar ohne Fachkenntnis; entsteht dort, wo gebaut wird |
 | P9 | Ausarbeiten | die Implementierung mit Unit-Tests und automatisierten Integrationstests — das Produkt; Glied der Kette ist der Tag |
 | P10 | Testen | Testplan mit den nicht automatisierbaren Anteilen, aus den Testfällen; Testberichte |
-| P11 | Ausliefern | Deploy-Stand je Zielumgebung; dazu die CI-Pipeline-Konfiguration |
-| P12 | Produzieren | Bereitstellen und Konfigurieren der Zielumgebung — bei Standard-Software oft weitgehend durch den Deploy-Stand abgedeckt |
-| P13 | Betreiben | Betriebs-Handbuch; Fehlermeldungen aus dem Betrieb laufen fortlaufend ins Register |
+| P11 | Dokumentieren für Entwickler | Entwickler-Doku als selbsttragender Stand, Kopie in `docs/developer/`: Aufbau, Entscheidungen, Einstieg und Build; die aus Code-Kommentaren erzeugte API-Doku ist Teil davon |
+| P12 | Dokumentieren für Benutzer | Benutzer-Doku als selbsttragender Stand, Kopie in `docs/user/` |
+| P13 | Ausliefern | Deploy-Stand je Zielumgebung; dazu die CI-Pipeline-Konfiguration |
+| P14 | Produzieren | Bereitstellen und Konfigurieren der Zielumgebung — bei Standard-Software oft weitgehend durch den Deploy-Stand abgedeckt |
+| P15 | Betreiben | Betriebs-Anleitung je Umgebung als selbsttragender Stand, Kopie in `docs/ops/`, aus dem Deploy-Stand; Fehlermeldungen aus dem Betrieb laufen fortlaufend ins Register |
 
 Phasen heißen nach der **Tätigkeit** („Zerlegen in
 Bausteine“, nicht „Zerlegung“), weil die Tätigkeit sagt,
@@ -66,6 +71,41 @@ die Phasen neu nummeriert — P8 „Spezifizieren“ ist in
 2.0 neu, die früheren P8 bis P12 sind um eins
 verschoben (siehe [Upgrade](Upgrade.md), „Der Sprung
 von 1.x auf 2.0“).
+
+„Stand aus den Elementen“ heißt: Der Inhalt einer Phase
+entsteht als Einträge eines Registers im `wiki/` (die
+**Elemente**), und der Stand ist das daraus abgeleitete
+Dokument in `output/` — der Stand ist das Dokument, die
+Elemente sind sein Inhalt (unten, „Was ein Stand ist“).
+Die drei **Doku-Phasen** P11, P12 und P15 bringen
+Stände hervor, die ohne das Wiki lesbar sind — für
+Entwickler, Benutzer und Betreiber des Produkts. Die
+beiden Doku-Phasen für Entwickler und Benutzer liegen
+**vor** der Auslieferung, damit die Ordnung der
+Freigaben sichert, dass die Dokumentation vorliegt, wenn
+ausgeliefert wird; die Betriebs-Anleitung folgt der
+Auslieferung, weil sie daraus entsteht. Ob und in
+welcher Form eine Marke ihre Dokumentation erhält,
+entscheidet die **Doku-Abfrage** (unten,
+„Dokumentation: Entwickler-Doku, Benutzer-Doku,
+Betriebs-Anleitung“).
+
+**Wer aus Version 2.0 der Vorlage kommt:** Dort gab es
+die Doku-Phasen noch nicht, und die letzten Phasen
+trugen andere Nummern — Ausliefern war P11, Produzieren
+P12, Betreiben P13; P1 bis P10 sind unverändert.
+Freigaben nennen immer Nummer **und** Tätigkeit („für
+P13 Ausliefern“), und eingefrorene Einträge aus der Zeit
+vor dem Anheben bleiben, wie sie sind: Der Lint liest
+ihren Zweck am Tätigkeitsnamen („für P11 Ausliefern“
+ist die Auslieferung, „für P13 Betreiben“ der Betrieb),
+nicht an der Nummer. Die Zuordnung der alten zu den
+neuen Nummern vermerkt das Anheben im Herkunfts-Vermerk
+deines Projekts (`wiki/Aktivierter-Prozess.md`,
+Abschnitt „Herkunft“, unter der Zeile „Vorher“); die
+Tabelle selbst steht in der Upgrade-Anleitung dieses
+Starters, `../upgrade/2.0-nach-2.1.md` (siehe
+[Upgrade](Upgrade.md), Schritt 6).
 
 **Phasen ordnen Freigaben, nicht Arbeit.** Ein Eintrag
 in einem Register (eine Anforderung, eine
@@ -81,8 +121,10 @@ davon mit Kettenprüfung durch einen Prüfer vor der
 Freigabe, dazu Tag und Abschluss-Stand. Für ein kleines
 Werkzeug hast du zwei Wege, das zu dosieren: Phasen,
 die du nicht brauchst, lässt du je Marke per
-**Verzicht** aus (unten, „Kettenprüfung“), und die
-Spezifikation darf in kleinen Projekten schmal bleiben.
+**Verzicht** aus (unten, „Kettenprüfung“; bei der
+Dokumentation ist der Verzicht eine Antwort in der
+Doku-Abfrage), und die Spezifikation darf in kleinen
+Projekten schmal bleiben.
 Zielmarken führt jedes Projekt; zu jeder Marke gehören
 der **Tag**, der das Produkt der Marke markiert, und
 beim Abschluss der **Abschluss-Stand**, der nur auf
@@ -101,33 +143,83 @@ sich jemand darauf verlassen soll, wird daraus ein
 **Stand** gebildet: ein abgeleitetes Dokument in
 `output/`, versioniert, eingefroren, zu genau einer
 Zielmarke gehörend. Freigegeben wird immer ein Stand,
-nie die lebende Fassade.
+nie die lebende Fassade und nie ein einzelner Eintrag.
 
 - **Dreiklang je Register:** die Fassade (lebend) → ihre
-  Elemente (eingefroren ab Annahme) → der Stand je
-  Dokumenttyp (abgeleitet, in `output/`). Ein Stand
+  Elemente (die einzelnen Einträge; eingefroren, sobald
+  sie angenommen sind) → der Stand je Dokumenttyp
+  (abgeleitet, in `output/`). Der Stand ist das
+  Dokument, die Elemente sind sein Inhalt. Ein Stand
   filtert oft mehrere Register; ein Register speist
   mehrere Stände.
-- **Nur Eingefrorenes geht hinein.** Elemente werden im
-  Stand **verwiesen**, nicht kopiert; jede Kennung im
-  Text eines Stands ist ein Verweis. Lebende Quellen
-  (Glossar-Einträge, Rollen, Konzepte, das Mission
-  Statement) werden neben dem Stand in einen Ordner
-  `output/<Ketten-ID>_VV_TLA/` (der Dateiname des Stands
-  ohne Endung; die Ketten-ID ist der Teil des Namens vor
-  der Version, der über alle Versionen gleich bleibt)
-  **kopiert**, als Kopie gekennzeichnet und
-  unveränderlich.
+- **Zwei Grade.** Ein Stand ist entweder
+  **wiki-verweisend** — die Regel: er verweist auf
+  seine Elemente und ist nur mit dem Wiki vollständig
+  lesbar, sein Leser hat Zugang zum Projekt — oder
+  **selbsttragend**: am Stück lesbar für Leser ohne
+  Wiki-Zugang, ohne Wikilinks und Register-Kennungen,
+  mit ausgeschriebenen Begründungen. Selbsttragend sind
+  mit SP-1 die drei Doku-Stände Entwickler-Doku,
+  Benutzer-Doku und Betriebs-Anleitung; sie verweisen
+  auf keine Elemente, sondern sind aus eingefrorenen
+  **Quell-Ständen** ausformuliert (unten,
+  „Dokumentation“). Welchen Grad ein Dokumenttyp hat,
+  steht in seinem Katalog-Eintrag.
+- **Offen, dann eingefroren.** In den beschreibenden
+  Registern eines Prozesses (mit SP-1
+  Funktionsbeschreibungen, Architektur, Spezifikationen,
+  Testfälle, Deployments) legt der Agent einen Eintrag
+  als `offen` im Wiki an — mit seinem Vorschlag und den
+  offenen Punkten im Eintrag selbst. Solange ein
+  Eintrag offen ist, ändert eine Klärung mit dir ihn
+  direkt; eingefroren wird er durch **Annahme**:
+  einzeln, wenn andere Arbeit darauf baut (du sagst
+  „ja, so“), oder gesammelt mit der Freigabe des ersten
+  Stands, der ihn verweist. Entscheidungen und Contracts
+  kommen dagegen erst mit deinem OK ins Register und
+  sind ab dann eingefroren; nur dort liegen Entwürfe
+  außerhalb des Wikis.
+- **Freigegeben wird nur aus Eingefrorenem.** Elemente
+  werden im Stand **verwiesen**, nicht kopiert; jede
+  Kennung im Text eines Stands ist ein Verweis. Was bei
+  der Vorlage noch offen ist, nimmt der Agent mit der
+  Freigabe an — damit ist es eingefroren. Lebende
+  Quellen (Glossar-Einträge, Rollen, Konzepte, das
+  Mission Statement) werden neben dem Stand in einen
+  Ordner `output/<Ketten-ID>_VV_TLA/` (der Dateiname
+  des Stands ohne Endung; die Ketten-ID ist der Teil
+  des Namens vor der Version, der über alle Versionen
+  gleich bleibt) **kopiert**, als Kopie gekennzeichnet
+  und unveränderlich. Ein selbsttragender Stand braucht
+  keine Kopien: Er trägt alles im Text.
 - **Ableitungsprüfung.** Vor der Bildung legt der Agent
   vor, was dazugehört, aber noch nicht angenommen ist —
   je Punkt: annehmen, weglassen (im Kopf des Stands
   ausgewiesen) oder „trotzdem alles“ (dann ist es eine
-  Momentaufnahme, nicht freigabefähig).
+  Momentaufnahme, nicht freigabefähig). Für offene
+  Einträge der beschreibenden Register darf die Annahme
+  im Freigabe-Zug liegen: Die vorgelegte Version
+  verweist sie wie angenommene und weist sie im Kopf
+  aus („Offen (Annahme im Freigabe-Zug)“).
 - **Herkunftszeile.** Jeder Stand trägt im Kopf die
   Marke, das Datum seiner Bildung, den Zweck und die
   Vorgänger-Stände mit Version (wo die Kette es
   verlangt, auch den Tag der Implementierung und den
-  Testbericht).
+  Testbericht — in jeder Domäne mit Prozess, nicht nur
+  bei Software); ein selbsttragender Stand nennt dort
+  die Quell-Stände, aus denen er ausformuliert ist.
+- **Name.** Ein Stand heißt nach dem Schema für
+  `output/` (`<Datum> - <Dokumentname>[ - <Gegenstand>]_VV_TLA.md`),
+  ohne Absender und Empfänger — sie treffen bei einem
+  Stand nicht zu —; die Marke steht nur im Kopf, nicht
+  im Namen. Gibt es zu einer Marke mehrere Stände eines
+  Typs (ein Deploy-Stand oder eine Betriebs-Anleitung je
+  Umgebung, eine Übergabe je Komponente), steht der
+  Gegenstand im Namen. Status-Wörter wie „Entwurf“,
+  „final“ oder „freigegeben“ gehören nicht in den Namen:
+  Der Name bleibt über alle Versionen gleich, ein solches
+  Wort bliebe für immer stehen; ob und wofür ein Stand
+  freigegeben ist, steht nur im Freigabe-Eintrag.
 - **Voll-Stand.** Ein Stand zu Marke M beschreibt das
   ganze Produkt zu M, einschließlich weiter gültiger
   Elemente früherer Marken; den Zuwachs zeigen
@@ -136,12 +228,12 @@ nie die lebende Fassade.
   Prozess (ihr Zweck ist die Phase); optionale Stände
   beauftragst du mit freiem Zweck (Versand, Anwender-Test,
   Auftrag an einen Unteragenten). Mit dem
-  Software-Prozess tragen P1 und P3 bis P8, P10 und
-  P11 einen Pflicht-Stand (die Übergabe P6 nur beim
-  Schnitt in Komponenten, der Deploy-Stand P11 je
-  Zielumgebung); P9 ist der Tag; P2, P12 und P13
-  tragen keinen Pflicht-Stand; zum Marken-Abschluss
-  kommt der Abschluss-Stand.
+  Software-Prozess tragen P1, P3 bis P8, P10 bis P13
+  und P15 einen Pflicht-Stand (die Übergabe P6 nur beim
+  Schnitt in Komponenten, der Deploy-Stand P13 und die
+  Betriebs-Anleitung P15 je Zielumgebung); P9 ist der
+  Tag; P2 und P14 tragen keinen Pflicht-Stand; zum
+  Marken-Abschluss kommt der Abschluss-Stand.
 
 **Stand, Version, Marke.** Die **Version** ist der
 `_VV_TLA`-Dateistand; der **Stand** ist das abgeleitete
@@ -152,13 +244,120 @@ Stände, Freigaben und Abschluss-Stand; die
 Produkt-Version ist der Tag-Name nach der
 Tag-Konvention in `wiki/Facts.md`.
 
+## Der Lebenslauf eines Stands
+
+Vom ersten Eintrag bis nach der Freigabe läuft jeder
+Stand durch dieselben Schritte; das Regelwerk führt sie
+in `../referenzprozesse/base/wiki/Lebenslauf-eines-Stands.md`.
+
+1. **Erarbeiten.** Die Einträge einer Phase entstehen
+   im Wiki, als offene Elemente (oben). Das darf in
+   jeder Reihenfolge geschehen — geordnet ist nur die
+   Freigabe der Stände, nicht die Arbeit.
+2. **Lesen während der Arbeit.** Bis ein Stand gebildet
+   ist, liest du die Einträge einer Phase über ihre
+   Register-Fassade — der Agent benennt sie dir
+   ausdrücklich als „Lese-Klammer dieser Phase“ und
+   zeigt dir die Einträge auf Wunsch gesammelt im Chat.
+   Einen frühen Stand als Lese-Dokument bildet er nicht
+   von sich aus; auf deinen Zuruf jederzeit.
+3. **Bilden.** Der Agent **bietet** die Bildung an,
+   sobald er die Einträge für vollständig hält, oder
+   bildet den Stand auf deinen Zuruf — auch vorher. Der
+   Katalog-Eintrag eines Dokumenttyps kann den Anlass
+   einengen (bei den Doku-Ständen ist es die
+   Doku-Abfrage). Vor der Bildung läuft die
+   Ableitungsprüfung (oben). **Entwürfe neben dem Stand
+   gibt es nicht** — weder im Scratch noch als eigene
+   Versionskette: Was der Agent dir vorlegt, ist der
+   Stand selbst.
+4. **Prüfen.** Bei einem Pflicht-Stand läuft die
+   Kettenprüfung durch den Prüfer **vor der Vorlage**
+   an dich, so dass du den Prüfbericht mit dem Stand
+   bekommst (unten, „Kettenprüfung“); bei den
+   Doku-Ständen dazu der Verständnis-Check durch einen
+   Leser ohne Repo-Zugang. Optionale Stände werden auf
+   Anfrage geprüft, der Abschluss-Stand nur auf
+   Vollständigkeit.
+5. **Vorlegen.** Der Agent nennt den Stand mit Version
+   und Pfad, den Zweck, das Weggelassene und die noch
+   offenen Einträge, den Prüfbericht und die
+   Einschränkungen; er sagt, dass der Stand auf
+   Einträge verweist und wo du ihnen folgst; und er
+   fragt nach der Freigabe im Wortlaut der Formel
+   (unten, „Freigaben“). Bei einem selbsttragenden
+   Stand nennt er statt der Einträge die Quell-Stände
+   mit Version und den Bericht des Verständnis-Checks.
+6. **Korrigieren vor der Freigabe.** Eine Korrektur
+   geht in die **Einträge**, nie in den Stand: Offene
+   werden geändert, eingefrorene abgelöst. Danach
+   bildet der Agent eine **neue Version** desselben
+   Dokuments (die Versionsnummer zählt hoch, der Name
+   bleibt — auch das Datum im Namen); die vorige Version
+   bleibt ohne Freigabe liegen, und die Freigabe trifft
+   die jüngste. Schreibst du selbst eine Version des
+   Stands (mit deinem Kürzel), überträgt der Agent deine
+   Änderungen in die Einträge und bildet die nächste
+   Version. Nach einer Korrektur prüft der Prüfer nur
+   die geänderten Einträge noch einmal. Bei einem
+   selbsttragenden Stand geht eine Korrektur nicht in
+   Einträge (seine Quell-Stände sind eingefroren) und
+   wird nicht von Hand nachgezogen: Der Agent erzeugt
+   die neue Version erneut aus den Quell-Ständen, und
+   Kettenprüfung und Verständnis-Check laufen über das
+   ganze Dokument.
+7. **Freigeben und buchen.** Du gibst frei; der Agent
+   bucht die Freigabe als Entscheidung und nimmt im
+   selben Zug die offenen Einträge an, die der Stand
+   verweist — damit sind sie eingefroren. Schon
+   angenommene Einträge werden nicht erneut angenommen.
+8. **Nach der Freigabe.** Eine Freigabe gilt für ihren
+   eingefrorenen Stand und wird nicht zurückgenommen;
+   ändert sich danach etwas, entsteht ein neuer Stand
+   (unten, „Nach der Freigabe“). Gilt ein Stand für die
+   nächste Marke weiter, wird er übernommen, nicht neu
+   gebildet (unten, „Zielmarken“).
+
+Abweichend vom Standardablauf sind nur der
+Abschluss-Stand (eigener Anlass: der Marken-Wechsel;
+Prüfung nur auf Vollständigkeit), optionale Stände
+(Angebot, freier Zweck, Prüfung auf Anfrage),
+selbsttragende Ableitungen wie Release-Notes (aus einem
+freigegebenen Stand abgeleitet, mit ihrer Freigabe
+friert nichts Neues ein) und die drei Doku-Stände
+(eigener Anlass Doku-Abfrage, Verständnis-Check als
+Pflicht, Korrektur durch Neu-Erzeugung — unten,
+„Dokumentation“).
+
 ## Freigaben
+
+**Der Kernsatz: Eine Freigabe hängt immer an einem
+Stand.** Freigegeben wird „Stand X für Zweck Y“ — immer
+ein Stand, nie die lebende Fassade und nie ein
+einzelner Eintrag. Mit der Freigabe frieren alle
+Einträge ein, auf die der Stand verweist; bis dahin
+leben sie im Wiki. Der Stand ist damit der einzige
+Ort, an dem etwas übergreifend eingefroren und an dem
+eine Zweck-Freigabe festgemacht wird. Die einzige
+Zweck-Freigabe ohne Stand ist der Tag der
+Implementierung (unten): Ein Tag friert selbst ein wie
+ein Stand und gehört zum Produkt, nicht zum Wiki.
+
+**Annahme und Freigabe** bleiben getrennt: Einen
+einzelnen Eintrag kannst du vorher **annehmen** („ja,
+so“) — das ist das OK zum Eintrag, und er friert damit
+ein. Eine **Freigabe für einen Zweck** gibt es nur am
+Stand. Zwei weitere Vorgänge heißen „Freigabe“, sind
+aber keine Zweck-Freigabe: die Ordner-Freigabe beim
+Projektstart (eine Erlaubnis) und die Freigabe eines
+Contracts durch die zuständige Stelle (die Annahme
+eines Eintrags).
 
 Jeder Stand kann null, eine oder mehrere Freigaben
 tragen — **jede an einen Zweck gebunden**. Ein Stand der
 Funktionsbeschreibung kann „für P5 Zerlegen in
 Bausteine“ freigegeben sein (die Architektur darf ihn
-als Grundlage nehmen), ohne schon „für P11 Ausliefern“
+als Grundlage nehmen), ohne schon „für P13 Ausliefern“
 freigegeben zu sein. Freigaben sind unabhängig
 voneinander; eine impliziert nicht die andere.
 
@@ -192,20 +391,28 @@ der Eintrag ist dann ihre einzige Quelle.
 **Gebucht als Entscheidung.** Jede Freigabe ist ein
 Eintrag im Entscheidungs-Register mit Verweis auf die
 Stand-Datei und — bei Pflicht-Ständen — auf den
-Prüfbericht der Kettenprüfung; sein Marken-Feld trägt
-die Marke der Freigabe, nicht ohne Weiteres die beim
-Buchen laufende. Eine Einschränkung steht ausdrücklich
-dabei: ein fehlender Vorgänger, offene Fehler im
-Testbericht, oder dass Prüf- und Bau-Modell dasselbe
-waren. Wird derselbe Gegenstand erneut freigegeben, ist
-das ein neuer Eintrag, der den alten ablöst. Ausnahme:
-Freigaben, die nach dem Marken-Wechsel zu einer
-abgeschlossenen Marke gehören, stehen im Nachtrag an
-der Marke, nicht als eigener Eintrag, und lösen nichts
-ab — die Tag-Freigabe einer Tag-Korrektur (die alte
-Tag-Freigabe bleibt stehen) und die Freigabe eines
-nachgetragenen Deploy-Stands (unten, „Tag-Korrektur“
-und „Nachtrag“).
+Prüfbericht der Kettenprüfung, bei den drei
+Doku-Ständen dazu auf den Bericht des
+Verständnis-Checks; sein Feld `zielmarke:`
+trägt die Marke der Freigabe, nicht ohne Weiteres die
+beim Buchen laufende. Eine Einschränkung steht
+ausdrücklich dabei: ein fehlender Vorgänger, „Doku
+folgt“ (die Auslieferung wird freigegeben, bevor
+Entwickler- oder Benutzer-Doku vorliegen), „Teil-Doku
+fehlt“ (der Koordinator gibt seine Gesamtsicht ohne die
+Entwickler-Doku einer Komponente frei), offene Fehler
+im Testbericht, oder dass Prüf- und Bau-Modell dasselbe
+waren. Wird derselbe Gegenstand erneut
+freigegeben, ist das ein neuer Eintrag, der den alten
+ablöst. Ausnahme: Freigaben, die nach dem
+Marken-Wechsel zu einer abgeschlossenen Marke gehören,
+stehen im Nachtrag an der Marke, nicht als eigener
+Eintrag, und lösen nichts ab — die Tag-Freigabe einer
+Tag-Korrektur (die alte Tag-Freigabe bleibt stehen),
+die Freigabe eines nachgetragenen Deploy-Stands und die
+Freigabe eines Doku-Stands, der in der Doku-Abfrage
+„später“ erhielt (unten, „Tag-Korrektur“ und der Absatz
+danach).
 
 **Nach der Freigabe.** Eine Freigabe gilt für ihren
 eingefrorenen Stand und wird nicht zurückgenommen.
@@ -248,7 +455,14 @@ freigegeben. Fehlt ein früherer Stand ohne Verzicht,
 trotzdem frei, nennt der Eintrag den fehlenden
 Vorgänger. Die einzige harte Bedingung: der
 Testplan-Stand (P10) wird erst nach dem Tag der
-Implementierung freigegeben.
+Implementierung freigegeben. Die Doku-Glieder stehen in
+dieser Ordnung so: Entwickler-Doku (P11) und
+Benutzer-Doku (P12) **vor** dem Deploy-Stand — fehlt
+eines ohne Verzicht, warnt der Agent, und die Freigabe
+der Auslieferung nennt es als Einschränkung „Doku
+folgt“, keine Blockade; die Betriebs-Anleitung (P15)
+**nach** dem Deploy-Stand ihrer Umgebung, aus dem sie
+entsteht.
 
 Vor der Freigabe eines Pflicht-Stands wird er gegen
 **alle freigegebenen Vorgänger derselben Marke**
@@ -259,7 +473,17 @@ Folgendes:
 - **Widerspruch** — der Stand widerspricht einem
   Vorgänger;
 - **Abdeckung** — alles vom Vorgänger ist aufgegriffen;
-- **Unbegründetes** — Inhalt, den kein Vorgänger trägt.
+  geprüft gegen die Quell-Stände, die der Katalog-Eintrag
+  des Dokumenttyps nennt (die Benutzer-Doku etwa gegen
+  Konzept, Anforderungen und Funktionsbeschreibung, nicht
+  gegen die Spezifikation; die Betriebs-Anleitung gegen
+  den Deploy-Stand ihrer Umgebung);
+- **Unbegründetes** — eine neue Sachaussage, die kein
+  Vorgänger trägt (eine Funktion, eine Eigenschaft, eine
+  Grenze, die das Produkt laut Vorgängern nicht hat).
+  Darstellung — Anleitungen, Beispiele, Erklärungen,
+  Gliederung, Bilder — ist erlaubt und kein Befund,
+  solange sie keine neue Sachaussage enthält.
 
 Die Abdeckung prüft der Lint nur mechanisch über
 Verweis-Felder („mindestens einer“ je Glied); ob sie
@@ -270,24 +494,31 @@ ein Werkzeug, sonst über den beim Start gewählten
 Ersatzweg; das Standard-Prüfmuster setzt dafür zwei
 unabhängige Prüfer ein (siehe
 [Arbeitsweise](Arbeitsweise.md), „Prüfmuster und
-Review-Kette“). Ergebnis ist ein Prüfbericht, auf den
-die Freigabe zeigt. Optionale Stände werden nur auf
-Anfrage geprüft; der Abschluss-Stand wird nur auf
+Review-Kette“). Die Prüfung läuft **vor der Vorlage**
+an dich: Du bekommst den Prüfbericht zusammen mit dem
+Stand, und die Freigabe zeigt auf ihn. Nach einer
+Korrektur vor der Freigabe prüft eine neue Runde nur
+die geänderten Einträge. Optionale Stände werden nur
+auf Anfrage geprüft; der Abschluss-Stand wird nur auf
 Vollständigkeit geprüft.
 
 **Verzicht.** Willst du eine Phase mit Pflicht-Stand für
 eine Marke bewusst auslassen, wird das als
-Verzichts-Entscheidung gebucht (mit Marke und Phase);
-dann entfallen der Stand und seine Prüfpflichten für
-diese Marke, und spätere Glieder prüfen gegen die
-übrigen Vorgänger. Nicht verzichtbar ist der Tag der
-Implementierung. Manche Glieder fehlen ohne Verzicht
-von selbst — die Phase P2 hat keinen Pflicht-Stand,
-eine Übergabe gibt es nur bei einem Schnitt in
-Komponenten, Auslieferung nur mit Zielumgebung — oder
-werden durch anderes vertreten, etwa den
-Übergabe-Stand des Koordinators bei einer Komponente
-(siehe
+Verzichts-Entscheidung gebucht (mit Marke und genau
+einer Phase); dann entfallen der Stand und seine
+Prüfpflichten für diese Marke, und spätere Glieder
+prüfen gegen die übrigen Vorgänger. Bei den
+Doku-Gliedern ist der Verzicht die Antwort „gar nicht
+(Verzicht)“ in der Doku-Abfrage; auf die
+Betriebs-Anleitung wird je Umgebung verzichtet (die
+Entscheidung nennt die Umgebung). Nicht verzichtbar ist
+der Tag der Implementierung. Manche Glieder fehlen ohne
+Verzicht von selbst — die Phasen P2 und P14 haben
+keinen Pflicht-Stand, eine Übergabe gibt es nur bei
+einem Schnitt in Komponenten, Auslieferung und
+Betriebs-Anleitung nur mit Zielumgebung — oder werden
+durch anderes vertreten, etwa den Übergabe-Stand des
+Koordinators bei einer Komponente (siehe
 [Zusammenarbeit mehrerer Repos](Mehrere-Repos.md));
 welche Glieder in welchem Fall fehlen oder vertreten
 werden, legt `../wiki/Kettenpruefung.md` im Einzelnen
@@ -337,10 +568,164 @@ Gepusht wird nur auf Anfrage.
 Nach dem Tag folgt ein Testplan-Stand (P10) und ein
 **Testbericht** als Nachweis des Durchgangs; nicht
 Bestandenes erzeugt Fehlermeldungen (mit der Marke des
-getesteten Stands). Weist der Testbericht offene Fehler
-aus, legt der Agent die Freigabe für die Auslieferung
+getesteten Stands). Weist der
+Testbericht offene Fehler aus, legt der Agent die
+Freigabe für die Auslieferung oder einen Doku-Stand
 trotzdem vor — du entscheidest, und der Eintrag nennt
-die offenen Fehler.
+die offenen Fehler. Mit dem gesetzten Tag legt der
+Agent außerdem die **Doku-Abfrage** vor (unten,
+„Dokumentation“): Erst jetzt ist der Umfang der
+Änderung bekannt, und Entwickler-Doku und Benutzer-Doku
+stehen in der Ordnung der Freigaben zwischen dem
+Testbericht und der Auslieferung.
+
+## Dokumentation: Entwickler-Doku, Benutzer-Doku, Betriebs-Anleitung
+
+Mit SP-1 trägt die Kette drei Stände, die für Leser
+ohne Zugang zum Projekt geschrieben sind — die
+**Doku-Stände**, je ein Pflicht-Stand seiner Phase:
+
+- die **Entwickler-Doku** (P11, „für P13 Ausliefern“):
+  Ein Fremder kann das Produkt ohne Rückfrage ändern —
+  Aufbau, Entscheidungen und ihre Gründe, Einstieg und
+  Build, Schnittstellen. Sie ist aus den freigegebenen
+  Ständen von Architektur, Technologie-Entscheidungen
+  und Spezifikation und dem Tag ausformuliert.
+- die **Benutzer-Doku** (P12, „für P13 Ausliefern“):
+  Ein Fremder kann das Produkt ohne Hilfe benutzen —
+  was es leistet, wie man es bedient, was es nicht tut.
+  Sie ist aus Konzept, Anforderungen,
+  Funktionsbeschreibung und Tag ausformuliert.
+  „Benutzer“ sind die Leser des Produkts — nicht du als
+  Anwender, der mit dem Agenten arbeitet.
+- die **Betriebs-Anleitung** je Zielumgebung (P15, „für
+  P15 Betreiben“): Ein Fremder kann das Produkt in
+  dieser Umgebung ausführen — Installation und Betrieb.
+  Sie ist aus dem freigegebenen Deploy-Stand ihrer
+  Umgebung ausformuliert und wird erst nach ihm
+  freigegeben; ein weiterer Deploy-Stand derselben
+  Umgebung ist der Anlass einer neuen Version.
+
+Diese Stände sind **selbsttragend** (oben, „Zwei
+Grade“): keine Wikilinks, keine Register-Kennungen,
+Begründungen ausgeschrieben; eine feste Kapitelliste
+gibt es nicht, der Maßstab ist der Satz je Typ. Vor der
+Freigabe stehen zwei Prüfungen: die Kettenprüfung gegen
+die Quell-Stände (Darstellung ist dabei kein Befund,
+eine neue Sachaussage schon) und, als Pflicht, der
+**Verständnis-Check** — ein Prüfer, der nur das
+Dokument bekommt, nicht das Wiki, und die Prüffrage des
+Typs beantwortet („Kann ein Fremder das Produkt ohne
+Rückfrage ändern?“, „… ohne Hilfe benutzen?“, „… in
+dieser Umgebung ausführen?“) und jede Stelle nennt, an
+der er raten müsste. Beide Berichte bekommst du mit dem
+Stand; die Freigabe nennt sie. Vorbedingung von
+Entwickler- und Benutzer-Doku ist der Testbericht der
+Marke. Die freigegebene Version liegt wie jeder Stand
+versioniert in `output/`; eine Kopie geht in den Ordner
+`docs/` des Produkts (`docs/developer/`, `docs/user/`,
+`docs/ops/`) — im Zwei-Repo-Fall ins Produkt-Repo
+(siehe [Zusammenarbeit mehrerer Repos](Mehrere-Repos.md)).
+Mit RP-1 ist die aus den Code-Kommentaren erzeugte
+API-Doku Teil der Entwickler-Doku, nicht ihr Ersatz.
+
+**Die Doku-Abfrage.** Sobald der Tag der
+Implementierung einer Marke gesetzt ist (beim
+Koordinator ohne eigene Bauteile: sobald die letzte
+erwartete Lieferung gebucht ist), legt dir der Agent
+**einmal je Marke** eine Tabelle vor — je eine Zeile
+für Entwickler-Doku, Benutzer-Doku und
+Betriebs-Anleitung je Zielumgebung, mit seiner
+Empfehlung und Begründung. Du entscheidest je Zeile
+zweierlei:
+
+- den **Zeitpunkt**: **jetzt** — die Doku wird vor der
+  Auslieferung freigegeben, in der Ordnung der Kette
+  (der Normalfall); **später** — die Auslieferung geht
+  zuerst, ihre Freigabe trägt die Einschränkung „Doku
+  folgt“, und die Doku kommt spätestens zum
+  Marken-Abschluss (unten); **gar nicht** — als
+  **Übernahme**, wenn sich für diese Leser nichts
+  geändert hat (der freigegebene Stand der Vormarke
+  gilt weiter, der Abschluss-Stand weist ihn als
+  übernommen aus), oder als **Verzicht**, wenn es keinen
+  Stand geben soll (mit Begründung). Für die
+  Betriebs-Anleitung, die nach ihrem Deploy-Stand
+  kommt, heißt „jetzt“: nach dem Deploy-Stand und vor
+  dem Marken-Abschluss; „später“: der Marken-Abschluss
+  wartet nicht auf sie, ihre Freigabe wird nach dem
+  Wechsel nachgetragen.
+- die **Form** (bei „jetzt“ und „später“):
+  **Änderungsdokument** — es benennt nur die Änderungen
+  gegenüber der letzten Vollfassung, nennt sie im Kopf
+  als Basis und ist kumulativ (ein weiteres
+  Änderungsdokument zur selben Vollfassung enthält die
+  früheren Änderungen wieder, so dass Vollfassung plus
+  ein Änderungsdokument immer genügen);
+  **Einarbeitung** — eine neue Vollfassung, in der die
+  geänderten Kapitel neu erzeugt und die übrigen
+  unverändert aus der letzten Vollfassung übernommen
+  sind; **komplett neu** — eine neue Vollfassung,
+  vollständig neu erzeugt. In jeder Form stammt jeder
+  Text aus dem Wiki bzw. den Quell-Ständen, nichts wird
+  von Hand nachgezogen, und beide Prüfungen gehen über
+  das ganze Dokument.
+
+Die Empfehlung des Agenten folgt Umfang und Art der
+Änderung: erste Marke, Bruch oder neue Struktur des
+Produkts → komplett neu; übliche Folge-Marke →
+Einarbeitung; Patch- oder Zwischenmarke mit kleiner
+Änderung → Änderungsdokument; ab zwei
+Änderungsdokumenten seit der letzten Vollfassung →
+Einarbeitung; dringender Fix → später; nichts für diese
+Leser sichtbar → gar nicht (Übernahme); erste Marke
+nach einem Anheben der Vorlage, das die Doku-Stände
+einführt → komplett neu, vorgefundene Dokumente in
+`docs/` bleiben als Nachweis liegen. Die
+Arbeit an einer Doku darf früher beginnen — die Abfrage
+entscheidet nur Zeitpunkt und Form der Freigabe.
+
+Jede Zeile wird als eigene Entscheidung gebucht
+(„Doku-Entscheidung zu Marke 1.1: Benutzer-Doku — gar
+nicht (Übernahme)“); die Tabelle steht als Nachweis an
+der ersten davon. Ein Verzicht ist eine gewöhnliche
+Verzichts-Entscheidung mit genau einer Phase, bei der
+Betriebs-Anleitung je Umgebung. Die Freigaben der
+Doku-Stände selbst bleiben eigene Freigabe-Einträge.
+Kommt nach der Abfrage eine Zielumgebung hinzu oder
+entsteht zu einer Umgebung ein weiterer Deploy-Stand,
+stellt der Agent mit dessen Vorlage die Zeile
+Betriebs-Anleitung für diese Umgebung nach — die
+Abfrage je Marke bleibt eine, die Nachfrage ist ihre
+Fortsetzung.
+
+**Später und Nachtrag.** Ein Doku-Stand mit „später“
+wird spätestens zum Marken-Abschluss freigegeben: Der
+Vollständigkeits-Scan beim Marken-Wechsel legt ihn dir
+als offenen Punkt vor. Sagst du dort erneut „später“,
+wird seine Freigabe nach dem Wechsel als **Nachtrag** an
+der Marke gebucht — wie ein nachgetragener Deploy-Stand
+(unten, „Marken-Wechsel und Abschluss-Stand“): kein
+eigener Freigabe-Eintrag, keine Ablösung, kein
+Meilenstein; der Abschluss-Stand bleibt und ist dadurch
+nicht überholt.
+
+**Jede Freigabe eines Doku-Stands** einer laufenden
+Marke ist ein Meilenstein wie bei jedem Pflicht-Stand;
+beim Koordinator sind Entwickler-Doku und Benutzer-Doku
+je ein eigener Anlass.
+
+**Release-Notes bleiben unverändert:** Sie sagen,
+**was** sich geändert hat; ein Änderungsdokument sagt,
+**wie** man das Geänderte benutzt, ändert oder betreibt.
+Beides nebeneinander ist keine Redundanz.
+
+**Ohne Prozess** gibt es keine Phasen und keine
+Doku-Abfrage; der Agent bietet Doku-Stände dann nur auf
+Zuruf an, als optionale Stände. Welche Doku-Glieder
+Koordinator, Komponente und Standalone-Projekt führen:
+[Zusammenarbeit mehrerer Repos](Mehrere-Repos.md), „Die
+Kette der Komponente“ und „Der Koordinator“.
 
 ## Zielmarken
 
@@ -444,7 +829,9 @@ Weitere Regeln der Zuordnung:
   — gegen die Folge-Marke geprüft — nicht überholt ist.
   Er wird weder neu gebildet noch neu freigegeben;
   der Abschluss-Stand der Folge-Marke führt ihn mit
-  „übernommen aus ⟨Vormarke⟩“. Dasselbe gilt für den
+  „übernommen aus ⟨Vormarke⟩“. Bei den Doku-Ständen ist
+  das die Antwort „gar nicht (Übernahme)“ in der
+  Doku-Abfrage. Dasselbe gilt für den
   Tag, wenn das Produkt seit ihm unverändert ist
   **und** die Stände, auf denen er beruht, für die
   Folge-Marke nicht überholt sind; sonst folgt nach
@@ -611,6 +998,11 @@ Schritten:
      Agent um; einen eingefrorenen — angenommenen —
      löst er durch einen neuen Eintrag für die spätere
      Marke ab;
+   - einen Doku-Stand, der noch nicht freigegeben ist —
+     „jetzt“ wie „später“ —, legt er vor: bei „jetzt“
+     ist die Vorlage vor dem Wechsel Pflicht, bei
+     erneutem „später“ folgt die Freigabe als Nachtrag
+     (oben, „Dokumentation“);
    - eine Fehlermeldung bleibt bei der Marke ihrer
      Meldung (der Marke des Produkt-Stands, an dem der
      Fehler beobachtet wurde); ihre Behebung plant die
@@ -639,9 +1031,12 @@ Schritten:
 2. **Freigabe des Abschluss-Stands** durch dich — der
    Pflicht-Stand „für den Marken-Abschluss“, der alle
    freigegebenen Stände der Kette dieser Marke mit ihren
-   Freigaben listet, einschließlich der übernommenen,
-   und den Tag der Marke. Abgeschlossen ist die Marke
-   damit noch nicht — das ist sie erst mit dem Wechsel
+   Freigaben listet, einschließlich der übernommenen und
+   der drei Doku-Stände (ein Doku-Stand mit „später“
+   steht als offener Punkt und nach dem Wechsel im
+   Nachtrag), und den Tag der Marke. Abgeschlossen ist
+   die Marke damit noch nicht — das ist sie erst mit
+   dem Wechsel
    (Schritt 4).
 3. **Prüfung auf überholte Stände** im Abschluss-Stand;
    sind welche überholt, werden sie neu abgeleitet und
@@ -724,15 +1119,19 @@ Ablauf) —, wird er als Nachtrag am Marken-Eintrag
 gebucht, und seine Freigabe steht in der
 Nachtragszeile. Ein eigener Freigabe-Eintrag entsteht
 nicht, nichts wird abgelöst, und die Freigabe wirkt wie
-jede Freigabe eines Deploy-Stands: sie löst die
-Betriebs-Anleitung aus und zählt als Pflicht-Freigabe
-der Umgebung. Ebenso die Tag-Korrektur bei
-unverändertem Produkt (oben). Zu einer Marke kann es so
-beliebig viele Deploy-Stände geben; je Umgebung gilt
-der jüngste, und ein weiterer Stand derselben Umgebung
-ist eine neue Version desselben Dokuments. Die
-Deployment-Elemente eines nachgetragenen Stands und
-eine Entscheidung, die nur diese Umgebung betrifft,
+jede Freigabe eines Deploy-Stands (sie zählt als
+Pflicht-Freigabe der Umgebung; ob und in welcher Form
+eine Betriebs-Anleitung für diese Umgebung entsteht,
+entscheidet die nachgestellte Zeile der Doku-Abfrage,
+oben „Dokumentation“); ebenso die Tag-Korrektur bei
+unverändertem Produkt (oben) und die Freigabe eines
+Doku-Stands, der in der Doku-Abfrage „später“ erhielt
+und erst nach dem Wechsel freigegeben wird. Zu einer Marke kann es
+so beliebig viele Deploy-Stände geben; je Umgebung
+gilt der jüngste, und ein weiterer Stand derselben
+Umgebung ist eine neue Version desselben Dokuments.
+Die Deployment-Elemente eines nachgetragenen Stands
+und eine Entscheidung, die nur diese Umgebung betrifft,
 tragen die Marke des nachgetragenen Stands, nicht die
 laufende Marke. Der Abschluss-Stand, der die ältere
 Fassung des Deploy-Stands nennt, bleibt eingefroren und
@@ -801,24 +1200,32 @@ neue Marke (z.B. eine Patch-Marke `2.0.1`) — läuft die
 nächste Marke schon, als Zwischenmarke (oben); ein
 anderes Ausrollen allein ist keine.
 
-## Selbsttragende Ableitungen
+## Selbsttragende Stände und Ableitungen
 
-Stände sind **wiki-verweisend**: sie verweisen auf
-Elemente und sind nur mit dem Wiki vollständig lesbar.
-Für Empfänger ohne Wiki-Zugang entsteht aus einem Stand
-bei Bedarf eine **selbsttragende Ableitung** — ohne
-Wikilinks, ohne Register-Kennungen, mit ausgeschriebenen
-Begründungen: aus dem Testplan eine
-Durchführungs-Instanz, aus dem Deploy-Stand eine
-Betriebs-Anleitung in `docs/ops/`, aus dem
-Abschluss-Stand Release-Notes. Solche Ableitungen werden
-zu festen Anlässen vollständig neu erzeugt, nicht von
-Hand nachgepflegt, und tragen einen Herkunfts-Kopf mit
-Marke und Quell-Stand — ähnlich wie diese Erklärung,
-die ihre Quellen und ihren Quell-Stand im Kopf nennt.
-Bei einer Migration bleiben vorgefundene
-Betriebs-Anleitungen als Nachweis liegen; die neue
-entsteht selbsttragend aus dem ersten Deploy-Stand.
+Die meisten Stände sind **wiki-verweisend**: sie
+verweisen auf Elemente und sind nur mit dem Wiki
+vollständig lesbar. Für Empfänger ohne Wiki-Zugang gibt
+es zwei Wege (oben, „Zwei Grade“): Entweder ist der
+Stand selbst **selbsttragend** und geht nach außen —
+die drei Doku-Stände Entwickler-Doku, Benutzer-Doku und
+Betriebs-Anleitung, Pflicht-Stände der Kette mit
+eigener Freigabe (oben, „Dokumentation“) — oder aus
+einem freigegebenen Stand entsteht bei Bedarf eine
+**selbsttragende Ableitung**: aus dem Testplan eine
+Durchführungs-Instanz für menschliche Tester, aus dem
+Abschluss-Stand Release-Notes. Eine Ableitung verweist
+auf keine Elemente, und mit ihrer Freigabe friert nichts
+Neues ein; ihr Kopf nennt Marke und Quell-Stand. Beides
+— selbsttragende Stände wie Ableitungen — wird zu
+seinem Anlass vollständig aus dem Wiki bzw. den
+Quell-Ständen neu erzeugt, nicht von Hand nachgepflegt
+(auch eine Einarbeitung oder ein Änderungsdokument
+entsteht so) — ähnlich wie diese Erklärung, die ihre
+Quellen und ihren Stand im Kopf nennt. Bei einer
+Migration und nach einem Anheben der Vorlage bleiben
+vorgefundene Dokumente in `docs/` als Nachweis liegen;
+der erste Doku-Stand entsteht selbsttragend über die
+Doku-Abfrage.
 
 ## Scaffolding
 

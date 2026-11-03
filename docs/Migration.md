@@ -14,11 +14,11 @@
 > `Standarddateien-Katalog.md`) und
 > `../referenzprozesse/SP-1-Standardprozess/Steckbrief.md`
 > (mitgebrachte Ordner). Stand der Quellen:
-> Starter-Commit `06af8e2` (Version 2.0). Dieses
+> Starter-Commit `c7fbc93` (Version 2.1). Dieses
 > Dokument ist aus den Quellen abgeleitet und wird bei
 > Änderungen der Quellen auf deren Stand nachgezogen
-> (zuletzt am 2026-10-28, nachgezogen auf `06af8e2`:
-> Hinweis des Skripts nach einem Wiederholungslauf);
+> (zuletzt am 2026-11-03, nachgezogen auf `c7fbc93`:
+> Version 2.1 im Herkunfts-Vermerk);
 > eigene Inhalte bekommt es
 > nicht — Änderungen gehören in die Quellen.
 
@@ -257,7 +257,7 @@ da“.
 4. **Herkunft vermerken.** Nach der Kopie, vor dem
    Aufnahme-Commit, schreibt der Agent in den Abschnitt
    `## Herkunft` von `wiki/Aktivierter-Prozess.md`:
-   `Template-Stand: 2.0 seit JJJJ-MM-TT` mit dem
+   `Template-Stand: 2.1 seit JJJJ-MM-TT` mit dem
    **Übernahme-Tag** — dem Tag des Aufnahme-Commits; er
    ist der Stichtag, den der Lint liest, und das Datum
    in der Bezeichnung der Übernahme-Marke —, die

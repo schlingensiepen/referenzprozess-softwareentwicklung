@@ -12,10 +12,10 @@
 > `Instruktionsdatei-Pflege.md`, `Marken-RP-1.md`,
 > `Vorgehen-SP-1.md` Abschnitt 4a,
 > `templates/Tools-Vorlage.md`). Stand der Quellen:
-> Starter-Commit `959026c` (Version 2.0). Dieses
+> Starter-Commit `c7fbc93` (Version 2.1). Dieses
 > Dokument ist aus den Quellen abgeleitet und wird bei
 > Änderungen der Quellen auf deren Stand nachgezogen
-> (zuletzt am 2026-10-28); eigene Inhalte bekommt es
+> (zuletzt am 2026-11-03); eigene Inhalte bekommt es
 > nicht — Änderungen gehören in die Quellen.
 
 Zurück zur [Einführung](Einfuehrung.md).
@@ -365,7 +365,7 @@ beim Anlegen die laufende Marke und sein Anlage-Datum.
   keine Marke trägt `current`, solange keine
   abgeschlossen ist.
 - **Herkunfts-Vermerk** im Abschnitt `## Herkunft` von
-  `wiki/Aktivierter-Prozess.md`: `Template-Stand: 2.0
+  `wiki/Aktivierter-Prozess.md`: `Template-Stand: 2.1
   seit JJJJ-MM-TT` (der Tag des Starts — der Stichtag,
   den der Lint liest), `Quelle` (Repo-URL und Stand)
   und `Anbindungs-Modus` aus Schritt 0, `Rolle` und
