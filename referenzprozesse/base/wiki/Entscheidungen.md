@@ -96,7 +96,11 @@ active: true   # kann nicht deaktiviert werden — Entscheidungen ist Pflicht-Fa
     Pflicht-Stand freigegeben wird, der
     `review-report` der Kettenprüfung (nicht beim
     Abschluss-Stand, der nur auf Vollständigkeit
-    geprüft wird, [[Kettenpruefung]] §Regel); Prüfer
+    geprüft wird, [[Kettenpruefung]] §Regel) und bei
+    den drei Doku-Ständen der Kette (Entwickler-Doku,
+    Benutzer-Doku, Betriebs-Anleitung; mit SP-1) der
+    Bericht des Verständnis-Checks M6
+    (`Reviewmuster.md`); Prüfer
     und Reife stehen dort.
   - **Wahl und Begründung:** das Ergebnis der
     Kettenprüfung. Eine **Einschränkung** steht
@@ -104,9 +108,18 @@ active: true   # kann nicht deaktiviert werden — Entscheidungen ist Pflicht-Fa
     Vorgänger** — ein früherer Pflicht-Stand fehlt
     ohne Verzicht und der Anwender gibt trotzdem frei
     ([[Kettenpruefung]] §Kette, Freigabe-Ordnung als
-    Warnung); **offene BUG** — der Testbericht weist
+    Warnung); **„Doku folgt“** — ein Doku-Glied P11
+    oder P12 fehlt ohne Verzicht und der Deploy-Stand
+    wird trotzdem freigegeben ([[Kettenpruefung]]
+    §Kette, Doku-Glieder); **„Teil-Doku <Komponente>
+    fehlt“** — die Entwickler-Doku einer Komponente ist
+    „später“ oder verzichtet und der Koordinator gibt
+    seine Gesamtsicht trotzdem frei ([[Kettenpruefung]]
+    §Freigabe-Ordnung des Koordinators); **offene BUG** — der
+    Testbericht weist
     nicht Bestandenes aus und der Anwender gibt
-    trotzdem für P11 frei ([[Kettenpruefung]]
+    trotzdem für P13 oder einen Doku-Stand frei
+    ([[Kettenpruefung]]
     §Code-Glieder); **Prüf-Modell = Bau-Modell** — die
     Prüfung lief im Ein-Modell-Weg (`Reviewmuster.md`
     §2 Schleife 2). Ebenso eine Notfall-Freigabe
@@ -146,7 +159,7 @@ active: true   # kann nicht deaktiviert werden — Entscheidungen ist Pflicht-Fa
     `supersedes:` im Nachtrag, kein `superseded_by:` an
     einem Freigabe-Eintrag der Marke —, die Freigaben
     der Marke bleiben stehen, der Abschluss-Stand bleibt
-    unverändert. Zwei Fälle: **(a) Tag-Korrektur** —
+    unverändert. Drei Fälle: **(a) Tag-Korrektur** —
     wird der Tag der Marke nach dem Wechsel bei gleichem
     Inhalt der Pfade des Produkts korrigiert, steht die
     neue Tag-Freigabe zu derselben Marke im Nachtrag
@@ -159,9 +172,19 @@ active: true   # kann nicht deaktiviert werden — Entscheidungen ist Pflicht-Fa
     anders ausgerollt wird; je Umgebung gilt der
     jüngste), steht seine Freigabe in der
     Nachtragszeile des Stands; sie wirkt wie jede
-    Deploy-Stand-Freigabe (Auslöser der
-    Betriebs-Anleitung, Pflicht-Freigabe der Umgebung
-    für Lint und Vollständigkeits-Scan). Der Lint erkennt
+    Deploy-Stand-Freigabe (Pflicht-Freigabe der Umgebung
+    für Lint und Vollständigkeits-Scan; Zeitpunkt und
+    Form der Betriebs-Anleitung dieser Umgebung
+    entscheidet die Doku-Abfrage, [[Kettenpruefung]]
+    §Kette). **(c) Doku-Stand „später“** — wird ein
+    Doku-Stand der Kette (Entwickler-Doku, Benutzer-Doku,
+    Betriebs-Anleitung), der in der Doku-Abfrage
+    „später“ erhielt, erst nach dem Wechsel freigegeben,
+    steht seine Freigabe in derselben Form in der
+    Nachtragszeile des Stands (Nachweise: `review-report`
+    der Kettenprüfung, M6-Bericht, Testbericht); sie
+    zählt als Pflicht-Freigabe des Doku-Glieds. Der Lint
+    erkennt
     die Freigabe im Nachtrag an der Formel, ordnet sie
     der Marke des Eintrags zu und erwartet keine
     abgelöste Freigabe. Eine Freigabe im Nachtrag ist
@@ -207,12 +230,25 @@ active: true   # kann nicht deaktiviert werden — Entscheidungen ist Pflicht-Fa
   Phase mit Pflicht-Stand für eine Marke bewusst aus
   (`Vorgehen.md` §1), wird das als DEC mit
   `decision_type: verzicht`, `zielmarke:` (die Marke)
-  und `phase: Pn` (die ausgelassene Phase) gebucht;
+  und `phase: Pn` (die ausgelassene Phase — genau
+  eine je DEC) gebucht;
   ohne diese Felder gilt kein Verzicht. Für P9 gibt es
   keinen Verzicht (der Tag markiert das Produkt in
   jedem Projekt, [[Kettenpruefung]] §Kette); eine DEC
   mit `phase: P9` ist kein Verzicht, der Lint meldet
-  sie (ebenda §Lint-Anteil). Der Eintrag
+  sie (ebenda §Lint-Anteil). Der Verzicht auf die
+  Betriebs-Anleitung (`phase: P15`) gilt **je
+  Umgebung**: die DEC trägt zusätzlich `umgebung:` mit
+  dem Namen der Umgebung aus der Entitäts-Fassade der
+  Zielumgebungen (dasselbe Feld wie DEPL), je Umgebung
+  eine DEC; `phase: P15` ohne `umgebung:` ist kein
+  Verzicht, der Lint meldet einen Hinweis. Bei den
+  Doku-Gliedern P11, P12 und P15 ist der Verzicht die
+  Zeile „gar nicht (Verzicht)“ der Doku-Abfrage; die
+  übrigen Zeilen-DECs der Abfrage (jetzt, später,
+  Übernahme) sind gewöhnliche Entscheidungen
+  ([[Kettenpruefung]] §Kette, Doku-Abfrage —
+  Gegenstand und Buchung). Der Eintrag
   nennt wie jeder DEC die Begründung und die
   verworfene Alternative (die Phase doch zu führen).
   Was der Verzicht in der Kette bewirkt und wann kein

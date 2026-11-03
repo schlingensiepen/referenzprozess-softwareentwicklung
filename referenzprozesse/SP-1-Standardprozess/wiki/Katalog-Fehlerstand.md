@@ -23,7 +23,7 @@ Anwender-`wiki/` kopiert und in [[Katalog]] verankert.
 - **Verbindlichkeit:** optional
 - **Grad:** wiki-verweisend
 - **Auslöser:** Angebots-Auslöser: der Agent bietet
-  den Stand vor P11 Ausliefern an (vor der Freigabe
+  den Stand vor P13 Ausliefern an (vor der Freigabe
   des ersten Deploy-Stands der Marke); sonst auf
   Zuruf (Prüfung eines optionalen Stands:
   [[Kettenpruefung]] §Regel).

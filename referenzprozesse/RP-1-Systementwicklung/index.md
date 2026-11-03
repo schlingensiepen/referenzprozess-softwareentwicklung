@@ -287,12 +287,18 @@ einer Freigabe.
   §Mitgebrachte Fassaden), erbt RP-1 von SP-1. Die
   typische Marke unter RP-1: [[Marken-RP-1]].
 
-**Kette der Pflicht-Stände.** Gesamt- und
-Teil-Funktionsbeschreibungen (FUNC, P4) sowie Gesamt- und
-Teilspezifikationen (SPEC, P8) sind Elemente der
-SP-1-Register; freigegeben wird ein Stand, nie das
-Register (Stand-Zwang und Ablage: `Vorgehen.md` §4;
+**Kette der Pflicht-Stände.** Funktionsbeschreibungen
+(FUNC, P4) und Spezifikationen (SPEC, P8) sind
+Elemente der SP-1-Register; freigegeben wird ein
+Stand, nie das Register. „Gesamt“ und „Teil“ sind
+dabei Rollen des Repos und damit Eigenschaften des
+Stands — Koordinator und Standalone-Projekt bilden die
+Gesamt-, eine Komponente die
+Teil-Funktionsbeschreibung bzw. -Spezifikation —, kein
+Merkmal je Element (Stand-Zwang und Ablage:
+`Vorgehen.md` §4;
 Fassade, Element, Stand: [[Einfrieren-und-Abloesen]];
+Ablauf je Stand: [[Lebenslauf-eines-Stands]];
 Reihenfolge der Freigaben: [[Kettenpruefung]] — lesen
 vor der Freigabe eines Pflicht-Stands).
 
@@ -437,7 +443,10 @@ Nachtrag zu einer abgeschlossenen Marke,
   Meilensteine: die Freigaben seiner
   eigenen Pflicht-Stände (welche das sind:
   [[Vorgehen-RP-1]] §8, Zeilen „global“ und „je
-  Zielumgebung“ und die Übergaben P6, und
+  Zielumgebung“ — einschließlich Gesamtsicht der
+  Entwickler-Doku (P11), Benutzer-Doku (P12) und
+  Betriebs-Anleitung (P15), je ein eigener Anlass —
+  und die Übergaben P6, und
   [[Kettenpruefung]] §Freigabe-Ordnung des
   Koordinators für eigene Bauteile);
   außerdem der **Koordinator-Meilenstein** — die letzte
@@ -452,10 +461,10 @@ Nachtrag zu einer abgeschlossenen Marke,
   aktiv). Meilensteine: die rekursiven
   Freigaben der eigenen Pflicht-Stände (welche das
   sind: [[Vorgehen-RP-1]] §8, Zeilen „je Komponente“
-  bis zum Testplan-Stand P10; wo die Kette je
-  Übernahme-Art beginnt und wann sie P11 selbst
-  führt: [[Kettenpruefung]] §Fehlende und vertretene
-  Glieder).
+  bis zur Entwickler-Doku P11; wo die Kette je
+  Übernahme-Art beginnt und wann sie P12, P13 und P15
+  selbst führt: [[Kettenpruefung]] §Fehlende und
+  vertretene Glieder).
 - **Standalone:** (SP-1 ohne Komponenten-Split) —
   keine RP-1-Rollen-Ausstattung. Meilensteine: die
   Freigaben aller Pflicht-Stände der Kette

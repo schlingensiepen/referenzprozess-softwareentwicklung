@@ -37,7 +37,10 @@ Fassaden-Typ und `system-component`.
   zu DEC (Detail-Knoten zum ARC-Eintrag der Fassade)
 - **Klasse:** Element
 - **Freeze ab:** angenommen
-- **Sammelzustand:** nein
+- **Sammelzustand:** offen (Vorstatus `offen` ohne
+  `aufgeschoben`; Annahme einzeln oder im Freigabe-Zug
+  des ersten Stands, der das Element verweist —
+  [[Einfrieren-und-Abloesen]] §Eintrittsregel)
 - **Pflichtfelder:** `type: architecture-description`,
   `id` (Format `ARC-NNN`), `status` (Werte nach
   [[Register-Lebenszyklus]]), `status_date`, `datum`
@@ -62,8 +65,8 @@ Fassaden-Typ und `system-component`.
   CON über `abgeleitet_von:` hierher folgt und die
   Consumer-Registrierungen und `provider:` des CON
   dagegen prüft ([[Katalog-Contract-Index]]). Kein
-  `trigger`: Eintritts-Register ohne
-  `offen`/`aufgeschoben`.
+  `trigger`: Sammelzustand `offen` ohne
+  `aufgeschoben`, nichts zu reaktivieren.
 - **Dokumenttypen:** [[Katalog-Architekturdokument]],
   [[Katalog-Uebergabe]]
 - **Beispielname:** `ARC-001 Zuschnitt in Komponenten.md`

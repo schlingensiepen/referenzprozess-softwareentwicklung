@@ -31,7 +31,11 @@ und in [[Katalog]] verankert.
   Funktionsbeschreibungen (FUNC) und
   Architektur-Festlegungen (ARC) der Marke, die K
   betreffen — mit Status `angenommen`, `in-umsetzung`,
-  `umgesetzt` oder `abgeschlossen` (nicht verworfen;
+  `umgesetzt` oder `abgeschlossen`, an einer
+  vorgelegten, noch nicht freigegebenen Version auch
+  `offen` — im Kopf ausgewiesen, mit der Freigabe
+  angenommen ([[Einfrieren-und-Abloesen]]
+  §Ableitungsprüfung) — (nicht verworfen;
   für die Marke nicht abgelöst — ein Element mit
   Status `abgelöst` gehört dazu, solange sein
   Nachfolger für die Marke nicht gilt,

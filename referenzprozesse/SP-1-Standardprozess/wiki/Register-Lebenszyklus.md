@@ -23,16 +23,28 @@ Muster DEC, IDEA, NEED und SCEN in der Basis.
 
 **Zustände nach Register-Art:**
 
-- **Sammel-Register** (REQ, BUG, IDEA, NEED, SCEN):
+- **Sammel-Register mit `aufgeschoben`** (REQ, BUG,
+  IDEA, NEED, SCEN):
   `offen` → `aufgeschoben` → `angenommen` → `in-umsetzung` →
   `umgesetzt` → `abgeschlossen` → `verworfen` →
   `abgelöst`. Bei `aufgeschoben` steht zusätzlich
   `Auslöser:` (Datum oder Marke) im Fassaden-Eintrag;
   der Register-Wächter C5 und die Marken-Trigger
   arbeiten nur hier.
-- **Eintritts-Register** (DEC, FUNC, ARC, SPEC, TEST,
-  DEPL, CON): beginnen bei `angenommen`; `offen`,
-  `aufgeschoben` und `Auslöser:` gibt es nicht.
+- **Sammel-Register ohne `aufgeschoben`** — die
+  beschreibenden Register (FUNC, ARC, SPEC, TEST,
+  DEPL): `offen` → `angenommen` → `in-umsetzung` →
+  `umgesetzt` → `abgeschlossen` → `verworfen` →
+  `abgelöst`. `offen` ist der Vorstatus eines
+  bearbeitbaren Elements; die Annahme geschieht
+  einzeln oder im Freigabe-Zug des ersten Stands, der
+  es verweist ([[Einfrieren-und-Abloesen]]
+  §Eintrittsregel; Ablauf: [[Lebenslauf-eines-Stands]]).
+  `aufgeschoben`, `Auslöser:` und Wächter gibt es hier
+  nicht.
+- **Eintritts-Register** (DEC, CON): beginnen bei
+  `angenommen`; `offen`, `aufgeschoben` und `Auslöser:`
+  gibt es nicht.
 - **Nachweis-Register** (TRES): ein Testbericht ist
   ab Anlage eingefroren und steht von der Anlage an
   auf `angenommen`; weitere Übergänge gibt es nicht,

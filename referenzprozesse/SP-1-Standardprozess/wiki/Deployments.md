@@ -8,7 +8,7 @@ type: deployment-description-log
 **Ich bin neu in SP-1.** Diese Fassade entsteht mit der
 Wahl von SP-1 (Wiki.md §11 Prozess-Teil-Wikis) — das
 Register der Deployments speist den Deploy-Stand der
-Phase P11 „Ausliefern“.
+Phase P13 „Ausliefern“.
 
 ## Meta
 
@@ -54,10 +54,15 @@ Phase P11 „Ausliefern“.
   Bauanleitung eine SPEC in [[Spezifikationen]]. Ein
   DEPL-Element stützt sich per `abgeleitet_von:` auf
   ARC, SPEC und DEC.
-- **Eintritt:** DEPL-Elemente dürfen jederzeit
-  entstehen; sie werden mit Anwender-OK direkt
-  `angenommen` und sind ab dann eingefroren
-  ([[Einfrieren-und-Abloesen]]). Eine später
+- **Eintritt und Lese-Klammer:** DEPL-Elemente dürfen
+  jederzeit entstehen; der Agent legt sie als `offen`
+  an, sie bleiben bearbeitbar, bis sie einzeln
+  angenommen werden oder mit der Freigabe des
+  Deploy-Stands, der sie verweist, und sind ab dann
+  eingefroren ([[Einfrieren-und-Abloesen]]
+  §Eintrittsregel). Bis zur Bildung des Deploy-Stands
+  ist diese Fassade die Lese-Klammer der Phase P13
+  ([[Lebenslauf-eines-Stands]]). Eine später
   hinzukommende Umgebung für eine bereits
   ausgelieferte Marke ist zulässig (Nachtrag:
   [[Zielmarken]]); ihre DEPL tragen die Marke des

@@ -23,7 +23,7 @@ Wächter-Trigger T4, Rekursions-Muster) gelten
 unverändert aus der Basis-Vorgehen-Datei
 (`Vorgehen.md`).
 
-Alle dreizehn SP-1-Phasen bleiben bestehen — RP-1 belegt
+Alle fünfzehn SP-1-Phasen bleiben bestehen — RP-1 belegt
 sie mit Software-spezifischen Artefakten und Namen und
 fügt einige Automatisierungs-Regeln hinzu, die
 Software-typisch sind.
@@ -41,10 +41,13 @@ Software-typisch sind.
 | P7 | Auswählen der Technologie | Technologie-Entscheidungen ([[Katalog-Technologie-Entscheidungen]]) aus den Technologie-Stack-Entscheidungen (R6 Passende Technologien, R7 Best Practices, R8 Sicherheitslage, R11 Lizenz); **mehrere Sprachen möglich, Runtime-Version explizit** (V3); Werkzeugkette siehe Anmerkung unten (V5) |
 | P8 | Spezifizieren | Spezifikation-Stand ([[Katalog-Spezifikation-Stand]]) — **Spezifikation** (Bauanleitung nach Schnitt und Technologie-Stack, umsetzbar ohne Fachkenntnis — auch durch Subagenten); entsteht dort, wo gebaut wird: in der nicht weiter zerlegten Komponente, beim Koordinator nur für eigene Bauteile; kleine Projekte: schmal oder Verzichts-DEC (`decision_type: verzicht`, [[Kettenpruefung]] §Fehlende und vertretene Glieder) |
 | P9 | Ausarbeiten | **Implementierung inkl. Unit-Tests und automatisierten Integrationstests** (siehe §3 Test-Automatisierungs-Regel) — das Produkt der Marke ist hier der Code ([[Glossar]]); Glied der Kette ist der Tag der Implementierung |
-| P10 | Testen | **Testplan** ([[Katalog-Testplan]]) **mit nicht-automatisierbaren Anteilen** (manuelle Integrationstests + Anwender-Tests) aus den Testfällen ([[Testfaelle]]) + Testberichte (TRES, [[Testberichte]]); bei einer Komponente das letzte Glied ihrer Kette (§8); Angebot Durchführungs-Instanz je Testdurchgang (§4 Anmerkung P10) |
-| P11 | Ausliefern | **Deploy-Stand** je Umgebung ([[Katalog-Deploy-Stand]]) in `output/` mit `_VV_TLA` (index §4), beim Koordinator für alle Komponenten (§7 Punkt 6, §8) + Startprompts; **CI-Pipeline-Konfiguration** (V6a — Deploy-Zielumgebung ist hier verankert) |
-| P12 | Produzieren | Bereitstellen und Konfigurieren der Ziel-Umgebung — bei Standard-Software oft weitgehend durch P11-Rückverweis (Deploy-Stand) abgedeckt; bei RP-11 Cloudanwendung eigener Substanz-Bereich (Vertragsaspekte, laufender Betrieb); CI-/Deploy-Feinheiten aus V6a greifen hier |
-| P13 | Betreiben | Betriebs-Handbuch + laufende `bug-report`-Ingestion; Fehlerbilder-Recherche R10 aktiv |
+| P10 | Testen | **Testplan** ([[Katalog-Testplan]]) **mit nicht-automatisierbaren Anteilen** (manuelle Integrationstests + Anwender-Tests) aus den Testfällen ([[Testfaelle]]) + Testberichte (TRES, [[Testberichte]]); Angebot Durchführungs-Instanz je Testdurchgang (§4 Anmerkung P10) |
+| P11 | Dokumentieren für Entwickler | **Entwickler-Doku** ([[Katalog-Entwickler-Doku]]) als selbsttragender Stand in `output/`, Kopie in `docs/developer/`: Aufbau, Entscheidungen, Einstieg und Build in der Projektsprache; die aus Docstrings erzeugte API-Doku (Zone 1, §12) ist Teil davon, nicht ihr Ersatz; bei einer Komponente die Entwickler-Doku für ihr Bauteil — das letzte Glied ihrer Kette (§8) |
+| P12 | Dokumentieren für Benutzer | **Benutzer-Doku** ([[Katalog-Benutzer-Doku]]) als selbsttragender Stand in `output/`, Kopie in `docs/user/`; Zone 3 (§12): projekt-primär Deutsch; beim Koordinator bzw. Standalone, bei einer Komponente nur mit eigener Zielumgebung (§8) |
+| P13 | Ausliefern | **Deploy-Stand** je Umgebung ([[Katalog-Deploy-Stand]]) in `output/` mit `_VV_TLA` (index §4), beim Koordinator für alle Komponenten (§7 Punkt 6, §8) + Startprompts; **CI-Pipeline-Konfiguration** (V6a — Deploy-Zielumgebung ist hier verankert) |
+| P14 | Produzieren | Bereitstellen und Konfigurieren der Ziel-Umgebung — bei Standard-Software oft weitgehend durch P13-Rückverweis (Deploy-Stand) abgedeckt; bei RP-11 Cloudanwendung eigener Substanz-Bereich (Vertragsaspekte, laufender Betrieb); CI-/Deploy-Feinheiten aus V6a greifen hier |
+| P15 | Betreiben | **Betriebs-Anleitung** je Umgebung ([[Katalog-Betriebs-Anleitung]]) als selbsttragender Stand in `output/`, Kopie in `docs/ops/`, aus dem Deploy-Stand der Umgebung; laufende `bug-report`-Ingestion; Fehlerbilder-Recherche R10 aktiv |
+| — | Ablauf je Stand | vom ersten `offen`en Element über Lese-Klammer, Bildung, Prüfung, Vorlage und Korrektur bis zur Freigabe: [[Lebenslauf-eines-Stands]] (gilt für jeden Stand dieser Tabelle) |
 
 Zweck, Filter und Auslöser jedes Stands stehen in
 seinem Dokumenttyp-Eintrag (verlinkt in der Tabelle;
@@ -244,9 +247,11 @@ Folge-Marke unverändert, gelten Tag und Lieferung
 dort weiter ([[Kettenpruefung]] §Kette, Übernahme des
 Tags und der Lieferung).
 
-**P10 → P11.** Glied ist der Testbericht (TRES,
-[[Testberichte]]) zu einem Durchgang nach dem
-freigegebenen Testplan-Stand; Nicht-Bestandenes erzeugt
+**P10 → P11, P12, P13.** Glied ist der Testbericht
+(TRES, [[Testberichte]]) zu einem Durchgang nach dem
+freigegebenen Testplan-Stand; er ist Vorbedingung der
+Entwickler-Doku (P11), der Benutzer-Doku (P12) und des
+Deploy-Stands (P13); Nicht-Bestandenes erzeugt
 einen BUG ([[Kettenpruefung]] §Code-Glieder).
 
 **Rollen bei Integrationstest-Befunden (P10):**
@@ -333,8 +338,8 @@ Scaffolding-Vorlagen-Präzisierung (Vorgehen.md §7a,
 |---|---|---|---|
 | R | **R4** Referenzarchitekturen | P5 Zerlegen in Bausteine | vor Architektur-Entscheidung |
 | R | **R5** Standards und Austauschformate | P5 Zerlegen in Bausteine · P7 Auswählen der Technologie | vor Contract-Definition; vor Technologie-Wahl |
-| R | **R9** Betriebs- und Deploypraxis der Zielumgebung | P11 Ausliefern | vor Deploy-Erstellung |
-| R | **R10** Fehlerbilder der eingesetzten Version | P13 Betreiben | laufend, insbesondere nach neuen Releases |
+| R | **R9** Betriebs- und Deploypraxis der Zielumgebung | P13 Ausliefern | vor Deploy-Erstellung |
+| R | **R10** Fehlerbilder der eingesetzten Version | P15 Betreiben | laufend, insbesondere nach neuen Releases |
 | M | **Vierte Frage: Technologieagnostik** — Funktionsbeschreibung frei von Technologie-Vorannahmen? | P4 Beschreiben der Funktion | vor Freigabe |
 | M | **Hochwertiger Prüfer, mehrere Runden** — Fehler der Funktionsbeschreibung kaskadieren | P4 Beschreiben der Funktion | vor Freigabe |
 | M | **UI-Entwürfe** (bei Systemen mit Benutzungs-Schnittstelle) — alle Fälle der Funktionsbeschreibung abgebildet? (Anmerkung P4 unten) | P4 Beschreiben der Funktion | vor Freigabe für P5 |
@@ -343,12 +348,13 @@ Scaffolding-Vorlagen-Präzisierung (Vorgehen.md §7a,
 | M | Prüfung gegen Teil- und Gesamt-Funktionsbeschreibung (kein Widerspruch, kein ungewollter Lock-in) | P7 Auswählen der Technologie | vor Freigabe |
 | M | **Anforderungs-Vollerfassung Stufe 2 vollständig** (§2 Anmerkung P3) — oder Negativ-Entscheidung „Verzicht auf Stufe 2" im Projekt-Repo vorhanden; Warnung nach [[Berichten-statt-Blockieren]], keine harte Blockade | Übergang P8 → P9 | vor Fachlogik-Start |
 | M | **Code-Review als Kettenprüfung des Glieds P9** ([[Kettenpruefung]] §Regel) durch ein anderes Modell als das implementierende oder ein spezialisiertes Werkzeug — Vorbedingung, angeboten wird nur die Werkzeug-Wahl (§3 Nachweis (b)) | Übergang P9 → P10 | vor dem Tag der Implementierung |
-| M | **„Kann ein Fremder ausführen?"** — Betriebs-Anleitung und Startprompts als selbsttragende Anleitung | P11 Ausliefern | Startprompts vor Freigabe; Betriebs-Anleitung vor ihrer Veröffentlichung, nicht vor der Freigabe des Deploy-Stands (sie entsteht erst danach, [[Katalog-Betriebs-Anleitung]]) |
+| M | **Verständnis-Check M6** (`Reviewmuster.md`), **Pflicht** vor der Vorlage der drei Doku-Stände — Entwickler-Doku „Kann ein Fremder das Produkt ohne Rückfrage ändern?“, Benutzer-Doku „Kann ein Fremder das Produkt ohne Hilfe benutzen?“, Betriebs-Anleitung „Kann ein Fremder das Produkt ausführen?“ | P11 Dokumentieren für Entwickler · P12 Dokumentieren für Benutzer · P15 Betreiben | vor der Vorlage an den Anwender, über das ganze Dokument; Betriebs-Anleitung nach der Freigabe des Deploy-Stands ihrer Umgebung ([[Katalog-Betriebs-Anleitung]]) |
+| M | **„Kann ein Fremder ausführen?"** — Startprompts als selbsttragende Anleitung | P13 Ausliefern | Startprompts vor Freigabe |
 | V | **V2**-Präzisierung: Anforderungsskizze Stufe 1, nur setup-relevant (§2 Anmerkung P3) | P3 Anforderungen sammeln | vor Scaffolding-Commit |
 | V | **V3**-Präzisierung: mehrere Sprachen möglich, Runtime-Version explizit | P7 Auswählen der Technologie | Wurzelentscheidung |
 | V | **V4**-Präzisierung: Architekturmuster explizit als Sub-Wahl (MVC, Hexagonal, Layered, Microservices) | P5 Zerlegen in Bausteine | mit Architektur-Entscheidung |
 | V | **V5**-Präzisierung: Werkzeugketten-Liste (§2 Anmerkung P7) | P7 Auswählen der Technologie | nach V3 |
-| V | **V6a**-Präzisierung: CI-Pipeline-Konfiguration, Deploy-Zielumgebung | P11 Ausliefern · P12 Produzieren | mit Deploy-Entscheidungen |
+| V | **V6a**-Präzisierung: CI-Pipeline-Konfiguration, Deploy-Zielumgebung | P13 Ausliefern · P14 Produzieren | mit Deploy-Entscheidungen |
 
 (V1 und V6b sind Basis-Angelegenheit — siehe
 Vorgehen.md §7a.)
@@ -492,18 +498,18 @@ SP-1-Vorgehens.
    Technologie; zusätzlich richtet der Koordinator eine
    **System-CI** ein, die die Integrationstests fährt.
    Die System-CI entsteht dort, wo der Koordinator
-   seine Integrationstests baut (P10+P11-Aggregat, siehe
+   seine Integrationstests baut (P10+P13-Aggregat, siehe
    §8); ein früherer Aufbau zusammen mit den übrigen
    beim Koordinator verbleibenden
    Technikentscheidungen aus Schritt 4 ist zulässig.
 6. **Die Deployment- und Zielumgebungs-Entscheidung**
    bleibt beim **Koordinator** — er baut die
    Deployment-Automatisierung des Gesamtsystems und
-   führt P11 Ausliefern: Deploy-Stände je Zielumgebung
+   führt P13 Ausliefern: Deploy-Stände je Zielumgebung
    in `output/` und die DEPL-Elemente für alle
    Komponenten seiner §Komponenten-Zeilen; die
    Komponenten liefern ihre Teile zu. Wann eine
-   Komponente P11 und ihre DEPL selbst führt (eigene
+   Komponente P13 und ihre DEPL selbst führt (eigene
    Zielumgebung): [[Kettenpruefung]] §Fehlende und
    vertretene Glieder.
 7. **Die Lizenz-Entscheidung** wird **einmal global**
@@ -544,14 +550,30 @@ Komponente an):
 | P7-Artefakt der Komponente (Technologie-Entscheidungen) | „P8 Spezifizieren der Komponente" | je Komponente |
 | P8-Artefakt der Komponente (Spezifikation-Stand) | „P9 Ausarbeiten der Komponente" | je Komponente |
 | Tag der Implementierung der Komponente (Glied P9) | „P10 Testen der Komponente" (Vorbedingung: Tests grün + Code-Review als Kettenprüfung P9, §3); zugleich die **Lieferung** an den Koordinator, gemeldet per Nachricht (`Vorgehen.md` §3a) | je Komponente |
-| P10-Artefakt der Komponente (Testplan-Stand der Komponenten-Tests, nach ihrem Tag; der Durchgang wird mit einem Testbericht belegt — damit endet die Kette der Komponente) | „P10 Testen der Komponente" | je Komponente |
-| P10+P11-Aggregat, Teil P10 (Testplan-Stand des Integrationstests; Vorbedingung: alle Lieferungen der Marke gebucht, bei eigenen Bauteilen dazu der eigene Tag — [[Kettenpruefung]] §Freigabe-Ordnung des Koordinators) | „P10 Testen" | global |
-| P10+P11-Aggregat, Teil P11 (Deploy-Stand für alle Komponenten seiner §Komponenten-Zeilen; Glied davor ist der Testbericht des Integrationstests, §3 „P10 → P11“) | „P11 Ausliefern" | je Zielumgebung |
+| P10-Artefakt der Komponente (Testplan-Stand der Komponenten-Tests, nach ihrem Tag; der Durchgang wird mit einem Testbericht belegt) | „P10 Testen der Komponente" | je Komponente |
+| P11-Artefakt der Komponente (Entwickler-Doku für ihr Bauteil, Vorbedingung ihr Testbericht — damit endet die Kette der Komponente; die Gesamtsicht des Koordinators nimmt sie auf) | „P13 Ausliefern" | je Komponente |
+| P10+P13-Aggregat, Teil P10 (Testplan-Stand des Integrationstests; Vorbedingung: alle Lieferungen der Marke gebucht, bei eigenen Bauteilen dazu der eigene Tag — [[Kettenpruefung]] §Freigabe-Ordnung des Koordinators) | „P10 Testen" | global |
+| P11-Artefakt (Gesamtsicht der Entwickler-Doku; Vorbedingung der Testbericht des Integrationstests, §3) | „P13 Ausliefern" | global |
+| P12-Artefakt (Benutzer-Doku; Vorbedingung der Testbericht des Integrationstests, §3) | „P13 Ausliefern" | global |
+| P10+P13-Aggregat, Teil P13 (Deploy-Stand für alle Komponenten seiner §Komponenten-Zeilen; Glied davor ist der Testbericht des Integrationstests, §3; Entwickler-Doku und Benutzer-Doku stehen in der Freigabe-Ordnung vor ihm — fehlt eines, Einschränkung „Doku folgt“) | „P13 Ausliefern" | je Zielumgebung |
+| P15-Artefakt (Betriebs-Anleitung; Quell-Stand und Vorbedingung der freigegebene Deploy-Stand der Umgebung) | „P15 Betreiben" | je Zielumgebung |
+
+Das Koordinator-Aggregat P10+P13 benennt nur, welche
+Phasen der Koordinator für das Gesamtsystem führt; es
+bündelt keine Meilensteine — die Doku-Glieder P11 und
+P12 des Koordinators liegen dazwischen und sind wie
+jeder Pflicht-Stand eigene Meilenstein-Anlässe
+([[Meilenstein-und-T2]]). Zeitpunkt und Form der drei
+Doku-Stände entscheidet die Doku-Abfrage je Marke
+([[Kettenpruefung]] §Kette, Doku-Abfrage; Einbindung
+[[Vorgehen-SP-1]] §2).
 
 Welche dieser Glieder bei einer Komponente der
 Übergabe-Stand vertritt (Übernahme-Art Auftrag: P1–P4,
-selbstständig: P1) und wann eine Komponente P11 mit
-eigenem Deploy-Stand und eigenen DEPL führt (eigene
+selbstständig: P1) und wann eine Komponente
+Benutzer-Doku (P12), P13 mit
+eigenem Deploy-Stand und eigenen DEPL und
+Betriebs-Anleitung (P15) selbst führt (eigene
 Zielumgebung): [[Kettenpruefung]] §Fehlende und
 vertretene Glieder — lesen, bevor die Kette einer
 Komponente geplant wird. Ihr Abschluss-Stand listet
@@ -559,10 +581,10 @@ die Glieder, die sie führt, und geht mit dem
 Marken-Abschluss an den Koordinator
 ([[Katalog-Abschluss-Stand]]).
 
-**P12 „Produzieren"** trägt keine eigene
+**P14 „Produzieren"** trägt keine eigene
 Standard-Freigabe — bei Standard-Software ist es
-weitgehend durch den P11-Deploy-Stand abgedeckt
-(§2); RP-11 Cloudanwendung präzisiert P12/P13 später
+weitgehend durch den P13-Deploy-Stand abgedeckt
+(§2); RP-11 Cloudanwendung präzisiert P14/P15 später
 (dominante Vertragsaspekte, laufender Betrieb).
 
 **Anmerkung Split P3/P4:** Anforderungen sammeln (P3)
@@ -713,7 +735,7 @@ teurer.
 
 | Befund | Eintrittspunkt (P-Phase) | Wer arbeitet danach |
 |---|---|---|
-| Zusammengefasster Deploy-Stand oder Testplan fehlerhaft; Code und Spezifikation sind in Ordnung | **P10+P11-Aggregat** des Koordinators | Koordinator |
+| Zusammengefasster Deploy-Stand oder Testplan fehlerhaft; Code und Spezifikation sind in Ordnung | **P10+P13-Aggregat** des Koordinators | Koordinator |
 | Implementierungsfehler; Contract und Spezifikation bleiben gültig | **P9 der Komponente** | betroffene Komponente |
 | Testlücke — das Verhalten war nie geprüft; die Spezifikation (automatisierbarer Anteil) bzw. die Funktionsbeschreibung (nicht-automatisierbarer Anteil) ist korrekt | **P9 der Komponente** (automatisierbarer Testfall) bzw. **P10-Testplan** (nicht-automatisierbarer Anteil), siehe §3 Test-Automatisierungs-Regel | betroffene Komponente |
 | Contract-Bruch — der Provider hält seinen eigenen Contract nicht ein | **P9 der Komponente**, beim Provider | der Provider |
@@ -836,7 +858,7 @@ Einheit**, kein einzelner Arbeitsschritt.
 
 Für RP-1 gilt eine **Drei-Zonen-Sprach-Regel**:
 Englisch intern, i18n an der Endanwender-Schnittstelle,
-Anwender-Doku projekt-primär Deutsch.
+Benutzer-Doku projekt-primär Deutsch.
 
 **Zone 1 — Software-intern immer Englisch**, unabhängig
 von der Projekt-Doku-Sprache: Quellcode (Variablen-,
@@ -875,13 +897,20 @@ wird. CLI-Ausgabe primär Englisch; `--help`/`--usage`
 und andere User-adressierte Texte auf Deutsch oder
 anderer Locale nach Aufforderung.
 
-**Zone 3 — Anwender-Doku projekt-primär Deutsch:**
-Benutzerhandbuch, Anwender-Dokumentation,
+**Zone 3 — Benutzer-Doku projekt-primär Deutsch:**
+die Benutzer-Doku ([[Katalog-Benutzer-Doku]]; vormals
+„Anwender-Doku“ — „Anwender“ ist im Template die
+Person, die mit dem Agenten arbeitet, [[Glossar]]),
 README-für-Endnutzer erstmal Deutsch (bei DE-primärem
 Projekt); weitere Sprachen auf explizite Aufforderung.
-Auch der **Testplan** (für menschliche Tester) ist
-Anwender-Doku und damit Deutsch — kein automatisierter
-Testcode.
+Auch der **Testplan** (für menschliche Tester) gehört
+zu dieser Zone und ist damit Deutsch — kein
+automatisierter Testcode. Die **Entwickler-Doku**
+([[Katalog-Entwickler-Doku]]) liegt zwischen den Zonen:
+ihr erklärender Text (Aufbau, Entscheidungen,
+Einstieg, Build) steht in der Projektsprache, die aus
+Docstrings erzeugte API-Doku ist Zone 1 und Teil der
+Entwickler-Doku.
 
 **Abgrenzung:** die Commit-Message-Sprache regelt
 MasterPrompt §6.2 (Optionen A/B/C, beim Init

@@ -75,7 +75,7 @@ stehen.
 
 ## 3. Phasen (Standard-Belegung, adaptierbar)
 
-Dreizehn generische Phasen als Angebot. Jeder Prozess kann
+Fünfzehn generische Phasen als Angebot. Jeder Prozess kann
 Phasen umbenennen, weglassen oder ergänzen — dies ist
 die Basis-Standard-Belegung.
 
@@ -92,38 +92,57 @@ Muster; gilt auch für Anleitungs-Titel und Prozess-
 Aktivitäts-Beschreibungen jenseits der Phasen-Namen.
 
 **Präfix-Konvention:** Phasen tragen das Präfix **P**
-(P1–P13). Der Präfix **F** ist nicht belegt und für
+(P1–P15). Der Präfix **F** ist nicht belegt und für
 künftige Verwendung frei.
 
 | # | Phase (Aktivität) | Ergebnis-Artefakt |
 |---|---|---|
-| **P1** | Konzipieren | Konzept-Dokument |
+| **P1** | Konzipieren | Konzept-Stand aus den Elementen |
 | **P2** | Stand der Technik erfassen | Stand-der-Technik-Bericht |
 | **P3** | Anforderungen sammeln | Anforderungs-Register |
-| **P4** | Beschreiben der Funktion | Funktionsbeschreibung |
-| **P5** | Zerlegen in Bausteine | Architektur-Beschreibung |
+| **P4** | Beschreiben der Funktion | Funktionsbeschreibung-Stand aus den Elementen |
+| **P5** | Zerlegen in Bausteine | Architektur-Stand aus den Elementen |
 | **P6** | Starten von Teilaktivitäten | Teil-Register (Verweise auf Teil-Systeme) |
 | **P7** | Auswählen der Technologie | Technologie-Entscheidung(en) |
 | **P8** | Spezifizieren | Spezifikation (Bauanleitung) |
 | **P9** | Ausarbeiten | Ausarbeitungs-Ergebnis (prozess-spezifisch) |
 | **P10** | Testen | Testplan · Testbericht |
-| **P11** | Ausliefern | Auslieferungsbeschreibung |
-| **P12** | Produzieren | Produktions-Plan · Produktions-Beschreibung |
-| **P13** | Betreiben | Betriebs-Plan · Betriebs-Beschreibung |
+| **P11** | Dokumentieren für Entwickler | Entwickler-Doku (selbsttragender Stand) |
+| **P12** | Dokumentieren für Benutzer | Benutzer-Doku (selbsttragender Stand) |
+| **P13** | Ausliefern | Auslieferungsbeschreibung |
+| **P14** | Produzieren | Produktions-Plan · Produktions-Beschreibung |
+| **P15** | Betreiben | Betriebs-Anleitung je Umgebung (selbsttragender Stand aus der Auslieferungsbeschreibung der Umgebung) |
 
 **Ergebnis-Artefakt-Regel:** Wo ein etablierter Name
 für das Artefakt existiert (Testplan,
 Deploy-Stand, Runbook, …), wird dieser
 bevorzugt verwendet. Die generische Doppelstruktur
 „Plan + Beschreibung" ist Fallback, wenn kein
-etablierter Name existiert.
+etablierter Name existiert. „Stand aus den
+Elementen“ heißt: Der Inhalt einer Phase entsteht als
+Elemente eines Registers im `wiki/`, der Stand ist das
+daraus abgeleitete Dokument in `output/` — der Stand
+ist das Dokument, die Elemente sind sein Inhalt
+(Dreiklang, MasterPrompt §1.5; Ablauf vom ersten
+Element bis zur Freigabe: [[Lebenslauf-eines-Stands]]).
+Ein Stand hat einen von zwei Graden: **wiki-verweisend**
+(die Regel; der Leser hat Repo-Zugang) oder
+**selbsttragend** (die Doku-Stände P11, P12 und P15:
+aus eingefrorenen Quell-Ständen ausformuliert, am Stück
+an Leser ohne Wiki-Zugang; Grade: MasterPrompt §9.6).
+Die Doku-Phasen liegen **vor** der Auslieferung, damit
+die Freigabe-Ordnung sichert, dass die Dokumentation
+zur Auslieferung vorliegt; ob und in welcher Form eine
+Marke ihre Doku-Stände erhält, entscheidet die
+Doku-Abfrage ([[Kettenpruefung]] §Kette).
 
 **Zwei Aktivitäten P3/P4:** Anforderungen sammeln ist
 eine eigene Aktivität (Interviews, Werkstattgespräche,
 Beobachtungen — Anforderungen entstehen inkrementell);
 Beschreiben der Funktion ist eine andere Aktivität
-(den vorliegenden Anforderungs-Bestand zu einem
-geschlossenen Funktionsbeschreibungs-Dokument zusammenschreiben).
+(aus dem vorliegenden Anforderungs-Bestand die
+Elemente der Funktionsbeschreibung erarbeiten, aus
+denen der Stand gebildet wird).
 Der Übergang „jetzt habe ich genug Anforderungen, jetzt
 schreibe ich die Funktionsbeschreibung" ist eine Freigabe des
 P3-Artefakts „für Zweck P4 Beschreiben der Funktion".
@@ -330,15 +349,46 @@ siehe `Vorgehen-RP-1.md`).
 
 Jedes Ergebnis-Artefakt kann **null, eine oder mehrere
 Freigaben** tragen — jede Freigabe ist an einen Zweck
-gebunden. Freigegeben wird immer ein **Stand** des
-Artefakts, nie die lebende Fassade.
+gebunden.
+
+**Kernsatz: Eine Freigabe hängt immer an einem
+Stand.** Freigegeben wird „Stand X für Zweck Y“ —
+immer ein **Stand** des Artefakts, nie die lebende
+Fassade und nie ein einzelnes Element. Mit dieser
+Freigabe frieren alle Elemente ein, auf die der Stand
+verweist — was bis dahin `offen` war, nimmt der Agent
+im Freigabe-Zug an; bis dahin leben diese Elemente im
+`wiki/`. Der Stand ist damit der einzige übergreifende
+Einfrier-Mechanismus und der einzige Ort, an dem eine
+Zweck-Freigabe „von … für …“ festgemacht wird. Die
+einzige Zweck-Freigabe ohne Stand ist der Tag der
+Implementierung („Freigabe per Tag“, unten): Ein Tag
+friert selbst ein wie ein Stand und gehört zum Code,
+nicht zum `wiki/`.
+
+**Annahme und Freigabe:** Einzelne Elemente kann der
+Anwender vorher **annehmen** („ja, so“) — das ist das
+Element-OK, und das Element friert damit ein. Eine
+**Freigabe für einen Zweck** gibt es nur am Stand. Die
+Begriffe bleiben getrennt: Annahme = Element-OK,
+Freigabe = Zweck. Zwei weitere Vorgänge heißen
+„Freigabe“, sind aber keine Zweck-Freigabe: die
+**Ordner-Freigabe** beim Init (MasterPrompt §1.1) ist
+eine Erlaubnis, gebucht als Entscheidung ohne Formel;
+die **Freigabe eines Contracts** durch Anwender oder
+Provider ([[Katalog]], Eintrag `contract`) ist die
+Annahme eines Elements durch die zuständige Stelle.
+Beide behalten ihren Namen. Der Ablauf vom ersten
+Element bis nach der Freigabe eines Stands:
+[[Lebenslauf-eines-Stands]] — lesen, sobald in einer
+Phase das erste Element entsteht.
 
 **Beispiele:**
 
 - Ein Stand der Gesamt-Funktionsbeschreibung
   (P4-Artefakt) kann freigegeben sein „für P5 Zerlegen
   in Bausteine" (heißt: die Architektur darf ihn als
-  verlässliche Grundlage nehmen), ohne schon „für P11
+  verlässliche Grundlage nehmen), ohne schon „für P13
   Ausliefern" freigegeben zu sein.
 - Ein Stand der Architektur (P5-Artefakt) wird „für
   P6/P7" freigegeben (Teil-Systeme dürfen ihre eigenen
@@ -353,7 +403,8 @@ Zweck-Freigabe lautet vollständig „**Stand x von
 x ist die Version `VV_TLA` ohne den führenden
 Unterstrich des Dateinamens (`01_ABC` für
 `…_01_ABC.md`) — in der Nachtragszeile eines
-Deploy-Stands steht an ihrer Stelle die Stand-Datei
+Deploy-Stands oder eines Doku-Stands steht an ihrer
+Stelle die Stand-Datei
 mit Version ([[Zielmarken]] §Meta „Nachtrag“) —,
 ⟨Artefakt⟩ der Dokumenttyp — als
 Dokumentname des Stands, als Typ-Kennung oder als Name
@@ -377,7 +428,7 @@ Eintrag dann nennt: [[Entscheidungen]] Meta
 Der Zweck-Katalog sind die P-Phasen in ihren
 Tätigkeits-Namen (P4 Beschreiben der Funktion, P5 Zerlegen in
 Bausteine, P8 Spezifizieren, P9 Ausarbeiten, P10 Testen,
-P11 Ausliefern, …); wo ein Stand zwei Phasen zugleich
+P13 Ausliefern, P15 Betreiben, …); wo ein Stand zwei Phasen zugleich
 trägt, nennt der Zweck beide („für P2/P3", „für
 P6/P7"); die Übergabe an eine Komponente K trägt „für
 den Start von K"; der Abschluss-Stand „für den
@@ -498,21 +549,39 @@ Rückkehr: [[Zielmarken]] §Meta „Zwischenmarke“ — lesen,
 bevor eine Zwischenmarke angelegt wird). Liegen Werkstatt und Produkt in zwei Repos,
 nennt `herkunft` den Tag als `<produkt-repo>/<tag>`
 ([[Einfrieren-und-Abloesen]] §Stand). Vorbedingungen
-des Tags: [[Kettenpruefung]] §Code-Glieder.
+des Tags: [[Kettenpruefung]] §Code-Glieder. Mit dem
+gesetzten Tag legt der Agent die Doku-Abfrage vor,
+wenn der Prozess Doku-Glieder führt (mit SP-1 die
+Phasen P11, P12, P15; [[Kettenpruefung]] §Kette,
+Doku-Abfrage).
 
 **Stand-Zwang:** eine Zweck-Freigabe bindet sich
 immer an einen **versionierten `output/`-Stand**;
 Artefakte mit lebendem Wissens-Kern (Fassaden,
 lebende Knoten) erhalten diesen Stand spätestens im
-Freigabe-Zug. Wie aus Fassade und Elementen ein Stand
+Freigabe-Zug. **Die Vorlage an den Anwender ist
+dieser Stand** — Entwurfs-Dokumente neben dem Stand
+gibt es nicht, weder im Scratch noch als eigene
+Versionskette; was der Anwender vor der Bildung liest,
+sind die Elemente im `wiki/` über die Register-Fassade
+als Lese-Klammer. Eine Korrektur zwischen Vorlage und
+Freigabe geht in die Elemente, der Agent bildet eine
+neue Version derselben Ketten-ID, die vorige bleibt
+ohne Freigabe liegen, die Freigabe trifft die jüngste.
+Wie aus Fassade und Elementen ein Stand
 wird (Dreiklang, Herkunftszeile, Kopien):
 [[Einfrieren-und-Abloesen]] §Stand — lesen vor der
-Bildung eines Stands; Ablage in `output/`: MasterPrompt
-§1.5.
+Bildung eines Stands; der Ablauf im Ganzen:
+[[Lebenslauf-eines-Stands]]; Ablage in `output/`:
+MasterPrompt §1.5.
 
 **Kettenprüfung vor der Freigabe eines Pflicht-Stands:**
 die Freigabe eines Pflicht-Stands der Kette setzt die
-Kettenprüfung voraus. Regel, Ordnung der Freigaben
+Kettenprüfung voraus; sie läuft **vor der Vorlage** an
+den Anwender, der den Prüfbericht mit dem Stand
+erhält, und nach einer Korrektur als neue Runde nur
+über die geänderten Elemente. Regel, Ordnung der
+Freigaben
 (Warnung bei fehlendem Vorgänger, harte Tag-Bedingung
 des Testplan-Stands), Lint- und Reviewer-Anteil:
 [[Kettenpruefung]] — lesen vor jeder solchen
@@ -530,8 +599,10 @@ eine erneute Freigabe desselben Gegenstands ist ein
 neuer Eintrag, der den früheren ablöst — Ausnahme:
 Freigaben im Nachtrag zu einer abgeschlossenen Marke,
 die Tag-Freigabe im Nachtrag „Tag korrigiert“ nach dem
-Marken-Wechsel (oben, „Freigabe per Tag“) und die
-Freigabe eines nachgetragenen Deploy-Stands — beide
+Marken-Wechsel (oben, „Freigabe per Tag“), die
+Freigabe eines nachgetragenen Deploy-Stands und die
+Freigabe eines Doku-Stands, der in der Doku-Abfrage
+„später“ erhielt ([[Kettenpruefung]] §Kette) — sie
 stehen als Formel im Nachtrag am Marken-Eintrag, nicht
 als eigener Eintrag, und lösen nichts ab
 ([[Zielmarken]] §Meta „Nachtrag“, Formate dort;
@@ -637,7 +708,7 @@ Recherche ist eine generische Fähigkeit (MasterPrompt
 lebt — das ist die strukturelle Heimat. Recherche kann
 aber in jeder Phase ausgelöst werden (z.B. R7 Best
 Practices Toolchain in P7 Auswählen der Technologie,
-R10 Fehlerbilder in P13 Betreiben).
+R10 Fehlerbilder in P15 Betreiben).
 
 **Rechercheartefakte** werden als Wiki-Detail-Knoten
 in der Basis-Fassade `wiki/Rechercheartefakte.md`

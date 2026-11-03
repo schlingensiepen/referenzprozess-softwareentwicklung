@@ -29,7 +29,10 @@ und in [[Katalog]] verankert.
   Register)
 - **Klasse:** Element
 - **Freeze ab:** angenommen
-- **Sammelzustand:** nein
+- **Sammelzustand:** offen (Vorstatus `offen` ohne
+  `aufgeschoben`; Annahme einzeln oder im Freigabe-Zug
+  des ersten Stands, der das Element verweist —
+  [[Einfrieren-und-Abloesen]] §Eintrittsregel)
 - **Pflichtfelder:** `type: test-case`, `id` (Format
   `TEST-NNN`), `status` (Werte nach
   [[Register-Lebenszyklus]]), `status_date`, `datum`
@@ -46,8 +49,8 @@ und in [[Katalog]] verankert.
   `superseded_by` (Liste), `ueberlagert` (Liste; nur
   an einem Element einer Sackgasse, [[Katalog]]
   §Typ-Konventionen), `alias` (Liste). Kein
-  `trigger`: Eintritts-Register ohne
-  `offen`/`aufgeschoben`.
+  `trigger`: Sammelzustand `offen` ohne
+  `aufgeschoben`, nichts zu reaktivieren.
 - **Dokumenttypen:** [[Katalog-Testplan]]
 - **Beispielname:** `TEST-001 Anmeldung mit gültigem Konto.md`
 - **Kanonizität:** Wahrheit bei Status-Drift liegt in

@@ -6,8 +6,9 @@ extends: []
 
 # SP-1 — Vorgehen
 
-**Bearbeitungsstand:** 2026-10-25 (Produkt als Ergebnis
-von P9; Phasentabelle: Phasen ordnen Freigaben)
+**Bearbeitungsstand:** 2026-11-03 (Doku-Phasen P11 und
+P12, Betriebs-Anleitung als Pflicht-Stand P15,
+Doku-Abfrage; Komponenten-Kette bis P11)
 
 ## 1. Erbschaft
 
@@ -17,7 +18,7 @@ Regel, Zweck-Freigaben, Wächter-Trigger T4,
 Rekursions-Muster). Regel-Details siehe
 `Vorgehen.md` §1–§7.
 
-SP-1 belegt die dreizehn generischen Basis-Phasen mit
+SP-1 belegt die fünfzehn generischen Basis-Phasen mit
 konkreten Artefakten und bindet R-Themen und
 Prüfungen an konkrete Phasen. Kein
 Weglassen, kein Umbenennen, kein Hinzufügen von
@@ -38,9 +39,12 @@ Entwicklungsprojekte.
 | P8 | Spezifizieren | Spezifikation-Stand ([[Katalog-Spezifikation-Stand]]) aus dem Register [[Spezifikationen]] (SPEC; Bauanleitung nach Schnitt und Technologie-Entscheidung) |
 | P9 | Ausarbeiten | Das **Produkt** der Marke (prozess-spezifisch — RPs präzisieren; Begriff: [[Glossar]]); Glied der Kette ist der Tag der Implementierung, der das Produkt markiert — in jedem Projekt, auch ohne Code |
 | P10 | Testen | Testplan ([[Katalog-Testplan]]) aus dem Register [[Testfaelle]] (TEST); Testberichte (TRES) in [[Testberichte]]; Umgebung und Ausführung: [[Systemtest-Setup]] |
-| P11 | Ausliefern | Deploy-Stand je Umgebung ([[Katalog-Deploy-Stand]], in `output/` mit `_VV_TLA`) aus dem Register [[Deployments]] (DEPL) |
-| P12 | Produzieren | Produktions-Plan + Produktions-Beschreibung (prozess-spezifisch — RPs präzisieren) |
-| P13 | Betreiben | Betriebs-Plan + Betriebs-Beschreibung (`bug-report`-Rückfluss ins Register) |
+| P11 | Dokumentieren für Entwickler | Entwickler-Doku ([[Katalog-Entwickler-Doku]], selbsttragender Stand in `output/`, Kopie in `docs/developer/`) aus Architekturdokument, Technologie-Entscheidungen, Spezifikation und Tag |
+| P12 | Dokumentieren für Benutzer | Benutzer-Doku ([[Katalog-Benutzer-Doku]], selbsttragender Stand in `output/`, Kopie in `docs/user/`) aus Konzept, Anforderungen, Funktionsbeschreibung und Tag |
+| P13 | Ausliefern | Deploy-Stand je Umgebung ([[Katalog-Deploy-Stand]], in `output/` mit `_VV_TLA`) aus dem Register [[Deployments]] (DEPL) |
+| P14 | Produzieren | Produktions-Plan + Produktions-Beschreibung (prozess-spezifisch — RPs präzisieren; kein Pflicht-Stand) |
+| P15 | Betreiben | Betriebs-Anleitung je Umgebung ([[Katalog-Betriebs-Anleitung]], selbsttragender Stand in `output/`, Kopie in `docs/ops/`) aus dem Deploy-Stand der Umgebung; `bug-report`-Rückfluss ins Register |
+| — | Ablauf je Stand | vom ersten `offen`en Element über Lese-Klammer, Bildung, Prüfung, Vorlage und Korrektur bis zur Freigabe: [[Lebenslauf-eines-Stands]] |
 
 Zweck, Filter und Auslöser jedes Stands stehen in
 seinem Dokumenttyp-Eintrag (verlinkt in der Tabelle);
@@ -49,6 +53,17 @@ die Ordnung der Freigaben in [[Kettenpruefung]] —
 jedes Registers darf jederzeit entstehen, nur die
 Pflicht-Stände werden in Phasenfolge freigegeben
 ([[Kettenpruefung]] §Kette).
+**Doku-Phasen und Doku-Abfrage:** Die drei Doku-Stände
+(P11, P12, P15) sind selbsttragend und entstehen aus
+den freigegebenen Quell-Ständen ihrer Marke; sobald der
+Tag der Implementierung gesetzt ist, legt der Agent
+einmal je Marke die Doku-Abfrage vor — je Doku-Art und
+je Zielumgebung Zeitpunkt (jetzt / später / gar nicht)
+und Form (Änderungsdokument / Einarbeitung / komplett
+neu), mit Empfehlung. Mechanismus, Ordnung der
+Doku-Glieder, Heuristik, Buchung und Nachtrag:
+[[Kettenpruefung]] §Kette (Doku-Glieder, Doku-Abfrage)
+— lesen, sobald der Tag gesetzt ist.
 **Contracts in der Kette:** welche Rolle ein CON in
 P4, P5/P6, P7 und P8 spielt —
 [[Katalog-Contract-Index#Rollen eines CON in der Kette]],
@@ -110,7 +125,7 @@ Tabelle ist die kanonische Phasen-Bindung.
 | R | **R3** Vergleichbare Werkzeuge / Fertiglösungen | P2 Stand der Technik erfassen | Kern-Aufgabe der Phase |
 | R | **R6** Passende Technologien | P7 Auswählen der Technologie | vor der Technologie-Entscheidung |
 | R | **R7** Best Practices Toolchain und Testdesign | P7 Auswählen der Technologie · P10 Testen | vor den jeweiligen Entscheidungen |
-| R | **R8** Sicherheitslage und Lebenszyklus | P7 Auswählen der Technologie · P13 Betreiben | vor Technologie-Entscheidung; laufend im Betrieb |
+| R | **R8** Sicherheitslage und Lebenszyklus | P7 Auswählen der Technologie · P15 Betreiben | vor Technologie-Entscheidung; laufend im Betrieb |
 | R | **R11** Lizenzkompatibilität | P7 Auswählen der Technologie | vor der Entscheidung |
 | M | **Basis-Prüfung** (Prüflauf nach `Reviewmuster.md` §2 — §4) | jede Phase mit Freigabe-Zweck | bevor die Freigabe „für die nachfolgende Phase" gebucht wird |
 | V | **Fahrplan** (§4a; nach [[Fahrplan-Vorlage]]) | Projektstart | vor der ersten Vorlage |
@@ -120,7 +135,7 @@ Tabelle ist die kanonische Phasen-Bindung.
 | V | **V3** Sprache und Stack | P7 Auswählen der Technologie (Anker) | Wurzelentscheidung, allein |
 | V | **V4** Struktur und Architekturmuster | P5 Zerlegen in Bausteine (Anker) | nach V3 |
 | V | **V5** Werkzeugkette | P7 Auswählen der Technologie (Anker) | nach V3 |
-| V | **V6** Betrieb und Rechtliches | P11 Ausliefern / P12 Produzieren (Anker) | Aufschub-Kandidaten-Bündel |
+| V | **V6** Betrieb und Rechtliches | P13 Ausliefern / P14 Produzieren (Anker) | Aufschub-Kandidaten-Bündel |
 | V | **Scaffolding-Commit** (Commit-Message `Initial project scaffolding`, MasterPrompt §6) | vor der ersten Fachlogik | sobald keine Scaffolding-Entscheidung mehr aussteht |
 
 **Nicht SP-1-Angebote** (RP-spezifisch): R4, R5, R9,
@@ -262,14 +277,23 @@ beeinflussen, welche Phasen im Vordergrund stehen:
 - **Koordinator:** P5 Zerlegen in Bausteine und P6
   Starten von Teilaktivitäten sind Schwerpunkte
   (Cross-Coordination der Teil-Systeme). Er
-  verantwortet den Gesamt-Deploy: P11 mit Deploy-Stand
+  verantwortet den Gesamt-Deploy: P13 mit Deploy-Stand
   je Zielumgebung und die DEPL-Elemente für alle
   Komponenten seiner §Komponenten-Zeilen
-  ([[Katalog-Deploy-Stand]], [[Deployments]]).
-- **Komponent:** führt ihre Kette **bis P10** — nach
+  ([[Katalog-Deploy-Stand]], [[Deployments]]); dazu
+  führt er die Gesamtsicht der Entwickler-Doku (P11,
+  sie nimmt die Entwickler-Doku der Komponenten auf),
+  die Benutzer-Doku (P12) und die Betriebs-Anleitung je
+  Zielumgebung (P15) — jede Freigabe eines dieser
+  Pflicht-Stände ist ein eigener Meilenstein-Anlass
+  ([[Meilenstein-und-T2]]; [[Kettenpruefung]]
+  §Freigabe-Ordnung des Koordinators).
+- **Komponent:** führt ihre Kette **bis P11** — nach
   ihrem Tag der Implementierung (P9) bildet sie einen
-  Testplan-Stand und belegt den Durchgang mit einem
-  Testbericht; den Integrationstest des Gesamtsystems
+  Testplan-Stand, belegt den Durchgang mit einem
+  Testbericht und bildet die Entwickler-Doku für ihr
+  Bauteil ([[Katalog-Entwickler-Doku]]); den
+  Integrationstest des Gesamtsystems
   führt der Koordinator. Ihr Tag ist zugleich ihre
   **Lieferung** an den Koordinator, gemeldet per
   Nachricht (übernommene Lieferung bei unverändertem
@@ -280,13 +304,15 @@ beeinflussen, welche Phasen im Vordergrund stehen:
   mit dem Abschluss-Stand, der die Glieder listet, die
   sie führt (Meldepflicht: `Vorgehen.md` §3a). Wo ihre
   Kette beginnt (was der Übergabe-Stand je
-  Übernahme-Art vertritt) und wann sie P11 mit eigenem
-  Deploy-Stand und eigenen DEPL führt (eigene
+  Übernahme-Art vertritt) und wann sie Benutzer-Doku
+  (P12), P13 mit eigenem Deploy-Stand und eigenen DEPL
+  und Betriebs-Anleitung (P15) selbst führt (eigene
   Zielumgebung): [[Kettenpruefung]] §Fehlende und
   vertretene Glieder — lesen, bevor die Kette einer
   Komponente geplant wird.
 - **Standalone:** durchläuft alle Phasen selbst
-  (kein Delegieren an Teil-Systeme möglich).
+  (kein Delegieren an Teil-Systeme möglich) — auch die
+  drei Doku-Glieder wie der Koordinator.
 
 ## 7. Zug in SP-1
 
@@ -297,9 +323,11 @@ MasterPrompt §6.1, Meilenstein-Vorgang in
 (allgemeines Entwicklungs-Vorgehen) umfasst ein Zug
 typischerweise:
 
-- **Konzept-Abschnitt fertig** — ein Absatz oder Kapitel
-  des Konzept-Dokuments (P1) inkl. eventueller Rück-
-  fragen-Klärung.
+- **Konzept-Beitrag fertig** — ein Element des
+  Konzept-Stands (P1: ein Bedarf, ein Szenario) oder
+  ein Abschnitt seiner lebenden Quellen (Konzept,
+  Mission-Dokument; [[Katalog-Konzept-Stand]]) inkl.
+  eventueller Rückfragen-Klärung.
 - **Anforderung geklärt** — eine `requirement`-Instanz
   im Register (P3) hat einen abschließenden Zustand
   erreicht (`umgesetzt`/`verworfen`/`aufgeschoben` mit

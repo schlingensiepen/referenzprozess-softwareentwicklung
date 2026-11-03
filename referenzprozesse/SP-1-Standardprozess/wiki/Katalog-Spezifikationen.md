@@ -38,7 +38,10 @@ Typ an.
   Ausarbeiten“)
 - **Klasse:** Element
 - **Freeze ab:** angenommen
-- **Sammelzustand:** nein
+- **Sammelzustand:** offen (Vorstatus `offen` ohne
+  `aufgeschoben`; Annahme einzeln oder im Freigabe-Zug
+  des ersten Stands, der das Element verweist —
+  [[Einfrieren-und-Abloesen]] §Eintrittsregel)
 - **Pflichtfelder:** `type: specification`, `id`
   (Format `SPEC-NNN`), `status` (Werte nach
   [[Register-Lebenszyklus]]), `status_date`, `datum`
@@ -57,11 +60,11 @@ Typ an.
   `superseded_by` (Liste), `ueberlagert` (Liste; nur
   an einem Element einer Sackgasse, [[Katalog]]
   §Typ-Konventionen), `alias` (Liste). Kein
-  `trigger`: Eintritts-Register ohne
-  `offen`/`aufgeschoben`.
+  `trigger`: Sammelzustand `offen` ohne
+  `aufgeschoben`, nichts zu reaktivieren.
 - **Dokumenttypen:** [[Katalog-Spezifikation-Stand]],
   [[Katalog-Deploy-Stand]] (Pipeline)
-- **Beispielname:** `SPEC-001 Teilspezifikation Auth-Modul.md`
+- **Beispielname:** `SPEC-001 Auth-Modul.md`
 - **Kanonizität:** Wahrheit bei Status-Drift liegt in
   `wiki/Spezifikationen.md` (Wiki.md §1.1a).
 - **Struktur-Konventionen:** `## Meta` der Fassade

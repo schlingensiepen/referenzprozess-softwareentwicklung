@@ -17,7 +17,7 @@ verankert.
 
 - **Zweck:** Register aller Deployment-Festlegungen
   dieses Repos, je Zielumgebung und Aspekt; speist den
-  Deploy-Stand der Phase P11. Geführt beim
+  Deploy-Stand der Phase P13. Geführt beim
   Koordinator für alle Komponenten seiner
   §Komponenten-Zeilen; bei einer Komponente nur mit
   eigener Zielumgebung (`## Meta` von [[Deployments]])
@@ -33,7 +33,10 @@ verankert.
   (Detail-Knoten zum DEPL-Eintrag im Register)
 - **Klasse:** Element
 - **Freeze ab:** angenommen
-- **Sammelzustand:** nein
+- **Sammelzustand:** offen (Vorstatus `offen` ohne
+  `aufgeschoben`; Annahme einzeln oder im Freigabe-Zug
+  des ersten Stands, der das Element verweist —
+  [[Einfrieren-und-Abloesen]] §Eintrittsregel)
 - **Pflichtfelder:** `type: deployment-description`,
   `id` (Format `DEPL-NNN`), `status` (Werte nach
   [[Register-Lebenszyklus]]), `status_date`, `datum`
@@ -67,8 +70,8 @@ verankert.
   `superseded_by` (Liste), `ueberlagert` (Liste; nur
   an einem Element einer Sackgasse, [[Katalog]]
   §Typ-Konventionen), `alias` (Liste). Kein
-  `trigger`: Eintritts-Register ohne
-  `offen`/`aufgeschoben`.
+  `trigger`: Sammelzustand `offen` ohne
+  `aufgeschoben`, nichts zu reaktivieren.
 - **Dokumenttypen:** [[Katalog-Deploy-Stand]]
 - **Beispielname:** `DEPL-001 Datenbank auf Produktion.md`
 - **Kanonizität:** Wahrheit bei Status-Drift liegt in

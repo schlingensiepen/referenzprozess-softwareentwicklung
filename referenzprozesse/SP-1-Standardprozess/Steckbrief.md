@@ -83,7 +83,7 @@ erst bei Bedarf (Scaffolding, `index.md` §4.4).
 | `tests/` | Tests | Code-Bereich, lebend; Test-Outputs flüchtig (Nachweis-Regel: [[Systemtest-Setup]] `## Meta`) |
 | `ci/` | Pipeline-Konfiguration | Code-Bereich, lebend; konkreter Zuschnitt je Scaffolding (V4); Plattform-Konventions-Pfade (z.B. `.github/workflows/`) laufen unter dieser Deklaration mit (MasterPrompt §1.1) |
 | `deploy/` | Deploy-Skripte und Infrastruktur-Definitionen | Code-Bereich, lebend, optional; Zuschnitt je Scaffolding (V4/V6a) |
-| `docs/` | externe Doku-Ableitungen (User-/Developer-/Ops-Doku, Handbücher) | **Ableitungs-Schicht** — neu abgeleitet, nicht gepflegt; Wahrheit bleibt im wiki (`index.md` §4.11); Unterstruktur je Bedarf (`docs/user/`, `docs/developer/`, `docs/ops/`) |
+| `docs/` | externe Doku (Kopien der selbsttragenden Doku-Stände Entwickler-Doku, Benutzer-Doku und Betriebs-Anleitung; weitere Handbücher) | **Ableitungs-Schicht** — neu abgeleitet, nicht gepflegt; Wahrheit bleibt im wiki, die freigegebenen Stände in `output/` (`index.md` §4.11); Unterstruktur `docs/developer/`, `docs/user/`, `docs/ops/` |
 | weitere je Scaffolding | nach V4-Vorlage | Code-Bereich; Zuschnitt im Instanz-Projekt, Buchung je Ordner |
 
 ## Mitgebrachte Präfixe

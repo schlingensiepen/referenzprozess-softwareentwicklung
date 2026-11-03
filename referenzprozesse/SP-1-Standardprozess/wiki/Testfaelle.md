@@ -33,10 +33,16 @@ P10 „Testen“.
   Wiki-Knoten, sondern der Stand über die Testfälle
   einer Marke ([[Katalog-Testplan]]); das Ergebnis
   eines Durchgangs steht in [[Testberichte]].
-- **Eintritt:** Testfälle dürfen jederzeit entstehen,
-  auch vor dem Tag der Implementierung; sie werden mit
-  Anwender-OK direkt `angenommen` und sind ab dann
-  eingefroren ([[Einfrieren-und-Abloesen]]). Für einen
+- **Eintritt und Lese-Klammer:** Testfälle dürfen
+  jederzeit entstehen, auch vor dem Tag der
+  Implementierung; der Agent legt sie als `offen` an,
+  sie bleiben bearbeitbar, bis sie einzeln angenommen
+  werden oder mit der Freigabe des Testplan-Stands,
+  der sie verweist, und sind ab dann eingefroren
+  ([[Einfrieren-und-Abloesen]] §Eintrittsregel). Bis
+  zur Bildung des Testplans ist diese Fassade die
+  Lese-Klammer der Phase P10
+  ([[Lebenslauf-eines-Stands]]). Für einen
   neuen Testplan wird ein Testfall abgelöst,
   weggelassen oder ergänzt.
 - **Kanonizität:** die Wahrheit beim Status liegt in

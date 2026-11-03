@@ -99,7 +99,7 @@ Lint liest daraus den Stichtag und die Übernahme-Art:
 ```markdown
 ## Herkunft
 
-- **Template-Stand:** 2.0 seit JJJJ-MM-TT
+- **Template-Stand:** 2.1 seit JJJJ-MM-TT
 - **Quelle:** <Quelle und Stand, z.B. URL des Klons und Commit oder Tag; Modus A: der Stand der Einmal-Kopie unter `_template/`>
 - **Anbindungs-Modus:** A | B
 - **Prozess:** <Kennung, z.B. SP-1 oder RP-1> | Basis, ohne Prozess
@@ -109,7 +109,7 @@ Lint liest daraus den Stichtag und die Übernahme-Art:
 
 - **Template-Stand** ist die feste Zeile
   `<Version der Vorlage> seit JJJJ-MM-TT`: die Version
-  der Vorlage (z.B. `2.0`) und der Tag, an dem das
+  der Vorlage (z.B. `2.1`) und der Tag, an dem das
   Projekt mit diesem Template-Stand angelegt oder auf
   ihn gehoben wurde — der Stichtag des
   Bestandsschutzes ([[Katalog]] §Typ-Konventionen):

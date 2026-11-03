@@ -31,6 +31,12 @@ Wahl von SP-1 (Wiki.md §11 Prozess-Teil-Wikis).
   alle chronologisch nach ID; die Sektion entspricht
   `requirement_type` (`functional` | `non-functional`
   | `fix`, [[Katalog-Anforderungen]]).
+- **Lese-Klammer:** bis zur Bildung des
+  Anforderungen-Stands ([[Katalog-Anforderungen-Stand]])
+  ist **diese Fassade die Lese-Klammer** der Phase P3
+  — sie listet jede Anforderung mit Link und Status,
+  und der Agent benennt sie dem Anwender so; Ablauf bis
+  zur Freigabe: [[Lebenslauf-eines-Stands]].
 - **Fehlerbehebungen:** Eine Fehlermeldung (BUG,
   [[Fehlermeldungen]]) wird über eine
   **Fix-Anforderung** behoben — ein REQ mit

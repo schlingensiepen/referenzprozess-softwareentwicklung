@@ -209,7 +209,7 @@ als Ergänzung im Basis-Eintrag
 [[Katalog-Geschaeftsbeziehungen]]).
 
 **Dokumenttyp-Einträge unter SP-1:** SP-1 bringt die
-Glieder der Kette P1–P11 als Dokumenttyp-Einträge mit
+Glieder der Kette P1–P15 als Dokumenttyp-Einträge mit
 — je Glied ein Stand mit Zweck, Phase, Auslöser und
 Filter: [[Katalog-Konzept-Stand]] (P1),
 [[Katalog-Anforderungen-Stand]] (P3),
@@ -218,13 +218,19 @@ Filter: [[Katalog-Konzept-Stand]] (P1),
 [[Katalog-Uebergabe]] (P6, beim Koordinator je
 Komponente), [[Katalog-Technologie-Entscheidungen]]
 (P7), [[Katalog-Spezifikation-Stand]] (P8),
-[[Katalog-Testplan]] (P10), [[Katalog-Deploy-Stand]]
-(P11, je Umgebung). P2 hat keinen Stand; das Glied P9
+[[Katalog-Testplan]] (P10),
+[[Katalog-Entwickler-Doku]] (P11),
+[[Katalog-Benutzer-Doku]] (P12),
+[[Katalog-Deploy-Stand]] (P13, je Umgebung),
+[[Katalog-Betriebs-Anleitung]] (P15, je Umgebung).
+P2 und P14 haben keinen Stand; das Glied P9
 ist der Tag der Implementierung ([[Kettenpruefung]]
-§Kette). Nicht Glieder der Kette sind die
-selbsttragenden [[Katalog-Uebergabe-Dokument]] und
-[[Katalog-Betriebs-Anleitung]] und der optionale
-[[Katalog-Fehlerstand]]. Die Marken-Typen
+§Kette). Die drei Doku-Glieder P11, P12 und P15 sind
+selbsttragende Stände (§4.11; Auslöser ist die
+Doku-Abfrage, [[Kettenpruefung]] §Kette). Nicht
+Glieder der Kette sind das
+selbsttragende [[Katalog-Uebergabe-Dokument]] und der
+optionale [[Katalog-Fehlerstand]]. Die Marken-Typen
 (Abschluss-Stand, Release-Notes, Übersicht gültiger
 DECs) liegen in der Basis. Was ein Stand ist und wie
 Freigaben geordnet sind: [[Einfrieren-und-Abloesen]],
@@ -506,45 +512,66 @@ Init-Frage, gestellt über die Init-Kaskade MasterPrompt
 
 SP-1 deklariert den Ordner `docs/` (Steckbrief
 § Mitgebrachte Ordner) als **Ableitungs-Schicht**:
-nach außen gerichtete Projekt-Doku — User-Doku,
-Developer-Doku, Betriebs-Anleitungen, Handbücher —
+nach außen gerichtete Projekt-Doku — Benutzer-Doku,
+Entwickler-Doku, Betriebs-Anleitungen, Handbücher —
 **abgeleitet aus dem wiki/**, dort liegt die Wahrheit
 (MasterPrompt §1.1-Grenzregel: solche Ordner sind nie
-Wahrheits-Orte). Alle `docs/`-Dokumente, auch die
-Handbücher (Anwender, Entwickler), sind
-**selbsttragend** (Grade: MasterPrompt §9.6). In der
+Wahrheits-Orte). Alle `docs/`-Dokumente sind
+**selbsttragend** (Grade: MasterPrompt §9.6). Die drei
+Doku-Glieder der Kette — Entwickler-Doku
+([[Katalog-Entwickler-Doku]], P11), Benutzer-Doku
+([[Katalog-Benutzer-Doku]], P12) und Betriebs-Anleitung
+je Umgebung ([[Katalog-Betriebs-Anleitung]], P15) —
+sind **selbsttragende Pflicht-Stände**: Der Stand, den
+der Anwender freigibt, ist das Dokument, das
+ausgeliefert wird; die freigegebene Version liegt als
+`_VV_TLA` in `output/`, ihre Kopie in `docs/`. In der
 Zwei-Repo-Standardbelegung liegt `docs/` im Produkt,
 `output/` in der Werkstatt
 ([[Two-Repo-Submodul-Muster]] §Standardbelegung): Der
-freigegebene Stand (z.B. der Deploy-Stand) bleibt in
-`output/` der Werkstatt, seine selbsttragende
-Ableitung (z.B. die Betriebs-Anleitung in `docs/ops/`)
-liegt in `docs/` des Produkts. Im Ein-Repo-Fall liegen
-beide im selben Repo.
+freigegebene Stand bleibt in `output/` der Werkstatt,
+die Kopie des selbsttragenden Stands (z.B. die
+Betriebs-Anleitung in `docs/ops/`) liegt in `docs/`
+des Produkts. Im Ein-Repo-Fall liegen beide im selben
+Repo.
 
-- **Struktur:** Unterordner je Bedarf (`docs/user/`,
-  `docs/developer/`, `docs/ops/`) — Zuschnitt im
-  Instanz-Projekt.
+- **Struktur:** Unterordner je Bedarf —
+  `docs/developer/` (Entwickler-Doku), `docs/user/`
+  (Benutzer-Doku), `docs/ops/` (Betriebs-Anleitungen)
+  — weiterer Zuschnitt im Instanz-Projekt.
 - **Herkunfts-Kopf:** jedes `docs/`-Dokument beginnt
   mit „abgeleitet aus dem wiki, Stand <Datum>" —
   Drift ist damit deklariert; bei Regel-Konflikt
   gilt das wiki. Hat sein Dokumenttyp einen
-  Katalog-Eintrag (z.B. [[Katalog-Betriebs-Anleitung]]),
-  trägt es zusätzlich dessen Herkunftszeile
+  Katalog-Eintrag (die drei Doku-Stände), trägt es
+  zusätzlich dessen Herkunftszeile
   ([[Einfrieren-und-Abloesen]] §Stand).
 - **Neu-Ableitung statt Pflege:** `docs/`-Dokumente
   werden nicht von Hand nachgezogen, sondern zu ihrem
-  Auslöser vollständig neu aus dem wiki erzeugt
-  (MasterPrompt §9.6, „Neu ableiten statt
-  nachpflegen“). Der Auslöser steht in der
-  Auslöser-Zeile des Dokumenttyp-Eintrags; ohne
+  Auslöser aus dem wiki bzw. aus ihren Quell-Ständen
+  erzeugt (MasterPrompt §9.6, „Neu ableiten statt
+  nachpflegen“) — für die drei Doku-Stände in der Form,
+  die die Doku-Abfrage festlegt (komplett neu /
+  Einarbeitung / Änderungsdokument; [[Kettenpruefung]]
+  §Kette, Doku-Abfrage): auch bei Einarbeitung und
+  Änderungsdokument stammt jeder Text aus dem Wiki,
+  übernommene Kapitel kommen unverändert aus der
+  Vollfassung, und die Prüfung geht über das ganze
+  Dokument. Der Auslöser steht in der
+  Auslöser-Zeile des Dokumenttyp-Eintrags (bei den drei
+  Doku-Ständen die Doku-Abfrage); ohne
   eigenen Eintrag gilt der Standard-Auslöser
   ([[Katalog]], Auslöser-Zeile Standard) — lesen,
   bevor eine Neu-Ableitung angestoßen wird. Kein
   Lint-Zwang.
-- **Zweck-Freigabe:** eine Neu-Ableitung wird wie
-  jeder Stand für einen Zweck freigegeben — typische
-  Zwecke: P11 Ausliefern, Versand. Wortlaut der
+- **Zweck-Freigabe:** die drei Doku-Stände werden wie
+  jeder Pflicht-Stand für den Zweck ihres
+  Katalog-Eintrags freigegeben („für P13 Ausliefern“,
+  „für P15 Betreiben“), nach Kettenprüfung und
+  Verständnis-Check M6 (`Reviewmuster.md`); eine
+  andere Neu-Ableitung wird wie jeder Stand für einen
+  Zweck freigegeben — typische Zwecke: P13 Ausliefern,
+  Versand. Wortlaut der
   Freigabe: `Vorgehen.md` §4 — lesen vor der Buchung.
   Die freigegebene Version geht als `_VV_TLA`-Version
   nach `output/` (MasterPrompt §1.5).
@@ -552,15 +579,17 @@ beide im selben Repo.
   Deploy-Skripte/IaC → `deploy/` (Code-Bereich) ·
   Pipeline-Definition → `ci/` bzw.
   Plattform-Konventions-Pfad (MasterPrompt §1.1) ·
-  Betriebs-Anleitung für Menschen, selbsttragend
-  ([[Katalog-Betriebs-Anleitung]]) → `docs/ops/` ·
+  Betriebs-Anleitung für Menschen, selbsttragender
+  Stand ([[Katalog-Betriebs-Anleitung]]) → `output/`,
+  Kopie in `docs/ops/` ·
   Deploy-Stand je Umgebung, wiki-verweisend
   ([[Katalog-Deploy-Stand]]), und die übrigen
   Übergabe-Stände an Agenten/Ops → `output/`.
 - **RP-1-Spezialisierung (KANN):** RP-1 darf die
-  Developer-Doku-Ableitung automatisieren (z.B.
-  API-Doku aus Code-Kommentaren) — eigene
-  Ausgestaltung dort.
+  Erzeugung der API-Doku aus Code-Kommentaren
+  automatisieren — sie ist Teil der Entwickler-Doku und
+  ersetzt sie nicht ([[Katalog-Entwickler-Doku]];
+  Sprach-Zonen: `Vorgehen-RP-1.md` §12).
 
 ### 4.12 Prozess-spezifische Init-Fragen
 
@@ -625,7 +654,9 @@ präzisiert nur die Software-spezifische Ausstattung
   Consumer-Registrierungen), bildet je Komponente den
   Übergabe-Stand ([[Katalog-Uebergabe]]), bucht die
   Lieferungen der Komponenten am Marken-Eintrag
-  ([[Zielmarken]]) und führt den Gesamt-Deploy
+  ([[Zielmarken]]), führt den Gesamt-Deploy und die
+  Doku-Glieder Gesamtsicht der Entwickler-Doku,
+  Benutzer-Doku und Betriebs-Anleitungen
   ([[Vorgehen-SP-1]] §6); seine Pflichten in der
   Kette: [[Kettenpruefung]] §Freigabe-Ordnung des
   Koordinators. Mit RP-1 zeigt er zusätzlich den
@@ -633,7 +664,8 @@ präzisiert nur die Software-spezifische Ausstattung
   ([[devstate-Skelett]]).
 - **Komponent:** ein Repo, das mit dem Startprompt
   seines Koordinators entstanden ist. Hält die eigene
-  Kette bis P10 und ihre lokalen Freigaben; ihr Tag ist
+  Kette bis P11 (Entwickler-Doku für ihr Bauteil) und
+  ihre lokalen Freigaben; ihr Tag ist
   ihre Lieferung. Ist sie Provider eines Contracts,
   verhandelt sie ihn und meldet ihn per Nachricht;
   gebucht wird er beim Koordinator — ein eigenes
@@ -672,9 +704,11 @@ präzisiert nur die Software-spezifische Ausstattung
 ### 5.3 Rolle-abhängige Ausstattung
 
 Mit SP-1: **Koordinator** — Contract-Index aktiv,
-Übergabe-Stände, Lieferungs-Buchung, Gesamt-Deploy;
+Übergabe-Stände, Lieferungs-Buchung, Gesamt-Deploy,
+Gesamtsicht der Entwickler-Doku, Benutzer-Doku und
+Betriebs-Anleitungen;
 **Komponent** — Contract-Index deaktiviert (liegt beim
-Koordinator), Kette bis P10, Lieferung und
+Koordinator), Kette bis P11, Lieferung und
 Marken-Abschluss per Nachricht; **Standalone** — keine
 Rollen-Ausstattung ([[Vorgehen-SP-1]] §6; Meilensteine
 je Rolle: [[Meilenstein-und-T2]]). Was RP-1 ergänzt

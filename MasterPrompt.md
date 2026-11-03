@@ -341,12 +341,27 @@ von KI und User gemeinsam genutzt.
 **Fassade** (lebend) und ihre **Elemente**
 (eingefroren ab ihrem Freeze-Zeitpunkt) liegen im
 `wiki/`, der **Stand** je Dokumenttyp ist das
-abgeleitete, versionierte Dokument hier. Was lebt,
-lebt im `wiki/` — `output/` friert ein. Wann ein
+abgeleitete, versionierte Dokument hier — mit einem von
+zwei Graden, wiki-verweisend oder selbsttragend (§9.6;
+ein selbsttragender Stand, etwa eine Benutzer-Doku,
+verweist auf keine Elemente, sondern ist aus
+eingefrorenen Quell-Ständen ausformuliert,
+[[Einfrieren-und-Abloesen]] §Stand). Was lebt,
+lebt im `wiki/` — `output/` friert ein. **Der Stand
+ist der einzige Ort einer Zweck-Freigabe; Ausnahme
+ist der Tag** (Kernsatz der Freigabe und was mit ihr
+einfriert: `Vorgehen.md` §4 „Freigabe-Regel“). Die Vorlage an den
+Anwender ist immer der Stand hier, einen Entwurf
+daneben gibt es nicht; ein Stand trägt im Namen weder
+Absender noch Empfänger (§3.1, §3.2) und kein
+Status-Wort (§3.9). Wann ein
 Artefakt seinen Stand erhalten muss und wie eine
 Freigabe an ihn gebunden und gebucht wird
 (Stand-Zwang, Freigabe-Formel): `Vorgehen.md` §4 —
-lesen vor jeder Freigabe.
+lesen vor jeder Freigabe; der Ablauf vom ersten
+Element bis nach der Freigabe:
+[[Lebenslauf-eines-Stands]] — lesen, sobald in einer
+Phase das erste Element entsteht.
 
 - **Herkunftszeile:** im Kopf jedes Stands stehen
   Marke, Datum, Zweck und Herkunft als
@@ -517,6 +532,11 @@ Bestandteile:
   Eingangsdokumenten: deren Dokumentdatum.
 - **Absender:** Name oder Kurzbezeichnung.
 - **Empfänger:** Name oder Kurzbezeichnung.
+  Absender und Empfänger treffen bei einem **Stand**
+  (abgeleitetes Register-Dokument, §1.5) nicht zu und
+  entfallen dort nach §3.2; die Marke eines Stands
+  steht nur in seinem Kopf, nicht im Namen
+  ([[Einfrieren-und-Abloesen]] §Stand „Dateiname“).
 - **Dokumentname:** Dokumenttyp (z.B.
   "Stellungnahme", "Angebot").
 - **Betreff:** Hauptbegriffe der Betreffzeile, auf
@@ -538,6 +558,10 @@ Beispiele:
   `<Datum> - <Absender> - <Empfänger> - <Dokumentname>_VV_TLA.ext`
 - Dokument ohne Empfänger:
   `<Datum> - <Absender> - <Dokumentname> - <Gegenstand>_VV_TLA.ext`
+- Stand eines Dokumenttyps (ohne Absender und
+  Empfänger, Gegenstand nur bei mehreren Ständen eines
+  Typs je Marke):
+  `<Datum> - <Dokumentname>[ - <Gegenstand>]_VV_TLA.md`
 
 ### 3.3 Eingangsdokumente (raw/, input/)
 
@@ -622,6 +646,17 @@ dauerhafte Artefakte übernommen wird (nicht als
 Datei-Name, nicht als Präfix im Register). Die
 Marker landen im Session-Protokoll, verschwinden
 aber bei Materialisierung.
+
+**Status-Wörter in Namen versionierter Dokumente:**
+Namen in `output/` und `overview/` (Ketten-ID, §3.1)
+tragen keine Status-Wörter wie „Entwurf“, „final“ oder
+„freigegeben“. Die Ketten-ID ist unveränderlich
+(§3.8) — ein Status-Wort bliebe für immer im Namen
+stehen, auch wenn der Status längst ein anderer ist.
+Ob und wofür ein Stand freigegeben ist, steht nur im
+Freigabe-Eintrag (`Vorgehen.md` §4); einen „Entwurf“
+neben dem Stand gibt es nicht (§1.5). Der Lint meldet
+ein solches Wort im Namen als Hinweis.
 
 ## 4. Versionierung
 
@@ -1137,14 +1172,19 @@ als einen zu wenig.**
   (Datum-Vergleich per System-Reminder).
 
 **C5 Register-Lebenszyklus-Check** (nur aktiv, wenn
-mindestens ein Sammel-Register aktiv ist; aktiv-Status
-siehe `wiki/Fassaden.md`). Welche Register
-Sammel-Register sind, sagt die Sammelzustand-Zeile
-ihres Katalog-Eintrags ([[Katalog]] §Typ-Konventionen
+mindestens ein Sammel-Register mit `aufgeschoben`
+aktiv ist; aktiv-Status
+siehe `wiki/Fassaden.md`). Welche Register das sind,
+sagt die Sammelzustand-Zeile
+ihres Katalog-Eintrags — Wert `ja` ([[Katalog]]
+§Typ-Konventionen
 — lesen beim Zusammenstellen der zu prüfenden
-Register, auch nach jedem Prozess-Merge); was
-`Sammelzustand` für Status und `trigger` bedeutet und
-warum Eintritts-Register keine Trigger tragen:
+Register, auch nach jedem Prozess-Merge); auf den
+beschreibenden Registern mit `offen` ohne
+`aufgeschoben` (Wert `offen`) und auf
+Eintritts-Registern läuft C5 nicht — dort gibt es
+keinen `trigger` und nichts zu reaktivieren; was die
+Werte für Status und `trigger` bedeuten:
 [[Einfrieren-und-Abloesen]] §Eintrittsregel.
 
 - Alle Detail-Knoten der Sammel-Register und ihre
@@ -2149,11 +2189,15 @@ die Achse original ↔ abgeleitet ist davon unabhängig.
   Link.
 - **Selbsttragend** ist, was **am Stück** an einen
   Empfänger ohne Wiki-Zugang weitergegeben werden muss:
-  Betriebs-Anleitung, Release-Notes, Durchführungs-
-  Instanz eines Tests, Übergabe-Dokument ohne
-  Lesezugriff, Außen-Doku (Benutzer-, Entwickler-Doku,
-  README nach außen). Keine Wikilinks, keine
-  Register-IDs, Begründungen ausgeschrieben.
+  die Doku-Stände der Kette (Entwickler-Doku,
+  Benutzer-Doku, Betriebs-Anleitung — selbsttragende
+  Pflicht-Stände, mit SP-1), Release-Notes,
+  Durchführungs-Instanz eines Tests, Übergabe-Dokument
+  ohne Lesezugriff, README nach außen. Keine Wikilinks,
+  keine Register-IDs, Begründungen ausgeschrieben. Ein
+  Stand kann beide Grade haben; der Grad steht in
+  seinem Katalog-Eintrag ([[Einfrieren-und-Abloesen]]
+  §Stand).
 
 **Link-Regel (Wiki und wiki-verweisende Dokumente).**
 Wissen, das an mehreren Stellen genutzt wird, steht an
@@ -2223,14 +2267,25 @@ Daraus folgen die Arbeitsregeln:
   Wiki und in wiki-verweisenden Dokumenten gilt Link
   statt Wiederholung.
 - **Neu ableiten statt nachpflegen.** Abgeleitete
-  selbsttragende Dokumente werden zu festgelegten
-  Zeitpunkten vollständig neu aus dem Wiki erzeugt,
-  nicht von Hand nachgezogen — mit Herkunfts-Kopf und
-  nach dem Pflicht-Angebot eines Reviews (§5.6).
+  selbsttragende Dokumente — Ableitungen wie
+  selbsttragende Stände — werden zu festgelegten
+  Zeitpunkten aus dem Wiki bzw. aus ihren Quell-Ständen
+  erzeugt, nicht von Hand nachgezogen — mit
+  Herkunfts-Kopf und nach dem Pflicht-Angebot eines
+  Reviews (§5.6): **jeder Text stammt aus dem Wiki.**
+  Komplett neu heißt das ganze Dokument neu erzeugt;
+  bei einer Einarbeitung werden die geänderten Kapitel
+  neu erzeugt und die übrigen unverändert aus der
+  letzten Vollfassung übernommen, bei einem
+  Änderungsdokument der Zuwachs gegenüber der
+  Vollfassung — in jeder Form geht die Prüfung über
+  das ganze Dokument (welche Form wann: die
+  Doku-Abfrage, [[Kettenpruefung]] §Kette).
   Standard-Auslöser für Dokumente, die das Produkt
   beschreiben, ist die Freigabe eines Stands für das
   Ausliefern oder der Zuruf; ein eigener Auslöser des
-  Dokumenttyps geht vor.
+  Dokumenttyps geht vor — bei den Doku-Ständen der
+  Kette die Doku-Abfrage.
 - **Paarungs-Pflege für bewusste Paarungen.** Die
   bewussten Paarungen sind Kurz- und Vollform, keine
   Redundanz, und werden explizit gepflegt — zu jeder

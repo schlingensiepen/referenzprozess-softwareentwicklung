@@ -28,10 +28,16 @@ Systemarchitektur ist bei jedem Entwicklungsvorhaben
   Lage. Sie stützen sich per `abgeleitet_von:` auf
   Entscheidungen und Funktionsbeschreibungen; eine
   Wahl mit Alternativen (Muster, Technologie) bleibt
-  eine DEC in [[Entscheidungen]]. ARC-Elemente werden
-  mit dem Anwender-OK angenommen und sind ab dann
-  eingefroren ([[Einfrieren-und-Abloesen]]); eine
-  Änderung ist eine Ablösung. Der Stand der Phase P5
+  eine DEC in [[Entscheidungen]]. Ein ARC-Element
+  legt der Agent als `offen` an; es bleibt
+  bearbeitbar, bis es einzeln angenommen wird oder
+  mit der Freigabe des ersten Stands, der es verweist,
+  und ist ab dann eingefroren
+  ([[Einfrieren-und-Abloesen]] §Eintrittsregel); eine
+  Änderung ist dann eine Ablösung. Bis zur Bildung des
+  Stands ist diese Fassade die Lese-Klammer der Phase
+  P5 ([[Lebenslauf-eines-Stands]]). Der Stand der
+  Phase P5
   ist das Architekturdokument
   ([[Katalog-Architekturdokument]]).
 - **Lebende Sektionen:** die übrigen Sektionen sind

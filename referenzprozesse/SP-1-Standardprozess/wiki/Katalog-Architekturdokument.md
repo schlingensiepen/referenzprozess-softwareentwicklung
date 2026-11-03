@@ -34,7 +34,11 @@ unten.
   und die Funktionsbeschreibungen (FUNC) der Marke aus
   [[Funktionsbeschreibungen]] — jeweils mit Status
   `angenommen`, `in-umsetzung`, `umgesetzt` oder
-  `abgeschlossen` (nicht verworfen; für die Marke nicht
+  `abgeschlossen`, ARC und FUNC an einer vorgelegten,
+  noch nicht freigegebenen Version auch `offen` — im
+  Kopf ausgewiesen, mit der Freigabe angenommen
+  ([[Einfrieren-und-Abloesen]] §Ableitungsprüfung) —
+  (nicht verworfen; für die Marke nicht
   abgelöst — ein Element mit Status `abgelöst` gehört
   dazu, solange sein Nachfolger für die Marke nicht
   gilt, [[Einfrieren-und-Abloesen]] §Stand;

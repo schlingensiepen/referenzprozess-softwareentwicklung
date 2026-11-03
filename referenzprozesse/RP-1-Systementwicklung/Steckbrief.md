@@ -58,7 +58,7 @@ Softwaresystems (Release, Produkt-Version ≠ Marke) in
   nach Testplan als Testbericht im SP-1-Register
   [[Testberichte]] (RP-1-index §4).
 - Prüf- und Rechercheangebot an P-Phasen des RP-1-
-  Vorgehens anwenden (R4/R5/R9/R10 an P5/P7/P11/P13;
+  Vorgehens anwenden (R4/R5/R9/R10 an P5/P7/P13/P15;
   siehe [[Vorgehen-RP-1]] §Angebote an Phasen).
 - Beim Init als aufbauender Prozess auf SP-1 angeboten
   werden — primär im Init-Prozess-Angebot, sekundär

@@ -135,20 +135,88 @@ im Register NEED.
 
 **Verankert in:** [[Bedarfe]]
 
+### Benutzer-Doku
+
+**English:** user documentation
+
+Selbsttragender Pflicht-Stand der Phase P12
+Dokumentieren für Benutzer, freigegeben „für P13
+Ausliefern“: aus Konzept, Anforderungen,
+Funktionsbeschreibung und Tag ausformuliert, so dass
+ein Fremder das Produkt ohne Hilfe benutzen kann. Die
+Benutzer sind die Leser des Produkts — nicht der
+Anwender, der mit dem Agenten arbeitet.
+
+**Nicht verwenden:** Anwender-Doku, Anwenderhandbuch
+**Verankert in:** mit SP-1 der Dokumenttyp-Eintrag
+`Katalog-Benutzer-Doku`; Zeitpunkt und Form:
+[[Kettenpruefung]] §Kette (Doku-Abfrage)
+
+### Betriebs-Anleitung
+
+**English:** operations guide
+
+Selbsttragender Pflicht-Stand der Phase P15 Betreiben
+je Zielumgebung, freigegeben „für P15 Betreiben“: aus
+dem freigegebenen Deploy-Stand der Umgebung
+ausformuliert, so dass ein Fremder das Produkt dort
+ausführen kann; wird erst nach dem Deploy-Stand ihrer
+Umgebung freigegeben.
+
+**Nicht verwenden:** Betriebs-Handbuch, Betriebs-Plan,
+Betriebs-Beschreibung
+**Verankert in:** mit SP-1 der Dokumenttyp-Eintrag
+`Katalog-Betriebs-Anleitung`; Zeitpunkt und Form:
+[[Kettenpruefung]] §Kette (Doku-Abfrage)
+
 ### Deploy-Stand
 
 **English:** deployment baseline
 
-Stand der Phase P11 je Zielumgebung, gebildet aus den
+Stand der Phase P13 je Zielumgebung, gebildet aus den
 Deployment-Festlegungen (DEPL) und freigegeben für die
 Auslieferung in diese Umgebung; zu einer Marke kann es
-mehrere geben, je Umgebung gilt der jüngste. Eine
-Anleitung für Menschen wird daraus bei Bedarf als
-Betriebs-Anleitung abgeleitet.
+mehrere geben, je Umgebung gilt der jüngste. Sein
+freigegebener Stand ist Quell-Stand und Vorbedingung
+der Betriebs-Anleitung seiner Umgebung. In der
+Phasentabelle der Basis (`Vorgehen.md` §3) heißt das
+Artefakt generisch Auslieferungsbeschreibung.
 
 **Nicht verwenden:** Deploy-Dokument
 **Verankert in:** mit SP-1 der Dokumenttyp-Eintrag
 `Katalog-Deploy-Stand`
+
+### Doku-Abfrage
+
+**English:** documentation query
+
+Vorlage des Agenten einmal je Marke, sobald der Tag der
+Implementierung gesetzt ist: je Doku-Art
+(Entwickler-Doku, Benutzer-Doku, Betriebs-Anleitung je
+Umgebung) Zeitpunkt — jetzt, später, gar nicht als
+Übernahme oder Verzicht — und Form — Änderungsdokument,
+Einarbeitung, komplett neu — mit Empfehlung; je Zeile
+eine Entscheidung.
+
+**Verankert in:** [[Kettenpruefung]] §Kette
+(Doku-Abfrage); Einbindung mit SP-1 in
+`Vorgehen-SP-1.md` §2
+
+### Entwickler-Doku
+
+**English:** developer documentation
+
+Selbsttragender Pflicht-Stand der Phase P11
+Dokumentieren für Entwickler, freigegeben „für P13
+Ausliefern“: aus Architekturdokument,
+Technologie-Entscheidungen, Spezifikation und Tag
+ausformuliert, so dass ein Fremder das Produkt ohne
+Rückfrage ändern kann; eine Komponente bildet sie für
+ihr Bauteil, der Koordinator die Gesamtsicht.
+
+**Verankert in:** mit SP-1 der Dokumenttyp-Eintrag
+`Katalog-Entwickler-Doku`; Zeitpunkt und Form:
+[[Kettenpruefung]] §Kette (Doku-Abfrage)
 
 ### Ersatzweg
 
@@ -273,14 +341,15 @@ Vermerk am Eintrag einer abgeschlossenen Marke, der an
 der Marke nichts ändert: Er bucht, was nach dem
 Marken-Wechsel bei unverändertem Produkt und
 unveränderter Spezifikation hinzukommt — ein weiterer
-Deploy-Stand mit seiner Freigabe oder die Korrektur des
+Deploy-Stand mit seiner Freigabe, ein Doku-Stand mit
+„später“ aus der Doku-Abfrage oder die Korrektur des
 Tags. Ändern sich Produkt oder Spezifikation, entsteht
 dagegen eine neue Marke; erneutes Ausrollen ohne
 Änderung ist Betrieb und kein Nachtrag.
 
 **Verankert in:** [[Zielmarken]] §Meta (Nachtrag; Format
-der Nachtragszeile eines Deploy-Stands; Nachtrag „Tag
-korrigiert“)
+der Nachtragszeile eines Deploy-Stands und eines
+Doku-Stands; Nachtrag „Tag korrigiert“)
 
 ### Patch-Marke
 
@@ -352,9 +421,18 @@ und Prüfregel für selbsttragende Dokumente
 
 **English:** baseline
 
-Abgeleitetes, wiki-verweisendes Dokument in
-`output/`, das zu einer Marke aus eingefrorenen
-Elementen gebildet wird und Träger einer Freigabe ist.
+Abgeleitetes Dokument in
+`output/`, das zu einer Marke aus den Elementen
+gebildet wird und Träger einer Freigabe ist — mit
+einem von zwei Graden: wiki-verweisend (die Regel) oder
+selbsttragend (die Doku-Stände: aus eingefrorenen
+Quell-Ständen ausformuliert). Eine
+Zweck-Freigabe hängt immer an einem Stand —
+freigegeben wird „Stand X für Zweck Y“, nie ein
+Element und nie die Fassade; mit der Freigabe frieren
+die verwiesenen Elemente ein, bis dahin leben sie im
+`wiki/`; ein selbsttragender Stand friert nichts Neues
+ein. Einzige Zweck-Freigabe ohne Stand ist der Tag.
 Nicht zu verwechseln mit **Version** (dem
 `_VV_TLA`-Dateistand; in „Stand x“ ist x die Version),
 mit der Marken-Bezeichnung und mit dem
@@ -363,7 +441,8 @@ die kein Stand ist).
 
 **Nicht verwenden:** Fassung
 **Verankert in:** [[Einfrieren-und-Abloesen]] §Stand
-und §Abgrenzungen
+und §Abgrenzungen; Kernsatz der Freigabe:
+`Vorgehen.md` §4; Ablauf: [[Lebenslauf-eines-Stands]]
 
 ### Szenario
 
@@ -441,7 +520,10 @@ des Tags und der Lieferung)
 Bewusstes Auslassen einer Phase mit Pflicht-Stand für
 eine Marke, gebucht als Verzichts-DEC mit
 `decision_type: verzicht`, `zielmarke:` und
-`phase: Pn`, wodurch für diese Marke der Pflicht-Stand
+`phase: Pn` (genau eine Phase; bei `phase: P15`
+zusätzlich `umgebung:`, der Verzicht auf die
+Betriebs-Anleitung gilt je Umgebung), wodurch für
+diese Marke der Pflicht-Stand
 der Phase und seine Lint-Pflichten entfallen — nicht zu
 verwechseln mit einem Glied, das abgeleitet entfällt
 oder vertreten wird (dafür ist kein Verzicht nötig).
@@ -532,7 +614,7 @@ es eine Deployment-Festlegung (DEPL).
 
 Komponente, die ihrerseits in Komponenten geschnitten
 ist: Sie liefert an ihren Koordinator wie eine
-Komponente (Kette bis P10) und prüft die Lieferungen
+Komponente (Kette bis P11) und prüft die Lieferungen
 ihrer Unter-Komponenten wie ein Koordinator.
 Unter-Komponente ist eine §Komponenten-Zeile, für die
 ihr Repo einen Übergabe-Stand gebildet hat — nicht die

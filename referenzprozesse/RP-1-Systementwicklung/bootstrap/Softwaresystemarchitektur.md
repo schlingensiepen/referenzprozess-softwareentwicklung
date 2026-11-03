@@ -37,7 +37,7 @@ Kleinen"):
    Auftrag ableiten (Sollzustand); in §Komponenten
    mindestens die Zeile des eigenen Repos anlegen
    (Repo-Name, Pfad, Remote). Festlegungen entstehen
-   als ARC-Elemente erst mit Anwender-OK.
+   als ARC-Elemente — `offen` bis zur Annahme (Meta).
 4. `### Verankerungen` abarbeiten.
 
 ### Verankerungen

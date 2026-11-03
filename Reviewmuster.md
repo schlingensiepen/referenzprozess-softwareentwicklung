@@ -45,9 +45,16 @@ Prüfer die Freigabe-Reife.
 eines Pflicht-Stands der Kette führt ein Review nach
 diesem Dokument den Reviewer-Anteil der Kettenprüfung
 aus; Ergebnis ist ein `review-report`, auf den die
-Freigabe des Stands zeigt. Was geprüft wird und gegen
+Freigabe des Stands zeigt. Prüfauftrag: Widerspruch
+gegen alle freigegebenen Vorgänger, Abdeckung gegen die
+Quell-Stände des Dokumenttyp-Eintrags, Unbegründetes
+als **neue Sachaussage** — Darstellung (Anleitungen,
+Beispiele, Erklärungen) ist kein Befund. Was geprüft
+wird und gegen
 welche Vorgänger: [[Kettenpruefung]] §Reviewer-Anteil
-— lesen vor jeder solchen Freigabe.
+— lesen vor jeder solchen Freigabe. Bei den drei
+Doku-Ständen der Kette läuft daneben M6 (§3) als
+Pflicht.
 
 **Berichten statt Blockieren.** Ein Review, das nicht
 alle üblichen Prüfer stellen kann (z.B. nur ein
@@ -214,7 +221,13 @@ Befunde liefert, folgt eine weitere Runde: Befunde
 einarbeiten, Artefakt aktualisieren → neue Runde
 starten (wieder unabhängige Prüfer, wieder frischer
 Kontext; der Re-Check-Bericht nennt die Prüfberichte
-der vorigen Runde als Vorgänger). Auf diese Kette
+der vorigen Runde als Vorgänger). **Bei einem Stand**
+(abgeleitetes Register-Dokument in `output/`) heißt
+„einarbeiten“: Die Befunde gehen in die Elemente im
+`wiki/`, der Agent bildet eine neue Version derselben
+Ketten-ID, und die neue Runde prüft nur die geänderten
+Elemente ([[Lebenslauf-eines-Stands]] Schritt 6,
+[[Kettenpruefung]] §Regel). Auf diese Kette
 verweisen die Review-Angebote vor Publikation und beim
 Übertrag ins Produkt
 ([[Angebots-und-Beauftragungs-Muster]]) und die
@@ -446,7 +459,7 @@ Gesamturteil verschmolzen.
 
 - Technologie-Entscheidungen (P7)
 - Architektur-Reviews (P5)
-- Deploy-Reviews (P11)
+- Deploy-Reviews (P13)
 - Alle Artefakte mit vielen orthogonalen
   Bewertungs-Dimensionen
 
@@ -488,9 +501,11 @@ Judges K-URTEIL.
 
 **Zweck:** Prüfen, ob ein **selbsttragendes Dokument**
 (MasterPrompt §9.6: alles, was am Stück an Empfänger
-ohne Wiki-Zugang geht — Betriebs-Anleitung,
-Release-Notes, Außen-Doku, Übergabe-Dokument ohne
-Lesezugriff) ohne Repo-Zugang trägt. Der Prüfer spielt
+ohne Wiki-Zugang geht — die selbsttragenden
+Doku-Stände Entwickler-Doku, Benutzer-Doku und
+Betriebs-Anleitung, Release-Notes, Übergabe-Dokument
+ohne Lesezugriff) ohne Repo-Zugang trägt. Der Prüfer
+spielt
 den Zielnutzer: er bekommt nur das Dokument, nicht das
 Wiki.
 
@@ -508,12 +523,21 @@ Fehlbedienungs-Risiko? Jede Rate-Stelle ist eine
 Dokument-Lücke. Danach die Review-Kette nach §2
 Schleife 4.
 
-**Wann einsetzen:** vor der Neu-Ableitung eines
-selbsttragenden Dokuments — der Agent schlägt M6 im
-Pflicht-Angebot vor Publikation vor
-([[Angebots-und-Beauftragungs-Muster]]); an der
-Betriebs-Anleitung mit der Prüffrage „Kann ein Fremder
-das ausführen?“; vor jeder Veröffentlichung eines
+**Wann einsetzen:** **Pflicht** vor der Vorlage der
+drei Doku-Stände der Kette an den Anwender — über das
+ganze Dokument, auch bei Einarbeitung und
+Änderungsdokument —, mit der Prüffrage je Typ:
+Entwickler-Doku „Kann ein Fremder das Produkt ohne
+Rückfrage ändern?“, Benutzer-Doku „Kann ein Fremder
+das Produkt ohne Hilfe benutzen?“, Betriebs-Anleitung
+„Kann ein Fremder das Produkt ausführen?“; der
+M6-Bericht ist Nachweis im Freigabe-Eintrag
+([[Entscheidungen]] Meta „Freigabe-Einträge“). Für
+übrige selbsttragende Dokumente ein Vorschlag: vor der
+Neu-Ableitung schlägt der Agent M6 im Pflicht-Angebot
+vor Publikation vor
+([[Angebots-und-Beauftragungs-Muster]]); vor jeder
+Veröffentlichung eines
 Einstiegs (README, Start-Anleitung).
 
 **Wann nicht:** für wiki-verweisende Dokumente — dort
@@ -545,7 +569,10 @@ mit Agent-Vorschlag. Der Agent schlägt vor:
    Design-Frage offen ist und mehrere Wege gangbar sind.
 6. **M6 zusätzlich zu M1**, wenn das Artefakt ein
    selbsttragendes Dokument ist (Neu-Ableitung,
-   Betriebs-Anleitung, Einstieg nach außen).
+   Einstieg nach außen) — bei den drei Doku-Ständen
+   der Kette (Entwickler-Doku, Benutzer-Doku,
+   Betriebs-Anleitung) keine Wahl, sondern Pflicht
+   (§3 M6).
 
 **Erschöpfungs-Reifekriterium (K≥2 in Schleife 4)
 wählen** bei Sicherheits-, Compliance- und
@@ -639,7 +666,7 @@ Beispiele:
 - **RP-1 P9 Ausarbeiten (Implementierung):** M4
   Perspektive-Panel mit Lenses Korrektheit,
   Sicherheit, Testabdeckung; K-SEMANTIK für alle.
-- **RP-1 P11 Ausliefern:** M2 Pflicht mit
+- **RP-1 P13 Ausliefern:** M2 Pflicht mit
   Erschöpfungs-Reifekriterium K=3 (Auslieferung
   nach außen).
 

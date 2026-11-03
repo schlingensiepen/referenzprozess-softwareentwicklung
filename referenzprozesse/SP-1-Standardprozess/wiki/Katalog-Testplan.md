@@ -35,7 +35,11 @@ Anwender-`wiki/` kopiert und in [[Katalog]] verankert.
   Lint-Anteil REQ/FUNC → TEST: §Lint-Anteil).
 - **Quell-Register und Filter:** TEST-Elemente der
   Marke aus [[Testfaelle]] mit Status `angenommen`,
-  `in-umsetzung`, `umgesetzt` oder `abgeschlossen`
+  `in-umsetzung`, `umgesetzt` oder `abgeschlossen`, an
+  einer vorgelegten, noch nicht freigegebenen Version
+  auch `offen` — im Kopf ausgewiesen, mit der Freigabe
+  angenommen ([[Einfrieren-und-Abloesen]]
+  §Ableitungsprüfung) —
   (nicht verworfen; für die Marke nicht abgelöst —
   ein TEST mit Status `abgelöst` gehört dazu, solange
   sein Nachfolger für die Marke nicht gilt,
@@ -58,7 +62,9 @@ Anwender-`wiki/` kopiert und in [[Katalog]] verankert.
   §Stand).
 - **Nachweis:** der Testbericht (TRES,
   [[Testberichte]]) zu einem Durchgang nach diesem
-  Stand; was er für die Freigabe P10 → P11 bedeutet:
+  Stand; was er als Vorbedingung der Doku-Stände P11
+  und P12 und des Deploy-Stands P13 bedeutet
+  (P10 → P11, P12, P13):
   [[Kettenpruefung]] §Code-Glieder; was bei nicht
   bestandenen Testfällen gilt: `## Meta` von
   [[Testberichte]]; seine Herkunftszeile:

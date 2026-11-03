@@ -35,7 +35,9 @@
 # Prüf-Gruppen (Befund-Codes in Klammern):
 #   Typen und Frontmatter nach den Katalog-Einträgen: `type:`,
 #     Pflichtfelder, Festwerte, Listen-Felder, `replaces_type`,
-#     ersetzte Typen, Sammelzustand, `datum:`-Format an Knoten (OHNE-TYP,
+#     ersetzte Typen, Sammelzustand (`ja`: offen und aufgeschoben; `offen`:
+#     nur offen, kein aufgeschoben, kein trigger — beschreibende Register;
+#     `nein`: Eintritts-Register), `datum:`-Format an Knoten (OHNE-TYP,
 #     TYP-UNBEKANNT, PFLICHTFELD*, FESTWERT, LISTE, REPLACES-SPIEGEL,
 #     ERSETZT*, SAMMELZUSTAND, DATUM-FORMAT); Altknoten aus 1.x unter
 #     wiki/ (`type: deployment`, `type: testplan`) im Bestand als Hinweis
@@ -76,23 +78,29 @@
 #     für die Übernahme des Tags, mit Prozess zählt die Tag-Freigabe in der
 #     Formel des Nachtrags als Tag-Freigabe der Marke (fehlt sie: Hinweis),
 #     der Nachtrag an einer nicht abgeschlossenen Marke ist ein Hinweis; der
-#     Nachtrag eines Deploy-Stands „Nachtrag: Stand <Datei mit Version> von
-#     Deploy-Stand, freigegeben für P11 Ausliefern zu Marke <M>, …“ wird
-#     mitgelesen — die Freigabe in der Formel zählt als Pflicht-Freigabe P11
-#     der Marke und als Freigabe des Stands, ohne eigenen Eintrag und ohne
+#     Nachtrag eines Deploy-Stands oder eines Doku-Stands „Nachtrag: Stand
+#     <Datei mit Version> von ⟨Artefakt⟩, freigegeben für <Zweck> zu Marke
+#     <M>, …“ (⟨Artefakt⟩ Deploy-Stand, Entwickler-Doku, Benutzer-Doku,
+#     Betriebs-Anleitung — ein Nachtrag mit Formel zu einem anderen
+#     ⟨Artefakt⟩ ist kein Nachtrag-Fall: Hinweis, nicht gelesen) wird
+#     mitgelesen — die Freigabe in der Formel zählt
+#     als Pflicht-Freigabe der Phase des Dokumenttyps (P13; P11, P12, P15 je
+#     Umgebung) und als Freigabe des Stands, ohne eigenen Eintrag und ohne
 #     Ablösung (Nachtrag ohne Formel, Formel ohne „Nachtrag:“, andere Marke,
 #     Marke nicht abgeschlossen, keine Stand-Datei — die Datei wird wie im
 #     Feld „Verweise“ gelesen: mit oder ohne `.md`, als Wikilink oder als
-#     Pfad unter output/, sonst die Version allein —, dieselbe Freigabe auch
-#     als Eintrag — derselbe Stand, über die Stand-Datei abgeglichen:
+#     Pfad unter output/, sonst die Version allein —, Stand-Datei passt nicht
+#     zum ⟨Artefakt⟩, Zweck passt nicht zum Katalog-Zweck, dieselbe Freigabe
+#     auch als Eintrag — derselbe Stand, über die Stand-Datei abgeglichen:
 #     Hinweis); je Umgebung (`umgebung` im Kopf der Stand-Datei, sonst der
-#     Gegenstand des Dateinamens) gilt der jüngste Deploy-Stand — bei
-#     mehreren Nachtragszeilen derselben Umgebung die mit dem jüngsten
-#     Datum, bei gleichem Datum die spätere Zeile; ein Nachtrag ist jünger
-#     als ein Freigabe-Eintrag vor dem Wechsel —, die Pflicht-Freigabe P11
-#     der Umgebung zählt einmal; ein weiterer Stand derselben Umgebung ist
-#     eine neue Version derselben Ketten-ID — eine zweite Ketten-ID für
-#     dieselbe Umgebung ist ein Hinweis, die Zeile zählt trotzdem;
+#     Gegenstand des Dateinamens; ohne Umgebung je Ketten-ID) gilt der
+#     jüngste Stand — bei mehreren Nachtragszeilen derselben Umgebung die mit
+#     dem jüngsten Datum, bei gleichem Datum die spätere Zeile; ein Nachtrag
+#     ist jünger als ein Freigabe-Eintrag vor dem Wechsel —, die
+#     Pflicht-Freigabe der Umgebung zählt einmal; ein weiterer Stand
+#     derselben Umgebung ist eine neue Version derselben Ketten-ID — eine
+#     zweite Ketten-ID für dieselbe Umgebung ist ein Hinweis, die Zeile
+#     zählt trotzdem;
 #     ein Bestands-Nachfolger ohne `zielmarke:` während einer Zwischenmarke
 #     ist ein Hinweis ABLOESUNG-BESTAND, bis der Vermerk „Ablösung von <E>
 #     gilt ab Marke <M> (Anwender <Datum>)“ am Nachfolger steht — mit ihm
@@ -114,10 +122,19 @@
 #     Sackgasse gilt nur für sie; ein Bestands-Element ohne Feld gilt für jede
 #     Marke, ein Bestands-Nachfolger ohne Feld ab der laufenden Marke; ein in
 #     der Sackgasse überlagertes Element gilt dort nicht),
-#     Abschluss-Stand, Verzicht (`zielmarke:` und `phase: Pn`, streng gelesen;
-#     `phase: P9` ist ein Fehler — der Tag ist nicht verzichtbar; ohne
-#     `phase:` nur mit Prozess ein Hinweis — ohne Prozess ist das der
-#     Verzicht auf „Tests grün“, den der Lint nicht liest),
+#     Abschluss-Stand, Verzicht (`zielmarke:` und `phase: Pn`, streng gelesen
+#     — genau eine Phase je DEC; `phase: P9` ist ein Fehler — der Tag ist
+#     nicht verzichtbar; ohne `phase:` nur mit Prozess ein Hinweis — ohne
+#     Prozess ist das der Verzicht auf „Tests grün“, den der Lint nicht
+#     liest; `phase: P15` gilt je Umgebung: mit `umgebung:` — Name geprüft
+#     wie DEPL-BEZUG, Fehler —, ohne `umgebung:` kein Verzicht, Hinweis; eine
+#     Verzichts-DEC mit `phase: P11`, `P12` oder `P13`, deren Anlage-Datum
+#     (`datum:` des Knotens, sonst Zeile `Angelegt` des Eintrags) vor dem
+#     Stichtag liegt, liest sich — solange `Template-Stand` die Version 2.1
+#     nennt und der Katalog die Phase P15 führt — über die Zuordnungstabelle
+#     2.0 → 2.1 als P13, P14 bzw. P15 (Hinweis), die alte P13 Betreiben
+#     ohne `umgebung:` als Verzicht für alle Umgebungen; ohne lesbares
+#     Anlage-Datum keine Umlesung, Hinweis),
 #     Fehlerbehebung (`fix_requirement:` am BUG ist eine Liste — jede
 #     Anforderung, die ihn behebt, Fix-Anforderung oder ablösende bzw. neue
 #     REQ; ein Einzelwert liest sich als Liste mit einem Eintrag: je Eintrag
@@ -131,26 +148,60 @@
 #     MARKE-HERKUNFT) (MARKE-ZUSTAND, ZIELMARKE*, ZIELMARKE-DRIFT,
 #     MARKEN-REGEL, ABLOESUNG-BESTAND, ABSCHLUSS-STAND, VERZICHT,
 #     FIX-REQUIREMENT, MARKE-HERKUNFT)
-#   Stände in output/: Ort, Typ, Herkunft, Marke je Ketten-ID, `datum`,
+#   Stände in output/: Ort, Typ, Herkunft (Format; ein Quell-Stand über
+#     Repo-Grenzen `<repo>/<Dateiname mit Version>` beim gelesenen Nachbarn
+#     auf Vorhandensein in dessen output/, sonst OHNE-ZUGRIFF; bei einem
+#     selbsttragenden Stand je Umgebung — Betriebs-Anleitung — der
+#     Deploy-Stand seiner Umgebung als Quell-Stand: fehlt er, Hinweis, andere
+#     Umgebung Hinweis, andere Marke Fehler MARKE-HERKUNFT; ein freigegebener
+#     Pflicht-Stand der Phasen P11–P13 ohne Testbericht TRES-NNN in
+#     `herkunft`: Hinweis; `basis:` eines Änderungsdokuments als Stand-Datei
+#     mit Version in der Form des Felds „Verweise“ — fehlend in output/,
+#     ohne Version, anderer Dokumenttyp oder der Stand selbst: Hinweis),
+#     Marke je Ketten-ID, `datum`,
 #     überholt mit Marken-Bezug (auch für die laufende Marke bei Ständen
 #     der Vormarke; ein Vorgänger in `herkunft` mit jüngerer Version
 #     derselben Marke wird bei abgeschlossener Marke als jüngste Version
-#     gelesen — Nachtrag), Verweise, Consumer-Status (STAND-*, OUTPUT-TYP,
-#     HERKUNFT, MARKE-HERKUNFT, UEBERHOLT)
+#     gelesen — Nachtrag), Verweise, Consumer-Status, Verweis-Satz (ein
+#     freigegebener Stand verweist nur auf Eingefrorenes — ein verwiesenes
+#     `offen`es oder `aufgeschoben`es Element mit `Freeze ab: angenommen`
+#     ist ein Fehler; an einer vorgelegten Version sind `offen`e Elemente
+#     der beschreibenden Register — Sammelzustand `offen` — kein Befund,
+#     wenn die Zeile `Offen (Annahme im Freigabe-Zug): …` unter dem Titel
+#     sie nennt, sonst Hinweis; `offen`/`aufgeschoben` aus einem
+#     Sammel-Register mit `aufgeschoben`: Hinweis; eine ID der Zeile
+#     `Nicht berücksichtigt (offen): …` ist kein Verweis; geprüft werden
+#     auch Fassaden-Einträge ohne Detail-Knoten), Status-Wörter in der
+#     Ketten-ID jeder Datei direkt in output/ und jedes Namens in
+#     overview/ (Hinweis) (STAND-*, OUTPUT-TYP, HERKUNFT, MARKE-HERKUNFT,
+#     UEBERHOLT, STAND-OFFEN, STAND-NAME)
 #   Freigabe-Einträge: kanonische Formel im Gegenstand, Stand-Datei und
 #     Marke (ohne Stand-Datei nennt der Eintrag die Marke immer — fehlt sie:
 #     Fehler ab Stichtag; das `zielmarke:` des Eintrags gegen die Marke der
 #     Freigabe, Abweichung: Hinweis; ein abgelöster Freigabe-Eintrag gilt
 #     für seine Marke weiter, solange kein Nachfolger für sie gilt —
 #     Marken-Regel), Tag-Eintrag („Stand <Tag> von Implementierung,
-#     freigegeben für P10 Testen zu Marke M“), Zweck an der Phasen-Angabe,
+#     freigegeben für P10 Testen zu Marke M“), Zweck an der Phasen-Angabe
+#     oder — trifft keine Phase und ist der Eintrag Bestand (vor dem
+#     Stichtag angelegt) — am Tätigkeitsnamen („für P11 Ausliefern“ eines
+#     eingefrorenen 2.0-Eintrags liest sich als P13 Ausliefern, „für P13
+#     Betreiben“ als P15 Betreiben; ab dem Stichtag bleibt eine falsche
+#     Nummer ein Hinweis; Kettenpruefung.md §Lint-Anteil),
 #     Freigabe-Ordnung
 #     je Marke mit Übernahme aus den Vormarken (Stände und — bei
 #     unverändertem Produkt — der Tag auf Basis der für die Vormarke
 #     wirksamen Pflicht-Stände; Hinweis, der entfällt, wenn der
 #     Abschluss-Stand die Übernahme ausweist), Verzicht und Rolle des Repos
 #     (Koordinator, Komponente, Komponente und Koordinator, Standalone,
-#     unbekannt); Tag-Bedingung des Testplan-Stands; Lieferungen der
+#     unbekannt; die Doku-Glieder wie jede Phase: Komponente ohne eigene
+#     Zielumgebung bis P11 — ohne P12, P13, P15 —, mit eigener Zielumgebung
+#     alle, Koordinator auch ohne eigene Bauteile P11 und P12; P13 und P15
+#     nur mit Zielumgebungen; ein fehlendes Doku-Glied P11/P12 vor dem
+#     Deploy-Stand nennt die Einschränkung „Doku folgt“; die
+#     Betriebs-Anleitung je Umgebung erst nach dem freigegebenen Deploy-Stand
+#     derselben Umgebung — Eintrag oder Nachtrag —, und am Abschluss-Stand je
+#     Umgebung mit eigenem Deploy-Stand zu M: Freigabe, Übernahme oder
+#     Verzicht mit `umgebung:`); Tag-Bedingung des Testplan-Stands; Lieferungen der
 #     Komponenten, deren Übergabe-Stand zur Marke freigegeben oder aus der
 #     Vormarke übernommen ist; ohne Prozess (kein Pflicht-Dokumenttyp mit
 #     Phase Pn) keine Freigabe-Ordnung und kein Pflicht-Glied P9 — nur ob
@@ -538,6 +589,18 @@ infm {
   # §Ablösung): Zeile `> **⚠ Abgelöst durch [[…]]**` — Merker für LINK-TOT
   if (line ~ /^>[ \t]*\*\*.*Abgelöst durch/) print "ABV\t" FILENAME "\t" FNR
   if (isout) scan_refs(line, "SREF")
+  # Ausweis-Zeilen eines Stands (Einfrieren-und-Abloesen §Ableitungsprüfung):
+  # `Offen (Annahme im Freigabe-Zug): <ID>, …` (SOFF — verwiesene `offen`e
+  # Elemente einer vorgelegten Version) und `Nicht berücksichtigt (offen):
+  # <ID>, …` (SNB — Weggelassenes; diese IDs sind kein Verweis des Stands)
+  if (isout && line ~ /^Offen \(Annahme im Freigabe-Zug\):/) {
+    s = line
+    while (match(s, /[A-Z][A-Z]+-[0-9]+/)) { print "SOFF\t" FILENAME "\t" substr(s, RSTART, RLENGTH); s = substr(s, RSTART + RLENGTH) }
+  }
+  if (isout && line ~ /^Nicht berücksichtigt \(offen\):/) {
+    s = line
+    while (match(s, /[A-Z][A-Z]+-[0-9]+/)) { print "SNB\t" FILENAME "\t" substr(s, RSTART, RLENGTH); s = substr(s, RSTART + RLENGTH) }
+  }
   if (isout && index(line, "bernommen aus") > 0) { l = line; gsub(/\t/, " ", l); print "MMU\t" FILENAME "\t" l }
   # Abschluss-Stand: Zeile mit dem Wort „Tag“ bzw. „Implementierung“ (Projekt ohne Prozess)
   if (isout && ftype == "abschluss-stand" && (line ~ /(^|[^A-Za-z])Tags?([^A-Za-z]|$)/ || index(line, "Implementierung") > 0)) print "MMT\t" FILENAME
@@ -679,25 +742,34 @@ infm {
       }
       print "MKT\t" FILENAME "\t" mkcur "\t" tka "\t" tkb "\t" FNR "\t" tfn "\t" tfm
     }
-    # Nachtrag eines Deploy-Stands (Zielmarken §Meta, Nachtrag; Entscheidungen
-    # Meta „Freigabe-Einträge“, Ausnahme „Nachtrag zu einer abgeschlossenen
-    # Marke“): Vermerk-Zeile `- **Vermerk <Datum>:** Nachtrag: Stand <Datei mit
-    # Version> von Deploy-Stand, freigegeben für P11 Ausliefern zu Marke <M>,
-    # freigegeben vom Anwender <Datum>[; …]` — gelesen werden x (Stand-Datei
-    # oder Version) und M aus der Formel sowie das Datum des Vermerks (je
-    # Umgebung gilt der jüngste Nachtrag); die Formel ist das Kennzeichen, auch
-    # ohne „Nachtrag:“ am Anfang (dann Format-Hinweis); eine Vermerk-Zeile
-    # „Nachtrag:“ mit dem Wort „Deploy-Stand“ ohne Formel wird gemeldet
+    # Nachtrag eines Deploy-Stands oder eines Doku-Stands (Zielmarken §Meta,
+    # Nachtrag; Entscheidungen Meta „Freigabe-Einträge“, Ausnahme „Nachtrag zu
+    # einer abgeschlossenen Marke“): Vermerk-Zeile `- **Vermerk <Datum>:**
+    # Nachtrag: Stand <Datei mit Version> von ⟨Artefakt⟩, freigegeben für
+    # <Zweck> zu Marke <M>, freigegeben vom Anwender <Datum>[; …]` — ⟨Artefakt⟩
+    # ist der Dokumentname des Katalog-Eintrags (Deploy-Stand, Entwickler-Doku,
+    # Benutzer-Doku, Betriebs-Anleitung); gelesen werden x (Stand-Datei oder
+    # Version), ⟨Artefakt⟩, Zweck und M aus der Formel sowie das Datum des
+    # Vermerks (je Umgebung gilt der jüngste Nachtrag); die Formel ist das
+    # Kennzeichen, auch ohne „Nachtrag:“ am Anfang (dann Format-Hinweis); eine
+    # Vermerk-Zeile „Nachtrag:“ mit einem der Dokumentnamen ohne Formel wird
+    # gemeldet
     else if (line ~ /^- \*\*Vermerk[^*]*\*\*/) {
       v = line; sub(/^- \*\*Vermerk[^*]*\*\*[ \t]*/, "", v); gsub(/`/, "", v)
       dvd = line; sub(/^- \*\*Vermerk[ \t]*/, "", dvd); sub(/[:*].*$/, "", dvd); dvd = trim(dvd)
       dnf = (v ~ /^Nachtrag:/) ? 1 : 0
-      dfp = index(v, "Stand "); dfq = index(v, " von Deploy-Stand, freigegeben für ")
+      dfp = index(v, "Stand "); dfq = index(v, ", freigegeben für "); dfa = ""; dfn = ""
       if (dfp > 0 && dfq > dfp) {
-        dfn = trim(substr(v, dfp + 6, dfq - dfp - 6)); dfm = ""
-        dfr = substr(v, dfq); if (match(dfr, / zu Marke [^ ,;]+/)) { dfm = trim(substr(dfr, RSTART + 10, RLENGTH - 10)); sub(/[.,;]+$/, "", dfm) }
-        print "MKD\t" FILENAME "\t" mkcur "\t" FNR "\t" dfn "\t" dfm "\t" dnf "\t" dvd
-      } else if (dnf && index(v, "Deploy-Stand") > 0) print "MKD\t" FILENAME "\t" mkcur "\t" FNR "\t\t\t" dnf "\t" dvd
+        dfa = substr(v, dfp + 6, dfq - dfp - 6); dfv = index(dfa, " von ")
+        if (dfv > 0) { dfn = trim(substr(dfa, 1, dfv - 1)); dfa = trim(substr(dfa, dfv + 5)) } else dfa = ""
+      }
+      if (dfa != "" && dfn != "") {
+        dfz = trim(substr(v, dfq + length(", freigegeben für "))); dfm = ""
+        if (match(dfz, / zu Marke [^ ,;]+/)) { dfm = trim(substr(dfz, RSTART + 10, RLENGTH - 10)); sub(/[.,;]+$/, "", dfm); dfz = trim(substr(dfz, 1, RSTART - 1)) }
+        else { sub(/[,;(].*$/, "", dfz); dfz = trim(dfz) }
+        sub(/^Zweck /, "", dfz)
+        print "MKD\t" FILENAME "\t" mkcur "\t" FNR "\t" dfn "\t" dfm "\t" dnf "\t" dvd "\t" dfa "\t" dfz
+      } else if (dnf && v ~ /Deploy-Stand|Entwickler-Doku|Benutzer-Doku|Betriebs-Anleitung/) print "MKD\t" FILENAME "\t" mkcur "\t" FNR "\t\t\t" dnf "\t" dvd "\t\t"
     }
     # Lieferungen unter „Zuliefernde Komponenten“ (Zielmarken §Meta): Tabelle
     # mit Spalte „Komponente“ (Repo-Name) — je Zeile die Zelle; Listenzeilen
@@ -788,15 +860,27 @@ extract() {
 
 # Dateinamen dürfen Leerzeichen enthalten, daher Schleife statt xargs.
 extract "$LIST" "$OUTP" > "$DATA"
+# Namen in overview/ (MasterPrompt §3.9, Status-Wörter): nur der Name wird
+# geprüft — die Dateien selbst liegen außerhalb des Lesebereichs.
+if [ "$MODE" != template-quelle ] && [ -d "$ROOT/overview" ]; then
+  for f in "$ROOT"/overview/*.md; do
+    [ -f "$f" ] && printf 'OVN\t%s\n' "$f"
+  done >> "$DATA"
+fi
 
 # --- Stichtag aus dem Herkunfts-Vermerk (Projekt, ohne --stichtag) ----------
 # wiki/Aktivierter-Prozess.md, Abschnitt `## Herkunft`, feste Zeile
 # `- **Template-Stand:** <Version> seit YYYY-MM-DD` — gelesen wird das
 # Datum hinter `seit` (Init-Choreografie §Phase A0 „Herkunfts-Vermerk“);
 # die Option geht vor.
-STQ=""; HVBAD=""
-if [ "$MODE" = projekt ] && [ -z "$STICHTAG" ]; then
+STQ=""; HVBAD=""; TSVER=""
+if [ "$MODE" = projekt ]; then
   hvd=$(awk -F '\t' '$1 == "HV" && $3 == "Template-Stand" { print $4; exit }' "$DATA")
+  # Version der Vorlage vor „seit“ (nur für die Lesart alter Phasennummern
+  # in Verzichts-DECs nach dem Upgrade 2.0 → 2.1, unten)
+  case "$hvd" in *" seit "*) TSVER="${hvd%% seit *}"; TSVER="${TSVER%%[ 	]*}" ;; esac
+fi
+if [ "$MODE" = projekt ] && [ -z "$STICHTAG" ]; then
   case "$hvd" in
     "") ;;
     *" seit "*) hvd="${hvd#* seit }"; hvd="${hvd%%[!0-9-]*}"
@@ -810,7 +894,8 @@ fi
 
 # --- Pass 1b: Nachbar-Repos aus §Komponenten (nur Projekt-Modus) -----------
 # Datensätze: OWN repo | NBOK repo pfad | NBX repo grund |
-#             N repo <FILE|FM|FML|QL|MK|RF|ID …>  (Nachbar-Daten)
+#             N repo <FILE|FM|FML|QL|MK|RF|ID …>  (Nachbar-Daten) |
+#             N repo OUT dateiname  (Stand-Datei in output/ des Nachbarn)
 if [ "$MODE" = projekt ]; then
   ROOT_ABS=$(cd "$ROOT" && pwd -P)
   awk -F '\t' '$1 == "KP" { print $4 "\t" $5 }' "$DATA" | sort -u > "$TMP/kp"
@@ -831,6 +916,12 @@ if [ "$MODE" = projekt ]; then
     printf 'NBOK\t%s\t%s\n' "$repo" "$pa" >> "$TMP/nb"
     extract "$TMP/nlist" "" | awk -F '\t' -v R="$repo" \
       '$1 ~ /^(FILE|FM|FML|QL|MK|RF|ID)$/ { print "N\t" R "\t" $0 }' >> "$TMP/nb"
+    # Stand-Dateien direkt in output/ des Nachbarn, nur die Namen: Quell-Stände
+    # über Repo-Grenzen in `herkunft` (`<repo>/<Dateiname mit Version>`,
+    # Einfrieren-und-Abloesen §Stand) werden auf Vorhandensein geprüft
+    for f in "$pa"/output/*.md; do
+      [ -f "$f" ] && printf 'N\t%s\tOUT\t%s\n' "$repo" "${f##*/}"
+    done >> "$TMP/nb"
   done < "$TMP/kp"
   cat "$TMP/nb" >> "$DATA"
 fi
@@ -1123,27 +1214,66 @@ function nachfolger_gilt(g0, M,   mi, m2, q, r0, z, sarr3) {
 # output/ und Endung `.md` werden abgestreift
 function standname(x,  p) {
   x = trim(x); gsub(/`/, "", x)
-  if (x ~ /^\[\[.*\]\]$/) { x = substr(x, 3, length(x) - 4); p = index(x, "|"); if (p > 0) x = substr(x, 1, p - 1) }
+  # Wikilink, auch nach der Frontmatter-Lesung mit einem Klammerpaar weniger
+  if (x ~ /^\[.*\]$/) { sub(/^\[+/, "", x); sub(/\]+$/, "", x); p = index(x, "|"); if (p > 0) x = substr(x, 1, p - 1) }
   sub(/^.*\//, "", x); sub(/\.md$/, "", x)
   return trim(x)
 }
-# Stand-Datei eines nachgetragenen Deploy-Stands (Zielmarken §Meta, Nachtrag)
-# und des Vermerks „Umgesetzt mit Stand …“ einer Fix-Anforderung auf einen
-# Deploy: x ist der Dateiname (`<Datum> - Deploy-Stand - <Umgebung>_VV_TLA`)
-# in einer der Schreibweisen von `standname()` oder nur die Version `VV_TLA`
-# — dann die einzige Stand-Datei mit dieser Version und ⟨Artefakt⟩
-# „Deploy-Stand“; tragen mehrere Deploy-Stände die Version, ist das Ergebnis
-# leer und `ntamb` gesetzt (die Meldung sagt dann „nicht eindeutig“)
-function nachtragstand(x,  ff, b, vers, nc, cand) {
+# Stand-Datei eines nachgetragenen Stands (Zielmarken §Meta, Nachtrag:
+# Deploy-Stand oder Doku-Stand) und des Vermerks „Umgesetzt mit Stand …“ einer
+# Fix-Anforderung auf einen Deploy: x ist der Dateiname (`<Datum> -
+# <Dokumentname>[ - <Umgebung>]_VV_TLA`) in einer der Schreibweisen von
+# `standname()` oder nur die Version `VV_TLA` — dann die einzige Stand-Datei
+# mit dieser Version und ⟨Artefakt⟩ a; tragen mehrere Stände dieses
+# ⟨Artefakts⟩ die Version, ist das Ergebnis leer und `ntamb` gesetzt (die
+# Meldung sagt dann „nicht eindeutig“)
+function nachtragstand(x, a,  ff, b, vers, nc, cand) {
   ntamb = 0; x = standname(x)
   vers = x; if (!match(vers, /[0-9][0-9]+_[A-Za-z][A-Za-z][A-Za-z]$/)) return ""
   vers = substr(vers, RSTART); nc = 0; cand = ""
   for (ff in stand) {
     b = base(ff); if (b == x) return ff
-    if (substr(b, length(b) - length(vers)) == "_" vers && artefakt_passt("Deploy-Stand", ff)) { cand = ff; nc++ }
+    if (substr(b, length(b) - length(vers)) == "_" vers && artefakt_passt(a, ff)) { cand = ff; nc++ }
   }
   if (nc > 1) ntamb = 1
   return (nc == 1) ? cand : ""
+}
+# Verzicht auf die Phase k zu Marke M (Kettenpruefung §Lint-Anteil, Verzicht):
+# Schlüssel Marke und Phase; bei P15 (Betriebs-Anleitung) Marke, Phase und
+# Umgebung u — oder der Verzicht für alle Umgebungen (`*`: eine vor dem
+# Upgrade 2.0 → 2.1 angenommene Verzichts-DEC auf die alte P13 Betreiben
+# ohne `umgebung:`, W6). u leer: jeder Verzicht auf P15 zählt
+function verz(M, k, u) {
+  if ((M, "P" k) in verzicht) return 1
+  if (k != 15) return 0
+  if ((M, "P15", "*") in verzicht) return 1
+  if (u == "") return ((M, "P15") in vzany)
+  return ((M, "P15", u) in verzicht)
+}
+# Aus einer Tab-Liste von Stand-Dateien (wie `freif`) die der Umgebung u
+# (`umgvon`; Einträge `-` ohne Datei entfallen)
+function freienv(lst, u,  n2, j, fa2, l) {
+  n2 = split(lst, fa2, "\t"); l = ""
+  for (j = 1; j <= n2; j++) if (fa2[j] != "" && fa2[j] != "-" && umgvon(fa2[j]) == u) l = l "\t" fa2[j]
+  return l
+}
+# Pflicht-Stand der Phase k je Umgebung (Deploy-Stand P13, Betriebs-Anleitung
+# P15) für Marke M und Umgebung u vorhanden — eigene Freigabe (Eintrag oder
+# Nachtrag) oder aus einer Vormarke übernommen (für M nicht überholt;
+# Marken-Regel wie `freigilt`)? ALTM2: die Vormarke, deren Stand für M
+# überholt ist (Meldung mit Grund)
+function vorg_env(M, k, u,   mi, mm, M2, fl2, n2, fa, j) {
+  ALTM2 = ""
+  if (((M, k) in frei) && freienv(freif[M, k], u) != "") return 1
+  mi = midx(M)
+  if (mi > 0) for (mm = mi - 1; mm >= 1; mm--) {
+    M2 = markn[mm]; if ((M2 in sackg) || !((M2, k) in frei)) continue
+    fl2 = freienv(freigilt(M2, k, M), u); if (fl2 == "") continue
+    n2 = split(fl2, fa, "\t")
+    for (j = 1; j <= n2; j++) if (fa[j] != "" && ueberholt(fa[j], M) == "") return 1
+    if (ALTM2 == "") ALTM2 = M2
+  }
+  return 0
 }
 # Überholt-Regel mit Marken-Bezug (Einfrieren-und-Abloesen §Überholt-Regel):
 # Stand f ist für Marke M überholt, wenn ein verwiesenes Element abgelöst ist
@@ -1155,6 +1285,24 @@ function nachtragstand(x,  ff, b, vers, nc, cand) {
 # wird der Vorgänger als diese jüngste Version gelesen — der Abschluss-Stand
 # bleibt eingefroren und ist dadurch nicht überholt. Rückgabe: Grund oder ""
 # (Merker uebm, Zyklus-sicher).
+# Status-Wort im Namen eines versionierten Dokuments (MasterPrompt §3.9):
+# Ketten-ID nach kid(), Hinweis STAND-NAME.
+function stand_name(f,   dn) {
+  dn = kid(f)
+  if (tolower(dn) ~ /(^|[^a-zäöü])(entwurf|final|freigegeben)([^a-zäöü]|$)/) hin("STAND-NAME", f, "Status-Wort im Namen (Ketten-ID `" dn "`) — Namen versionierter Dokumente tragen keine Status-Wörter wie „Entwurf“, „final“ oder „freigegeben“; ob und wofür ein Stand freigegeben ist, steht nur im Freigabe-Eintrag (MasterPrompt §3.9)")
+}
+# Verweis-Satz je verwiesenem Element (Kettenpruefung §Lint-Anteil): f der
+# Stand, id das Element, t sein Typ (Knoten oder id-Format des Präfix), cs
+# sein Status (Fassade kanonisch). Fehler am freigegebenen Stand; Hinweis an
+# der vorgelegten Version (Form (b) ohne Ausweis; Form (a) immer).
+function stand_offen(f, id, t, cs,   sz) {
+  if (cs != "offen" && cs != "aufgeschoben") return
+  if (fw(clinh(t, "Freeze ab")) != "angenommen") return
+  sz = fw(clinh(t, "Sammelzustand"))
+  if (f in freist) err("STAND-OFFEN", f, id " hat Status `" cs "` — ein freigegebener Stand verweist nur auf Eingefrorenes (Einfrieren-und-Abloesen §Zweck); mit der Freigabe nimmt der Agent verwiesene `offen`e Elemente an (Lebenslauf-eines-Stands Schritt 7)")
+  else if (sz == "offen" && cs == "offen") { if (!((f, id) in soff)) hin("STAND-OFFEN", f, id " ist `offen` und in der Zeile „Offen (Annahme im Freigabe-Zug): …“ unter dem Titel nicht ausgewiesen — eine vorgelegte Version weist verwiesene `offen`e Elemente der beschreibenden Register aus (Einfrieren-und-Abloesen §Ableitungsprüfung)") }
+  else hin("STAND-OFFEN", f, id " hat Status `" cs "` (Sammel-Register mit `aufgeschoben`) — vor der Bildung annehmen, weglassen (Zeile „Nicht berücksichtigt (offen): …“) oder Momentaufnahme (Einfrieren-und-Abloesen §Ableitungsprüfung); so nicht freigabefähig")
+}
 function ueberholt(f, M,   key, j, g0, n, i, w, p, r, harr, q) {
   key = f SUBSEP M
   if (key in uebm) return uebm[key]
@@ -1198,16 +1346,30 @@ function katzweck(t,  v, p, q) {
 }
 # Phasen-Angaben `Pn` eines Zwecks als „ P5 P6 “ (leer: „ “)
 function phasen(s,  out) { out = " "; while (match(s, /P[0-9]+/)) { out = out substr(s, RSTART, RLENGTH) " "; s = substr(s, RSTART + RLENGTH) }; return out }
+# Tätigkeitsname eines Zwecks (Vorgehen.md §3: „Ausliefern“, „Betreiben“ …):
+# der Zweck ohne seine Phasen-Angaben, klein; leer bei „für P2/P3“, „für P8“
+function taetigkeit(s,  v) {
+  v = s; gsub(/P[0-9]+/, "", v); gsub(/\//, " ", v); gsub(/[ \t]+/, " ", v); v = trim(v); sub(/[.,;:]+$/, "", v)
+  return tolower(trim(v))
+}
 # Zweck gegen den Katalog-Zweck (Entscheidungen Meta „Freigabe-Einträge“): an der Phasen-Angabe
-# gelesen — eine genannte Phase des Eintrags trifft eine des Katalogs; ohne
+# gelesen — eine genannte Phase des Eintrags trifft eine des Katalogs; trifft
+# keine und ist der Eintrag Bestand (alt = 1: vor dem Stichtag angelegt), am
+# Tätigkeitsnamen (Kettenpruefung §Lint-Anteil: ein eingefrorener Eintrag aus
+# einem 2.0-Projekt trägt „für P11 Ausliefern“ und liest sich als P13
+# Ausliefern, „für P13 Betreiben“ als P15 Betreiben — die Nummer wird dann
+# nicht gelesen); ein Eintrag ab dem Stichtag nennt Nummer und Tätigkeitsname
+# in der neuen Zählung, eine falsche Nummer bleibt ein Zweck-Hinweis; ohne
 # Phasen-Angabe im Katalog (Übergabe, Abschluss-Stand) Präfix-Vergleich
-function zweckpasst(t, z,  zw, zpk, zpz, n, i, zarr) {
+function zweckpasst(t, z, alt,  zw, zpk, zpz, n, i, zarr, tk) {
   zw = katzweck(t); if (zw == "") return 0
   zpk = phasen(zw); zpz = phasen(z)
   if (zpk != " " && zpz != " ") {
     n = split(trim(zpz), zarr, " ")
     for (i = 1; i <= n; i++) if (index(zpk, " " zarr[i] " ") > 0) return 1
-    return 0
+    if (!alt) return 0
+    tk = taetigkeit(zw)
+    return (tk != "" && tk == taetigkeit(z))
   }
   return (substr(z, 1, length(zw)) == zw)
 }
@@ -1301,6 +1463,12 @@ function eintragdatum(f, id,  v) {
   return ""
 }
 function eintragbestand(f, id,  d) { if (STICHTAG == "") return 1; d = eintragdatum(f, id); if (d == "") return 1; return (d < STICHTAG) }
+# Ist ein Freigabe-Eintrag Bestand (vor dem Stichtag angelegt) — für die
+# Lesung des Zwecks am Tätigkeitsnamen: die Zeile `Angelegt` (Anlage-Datum,
+# Katalog §Typ-Konventionen), nur ohne sie das Datum des Eintrags (`Datum`,
+# Status-Zeile — der letzte Statuswechsel, auch nach dem Upgrade); ohne
+# Datum Bestand
+function freialt(f, id,  d) { if (STICHTAG == "") return 1; d = eintraganlage(f, id); if (d == "") d = eintragdatum(f, id); if (d == "") return 1; return (d < STICHTAG) }
 # Anlage-Datum eines Register-Eintrags ohne Detail-Knoten (Katalog
 # §Typ-Konventionen, Stichtags-Feld): Zeile `- **Angelegt:** YYYY-MM-DD`
 # (auch `angelegt`); "" wenn fehlend oder nicht im Format
@@ -1346,7 +1514,7 @@ function wirkfrei(Mx, k,  idx, l) {
   WFM = ""
   for (idx = midx(Mx); idx >= 1; idx--) {
     if (idx != midx(Mx) && (markn[idx] in sackg)) continue
-    if ((markn[idx], "P" k) in verzicht) return ""
+    if (verz(markn[idx], k, "")) return ""
     if ((markn[idx], k) in frei) {
       l = freigilt(markn[idx], k, Mx); if (l == "") continue
       WFM = markn[idx]; return l
@@ -1449,7 +1617,7 @@ $1 == "MKZ" { if (!($3 in mkz)) mkz[$3] = $4; else mkzdup[$3] = 1; next }
 $1 == "MKZX" { if (!($3 in mkzx)) mkzx[$3] = $4; next }
 $1 == "MKW" { if (!($3 in mkw)) mkw[$3] = $4; next }
 $1 == "MKT" { if ($5 != "") { tagk[$3] = $5; tagx[$3] = tagx[$3] "\t" $4 "\t" $5; if ($7 != "") { tagfn[$3] = $7; tagfm[$3] = $8 } } else tagkx[$3] = $6; mktf[$3] = $2; mktl[$3] = $6; next }
-$1 == "MKD" { mkd[++nmkd] = $2 "\t" $3 "\t" $4 "\t" $5 "\t" $6 "\t" $7 "\t" $8; next }
+$1 == "MKD" { mkd[++nmkd] = $2 "\t" $3 "\t" $4 "\t" $5 "\t" $6 "\t" $7 "\t" $8 "\t" $9 "\t" $10; next }
 $1 == "ABM" { if (!($2 in abm)) { abm[$2] = $4; abme[$2] = $3 } ; next }
 $1 == "ZMV" { if ($3 == "") { if (!($2 in zmv)) zmv[$2] = $4 } else if (!(($2, $3) in zmve)) zmve[$2, $3] = $4; next }
 $1 == "FXV" { if ($3 == "" && !($2 in fxv)) { fxv[$2] = $4; fxvm[$2] = $5 } ; next }
@@ -1457,6 +1625,9 @@ $1 == "MKR" { if (ruhe == "") { ruhe = $4; ruhef = $2; ruhel = $3 } ; next }
 $1 == "MKF" { mkf[++nmkf] = $2 "\t" $3 "\t" $4; nmkfr++; next }
 $1 == "QL" { ql[++nql] = $2 "\t" $3 "\t" $4; qlref[$4] = 1; next }
 $1 == "SREF" { if (!(($2, $3) in srefseen)) { srefseen[$2, $3] = 1; sref[++nsref] = $2 "\t" $3 } ; next }
+$1 == "SOFF" { soff[$2, $3] = 1; next }
+$1 == "SNB" { snb[$2, $3] = 1; next }
+$1 == "OVN" { ovn[$2] = 1; next }
 $1 == "OWN" { OWN = $2; ownrow = 1; next }
 $1 == "NBOK" { nbok[$2] = $3; next }
 $1 == "NBX" { nbx[$2] = $3; next }
@@ -1470,6 +1641,7 @@ $1 == "N" {
   else if ($3 == "MK") nbmark[r, $5] = 1
   else if ($3 == "RF") { if (!((r, $5, $6) in nrf)) nrf[r, $5, $6] = $7 }
   else if ($3 == "ID") { if (!((r, $4, "id") in nfm) && !((r, $6) in nbreg)) nbreg[r, $6] = $4 }
+  else if ($3 == "OUT") nbout[r, $4] = 1
   next
 }
 END {
@@ -1539,7 +1711,7 @@ END {
     }
     # Werte (Lese-Regel a)
     if ((t, "Freeze ab") in clv) { v = fw(clv[t, "Freeze ab"]); if (v != "Anlage" && v != "angenommen" && v != "Abschluss") katerr("KAT-WERT", f, "Abschnitt `" t "`: Freeze ab `" v "` (Anlage | angenommen | Abschluss)") }
-    if ((t, "Sammelzustand") in clv) { v = fw(clv[t, "Sammelzustand"]); if (v != "ja" && v != "nein") katerr("KAT-WERT", f, "Abschnitt `" t "`: Sammelzustand `" v "` (ja | nein)") }
+    if ((t, "Sammelzustand") in clv) { v = fw(clv[t, "Sammelzustand"]); if (v != "ja" && v != "offen" && v != "nein") katerr("KAT-WERT", f, "Abschnitt `" t "`: Sammelzustand `" v "` (ja | offen | nein)") }
     if (kd == 5) {
       v = fw(clv[t, "Phase"]); if (v != "" && v !~ /^P[0-9]+$/ && v != "Marken-Abschluss" && v != "—") katerr("KAT-WERT", f, "Abschnitt `" t "`: Phase `" v "` (P<n> | Marken-Abschluss | —)")
       vb = fw(clv[t, "Verbindlichkeit"]); if (vb != "" && vb != "pflicht" && vb != "optional") katerr("KAT-WERT", f, "Abschnitt `" t "`: Verbindlichkeit `" vb "` (pflicht | optional)")
@@ -1547,11 +1719,20 @@ END {
       grad[t] = gr; verb[t] = vb
       v = trim(clv[t, "Auslöser"]); if (v != "" && v !~ /^Standard/ && v !~ /^Angebots-Auslöser:/ && v !~ /^eigener Auslöser:/) katerr("KAT-WERT", f, "Abschnitt `" t "`: Auslöser beginnt nicht mit `Standard`, `Angebots-Auslöser:` oder `eigener Auslöser:`")
       if (vb == "pflicht" && index(clv[t, "Zweck"], "„für") == 0) katerr("KAT-WERT", f, "Abschnitt `" t "`: Zweck eines Pflicht-Stands ohne Freigabe-Zweck „für …“ (Lese-Regel b)")
-      # Herkunftszeile (Einfrieren-und-Abloesen §Stand): wiki-verweisende Stände
-      # tragen marke, datum, zweck, herkunft; selbsttragende marke, quell_stand
-      need = (gr == "selbsttragend") ? "marke quell_stand" : (gr == "wiki-verweisend") ? "marke zweck herkunft datum" : ""
+      # Herkunftszeile (Einfrieren-und-Abloesen §Stand): Stände beider Grade
+      # tragen marke, datum, zweck, herkunft; eine selbsttragende Ableitung
+      # marke, quell_stand. Ein selbsttragender Stand (Doku-Glieder der Kette)
+      # ist ein Pflicht-Stand mit Phase `Pn` — Verbindlichkeit pflicht —; ein
+      # optionaler selbsttragender Typ ist ein Stand, wenn seine
+      # Pflichtfeld-Zeile `herkunft` nennt, sonst eine Ableitung
+      selbst[t] = (gr == "selbsttragend" && (vb == "pflicht" || index("," cp[t], ",herkunft|") > 0))
+      need = (gr == "selbsttragend" && !selbst[t]) ? "marke quell_stand" : (gr != "") ? "marke zweck herkunft datum" : ""
       k = split(need, narr, " ")
-      for (j = 1; j <= k; j++) if (index("," cp[t], "," narr[j] "|") == 0) katerr("KAT-ZEILE", f, "Abschnitt `" t "`: Pflichtfeld `" narr[j] "` der Herkunftszeile fehlt (Grad " gr ")")
+      for (j = 1; j <= k; j++) if (index("," cp[t], "," narr[j] "|") == 0) katerr("KAT-ZEILE", f, "Abschnitt `" t "`: Pflichtfeld `" narr[j] "` der Herkunftszeile fehlt (Grad " gr (selbst[t] ? ", Stand" : (gr == "selbsttragend") ? ", Ableitung" : "") ")")
+      # Stand je Umgebung (Deploy-Stand, Betriebs-Anleitung): `umgebung` in
+      # der Pflichtfeld-Zeile — Schlüssel Marke/Phase/Umgebung in Freigabe,
+      # Nachtrag und Verzicht
+      hatumg[t] = (index("," cp[t], ",umgebung|") > 0 || t == "deploy-stand")
     }
     if (kd == 1) {
       v = trim(clv[t, "Präfix"])
@@ -1618,6 +1799,15 @@ END {
       }
     }
   }
+  # Pflicht-Phasen des Prozesses aus den Dokumenttyp-Einträgen mit Phase `Pn`
+  # (Freigabe-Ordnung, unten): `ppt[k]` die Pflicht-Dokumenttypen der Phase k,
+  # `maxph` die höchste Pflicht-Phase (der Abschluss-Stand, Phase 99, zählt
+  # nicht als Prozess-Phase); der Tag ist Pflicht-Glied P9, sobald eine
+  # Pflicht-Phase ab P10 existiert. Ohne Prozess (`maxph` 0) gibt es keine
+  # Freigabe-Ordnung.
+  maxph = 0
+  for (t in verb) if (verb[t] == "pflicht" && kind[t] == 5) { k = phnum(t); if (k > 0) { ppt[k] = ppt[k] (ppt[k] == "" ? "" : ", ") t; if (k > maxph && k < 99) maxph = k } }
+  if (maxph >= 10 && !(9 in ppt)) ppt[9] = "Tag der Implementierung"
   # --- Pflicht-Fassaden (Wiki.md §3a „mandatory“): in jedem Projekt
   # vorhanden und aktiv, mit und ohne Prozess — Zielmarken und
   # Entscheidungen, weil die Marke der Zwischenziel-Anker jeder Projektart
@@ -1853,10 +2043,14 @@ END {
         befund("LISTE", f, "`" fld ":` als Einzelwert statt Liste")
     }
     if (f in altform) { if (!bestand(f)) err("ABLOESUNG-ALTFORM", f, "`superseded-by:` (alte Form) statt `superseded_by:`") }
-    # Sammelzustand nein: kein offen/aufgeschoben, kein trigger
+    # Sammelzustand nein: kein offen/aufgeschoben, kein trigger; Sammelzustand
+    # offen (beschreibende Register, Einfrieren-und-Abloesen §Eintrittsregel):
+    # `offen` als Vorstatus, aber kein aufgeschoben und kein trigger
     sz = fw(clinh(t, "Sammelzustand")); st = stat(f)
     if (sz == "nein" && (st == "offen" || st == "aufgeschoben" || ((f, "trigger") in fm)))
       befund("SAMMELZUSTAND", f, "`" t "` hat keinen Sammelzustand (Eintritts-Register): " (((f, "trigger") in fm) ? "`trigger:` gesetzt" : "Status `" st "`"))
+    if (sz == "offen" && (st == "aufgeschoben" || ((f, "trigger") in fm)))
+      befund("SAMMELZUSTAND", f, "`" t "` hat den Sammelzustand `offen` ohne `aufgeschoben` (beschreibendes Register, Einfrieren-und-Abloesen §Eintrittsregel): " (((f, "trigger") in fm) ? "`trigger:` gesetzt" : "Status `" st "`"))
     # Nachweise tragen keine zielmarke
     if (fw(clinh(t, "Klasse")) == "Nachweis" && ((f, "zielmarke") in fm))
       befund("ZIELMARKE-NACHWEIS", f, "Nachweis (`" t "`) trägt `zielmarke:` — abgeleitete Nachweise tragen die Marke als Herkunft")
@@ -2043,22 +2237,58 @@ END {
         }
       }
     }
-    # Herkunftszeile: Format von `herkunft`, Marke abgeleiteter Nachweise
+    # Herkunftszeile: Format von `herkunft`, Marke abgeleiteter Nachweise;
+    # ein Bezug über Repo-Grenzen (`<repo>/<Dateiname mit Version>`,
+    # Einfrieren-und-Abloesen §Stand — etwa die Entwickler-Doku-Stände der
+    # Komponenten als Quell-Stände der Gesamtsicht des Koordinators, SP-1
+    # Katalog-Entwickler-Doku) wird beim gelesenen Nachbarn auf Vorhandensein
+    # in dessen output/ geprüft (Hinweis), ohne Lesezugriff ein Hinweis
+    # OHNE-ZUGRIFF (wie bei `<koordinator>/FUNC-NNN`)
     if ((f, "herkunft") in fm) {
-      m = vals(f, "herkunft", varr)
+      m = vals(f, "herkunft", varr); hkq = 0
       for (i = 1; i <= m; i++) {
         w = varr[i]
         if (bn(w) ~ /_[0-9][0-9][0-9]*_[A-Za-z][A-Za-z][A-Za-z]\.[A-Za-z0-9]+$/ || w ~ /\.md$/) {
           if (bn(w) !~ /_[0-9][0-9][0-9]*_[A-Za-z][A-Za-z][A-Za-z]\.[A-Za-z0-9]+$/) { err("HERKUNFT", f, "`herkunft`: `" w "` — Stand ohne `_VV_TLA` im Dateinamen"); continue }
-          if (index(w, "/") == 0 && isout(f) && kid(w) == kid(f)) { err("HERKUNFT", f, "`herkunft`: `" w "` ist eine Version dieses Stands (gleiche Ketten-ID) — kein Vorgänger-Stand; die Nachfolge zeigt die Freigabe-DEC mit `supersedes:`"); continue }
-          if (index(w, "/") == 0 && OUTP != "" && !((OUTP w) in files)) hin("HERKUNFT", f, "`herkunft`: Stand `" w "` nicht in output/")
+          if (index(w, "/") > 0) {
+            hkr = substr(w, 1, index(w, "/") - 1); hkn = substr(w, index(w, "/") + 1)
+            if (hkr == OWN && OWN != "") { if (OUTP != "" && !((OUTP hkn) in files)) hin("HERKUNFT", f, "`herkunft`: Stand `" hkn "` (Qualifizierer `" hkr "` ist das eigene Repo) nicht in output/") }
+            else if (hkr in nbok) { if (!((hkr, hkn) in nbout)) hin("HERKUNFT", f, "`herkunft`: Stand `" hkn "` nicht in output/ von `" hkr "` (Quell-Stand über Repo-Grenzen, Einfrieren-und-Abloesen §Stand)") }
+            else if (MODE == "projekt") ohnezugriff(hkr, f, "Quell-Stände in `herkunft`")
+            continue
+          }
+          if (isout(f) && kid(w) == kid(f)) { err("HERKUNFT", f, "`herkunft`: `" w "` ist eine Version dieses Stands (gleiche Ketten-ID) — kein Vorgänger-Stand; die Nachfolge zeigt die Freigabe-DEC mit `supersedes:`"); continue }
+          if (OUTP != "" && !((OUTP w) in files)) hin("HERKUNFT", f, "`herkunft`: Stand `" w "` nicht in output/")
           if (ftype[f] == "test-report" && ((OUTP w) in files) && fmget(OUTP w, "type") == "testplan") {
             if (trim(fmget(OUTP w, "marke")) != trim(fmget(f, "marke"))) err("MARKE-HERKUNFT", f, "`marke: " fmget(f, "marke") "`, Testplan-Stand " w " hat `" fmget(OUTP w, "marke") "`")
+          }
+          # Quell-Stand eines selbsttragenden Stands je Umgebung (Betriebs-Anleitung):
+          # der Deploy-Stand seiner Umgebung — Marke aus ihm, Umgebung gleich
+          if (isout(f) && kind[t] == 5 && selbst[t] && hatumg[t] && ((OUTP w) in files) && (ftype[OUTP w] in hatumg) && hatumg[ftype[OUTP w]] && !selbst[ftype[OUTP w]]) {
+            hkq++
+            if (trim(fmget(OUTP w, "marke")) != trim(fmget(f, "marke"))) err("MARKE-HERKUNFT", f, "`marke: " fmget(f, "marke") "` weicht von der Marke des Quell-Stands " w " (`" fmget(OUTP w, "marke") "`) ab — `marke` kommt aus dem Deploy-Stand (SP-1 Katalog-Betriebs-Anleitung)")
+            if (umgvon(OUTP w) != umgvon(f)) hin("HERKUNFT", f, "`herkunft`: Quell-Stand " w " gehört zur Umgebung „" umgvon(OUTP w) "“, dieser Stand zur Umgebung „" umgvon(f) "“ — Quell-Stand ist der Deploy-Stand derselben Umgebung (SP-1 Katalog-Betriebs-Anleitung)")
           }
         } else if (w ~ /^[A-Z][A-Z]+-[0-9]+$/ && (idpfx(w) in prefixes)) {   # sonst Tag-Name (z.B. `RC-1`)
           if (idpfx(w) != "TRES") { err("HERKUNFT", f, "`herkunft`: `" w "` — als ID ist nur ein Testbericht (TRES-NNN) vorgesehen"); continue }
           if (resolve(w) == "") err("HERKUNFT", f, "`herkunft`: `" w "` — kein Knoten mit dieser id")
         }
+      }
+      if (isout(f) && kind[t] == 5 && selbst[t] && hatumg[t] && hkq == 0) hin("HERKUNFT", f, "`herkunft` nennt keinen Deploy-Stand — Quell-Stand und Vorbedingung eines selbsttragenden Stands je Umgebung ist der freigegebene Deploy-Stand seiner Umgebung mit Version (SP-1 Katalog-Betriebs-Anleitung; Einfrieren-und-Abloesen §Stand)")
+    }
+    # Änderungsdokument (Kettenpruefung §Regel; Doku-Abfrage, Dimension Form):
+    # das Kopf-Feld `basis` nennt die Vollfassung — eine Stand-Datei mit
+    # Version in der Form des Felds „Verweise“ eines Freigabe-Eintrags
+    # (Dateiname mit oder ohne `.md`, Wikilink, Pfad unter output/), vom
+    # selben Dokumenttyp; gelesen als Verweis auf die Stand-Datei (`basisf`)
+    if (isout(f) && kind[t] == 5 && ((f, "basis") in fm) && trim(fm[f, "basis"]) != "") {
+      bw = trim(fm[f, "basis"]); bsn = standname(bw)
+      if (bsn !~ /_[0-9][0-9][0-9]*_[A-Za-z][A-Za-z][A-Za-z]$/) hin("HERKUNFT", f, "`basis: " bw "` — die Vollfassung eines Änderungsdokuments ist eine Stand-Datei mit Version `_VV_TLA` (Form wie im Feld „Verweise“ eines Freigabe-Eintrags; Kettenpruefung §Regel, Änderungsdokument)")
+      else if (OUTP != "" && !((OUTP bsn ".md") in files)) hin("HERKUNFT", f, "`basis: " bw "` — Vollfassung `" bsn ".md` nicht in output/ (Änderungsdokument, Kettenpruefung §Regel)")
+      else if (OUTP != "") {
+        g0 = OUTP bsn ".md"; basisf[f] = g0
+        if (g0 == f) hin("HERKUNFT", f, "`basis: " bw "` nennt diesen Stand selbst — die Vollfassung ist ein anderer Stand desselben Dokumenttyps")
+        else if (ftype[g0] != t) hin("HERKUNFT", f, "`basis: " bw "` — die Vollfassung ist `" ftype[g0] "`, dieser Stand `" t "`; ein Änderungsdokument bezieht sich auf die Vollfassung desselben Dokumenttyps (Kettenpruefung §Regel, Änderungsdokument)")
       }
     }
     if (grad[t] == "selbsttragend" && isout(f) && ((f, "quell_stand") in fm)) {
@@ -2100,8 +2330,9 @@ END {
   # Repo-Name); die Zeile des Koordinators, bekannte Nachbarn und die eigene
   # Zeile zählen nicht = „komponente und koordinator“ — P1–P4 wie eine
   # Komponente, P5–P6 und die Lieferungen wie ein Koordinator, Kette bis
-  # P10 (P11/DEPL nur mit eigener Zielumgebung). Der Übergabe-Stand ist der
-  # Beleg; das erkannte eigene Repo ist dafür nicht nötig
+  # P11 (Entwickler-Doku für den Teilbaum; P12, P13/DEPL und P15 nur mit
+  # eigener Zielumgebung). Der Übergabe-Stand ist der Beleg; das erkannte
+  # eigene Repo ist dafür nicht nötig
   rolle = (nmkfr > 0) ? "komponente" : (nkp == 0) ? "standalone" : (OWN == "") ? "unbekannt" : "koordinator"
   if (rolle == "koordinator" && nkp == 1 && ownrow) rolle = "standalone"
   for (f in stand) if (stand[f] == "uebergabe") { kk = trim(fmget(f, "komponente")); if (kk == "") kk = gegenstand(f); if (kk != "") uebany[kanon(kk)] = 1 }
@@ -2242,14 +2473,45 @@ END {
     # `zielmarke:` ohne `phase:` ist kein Fehler: mit Prozess ein Hinweis
     # (unten, sobald bekannt ist, ob es Phasen gibt); ohne Prozess ist das
     # die Form des Verzichts auf „Tests grün“ (Kettenpruefung §Kette,
-    # Projekt ohne Prozess), den der Lint nicht liest — keine Meldung
+    # Projekt ohne Prozess), den der Lint nicht liest — keine Meldung.
+    # P15 (Betriebs-Anleitung) je Umgebung (Entscheidungen Meta
+    # „Verzichts-Einträge“): die DEC trägt zusätzlich `umgebung:` mit dem Namen
+    # aus den Zielumgebungen (geprüft wie DEPL-BEZUG), Schlüssel Marke, Phase
+    # und Umgebung; `phase: P15` ohne `umgebung:` ist kein Verzicht (Hinweis).
+    # Alte Nummern (Zuordnungstabelle 2.0 → 2.1 unter der `Vorher`-Zeile in
+    # Aktivierter-Prozess, Ausweis in `upgrade/2.0-nach-2.1.md`): eine vor dem
+    # Stichtag — dem Tag des Upgrades (Template-Stand „seit“) — angenommene
+    # Verzichts-DEC trägt `phase:` in den alten Nummern; führt der Katalog die
+    # Phase P15, liest der Lint sie über die Tabelle (alt P11 → P13, P12 →
+    # P14, P13 → P15) und sagt es als Hinweis; die alte P13 Betreiben ohne
+    # `umgebung:` gilt als Verzicht für alle Umgebungen ihrer Marke (W6)
     if (p == "DEC" && fw(fmget(f, "decision_type")) == "verzicht" && (stat(f) in AKTIV)) {
-      z = trim(fmget(f, "zielmarke")); vp = trim(fmget(f, "phase"))
-      if (vp != "" && vp !~ /^P[1-9][0-9]*$/) hin("VERZICHT", f, "`phase: " vp "` — erwartet genau eine Phase `Pn` (z.B. `P8`; keine führende Null, keine Liste); gilt nicht als Verzicht")
+      z = trim(fmget(f, "zielmarke")); vp = trim(fmget(f, "phase")); vu = trim(fmget(f, "umgebung")); valt = ""
+      if (vp ~ /^P1[123]$/ && (15 in ppt) && STICHTAG != "" && TSVER == "2.1") {
+        # Anlage-Datum: `datum:` des Knotens, sonst die Zeile `Angelegt` des
+        # Fassaden-Eintrags; ohne lesbares Datum keine Umlesung (Hinweis)
+        vd = trim(fmget(f, "datum")); if (vd !~ /^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]$/) vd = ""
+        if (vd == "" && (f in idof) && (idof[f] in regid)) vd = eintraganlage(regf[idof[f]], idof[f])
+        if (vd == "") hin("VERZICHT", f, "`phase: " vp "` einer Verzichts-DEC ohne lesbares Anlage-Datum (`datum:` des Knotens oder Zeile `Angelegt` des Eintrags) — ob sie vor dem Upgrade 2.0 → 2.1 (Stichtag " STICHTAG ") angenommen wurde und alte Nummern trägt, ist nicht lesbar; gelesen in der neuen Zählung")
+        else if (vd < STICHTAG) { valt = vp; vp = "P" (substr(vp, 2) + 2) }
+      }
+      if (vp != "" && vp !~ /^P[1-9][0-9]*$/) hin("VERZICHT", f, "`phase: " vp "` — erwartet genau eine Phase `Pn` (z.B. `P8`; keine führende Null, keine Liste — je Phase eine Verzichts-DEC, Entscheidungen Meta „Verzichts-Einträge“); gilt nicht als Verzicht")
       else if (vp == "P9") err("VERZICHT", f, "`phase: P9`" ((z != "") ? " zu Marke " z : " (ohne `zielmarke:`)") " — der Tag der Implementierung ist kein Stand und nicht verzichtbar; jedes Projekt hat ein Produkt, das der Tag markiert (Kettenpruefung §Fehlende und vertretene Glieder). Gilt nicht als Verzicht; die Tag-Bedingung des Testplan-Stands bleibt")
       else if (z == "") hin("VERZICHT", f, "Verzichts-DEC ohne `zielmarke:`" ((vp == "") ? " und `phase:`" : "") " — ohne `zielmarke:` gilt kein Verzicht (Kettenpruefung §Lint-Anteil; das Feld ist seit 2.0 Pflicht, fehlend meldet die Feld-Prüfung)")
       else if (vp == "") vzop[f] = z
-      else verzicht[z, vp] = 1
+      else if (vp == "P15") {
+        if (valt != "") {
+          hin("VERZICHT", f, "`phase: " valt "` einer vor dem Stichtag " STICHTAG " angenommenen Verzichts-DEC zu Marke " z " — gelesen als P15 Betreiben (Zuordnungstabelle 2.0 → 2.1: alt P13 Betreiben → P15; Aktivierter-Prozess §Herkunft, `Vorher`)" ((vu == "") ? "; ohne `umgebung:` gilt der Verzicht für alle Umgebungen der Marke" : ""))
+          if (vu == "") { verzicht[z, "P15", "*"] = 1; vzany[z, "P15"] = 1 }
+        }
+        if (vu == "") { if (valt == "") hin("VERZICHT", f, "`phase: P15` zu Marke " z " ohne `umgebung:` — der Verzicht auf die Betriebs-Anleitung gilt je Umgebung: `umgebung:` mit dem Namen aus den Zielumgebungen (dasselbe Feld wie DEPL), je Umgebung eine DEC; so gilt kein Verzicht, eine ablösende DEC mit dem Feld heilt es (Kettenpruefung §Lint-Anteil, Verzicht; Entscheidungen Meta „Verzichts-Einträge“)") }
+        else if (nenv > 0 && !(vu in env)) err("VERZICHT", f, "`umgebung: " vu "` — keine Umgebung dieses Namens in den Zielumgebungen (geprüft wie DEPL-BEZUG); gilt nicht als Verzicht auf die Betriebs-Anleitung")
+        else { verzicht[z, "P15", vu] = 1; vzany[z, "P15"] = 1 }
+      }
+      else {
+        if (valt != "") hin("VERZICHT", f, "`phase: " valt "` einer vor dem Stichtag " STICHTAG " angenommenen Verzichts-DEC zu Marke " z " — gelesen als " vp " (Zuordnungstabelle 2.0 → 2.1: alt P11 Ausliefern → P13, alt P12 Produzieren → P14; Aktivierter-Prozess §Herkunft, `Vorher`)")
+        verzicht[z, vp] = 1
+      }
     }
   }
   for (i = 1; i <= nsref; i++) { split(sref[i], s2, "\t"); if ((s2[1] in stand) && stand[s2[1]] == "uebergabe") delegiert[s2[2]] = 1 }
@@ -2275,7 +2537,7 @@ END {
       fxs = stat(f)
       if (f in fxv) {
         if (OUTP != "") {
-          fxf = nachtragstand(fxv[f])
+          fxf = nachtragstand(fxv[f], "Deploy-Stand")
           if (fxf == "" && ntamb) hin("FIX-DEPLOY", f, id ": Vermerk „Umgesetzt mit Stand " fxv[f] " von Deploy-Stand“ — Stand-Datei zu Version `" standname(fxv[f]) "` nicht eindeutig, mehrere Deploy-Stände verschiedener Umgebungen tragen sie; der Vermerk nennt die Datei (Anforderungen §Meta „Fehlerbehebungen“, Fix-Anforderung auf einen Deploy)")
           else if (fxf == "") hin("FIX-DEPLOY", f, id ": Vermerk „Umgesetzt mit Stand " fxv[f] " von Deploy-Stand“, aber keine Stand-Datei „" standname(fxv[f]) "“ (Deploy-Stand) in output/ — der Vermerk nennt den freigegebenen weiteren Deploy-Stand der Umgebung (Anforderungen §Meta „Fehlerbehebungen“, Fix-Anforderung auf einen Deploy)")
           else if (stand[fxf] != "deploy-stand") hin("FIX-DEPLOY", f, id ": der Vermerk „Umgesetzt mit Stand …“ nennt " bn(fxf) ", und das ist kein Deploy-Stand (Dokumenttyp `" stand[fxf] "`) — umgesetzt ist eine Fix-Anforderung auf einen Deploy mit der Freigabe des weiteren Deploy-Stands (Anforderungen §Meta „Fehlerbehebungen“)")
@@ -2335,12 +2597,24 @@ END {
     }
     if (narc == 0) befund("KETTE-CON", f, id ": `abgeleitet_von:` nennt kein ARC-Element (Katalog-Eintrag `contract`)")
   }
+  # --- Status-Wörter im Namen versionierter Dokumente (MasterPrompt §3.9):
+  # jede Datei direkt in output/ (Stände wie andere versionierte Dokumente,
+  # auch ohne `type:`) und jeder Name in overview/ (`ovn`, nur der Name) —
+  # Hinweis
+  for (f in files) if (isout(f)) stand_name(f)
+  for (f in ovn) stand_name(f)
   # --- Stände: überholt (für C5), Marken-Regel, Consumer-Verweise auf CON
   for (f in stand) {
     b = base(f); dn = b; vv = 0
     if (match(b, /_[0-9][0-9][0-9]*_[A-Za-z][A-Za-z][A-Za-z]$/)) { dn = substr(b, 1, RSTART - 1); split(substr(b, RSTART + 1), v2, "_"); vv = v2[1] + 0 }
     if (!(dn in neu) || vv > neu[dn]) { neu[dn] = vv; neuf[dn] = f }
   }
+  # Verweise eines Stands (SREF): `stref` die Elemente mit Detail-Knoten,
+  # `strid` die Register-IDs mit Fassaden-Eintrag ohne Knoten (Verweis-Satz,
+  # unten). Eine ID aus der Zeile „Nicht berücksichtigt (offen): …“ (`snb`)
+  # ist kein Verweis des Stands — Weggelassenes (Einfrieren-und-Abloesen
+  # §Ableitungsprüfung) zählt weder für den Verweis-Satz noch für die
+  # Marken-Regel oder die Überholt-Regel.
   for (i = 1; i <= nsref; i++) {
     split(sref[i], s2, "\t"); f = s2[1]; r = s2[2]
     if (!(f in stand)) continue
@@ -2358,7 +2632,15 @@ END {
       }
       continue
     }
-    g0 = resolve(r); if (g0 == "" || !(g0 in idof)) continue
+    g0 = resolve(r)
+    if (g0 == "") {
+      id = r; if (!match(id, /^[A-Z][A-Z]+-[0-9]+/)) continue
+      id = substr(id, RSTART, RLENGTH)
+      if ((id in regid) && !((f, id) in snb) && !((f, id) in stridseen)) { stridseen[f, id] = 1; strid[f, ++nstrid[f]] = id }
+      continue
+    }
+    if (!(g0 in idof)) continue
+    if ((f, idof[g0]) in snb) continue
     stref[f, ++nstref[f]] = g0
   }
   # überholt mit Marken-Bezug (Überholt-Regel): verwiesenes Element abgelöst
@@ -2437,9 +2719,7 @@ END {
   # seine Freigabe bestätigt ihn (Kettenpruefung §Kette, Projekt ohne
   # Prozess) — geprüft wird nur, ob jeder Abschluss-Stand eine Zeile mit
   # „Tag“ bzw. „Implementierung“ trägt (Hinweis).
-  maxph = 0
-  for (t in verb) if (verb[t] == "pflicht" && kind[t] == 5) { k = phnum(t); if (k > 0) { ppt[k] = ppt[k] (ppt[k] == "" ? "" : ", ") t; if (k > maxph && k < 99) maxph = k } }
-  if (maxph >= 10 && !(9 in ppt)) ppt[9] = "Tag der Implementierung"
+  # (Pflicht-Phasen `ppt` und `maxph`: oben nach dem Katalog)
   # Nachtrag „Tag korrigiert“ mit Prozess (Zielmarken §Meta, Nachtrag): der
   # Nachtrag trägt die neue Tag-Freigabe zu derselben Marke in der Formel;
   # sie zählt als Tag-Freigabe der Marke (P9), die alte Tag-Freigabe im
@@ -2503,7 +2783,7 @@ END {
       if (istag) { if (M != "" && index(phasen(z), " P10 ") > 0) { ph = 9; pfl = 1 } }
       else if (OUTP != "") {
         sf = standfile(f, id, x, a)
-        if (sf != "") { t = stand[sf]; fmm = trim(fmget(sf, "marke")); if (fmm != "") M = fmm; else if (M == "") M = inprog; ph = phnum(t); pfl = (verb[t] == "pflicht" && ph > 0 && zweckpasst(t, z)) }
+        if (sf != "") { t = stand[sf]; fmm = trim(fmget(sf, "marke")); if (fmm != "") M = fmm; else if (M == "") M = inprog; ph = phnum(t); pfl = (verb[t] == "pflicht" && ph > 0 && zweckpasst(t, z, freialt(f, id))) }
       }
       if (!pfl || M == "" || nachfolger_gilt(g0, M)) continue
       frei[M, ph] = 1; freif[M, ph] = freif[M, ph] "\t" (sf == "" ? "-" : sf)
@@ -2531,7 +2811,7 @@ END {
         if (!artefakt_passt(a, sf)) hin("FREIGABE-STAND", f, id ": ⟨Artefakt⟩ „" a "“ passt nicht zur Stand-Datei " bn(sf) " (Dokumenttyp `" t "`)")
         ph = phnum(t)
         pfl = (verb[t] == "pflicht" && ph > 0)
-        if (pfl && !zweckpasst(t, z)) { hin("FREIGABE-STAND", f, id ": Zweck „" z "“ passt nicht zum Katalog-Zweck „für " katzweck(t) "“ des Dokumenttyps `" t "` — nicht als Pflicht-Freigabe gezählt"); pfl = 0 }
+        if (pfl && !zweckpasst(t, z, freialt(f, id))) { hin("FREIGABE-STAND", f, id ": Zweck „" z "“ passt nicht zum Katalog-Zweck „für " katzweck(t) "“ des Dokumenttyps `" t "` (Nummer und Tätigkeitsname, Entscheidungen Meta „Freigabe-Einträge“) — nicht als Pflicht-Freigabe gezählt"); pfl = 0 }
       } else {
         if (OUTP != "" && !isver) hin("FREIGABE-STAND", f, id ": `" x "` ist weder eine Version `VV_TLA` noch ein Tag-Eintrag (⟨Artefakt⟩ „Implementierung“) — keine Stand-Datei, nicht als Pflicht-Freigabe gelesen")
         else if (OUTP != "") hin("FREIGABE-STAND", f, id ": keine Stand-Datei mit Version `" x "` zu „" a "“ in output/ — Marke aus dem Zusatz, Dokumenttyp und Ordnung nicht geprüft")
@@ -2556,11 +2836,11 @@ END {
     # der Lint die Datei nicht und sagt es als Hinweis — das Feld-Set nennt
     # die Stand-Datei (Entscheidungen Meta „Freigabe-Einträge“, Verweise)
     if (M != "" && sf != "") {
-      if (standeindeutig(f, id, x, a, sf)) { decfx[M, sf] = id; if (t == "deploy-stand") { decfu[M, umgvon(sf)] = id; decfs[M, umgvon(sf)] = sf } }
-      else if (t == "deploy-stand") {
+      if (standeindeutig(f, id, x, a, sf)) { decfx[M, sf] = id; if (hatumg[t]) { decfu[M, ph, umgvon(sf)] = id; decfs[M, ph, umgvon(sf)] = sf } }
+      else if (hatumg[t]) {
         u = standumg(x, a)
-        if (u != "") decfu[M, u] = id
-        else hin("FREIGABE-STAND", f, id ": Stand-Datei zu Version `" x "` nicht eindeutig — mehrere Deploy-Stände verschiedener Umgebungen tragen sie, und kein Feld des Eintrags nennt die Datei (Feld-Set „Verweise“: die Stand-Datei mit Version, Entscheidungen Meta „Freigabe-Einträge“); Abgleich mit einem Nachtrag für diesen Eintrag nicht geprüft")
+        if (u != "") decfu[M, ph, u] = id
+        else hin("FREIGABE-STAND", f, id ": Stand-Datei zu Version `" x "` nicht eindeutig — mehrere Stände „" a "“ verschiedener Umgebungen tragen sie, und kein Feld des Eintrags nennt die Datei (Feld-Set „Verweise“: die Stand-Datei mit Version, Entscheidungen Meta „Freigabe-Einträge“); Abgleich mit einem Nachtrag für diesen Eintrag nicht geprüft")
       }
     }
     if (mq && M != "") {
@@ -2573,29 +2853,38 @@ END {
     frei[M, ph] = 1
     freif[M, ph] = freif[M, ph] "\t" (sf == "" ? "-" : sf)
     if (t == "uebergabe") { kk = trim(fmget(sf, "komponente")); if (kk == "") kk = gegenstand(sf); uebk[M] = uebk[M] "|" ((kk == "") ? "*" : kk); uebkf[M] = uebkf[M] "|" sf }
-    fl[++nfl] = M "\t" ph "\t" id "\t" f "\t" g
+    fl[++nfl] = M "\t" ph "\t" id "\t" f "\t" g "\t" sf
   }
-  # Nachtrag eines Deploy-Stands (Zielmarken §Meta, Nachtrag; Entscheidungen
-  # Meta „Freigabe-Einträge“, Ausnahme „Nachtrag zu einer abgeschlossenen
-  # Marke“): die Freigabe steht als Formel im Nachtrag am Marken-Eintrag und
-  # zählt als Pflicht-Freigabe P11 der Marke und als Freigabe des Stands —
-  # kein eigener Eintrag, keine Ablösung erwartet. Hinweise: Nachtrag ohne
-  # Formel; Formel ohne „Nachtrag:“ am Anfang; Marke der Formel ≠ Marke des
-  # Eintrags oder fehlend; Marke nicht abgeschlossen (vor dem Wechsel ist die
-  # Freigabe ein eigener Eintrag); keine Stand-Datei; Stand-Datei nicht vom
-  # Dokumenttyp `deploy-stand` oder nicht Pflicht; Stand-Datei mit anderer
-  # `marke:`; derselbe Stand zusätzlich als eigener Freigabe-Eintrag (über die
-  # aufgelöste Stand-Datei abgeglichen, nicht über die Version). Die
-  # Freigabe-Ordnung wird für den Nachtrag nicht erneut geprüft (die Marke ist
-  # abgeschlossen, die Kette steht). Je Umgebung gilt der jüngste Deploy-Stand
-  # (Zielmarken §Meta, Nachtrag): Zu einer Marke kann es je Umgebung mehrere
-  # Nachtragszeilen geben (neue Umgebung, anders ausgerollte Umgebung); je
-  # Umgebung zählt der jüngste Nachtrag — das Datum der Vermerk-Zeile, bei
-  # gleichem Datum die spätere Zeile —, nur sein Stand geht als Freigabe der
-  # Phase in die Übernahme (`freif`), ein Freigabe-Eintrag derselben Umgebung
-  # vor dem Wechsel (`decfs`) tritt dort zurück; die Pflicht-Freigabe P11
-  # zählt einmal; die älteren Stände bleiben freigegeben (`freist`), abgelöst
-  # wird nichts. Ein weiterer Stand derselben Umgebung ist eine neue Version
+  # Nachtrag eines Deploy-Stands oder eines Doku-Stands (Zielmarken §Meta,
+  # Nachtrag; Entscheidungen Meta „Freigabe-Einträge“, Ausnahme „Nachtrag zu
+  # einer abgeschlossenen Marke“, Fälle (b) und (c)): die Freigabe steht als
+  # Formel im Nachtrag am Marken-Eintrag und zählt als Pflicht-Freigabe der
+  # Phase des Dokumenttyps (P13 beim Deploy-Stand; P11, P12 oder P15 beim
+  # Doku-Stand, bei der Betriebs-Anleitung je Umgebung) und als Freigabe des
+  # Stands — kein eigener Eintrag, keine Ablösung erwartet. ⟨Artefakt⟩ ist der
+  # Dokumentname des Katalog-Eintrags (Deploy-Stand, Entwickler-Doku,
+  # Benutzer-Doku, Betriebs-Anleitung); eine Formel ohne „Nachtrag:“ zu einem
+  # anderen ⟨Artefakt⟩ ist kein Nachtrag und bleibt still, der Tag nur im
+  # Nachtrag „Tag korrigiert“ (oben). Hinweise: Nachtrag ohne Formel; Formel
+  # ohne „Nachtrag:“ am Anfang; Marke der Formel ≠ Marke des Eintrags oder
+  # fehlend; Marke nicht abgeschlossen (vor dem Wechsel ist die Freigabe ein
+  # eigener Eintrag); keine Stand-Datei; Stand-Datei passt nicht zum
+  # ⟨Artefakt⟩ oder ist kein Pflicht-Stand mit Phase; Zweck passt nicht zum
+  # Katalog-Zweck (an der Phasen-Angabe oder am Tätigkeitsnamen, wie beim
+  # Freigabe-Eintrag); Stand-Datei mit anderer `marke:`; derselbe Stand
+  # zusätzlich als eigener Freigabe-Eintrag (über die aufgelöste Stand-Datei
+  # abgeglichen, nicht über die Version). Die Freigabe-Ordnung wird für den
+  # Nachtrag nicht erneut geprüft (die Marke ist abgeschlossen, die Kette
+  # steht). Je Umgebung gilt der jüngste Stand (Zielmarken §Meta, Nachtrag):
+  # Zu einer Marke kann es je Umgebung mehrere Nachtragszeilen geben (neue
+  # Umgebung, anders ausgerollte Umgebung, neue Version der Betriebs-Anleitung);
+  # je Umgebung — bei einem Stand ohne Umgebung je Ketten-ID — zählt der
+  # jüngste Nachtrag — das Datum der Vermerk-Zeile, bei gleichem Datum die
+  # spätere Zeile —, nur sein Stand geht als Freigabe der Phase in die
+  # Übernahme (`freif`), ein Freigabe-Eintrag derselben Umgebung vor dem
+  # Wechsel (`decfs`) tritt dort zurück; die Pflicht-Freigabe der Phase zählt
+  # einmal; die älteren Stände bleiben freigegeben (`freist`), abgelöst wird
+  # nichts. Ein weiterer Stand derselben Umgebung ist eine neue Version
   # derselben Ketten-ID — eine zweite Ketten-ID für dieselbe Umgebung ist ein
   # Hinweis (die ältere bliebe sonst als jüngste Version im Lesebereich von
   # Marken-Regel und Überholt-Regel), die Zeile zählt trotzdem. Umgebung:
@@ -2603,33 +2892,41 @@ END {
   # sonst die Stand-Datei selbst (`umgvon`).
   ndfrei = 0; ndfu = 0
   for (di = 1; di <= nmkd; di++) {
-    split(mkd[di], d6, "\t"); df = d6[1]; b = d6[2]; dl = d6[3]; x = d6[4]; M = d6[5]; dnf = d6[6] + 0; dvd = d6[7]
-    if (x == "") { hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": Nachtrag zu einem Deploy-Stand ohne Freigabe-Formel — die Freigabe eines nachgetragenen Deploy-Stands steht als Formel im Nachtrag („Nachtrag: Stand <Datei mit Version> von Deploy-Stand, freigegeben für P11 Ausliefern zu Marke " b ", freigegeben vom Anwender <Datum>“; Zielmarken §Meta, Nachtrag); nicht als Freigabe gelesen"); continue }
-    if (!dnf) hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": Freigabe-Formel eines Deploy-Stands in einem Vermerk ohne „Nachtrag:“ am Anfang — Format der Nachtragszeile: Zielmarken §Meta, Nachtrag; als Freigabe im Nachtrag gelesen")
+    split(mkd[di], d6, "\t"); df = d6[1]; b = d6[2]; dl = d6[3]; x = d6[4]; M = d6[5]; dnf = d6[6] + 0; dvd = d6[7]; a = d6[8]; z = d6[9]
+    if (x == "") { hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": Nachtrag zu einem Stand ohne Freigabe-Formel — die Freigabe eines nachgetragenen Deploy-Stands oder Doku-Stands steht als Formel im Nachtrag („Nachtrag: Stand <Datei mit Version> von <Dokumentname>, freigegeben für <Zweck> zu Marke " b ", freigegeben vom Anwender <Datum>“; Zielmarken §Meta, Nachtrag); nicht als Freigabe gelesen"); continue }
+    al = tolower(a)
+    if (al == "implementierung") continue
+    if (al != "deploy-stand" && al != "entwickler-doku" && al != "benutzer-doku" && al != "betriebs-anleitung") {
+      if (dnf) hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": Nachtrag mit Freigabe-Formel zu „" a "“ — ein Nachtrag-Fall gibt es nur für den Tag (Tag korrigiert), den Deploy-Stand und die drei Doku-Stände Entwickler-Doku, Benutzer-Doku und Betriebs-Anleitung; jede Änderung an Produkt oder Spezifikation ist eine neue Marke (Zielmarken §Meta, Nachtrag); nicht als Freigabe gelesen")
+      continue
+    }
+    if (!dnf) hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": Freigabe-Formel eines Stands „" a "“ in einem Vermerk ohne „Nachtrag:“ am Anfang — Format der Nachtragszeile: Zielmarken §Meta, Nachtrag; als Freigabe im Nachtrag gelesen")
     if (M == "") hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": die Freigabe im Nachtrag nennt keine Marke — im Nachtrag ist „zu Marke " b "“ immer gesetzt (Zielmarken §Meta, Nachtrag); gelesen wird die Marke des Eintrags")
     else if (M != b) hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": die Freigabe im Nachtrag nennt „zu Marke " M "“ — sie gehört zu derselben Marke `" b "` (Zielmarken §Meta, Nachtrag); gelesen wird die Marke des Eintrags")
-    if (!(b in abgeschl)) { hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": Freigabe eines Deploy-Stands im Nachtrag, aber die Marke ist nicht abgeschlossen — vor dem Marken-Wechsel ist jede Freigabe ein eigener DEC-Eintrag (Entscheidungen Meta „Freigabe-Einträge“); nicht als Freigabe gelesen"); continue }
+    if (!(b in abgeschl)) { hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": Freigabe eines Stands „" a "“ im Nachtrag, aber die Marke ist nicht abgeschlossen — vor dem Marken-Wechsel ist jede Freigabe ein eigener DEC-Eintrag (Entscheidungen Meta „Freigabe-Einträge“); nicht als Freigabe gelesen"); continue }
     if (OUTP == "") continue
-    sf = nachtragstand(x)
-    if (sf == "" && ntamb) { hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": Stand-Datei zu Version `" standname(x) "` nicht eindeutig — mehrere Deploy-Stände verschiedener Umgebungen tragen sie; die Nachtragszeile nennt die Datei (Zielmarken §Meta, Nachtrag); nicht als Pflicht-Freigabe gezählt"); continue }
-    if (sf == "") { hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": keine Stand-Datei „" x "“ (Deploy-Stand) in output/ — nicht als Pflicht-Freigabe gezählt"); continue }
+    sf = nachtragstand(x, a)
+    if (sf == "" && ntamb) { hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": Stand-Datei zu Version `" standname(x) "` nicht eindeutig — mehrere Stände „" a "“ verschiedener Umgebungen tragen sie; die Nachtragszeile nennt die Datei (Zielmarken §Meta, Nachtrag); nicht als Pflicht-Freigabe gezählt"); continue }
+    if (sf == "") { hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": keine Stand-Datei „" x "“ (" a ") in output/ — nicht als Pflicht-Freigabe gezählt"); continue }
     fxnenn[sf] = 1
     t = stand[sf]
-    if (t != "deploy-stand") { hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": die Stand-Datei " bn(sf) " ist kein Deploy-Stand (Dokumenttyp `" t "`) — nicht als Pflicht-Freigabe gezählt"); continue }
+    if (!artefakt_passt(a, sf)) { hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": die Stand-Datei " bn(sf) " (Dokumenttyp `" t "`) passt nicht zu ⟨Artefakt⟩ „" a "“ — nicht als Pflicht-Freigabe gezählt"); continue }
     if (verb[t] != "pflicht" || phnum(t) == 0) { hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": Dokumenttyp `" t "` ist kein Pflicht-Stand mit Phase im Katalog — nicht als Pflicht-Freigabe gezählt"); continue }
+    ph = phnum(t)
+    if (z != "" && !zweckpasst(t, z, (STICHTAG == "" || (dvd ~ /^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]$/ && dvd < STICHTAG)))) { hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": Zweck „" z "“ passt nicht zum Katalog-Zweck „für " katzweck(t) "“ des Dokumenttyps `" t "` — nicht als Pflicht-Freigabe gezählt"); continue }
     fmm = trim(fmget(sf, "marke"))
-    if (fmm != "" && fmm != b) hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": die Stand-Datei " bn(sf) " trägt `marke: " fmm "` — ein nachgetragener Deploy-Stand gehört zur Marke des Eintrags (Zielmarken §Meta, Nachtrag)")
-    u = umgvon(sf); du = b SUBSEP u
+    if (fmm != "" && fmm != b) hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": die Stand-Datei " bn(sf) " trägt `marke: " fmm "` — ein nachgetragener Stand gehört zur Marke des Eintrags (Zielmarken §Meta, Nachtrag)")
+    u = hatumg[t] ? umgvon(sf) : kid(sf); du = b SUBSEP ph SUBSEP u
     if ((b, sf) in decfx) hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": die Freigabe von Stand " bn(sf) " steht im Nachtrag und als eigener Eintrag `" decfx[b, sf] "` — nach dem Marken-Wechsel ist der Nachtrag der Träger, ein eigener Freigabe-Eintrag entsteht nicht (Entscheidungen Meta „Freigabe-Einträge“, Ausnahme)")
-    else if ((b, u) in decfs && kid(decfs[b, u]) != kid(sf)) hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": Stand " bn(sf) " ist eine zweite Ketten-ID für die Umgebung „" u "“ zu Marke " b " (neben " bn(decfs[b, u]) ", Eintrag `" decfu[b, u] "`) — ein weiterer Deploy-Stand derselben Umgebung ist eine neue Version derselben Ketten-ID (Zielmarken §Meta, Nachtrag); als Freigabe gelesen, je Umgebung gilt der jüngste")
-    else if ((du in nju) && kid(nju[du]) != kid(sf)) hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": Stand " bn(sf) " ist eine zweite Ketten-ID für die Umgebung „" u "“ zu Marke " b " (neben " bn(nju[du]) ", Zeile " njl[du] ") — ein weiterer Deploy-Stand derselben Umgebung ist eine neue Version derselben Ketten-ID (Zielmarken §Meta, Nachtrag); als Freigabe gelesen, je Umgebung gilt der jüngste")
+    else if (hatumg[t] && ((b, ph, u) in decfs) && kid(decfs[b, ph, u]) != kid(sf)) hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": Stand " bn(sf) " ist eine zweite Ketten-ID für die Umgebung „" u "“ zu Marke " b " (neben " bn(decfs[b, ph, u]) ", Eintrag `" decfu[b, ph, u] "`) — ein weiterer Stand „" a "“ derselben Umgebung ist eine neue Version derselben Ketten-ID (Zielmarken §Meta, Nachtrag); als Freigabe gelesen, je Umgebung gilt der jüngste")
+    else if (hatumg[t] && (du in nju) && kid(nju[du]) != kid(sf)) hin("MARKE-ZUSTAND", df, "Marke `" b "`, Zeile " dl ": Stand " bn(sf) " ist eine zweite Ketten-ID für die Umgebung „" u "“ zu Marke " b " (neben " bn(nju[du]) ", Zeile " njl[du] ") — ein weiterer Stand „" a "“ derselben Umgebung ist eine neue Version derselben Ketten-ID (Zielmarken §Meta, Nachtrag); als Freigabe gelesen, je Umgebung gilt der jüngste")
     ndfrei++; freist[sf] = 1
-    if (!(du in nju)) { ndfu++; nju[du] = sf; njd[du] = dvd; njl[du] = dl + 0; njp[du] = phnum(t) }
+    if (!(du in nju)) { ndfu++; nju[du] = sf; njd[du] = dvd; njl[du] = dl + 0; njp[du] = ph }
     else if (dvd > njd[du] || (dvd == njd[du] && dl + 0 >= njl[du])) { nju[du] = sf; njd[du] = dvd; njl[du] = dl + 0 }
   }
-  # je Umgebung der jüngste: der Stand des jüngsten Nachtrags geht in die
-  # Übernahme; der Stand des Freigabe-Eintrags derselben Umgebung vor dem
-  # Wechsel tritt dort zurück (bleibt freigegeben, nichts abgelöst)
+  # je Umgebung (bzw. Ketten-ID) der jüngste: der Stand des jüngsten Nachtrags
+  # geht in die Übernahme; der Stand des Freigabe-Eintrags derselben Umgebung
+  # vor dem Wechsel tritt dort zurück (bleibt freigegeben, nichts abgelöst)
   for (du in nju) {
     split(du, du2, SUBSEP); b = du2[1]; ph = njp[du]
     if (du in decfs) {
@@ -2650,8 +2947,48 @@ END {
     id = idof[f]
     if (idpfx(id) != "REQ" || !wirksam(f) || fw(fmget(f, "requirement_type")) != "fix" || trim(fmget(f, "umgebung")) == "") continue
     fxs = stat(f); if (fxs != "umgesetzt" && fxs != "abgeschlossen") continue
-    fxf = nachtragstand(fxv[f]); if (fxf == "" || stand[fxf] != "deploy-stand") continue
+    fxf = nachtragstand(fxv[f], "Deploy-Stand"); if (fxf == "" || stand[fxf] != "deploy-stand") continue
     if (!(fxf in freist) && !(fxf in fxnenn)) hin("FIX-DEPLOY", f, id ": Status `" fxs "`, der Vermerk „Umgesetzt mit Stand …“ nennt " bn(fxf) ", aber keine Nachtragszeile und kein Freigabe-Eintrag nennt diese Stand-Datei — umgesetzt ist eine Fix-Anforderung auf einen Deploy erst mit der Freigabe des weiteren Deploy-Stands (Anforderungen §Meta „Fehlerbehebungen“; Zielmarken §Meta, Nachtrag)")
+  }
+  # --- Verweis-Satz (Kettenpruefung §Lint-Anteil; Einfrieren-und-Abloesen
+  # §Zweck, §Ableitungsprüfung): ein Stand wird nur aus Eingefrorenem
+  # freigegeben. An einem freigegebenen Stand (`freist`: Freigabe-Eintrag
+  # oder Nachtragszeile) ist jedes verwiesene Element, das noch `offen` oder
+  # `aufgeschoben` ist und mit der Annahme einfriert (`Freeze ab:
+  # angenommen`), ein Fehler — ein BUG (`Freeze ab: Anlage`) ist auch als
+  # `offen` eingefroren. An einer vorgelegten, nicht freigegebenen Version
+  # (nur die jüngste je Ketten-ID) sind `offen`e Elemente der beschreibenden
+  # Register (Sammelzustand `offen`) kein Befund, wenn die Zeile `Offen
+  # (Annahme im Freigabe-Zug): …` unter dem Titel sie nennt (`soff`); fehlt
+  # das Element dort: Hinweis; ein `offen`es oder `aufgeschoben`es Element
+  # eines Sammel-Registers mit `aufgeschoben`: Hinweis (annehmen, weglassen
+  # oder Momentaufnahme). Status: das Feld `Status` des Fassaden-Eintrags
+  # (kanonisch), sonst das Frontmatter des Knotens. Geprüft werden Elemente
+  # mit Detail-Knoten (`stref`, Typ des Knotens) und Fassaden-Einträge ohne
+  # Knoten (`strid`, Typ über das id-Format des Präfix); eine in der Zeile
+  # `Nicht berücksichtigt (offen): …` ausgewiesene ID ist kein Verweis (oben).
+  for (f in stand) {
+    if (!(f in freist) && neuf[kid(f)] != f) continue
+    # Testbericht als Vorbedingung (Kettenpruefung §Code-Glieder, P10 → P11,
+    # P12, P13): ein freigegebener Pflicht-Stand der Phasen P11–P13 —
+    # Entwickler-Doku, Benutzer-Doku, Deploy-Stand — nennt den Testbericht
+    # (TRES-NNN) in `herkunft` (Zeile Herkunft seines Katalog-Eintrags;
+    # Einfrieren-und-Abloesen §Stand); gelesen wird nur, ob eine TRES-ID dort
+    # steht, nicht ihr Ergebnis
+    if ((f in freist) && verb[stand[f]] == "pflicht" && phnum(stand[f]) >= 11 && phnum(stand[f]) <= 13) {
+      m = vals(f, "herkunft", harr); ok = 0
+      for (j = 1; j <= m; j++) if (harr[j] ~ /^([A-Za-z0-9_.-]+\/)?TRES-[0-9]+$/) ok = 1
+      if (!ok) hin("HERKUNFT", f, "freigegebener Stand der Phase P" phnum(stand[f]) " (`" stand[f] "`) ohne Testbericht (TRES-NNN) in `herkunft` — der Testbericht ist Vorbedingung der Freigabe von Entwickler-Doku, Benutzer-Doku und Deploy-Stand (Kettenpruefung §Code-Glieder; Zeile Herkunft des Katalog-Eintrags)")
+    }
+    for (j = 1; j <= nstref[f]; j++) {
+      g0 = stref[f, j]; id = idof[g0]
+      cs = ((id in regid) && rf[regf[id], id, "Status"] != "") ? fw(rf[regf[id], id, "Status"]) : stat(g0)
+      stand_offen(f, id, ftype[g0], cs)
+    }
+    for (j = 1; j <= nstrid[f]; j++) {
+      id = strid[f, j]
+      stand_offen(f, id, anyfmt[idpfx(id)], fw(rf[regf[id], id, "Status"]))
+    }
   }
   # Überlagerung gegen einen Stand (Zielmarken §Meta, Zwischenmarke —
   # Überlagerung nach einer Freigabe): ein Stand der Sackgasse, der ein für
@@ -2686,27 +3023,71 @@ END {
   # Tag-Bedingung des Testplan-Stands (P10 ohne P9): Fehler — je Marke und
   # Phase einmal je Schwere (ein früherer Hinweis verdeckt keinen Fehler).
   for (i = 1; i <= nfl; i++) {
-    split(fl[i], f5, "\t"); M = f5[1]; n = f5[2] + 0; id = f5[3]; f = f5[4]; g = f5[5]
+    split(fl[i], f5, "\t"); M = f5[1]; n = f5[2] + 0; id = f5[3]; f = f5[4]; g = f5[5]; sfo = f5[6]
     if (n == 0) continue
+    # Umgebung des freigegebenen Stands, wenn er ein Stand je Umgebung ist
+    # (Deploy-Stand, Betriebs-Anleitung; `hatumg`)
+    uo = (sfo != "" && (stand[sfo] in hatumg) && hatumg[stand[sfo]]) ? umgvon(sfo) : ""
     for (k = 1; k < n; k++) {
       if (!(k in ppt)) continue
-      # Rolle: Standalone ohne P6; Koordinator ohne eigene Bauteile ohne P7–P9
-      # (P9 vertreten durch die Lieferungen, unten je Komponente); Komponente
-      # ohne P1–P2 (Übergabe-Stand ersetzt P1, P2 ohne Stand) und — bei
-      # Übernahme-Art Auftrag oder nicht lesbar — ohne P3–P4 (Übergabe-Stand
-      # vertritt), ohne P6; Komponente und Koordinator ebenso, P6 wie
-      # Koordinator; P11 nur mit Zielumgebungen; Rolle unbekannt: nur P5,
-      # P9 (Tag oder Lieferungen), P10, P11 als Hinweis
-      if (k == 11 && nenv == 0) continue
+      # Rolle (Kettenpruefung §Fehlende und vertretene Glieder): Standalone
+      # ohne P6; Koordinator ohne eigene Bauteile ohne P7–P9 (P9 vertreten
+      # durch die Lieferungen, unten je Komponente), seine Doku-Glieder P11
+      # und P12 bleiben; Komponente ohne P1–P2 (Übergabe-Stand ersetzt P1, P2
+      # ohne Stand) und — bei Übernahme-Art Auftrag oder nicht lesbar — ohne
+      # P3–P4 (Übergabe-Stand vertritt), ohne P6, Kette bis P11 — ohne P12
+      # (Benutzer-Doku beim Koordinator), es sei denn, sie hat eine eigene
+      # Zielumgebung; Komponente und Koordinator ebenso, P6 wie Koordinator;
+      # P13 und P15 nur mit Zielumgebungen (sonst abgeleitet entfallen), P15
+      # je Umgebung mit eigenem freigegebenem Deploy-Stand zu M; Rolle
+      # unbekannt: nur P5, P9 (Tag oder Lieferungen), P10, P11, P12, P13, P15
+      # als Hinweis
+      if ((k == 13 || k == 15) && nenv == 0) continue
       if (rolle == "standalone" && k == 6) continue
       if (istkomp && (k <= 2 || (uebart != "selbstständig" && k <= 4))) continue
+      if (istkomp && k == 12 && nenv == 0) continue
       if (rolle == "komponente" && k == 6) continue
       if (rolle == "unbekannt" && (k <= 4 || (k >= 6 && k <= 8))) continue
       if (rolle == "koordinator" && nfremd == 0 && k == 6) continue
       if (istkoord && !ownrow && k >= 7 && k <= 9) continue
+      # Betriebs-Anleitung je Umgebung (Kettenpruefung §Kette, Doku-Glieder):
+      # sie zählt erst nach dem freigegebenen Deploy-Stand ihrer Umgebung —
+      # P13 wird für den Stand je Umgebung gegen dieselbe Umgebung geprüft
+      # (eigene Freigabe, Eintrag oder Nachtrag, oder Übernahme aus der
+      # Vormarke; Verzicht auf P13 gilt für alle Umgebungen)
+      if (k == 13 && uo != "" && n != 13) {
+        if (verz(M, 13, "")) continue
+        if (vorg_env(M, 13, uo)) continue
+        if (("s", M, 13, uo, "H") in ordseen) continue
+        ordseen["s", M, 13, uo, "H"] = 1
+        hin("FREIGABE-ORDNUNG", f, id " (" g "): kein freigegebener Deploy-Stand der Umgebung „" uo "“ zu Marke " M ((ALTM2 != "") ? " — der Deploy-Stand aus der Vormarke " ALTM2 " ist für " M " überholt, keine Übernahme" : " — weder Freigabe (Eintrag oder Nachtrag) noch Übernahme aus der Vormarke noch Verzicht (`phase: P13`)") "; die Betriebs-Anleitung einer Umgebung wird erst nach dem freigegebenen Deploy-Stand dieser Umgebung freigegeben — Freigabe-Ordnung (Kettenpruefung §Kette, Doku-Glieder)" ((rolle == "unbekannt") ? "; Rolle des Repos nicht erkannt, nur Hinweis" : ""))
+        continue
+      }
+      # P15 je Umgebung (nur vor dem Abschluss-Stand erreicht): für jede
+      # Umgebung mit eigenem freigegebenem Deploy-Stand zu M — Eintrag oder
+      # Nachtrag — die Betriebs-Anleitung dieser Umgebung: Freigabe,
+      # Übernahme aus der Vormarke oder Verzicht mit `umgebung:` (bzw. der
+      # Verzicht für alle Umgebungen, W6); „später“ steht nach dem Wechsel
+      # als Nachtrag und zählt dann. Umgebungen, deren Deploy-Stand nur aus
+      # der Vormarke übernommen ist, werden nicht geprüft.
+      if (k == 15) {
+        n2 = split(freif[M, 13], fa, "\t"); split("", eseen)
+        for (j = 1; j <= n2; j++) {
+          if (fa[j] == "" || fa[j] == "-") continue
+          ue = umgvon(fa[j]); if (ue in eseen) continue
+          eseen[ue] = 1
+          if (verz(M, 15, ue)) continue
+          if (vorg_env(M, 15, ue)) continue
+          if (("s", M, 15, ue, "H") in ordseen) continue
+          ordseen["s", M, 15, ue, "H"] = 1
+          if (((M, 13, ue) in nju) && !((M, 13, ue) in decfs)) { hin("FREIGABE-ORDNUNG", f, id " (" g "): Betriebs-Anleitung (" ppt[15] ") für die Umgebung „" ue "“ zu Marke " M " offen — ihr Deploy-Stand steht im Nachtrag (Zeile " njl[M, 13, ue] "), die Betriebs-Anleitung folgt als Nachtrag oder entfällt per Verzicht (`decision_type: verzicht`, `zielmarke: " M "`, `phase: P15`, `umgebung: " ue "`; Kettenpruefung §Kette, Doku-Abfrage: später hinzukommende Umgebung)"); continue }
+          hin("FREIGABE-ORDNUNG", f, id " (" g "): kein freigegebener Pflicht-Stand der Phase P15 (" ppt[15] ") für die Umgebung „" ue "“ zu Marke " M ((ALTM2 != "") ? " — der Stand aus der Vormarke " ALTM2 " ist für " M " überholt, keine Übernahme" : " — weder Freigabe (Eintrag oder Nachtrag) noch Übernahme aus der Vormarke noch Verzicht (`decision_type: verzicht`, `zielmarke: " M "`, `phase: P15`, `umgebung: " ue "`)") " — Freigabe-Ordnung (Kettenpruefung §Kette; Betriebs-Anleitung je Umgebung hinter ihrem Deploy-Stand, „später“ nach dem Wechsel als Nachtrag)" ((rolle == "unbekannt") ? "; Rolle des Repos nicht erkannt, nur Hinweis" : ""))
+        }
+        continue
+      }
       if ((M, k) in frei) continue
       if (rolle == "unbekannt" && k == 9 && (mkl[M] != "" || mklk[M] != "")) continue
-      if ((M, "P" k) in verzicht) continue
+      if (verz(M, k, "")) continue
       # Übernahme aus einer früheren Marke: ein Pflicht-Stand, der für M nicht
       # überholt ist (jede frühere Marke mit Freigabe zählt; ist nur der
       # Stand der Vormarke überholt, eine Meldung mit dem Grund). Beim Tag
@@ -2748,6 +3129,11 @@ END {
       ordseen["s", M, k, sev] = 1
       if (altM2 != "") msg = id " (" g "): Pflicht-Stand der Phase P" k " (" ppt[k] ") aus der Vormarke " altM2 " ist für " M " überholt — keine Übernahme; zu Marke " M " weder Freigabe noch Verzicht (`decision_type: verzicht`, `zielmarke: " M "`, `phase: P" k "`): für " M " neu bilden und freigeben — Freigabe-Ordnung (Kettenpruefung §Kette)" ((rolle == "unbekannt") ? "; Rolle des Repos nicht erkannt, nur Hinweis" : "")
       else msg = id " (" g "): kein freigegebener Pflicht-Stand der Phase P" k " (" ppt[k] ((k == 9 && rolle == "unbekannt") ? " oder Lieferungen" : "") ") zu Marke " M " — weder Freigabe noch Übernahme aus der Vormarke" ((k == 9) ? " (der Tag ist nicht verzichtbar)" : " noch Verzicht (`decision_type: verzicht`, `zielmarke: " M "`, `phase: P" k "`)") " — Freigabe-Ordnung (Kettenpruefung §Kette)" ((rolle == "unbekannt") ? "; Rolle des Repos nicht erkannt, nur Hinweis" : "")
+      # Doku-Glieder vor dem Deploy-Stand (Kettenpruefung §Kette, Doku-Glieder):
+      # fehlt Entwickler-Doku (P11) oder Benutzer-Doku (P12) ohne Verzicht,
+      # nennt der Freigabe-Eintrag des Deploy-Stands das Glied als
+      # Einschränkung „Doku folgt“ — Warnung, keine Blockade
+      if ((k == 11 || k == 12) && (n == 13 || ((M, 13) in frei))) msg = msg "; der Freigabe-Eintrag des Deploy-Stands nennt das fehlende Doku-Glied als Einschränkung „Doku folgt“ (Warnung, keine Blockade; Kettenpruefung §Kette, Doku-Glieder)"
       if (sev == "E") ordfehler("FREIGABE-ORDNUNG", f, id, msg "; Tag-Bedingung des Testplan-Stands")
       else hin("FREIGABE-ORDNUNG", f, msg)
     }
@@ -2892,7 +3278,7 @@ EOF
 NFD=$(printf '\314\210')
 awk -v ROOT="$ROOT" -v MODE="$MODE" -v STICHTAG="$STICHTAG" -v KENNT="$KENNT" \
     -v OHNE="$OHNE_HINWEISE" -v NFD="$NFD" -v OUTP="$OUTP" -v OWNARG="$OWNARG" \
-    -v STQ="$STQ" -v HVBAD="$HVBAD" \
+    -v STQ="$STQ" -v HVBAD="$HVBAD" -v TSVER="$TSVER" \
     -f "$AWK_CHECK" "$DATA"
 RC=$?
 
@@ -2962,22 +3348,28 @@ cat <<'EOF'
   keine lesbare Form). Nachtrag „Tag korrigiert“: gelesen werden die beiden
   Tag-Namen und, mit Prozess, die Tag-Freigabe in der Formel des Nachtrags
   (Name und Marke; sie zählt als Tag-Freigabe der Marke) — nicht, ob die
-  alte Tag-Freigabe im Register steht. Nachtrag eines Deploy-Stands: gelesen
-  wird die Formel „Stand <Datei mit Version> von Deploy-Stand, freigegeben
-  für P11 Ausliefern zu Marke <M>“ in einer Vermerk-Zeile am Marken-Eintrag
-  (x als Dateiname ohne Endung oder als Version; die Freigabe zählt als
-  Pflicht-Freigabe P11 der Marke und als Freigabe des Stands; ein eigener
-  Eintrag für denselben Stand daneben ist ein Hinweis — abgeglichen über
-  die aufgelöste Stand-Datei, ein Eintrag ohne eindeutige Stand-Datei wird
-  dafür nicht gelesen; nennt er keine Umgebung eindeutig, sagt ein Hinweis
-  FREIGABE-STAND das) — nicht „freigegeben vom Anwender“, Nachweise und
-  Einschränkung; die Freigabe-Ordnung wird für den Nachtrag nicht erneut
-  geprüft. Je Umgebung (`umgebung` im Kopf der Stand-Datei, sonst der
-  Gegenstand des Dateinamens) gilt der jüngste Nachtrag — gelesen wird das
-  Datum der Vermerk-Zeile, bei gleichem Datum die spätere Zeile; ob ein
-  weiterer Stand derselben Umgebung wirklich anders ausgerollt wird oder
-  Betrieb wäre, liest der Lint nicht; eine zweite Ketten-ID für dieselbe
-  Umgebung ist ein Hinweis, mehr nicht. Eine Behebung in einer Sackgasse wird
+  alte Tag-Freigabe im Register steht. Nachtrag eines Deploy-Stands oder
+  eines Doku-Stands: gelesen wird die Formel „Stand <Datei mit Version> von
+  ⟨Artefakt⟩, freigegeben für <Zweck> zu Marke <M>“ in einer Vermerk-Zeile
+  am Marken-Eintrag (⟨Artefakt⟩ Deploy-Stand, Entwickler-Doku, Benutzer-Doku
+  oder Betriebs-Anleitung — eine Formel ohne „Nachtrag:“ zu einem anderen
+  ⟨Artefakt⟩ bleibt still, mit „Nachtrag:“ ist sie ein Hinweis „kein
+  Nachtrag-Fall“ und zählt nicht; x als Dateiname ohne Endung oder als
+  Version;
+  die Freigabe zählt als Pflicht-Freigabe der Phase des Dokumenttyps und als
+  Freigabe des Stands; ein eigener Eintrag für denselben Stand daneben ist
+  ein Hinweis — abgeglichen über die aufgelöste Stand-Datei, ein Eintrag
+  ohne eindeutige Stand-Datei wird dafür nicht gelesen; nennt er keine
+  Umgebung eindeutig, sagt ein Hinweis FREIGABE-STAND das) — nicht
+  „freigegeben vom Anwender“, Nachweise (auch nicht der M6-Bericht) und
+  Einschränkung; ob der Doku-Stand in der Doku-Abfrage „später“ erhielt,
+  liest der Lint nicht; die Freigabe-Ordnung wird für den Nachtrag nicht
+  erneut geprüft. Je Umgebung (`umgebung` im Kopf der Stand-Datei, sonst der
+  Gegenstand des Dateinamens; ohne Umgebung je Ketten-ID) gilt der jüngste
+  Nachtrag — gelesen wird das Datum der Vermerk-Zeile, bei gleichem Datum
+  die spätere Zeile; ob ein weiterer Stand derselben Umgebung wirklich
+  anders ausgerollt wird oder Betrieb wäre, liest der Lint nicht; eine
+  zweite Ketten-ID für dieselbe Umgebung ist ein Hinweis, mehr nicht. Eine Behebung in einer Sackgasse wird
   gegen keine andere Marke verglichen (eine Sackgasse ist nur für sich eine
   frühere Marke): ein BUG einer anderen Marke mit einer Fix-Anforderung in
   der Sackgasse ist kein Befund. Ablösung mit einem Ziel ohne Detail-Knoten
@@ -3081,8 +3473,15 @@ cat <<'EOF'
   Ordnung entfallen.
   Pflicht-Freigabe ist der Stand eines Pflicht-Dokumenttyps, dessen
   Zweck an der Phasen-Angabe `Pn` zum Katalog-Zweck passt („für P10“
-  genügt; ohne `Pn` im Katalog-Zweck Vergleich am Anfang); passt er
-  nicht: Hinweis, nicht gezählt. Tag der Implementierung nur als
+  genügt; ohne `Pn` im Katalog-Zweck Vergleich am Anfang) — trifft keine
+  Phase und ist der Eintrag Bestand (Datum vor dem Stichtag; beim Nachtrag
+  das Datum der Vermerk-Zeile), genügt der Tätigkeitsname (der Zweck ohne
+  seine `Pn`, z.B. „Ausliefern“): so liest sich „für P11 Ausliefern“ eines
+  eingefrorenen 2.0-Eintrags als P13 Ausliefern, „für P13 Betreiben“ als
+  P15 Betreiben, ohne Hinweis und ohne die Zuordnungstabelle zu lesen; ab
+  dem Stichtag oder wenn weder Phase noch Tätigkeitsname passt: Hinweis,
+  nicht gezählt. Die Phase der Freigabe ist immer die des Dokumenttyps im
+  Katalog, nie die Nummer im Eintrag. Tag der Implementierung nur als
   „Stand <Tag> von Implementierung, freigegeben für P10 … zu Marke M“;
   ohne Marke nicht zugeordnet (Fehler ab Stichtag); Nachweise (Tests
   grün, Code-Review) werden nicht gelesen. Die Ordnung prüft nur
@@ -3105,12 +3504,29 @@ cat <<'EOF'
   geprüften Marke (jüngste Version je Ketten-ID, freigegeben oder nicht)
   eine Zeile mit „übernommen aus <Vormarke>“ und dem Tag-Namen oder dem
   Wort „Tag“ bzw. „Implementierung“ trägt — mehr wird im Abschluss-Stand
-  nicht gelesen. Ein Verzicht auf P9 gilt nie (Fehler, auch ohne
-  `zielmarke:`); `phase:` zählt nur in der Form `Pn` (eine Phase, keine
-  führende Null), sonst Hinweis und kein Verzicht; eine Verzichts-DEC mit
-  `zielmarke:` und ohne `phase:` ist mit Prozess ein Hinweis, ohne Prozess
-  der Verzicht auf „Tests grün“, den der Lint nicht liest und nicht
-  meldet. Ohne Prozess — kein
+  nicht gelesen; die Zeilen-DEC der Doku-Abfrage („gar nicht (Übernahme)“
+  mit dem übernommenen Stand) wird nicht gelesen — ein übernommener
+  Doku-Stand zählt wie jeder Stand der Vormarke über die Übernahme. Ein
+  Verzicht auf P9 gilt nie (Fehler, auch ohne `zielmarke:`); `phase:` zählt
+  nur in der Form `Pn` (eine Phase, keine führende Null, keine Liste), sonst
+  Hinweis und kein Verzicht; eine Verzichts-DEC mit `zielmarke:` und ohne
+  `phase:` ist mit Prozess ein Hinweis, ohne Prozess der Verzicht auf
+  „Tests grün“, den der Lint nicht liest und nicht meldet. Verzicht auf P15
+  nur je Umgebung mit `umgebung:` (Name gegen die Zielumgebungen wie
+  DEPL-BEZUG, nur bei vorhandenen Zielumgebungen; ohne `umgebung:` Hinweis
+  und kein Verzicht); Schlüssel Marke, Phase, Umgebung. Alte Nummern
+  (Upgrade 2.0 → 2.1): die `Vorher`-Zeile und die Zuordnungstabelle in
+  Aktivierter-Prozess werden nicht gelesen; als „vor dem Upgrade
+  angenommen“ gilt eine Verzichts-DEC mit lesbarem Anlage-Datum vor dem
+  Stichtag (`datum:` des Knotens, sonst Zeile `Angelegt` des Eintrags;
+  Template-Stand „seit“ = Tag des Upgrades) — nur dann, nur solange
+  `Template-Stand` die Version 2.1 nennt und nur, wenn der Katalog die
+  Phase P15 führt, liest sich `phase: P11/P12/P13` als P13/P14/P15
+  (Hinweis), die alte P13 Betreiben ohne `umgebung:` als Verzicht für alle
+  Umgebungen; ohne lesbares Datum keine Umlesung (Hinweis), eine DEC vom
+  Stichtag selbst gilt als neu; das Kriterium „`zielmarke:` vor der ersten
+  Marke nach dem Upgrade“ wird nicht gelesen, Verzichts-DECs ohne
+  Detail-Knoten gar nicht, Nummern aus 1.x nicht umgelesen. Ohne Prozess — kein
   Pflicht-Dokumenttyp mit Phase `Pn` — ist der Tag kein Pflicht-Glied,
   die Freigabe-Ordnung entfällt auch gegen den Abschluss-Stand
   (Kettenpruefung §Kette, Projekt ohne Prozess); am Abschluss-Stand wird
@@ -3129,10 +3545,23 @@ cat <<'EOF'
   Koordinators, bekannte Nachbarn und die eigene Zeile zählen nicht:
   Komponente und Koordinator (Zwischen-Koordinator — P1–P4 wie
   Komponente, P6 und Lieferungen wie Koordinator, P7–P9 mit eigener
-  Zeile, P11 und DEPL für eigene Zeile und Unter-Komponenten nur mit
-  Zielumgebungen; auch ohne erkanntes eigenes Repo); eigenes Repo nicht
-  erkannt und kein `fuer_marke:`: Rolle unbekannt (P1–P4, P6–P8 still,
-  P9 durch Tag oder Lieferungen, alles nur Hinweis). Die
+  Zeile, P11 wie Komponente, P12, P13 und DEPL, P15 für eigene Zeile und
+  Unter-Komponenten nur mit Zielumgebungen; auch ohne erkanntes eigenes
+  Repo); eigenes Repo nicht erkannt und kein `fuer_marke:`: Rolle unbekannt
+  (P1–P4, P6–P8 still, P9 durch Tag oder Lieferungen, P11, P12, P13, P15
+  wie beim Koordinator, alles nur Hinweis). Doku-Glieder: Komponente ohne
+  eigene Zielumgebung ohne P12, P13, P15 (Kette bis P11), mit eigener
+  Zielumgebung alle; Koordinator auch ohne eigene Bauteile P11 und P12
+  (ob die Gesamtsicht die Teil-Dokus aufnimmt und ob eine Einschränkung
+  „Teil-Doku <Komponente> fehlt“ nötig wäre, liest der Lint nicht); P13
+  und P15 nur mit Zielumgebungen; P15 am Abschluss-Stand nur für
+  Umgebungen mit eigenem freigegebenem Deploy-Stand zu dieser Marke
+  (Eintrag oder Nachtrag) — eine Umgebung, deren Deploy-Stand nur aus der
+  Vormarke übernommen ist, wird nicht geprüft; eine Betriebs-Anleitung mit
+  „später“ fehlt bis zu ihrem Nachtrag (Hinweis am Abschluss-Stand, kein
+  Fehler). Die Einschränkung „Doku folgt“ wird nicht gelesen, nur in der
+  Meldung genannt; ob die Doku-Abfrage vorgelegt wurde, prüft der Lint
+  nicht. Die
   Übernahme-Art (selbstständig / Auftrag) wird nur aus der Zeile
   `- **Übernahme-Art:**` im Abschnitt `## Herkunft` von
   `wiki/Aktivierter-Prozess.md` gelesen (erstes Wort): selbstständig —
@@ -3221,9 +3650,22 @@ cat <<'EOF'
   Marken-Eintrag außer der Zeile „Tag korrigiert: <alt> → <neu>“ (gelesen
   werden nur die beiden Tag-Namen — ob die Pfade des Produkts zwischen
   beiden unverändert sind und ob der Anwender freigegeben hat, nicht) und
-  der Freigabe-Formel eines nachgetragenen Deploy-Stands (gelesen werden
-  Stand — in jeder Schreibweise des Felds „Verweise“ — und Marke, nicht
-  die Freigabe durch den Anwender).
+  der Freigabe-Formel eines nachgetragenen Deploy-Stands oder Doku-Stands
+  (gelesen werden Stand — in jeder Schreibweise des Felds „Verweise“ —,
+  ⟨Artefakt⟩, Zweck und Marke, nicht die Freigabe durch den Anwender).
+- Selbsttragende Stände (Doku-Glieder): ob der Text ohne Register-IDs und
+  Wikilinks auskommt, wird nicht geprüft (eine ID im Text zählt wie bei
+  jedem Stand als Verweis); welche Quell-Stände `herkunft` nach dem
+  Katalog-Eintrag nennen müsste, nur beim Testbericht (TRES-NNN, Phasen
+  P11–P13, nur am freigegebenen Stand) und beim Deploy-Stand der
+  Betriebs-Anleitung (Vorhandensein, Umgebung, Marke) — nicht bei
+  Architektur, Konzept und den übrigen Quell-Ständen; Quell-Stände über
+  Repo-Grenzen nur auf Vorhandensein des Dateinamens in output/ des
+  Nachbarn (Marke, Typ und Freigabe dort nicht gelesen); `basis:` nur als
+  Stand-Datei (Vorhandensein, Version, gleicher Dokumenttyp) — ob die
+  Vollfassung freigegeben ist, ob das Änderungsdokument kumulativ ist und
+  ob die Heuristik „ab zwei Änderungsdokumenten“ greift, nicht; der
+  M6-Bericht wird nirgends gelesen.
 - Widerspruch und Unbegründetes bleiben Prüfer-Sache.
 EOF
 
