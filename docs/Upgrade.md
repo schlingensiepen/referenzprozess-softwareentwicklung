@@ -314,7 +314,7 @@ führende Ort, das Skript ihre Implementierung.
 | Tausch | geschehen in Schritt 2 — das Skript stellt nur fest, dass `_template/` den neuen Stand trägt |
 | Umbenennungen | Dateinamen nach der Tabelle der Sprung-Datei (`Rollen.md`, `Katalog.md`, Umlaute in die ae/oe/ue/ss-Form) — per `git mv`, nie über eine vorhandene Datei |
 | Neue Dateien | jede Datei des neuen Stands, die im Projekt fehlt (Root-Regelwerk, `wiki/` samt Katalog-Einträgen, Mechanik-Knoten, Fassaden, Vorlagen; eine `.gitignore` nur, falls keine da ist), wird angelegt und gesammelt gemeldet — Fassaden, die der aktive Prozess voraussetzt, aktiv, optionale deaktiviert mit Hinweis an dich, abgelöste nur als Hintergrund; eine bestehende Datei wird nie überschrieben; eine so angelegte Fassade trägt im Kopf den Vermerk „beim Upgrade angelegt“ |
-| Formalien | nur aus 1.x: Feld-Umbenennungen im Kopf der Knoten, ein abgeschaffter Status-Wert wird umgestellt, Rollen-Knoten bekommen ihre Rollen-Art, der Nachfolger einer Ablösung bekommt den Rückverweis (Einzelheiten unten, „Der Sprung von 1.x auf 2.0“); aus 2.0 keine |
+| Formalien | nur aus 1.x: Feld-Umbenennungen im Kopf der Knoten, ein abgeschaffter Status-Wert wird umgestellt, Rollen-Knoten bekommen ihre Rollen-Art, der Nachfolger einer Ablösung bekommt den Rückverweis (Einzelheiten unten, „Der Sprung von 1.x auf 2.0“); aus 2.0 nur der Rückverweis, wo er am Nachfolger fehlt |
 | Herkunft | die Zeile `Template-Stand: 2.1 seit <Tag des Upgrades>` neu, darunter `Vorher: <alte Version> (bis <Tag des Upgrades>)`; eine frühere `Vorher`-Zeile bleibt darunter stehen; die 1.x-Form wird zur 2.0-Form (Schritt 7 füllt die übrigen Zeilen) |
 | Trefferliste | alles, was der Agent danach kontext-bewusst nachzieht (Schritt 6): aus 1.x Wikilinks auf umbenannte Dateien, alte Kennungen, Pflegezeilen, Marken-Zeiger, Altknoten, Contract-Einträge alter Form, alte Ablöse-Vermerke; aus 2.0 Verzichts-Entscheidungen und Freigaben mit alten Phasennummern, ein vorgefundenes `docs/`; dazu die Liste der bestehenden Dateien mit Unterschieden, eingeteilt wie in Schritt 5 |
 | Lint | als Trefferliste; maßgeblich ist der Durchgang in Schritt 8 |
@@ -435,8 +435,9 @@ Was dabei geschieht:
   und `Vorher` (Schritt 7) und legt die neuen Dateien
   an: den Mechanik-Knoten „Lebenslauf eines Stands“
   und die beiden Katalog-Einträge Entwickler-Doku und
-  Benutzer-Doku. Umbenennungen oder Feld-Umstellungen
-  gibt es nicht.
+  Benutzer-Doku. Umbenennungen gibt es nicht; von den
+  Formalien nur den Rückverweis am Nachfolger einer
+  Ablösung, wo er fehlt.
 - **Phasen-Zuordnung.** P1 bis P10 unverändert; P11
   und P12 neu ohne Vorgänger; alt P11 Ausliefern → P13,
   P12 Produzieren → P14, P13 Betreiben → P15. Die

@@ -652,10 +652,15 @@ while IFS='	' read -r alt neu; do
         fm && /^supersedes:[ \t]*$/ { print; hat = 1; lst = 1; da = 0; next }
         fm && /^supersedes:[ \t]*\[[ \t]*\][ \t]*$/ { print "supersedes:"; print "  - " alt; hat = 1; next }
         fm && /^supersedes:[ \t]*[^ \t]/ {
+            # Inline-Liste: trägt sie alt schon, bleibt die Zeile, wie sie
+            # ist (beide Listenformen gelten; kein Diff ohne Grund)
             v = $0; sub(/^supersedes:[ \t]*/, "", v); gsub(/[][" \t]/, "", v)
-            n = split(v, a, ","); print "supersedes:"
-            for (i = 1; i <= n; i++) if (a[i] != "") { print "  - " a[i]; if (a[i] == alt) da = 1 }
-            if (!da) print "  - " alt
+            n = split(v, a, ",")
+            for (i = 1; i <= n; i++) if (a[i] == alt) da = 1
+            if (da) { print; hat = 1; next }
+            print "supersedes:"
+            for (i = 1; i <= n; i++) if (a[i] != "") print "  - " a[i]
+            print "  - " alt
             hat = 1; next
         }
         { print }' "$nf" > "$tmp"
@@ -731,6 +736,11 @@ if [ -n "$UMBENANNT" ]; then
         treffer "\[\[$base" "Wikilinks auf '$base' (jetzt '${neu##*/}')"
     done
 fi
+# Sprung 1.x → 2.0 (1.x-nach-2.0.md Abschnitte 2 und 3) — nur, wenn das
+# Projekt aus 1.x kommt (oder die alte Version nicht ablesbar ist): in
+# einem 2.0-Projekt sind SPEC-Register und Ablöse-Vermerke regulär
+case $VORHER in 2.*) ALT1X=0 ;; *) ALT1X=1 ;; esac
+if [ "$ALT1X" -eq 1 ]; then
 treffer '^type: types' 'Katalog: alter Knotentypen-Inhalt (type: types) — projekt-eigene Typen als Katalog-Einträge, dann Inhalt aus _template/wiki/Katalog.md'
 treffer '(^### |\[\[|^id: *)SPEC-[0-9]' 'SPEC → FUNC mit alias: (Einträge, Detail-Knoten, Verweise)'
 treffer '(^### |\[\[|^id: *)BR-[0-9]' 'BR → BUG mit alias: (Einträge, Detail-Knoten, Verweise)'
@@ -741,6 +751,7 @@ treffer '^> \*\*⚠ Abgelöst durch \[\[' 'Ablöse-Vermerke der 1.x-Form — ble
 treffer '^- \*\*Auslöser:\*\*' 'Register-Zeilen mit Auslöser: zum Status umgesetzt (Prüfung offen) — Zeile streichen, Inhalt in den Vermerk des Knotens' wiki 'Prüfung offen — vor dem Upgrade'
 treffer '^- \*\*Zustand:\*\* *current' 'Marken-Zeiger current der 1.x-Form — Zeile Zustand nach 1.x-nach-2.0.md Abschnitt 2 (abgeschlossen, in-progress, künftig)' wiki
 treffer 'Template-Herkunft' 'Herkunfts-Vermerk 1.x-Form — Zeilen Quelle, Prozess, Rolle füllen' wiki
+fi
 # Sprung 2.0 → 2.1 (2.0-nach-2.1.md Abschnitt 3): alte Phasennummern an
 # Verzichts-DECs (der Lint liest sie um, Hinweis) und an Freigaben und
 # Nachträgen (am Tätigkeitsnamen gelesen, nichts zu ändern); docs/
