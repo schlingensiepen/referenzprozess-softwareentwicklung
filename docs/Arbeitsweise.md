@@ -13,7 +13,7 @@
 > `Standarddateien-Katalog.md`, `Kettenpruefung.md`
 > Abschnitt „Reviewer-Anteil“,
 > `Instruktionsdatei-Pflege.md`). Stand der Quellen:
-> Starter-Commit `c7fbc93` (Version 2.1). Dieses
+> Starter-Commit `b5d0eef` (Version 2.1). Dieses
 > Dokument ist aus den Quellen abgeleitet und wird bei
 > Änderungen der Quellen auf deren Stand nachgezogen
 > (zuletzt am 2026-11-03); eigene Inhalte bekommt es

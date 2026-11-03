@@ -9,12 +9,15 @@
 > `Init-Choreografie.md`, `Zielmarken.md`,
 > `Kettenpruefung.md`, `Fassaden.md`, `Katalog.md`,
 > `Agent-Berichte.md`). Stand der Quellen:
-> Starter-Commit `c7fbc93` (Version 2.1). Dieses
+> Starter-Commit `b5d0eef` (Version 2.1). Dieses
 > Dokument ist aus den Quellen abgeleitet und wird bei
 > Änderungen der Quellen auf deren Stand nachgezogen
-> (zuletzt am 2026-11-03, nachgezogen auf `c7fbc93`:
-> Version 2.1, der Sprung von 2.0 auf 2.1 und die
-> Kette der Sprünge aus 1.x); eigene
+> (zuletzt am 2026-11-03, nachgezogen auf `b5d0eef`:
+> Version 2.1, der Sprung von 2.0 auf 2.1, die Kette
+> der Sprünge aus 1.x und die Nacharbeit nach der
+> Abnahme — Lesung alter Nummern je Eintragsart,
+> Doku-Abfrage nach dem Upgrade, abgeschlossene
+> Marken, Stand-Dateien mit Status-Wort); eigene
 > Inhalte bekommt es nicht — Änderungen gehören in die
 > Quellen.
 
@@ -446,10 +449,14 @@ Was dabei geschieht:
   kommt kein Eintrag. Eingefrorene Einträge aus der
   Zeit vor dem Anheben bleiben, wie sie sind: Freigaben
   („für P11 Ausliefern“) liest der Lint am
-  Tätigkeitsnamen, Verzichts-Entscheidungen mit alten
+  Tätigkeitsnamen — dauerhaft, sobald sie vor dem Tag
+  des Upgrades angelegt sind, auch nach einem späteren
+  Upgrade; Verzichts-Entscheidungen mit alten
   Nummern über die Tabelle — nur, wenn sie vor dem Tag
-  des Upgrades angelegt sind, und nur, solange das
-  Projekt auf 2.1 steht; eine Verzichts-Entscheidung
+  des Upgrades angelegt sind, nur, solange das
+  Projekt auf 2.1 steht, und erst, wenn der Katalog des
+  Projekts die Phasen von 2.1 führt (vorher sagt der
+  Lint das als Hinweis); eine Verzichts-Entscheidung
   ohne lesbares Anlage-Datum liest er in der neuen
   Zählung und sagt es als Hinweis (heilen lässt sich
   das durch eine ablösende Entscheidung mit der neuen
@@ -468,14 +475,24 @@ Was dabei geschieht:
   Implementierung, holt der Agent die Doku-Abfrage mit
   dem Upgrade nach; ein schon freigegebener Deploy-Stand
   bleibt freigegeben, die Doku-Zeilen stehen dann auf
-  „später“ oder „gar nicht“, ein fehlendes Doku-Glied
-  ist eine Warnung, keine Blockade. Für die erste Marke
+  „später“ oder — als Verzicht, denn einen Doku-Stand
+  einer Vormarke gibt es noch nicht — „gar nicht“; ein
+  fehlendes Doku-Glied ist eine Warnung, keine Blockade,
+  die steht, bis der Doku-Stand freigegeben ist. Ob die
+  Abfrage stattgefunden hat, prüft der Lint nicht; der
+  Agent hakt es in seinem Bericht ab. Für die erste Marke
   nach dem Upgrade empfiehlt der Agent „komplett neu“;
   vorgefundene Dokumente in `docs/` bleiben als
-  Nachweis liegen.
+  Nachweis liegen, die Kopie des neuen Doku-Stands kommt
+  daneben, nichts wird überschrieben oder umbenannt.
 - **Abgeschlossene Marken** aus 2.0 bleiben
   abgeschlossen; ein Doku-Stand wird für sie nicht
-  nachgebaut.
+  nachgebaut, und der Lint verlangt für sie keine
+  Doku-Glieder.
+- **Stand-Dateien mit Status-Wort im Namen** („Entwurf“,
+  „final“, „freigegeben“) aus 2.0 bleiben, wie sie sind;
+  der Lint sagt es als Hinweis, umbenannt wird nichts —
+  Verweise und Freigaben zeigen auf den Namen.
 
 ### Der Sprung von 1.x auf 2.0
 

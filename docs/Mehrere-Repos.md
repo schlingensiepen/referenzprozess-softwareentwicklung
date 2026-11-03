@@ -12,7 +12,7 @@
 > `Contract-Index.md`, `Vorgehen-RP-1.md`,
 > `Vorgehen-SP-1.md` Abschnitt 6,
 > `Katalog-Entwickler-Doku.md`, `Glossar.md`). Stand der Quellen: Starter-Commit
-> `c7fbc93` (Version 2.1). Dieses Dokument ist aus den
+> `b5d0eef` (Version 2.1). Dieses Dokument ist aus den
 > Quellen abgeleitet und wird bei Änderungen der
 > Quellen auf deren Stand nachgezogen (zuletzt am
 > 2026-11-03); eigene Inhalte bekommt es nicht —
