@@ -11,7 +11,7 @@
 > `Marken-SP-1.md`, `Marken-RP-1.md`), den Steckbriefen
 > `../referenzprozesse/*/Steckbrief.md` und
 > `../referenzprozesse/SP-1-Standardprozess/index.md`
-> (Rollen). Stand der Quellen: Starter-Commit `3a32dbd`
+> (Rollen). Stand der Quellen: Starter-Commit `2017c75`
 > (Version 2.1). Dieses Dokument ist aus den Quellen
 > abgeleitet und wird bei Änderungen der Quellen auf
 > deren Stand nachgezogen (zuletzt am 2026-11-03);

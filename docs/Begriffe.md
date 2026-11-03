@@ -19,7 +19,7 @@
 > `../migration/MIGRATION.md`, `../upgrade/UPGRADE.md`
 > und
 > `../referenzprozesse/SP-1-Standardprozess/index.md`
-> (Rollen). Stand der Quellen: Starter-Commit `3a32dbd`
+> (Rollen). Stand der Quellen: Starter-Commit `2017c75`
 > (Version 2.1). Dieses Dokument ist aus den Quellen
 > abgeleitet und wird bei Änderungen der Quellen auf
 > deren Stand nachgezogen (zuletzt am 2026-11-03);
@@ -263,6 +263,15 @@ nicht. Abgeschlossen sind Meldung und Fix-Anforderung
 zusammen, wenn du bestätigst, dass der Fehler behoben
 ist; wann der Agent danach fragt, legst du bei der
 Freigabe des Stands fest.
+
+**Folge-Version.** Eine neue Version derselben
+Ketten-ID in einer Folge-Marke mit eigenem Tag — für
+Testplan-Stand, Deploy-Stand und Betriebs-Anleitung,
+die am Tag der Vormarke hängen und deshalb nicht
+übernommen werden; mit der neuen Marke und dem neuen
+Tag im Kopf und eigener Freigabe, bei unverändertem
+Inhalt mit unverändertem Text. Der einzige Fall einer
+neuen Version über die Marken-Grenze.
 
 **Freigabe.** Die Erklärung, dass ein Stand für einen
 bestimmten Zweck verlässlich ist — gebucht als
@@ -677,7 +686,10 @@ anlegt, trägt sie.
 Vormarke, der für die Folge-Marke weitergilt, ohne neu
 gebildet oder freigegeben zu werden; bei einem
 Doku-Stand die Antwort „gar nicht (Übernahme)“ der
-Doku-Abfrage.
+Doku-Abfrage. Hat die Folge-Marke einen eigenen Tag,
+werden Testplan-Stand, Deploy-Stand und
+Betriebs-Anleitung nicht übernommen, sondern als
+Folge-Version fortgeführt.
 
 **Unteragent.** Ein vom Agenten gestarteter
 Hilfs-Agent mit eigenem, frischem Kontext — für

@@ -20,7 +20,7 @@
 > `Glossar.md`), `../Reviewmuster.md` (Muster M6) sowie
 > `../referenzprozesse/SP-1-Standardprozess/index.md`
 > (Glieder der Kette). Stand der Quellen:
-> Starter-Commit `3a32dbd` (Version 2.1). Dieses
+> Starter-Commit `2017c75` (Version 2.1). Dieses
 > Dokument ist aus den Quellen abgeleitet und wird bei
 > Änderungen der Quellen auf deren Stand nachgezogen
 > (zuletzt am 2026-11-03); eigene Inhalte bekommt es
@@ -823,7 +823,12 @@ Weitere Regeln der Zuordnung:
 - **Stand je Marke.** Ein Stand gehört zu genau einer
   Marke. Für eine neue Marke entsteht ein neues Dokument
   mit neuer Ketten-ID; neue Versionen derselben
-  Ketten-ID gibt es nur innerhalb einer Marke.
+  Ketten-ID gibt es innerhalb einer Marke — und als
+  einzigen Fall über die Marken-Grenze die
+  **Folge-Version** (unten, „Übernahme“). Lint und
+  Wächter lesen die jüngste Version je Ketten-ID
+  **je Marke**: die Folge-Version verdrängt die Version
+  der Vormarke nicht.
 - **Übernahme.** Ein freigegebener Pflicht-Stand der
   Vormarke gilt für die Folge-Marke weiter, solange er
   — gegen die Folge-Marke geprüft — nicht überholt ist.
@@ -837,7 +842,18 @@ Weitere Regeln der Zuordnung:
   Folge-Marke nicht überholt sind; sonst folgt nach
   der Neu-Ableitung ein neuer Tag. Ein Testbericht
   der Vormarke gilt zum übernommenen Testplan-Stand
-  weiter.
+  weiter. **Hat die Folge-Marke einen eigenen Tag**,
+  ist das Produkt neu: Testplan-Stand, Deploy-Stand und
+  Betriebs-Anleitung der Vormarke gelten dann nicht als
+  übernommen — sie nennen den alten Tag — und brauchen
+  eine eigene Freigabe zur Folge-Marke als
+  Folge-Version derselben Ketten-ID (neue Marke, neuer
+  Tag und Testbericht im Kopf); hat sich sonst nichts
+  geändert, empfiehlt der Agent, den Text unverändert
+  zu übernehmen und nur den Kopf zu wechseln. Für
+  Entwickler- und Benutzer-Doku bleibt es bei deiner
+  Wahl in der Doku-Abfrage, „gar nicht (Übernahme)“
+  eingeschlossen.
 - **Ablösung wirkt ab der Marke des Nachfolgers.** Löst
   ein Element mit `zielmarke: M` ein älteres ab, gilt
   das alte für alle Marken vor M weiter und das neue ab

@@ -9,7 +9,7 @@
 > `Init-Choreografie.md`, `Zielmarken.md`,
 > `Kettenpruefung.md`, `Fassaden.md`, `Katalog.md`,
 > `Agent-Berichte.md`). Stand der Quellen:
-> Starter-Commit `3a32dbd` (Version 2.1). Dieses
+> Starter-Commit `2017c75` (Version 2.1). Dieses
 > Dokument ist aus den Quellen abgeleitet und wird bei
 > Änderungen der Quellen auf deren Stand nachgezogen
 > (zuletzt am 2026-11-03, nachgezogen auf `3a32dbd`:
@@ -486,7 +486,15 @@ Was dabei geschieht:
   vorgefundene Dokumente in `docs/` bleiben als
   Nachweis liegen, die Kopie des neuen Doku-Stands kommt
   daneben unter dem Namen des Stands mit Version, nichts
-  wird überschrieben oder umbenannt.
+  wird überschrieben oder umbenannt. Trägt die laufende
+  Marke einen **eigenen** Tag, gelten Testplan-Stand,
+  Deploy-Stände und Betriebs-Anleitungen der Vormarke
+  für sie nicht als übernommen — sie nennen den alten
+  Tag; der Agent legt sie als Folge-Version derselben
+  Ketten-ID mit eigener Freigabe vor (bei unverändertem
+  Inhalt mit unverändertem Text), die Trefferliste des
+  Skripts nennt es. Für Entwickler- und Benutzer-Doku
+  bleibt es bei deiner Wahl in der Doku-Abfrage.
 - **Abgeschlossene Marken** aus 2.0 bleiben
   abgeschlossen; ein Doku-Stand wird für sie nicht
   nachgebaut, und der Lint verlangt für sie keine
