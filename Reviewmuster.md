@@ -21,7 +21,8 @@ Verhältnis zu benachbarten Dokumenten:
   Zwei-Modelle-Regel, Selbst-Triage, Reifekriterium)
   hierher, §2.
 - **`wiki/Agent-Berichte.md`** regelt die Ablage der
-  Prüfberichte (`wiki/agent-berichte/REP-…`) und die
+  Prüfberichte (`wiki/REP-NNN — ….md`, flach im
+  `wiki/`-Root) und die
   Header der Berichts-Typen (`review-report` für
   Prüfberichte, `convergence-report` für den
   Konvergenz-Bericht nach §2 Schleife 4).
@@ -64,10 +65,12 @@ in Prüfbericht und Freigabe-DEC. Der Anwender
 entscheidet über Weiterarbeit (siehe
 [[Berichten-statt-Blockieren]]).
 
-**Prüfberichte** landen in
-`wiki/agent-berichte/REP-NNN — …md` (Detail-Typ
+**Prüfberichte** landen flach im `wiki/`-Root als
+`wiki/REP-NNN — ….md` (Detail-Typ
 `review-report`, erweitert `agent-report`; Fassade
-`wiki/Agent-Berichte.md`). Der Prüfbericht trägt
+`wiki/Agent-Berichte.md`, Detail-Knoten-Konventionen;
+das Wiki ist flach, Unterordner kennt der Lint
+nicht). Der Prüfbericht trägt
 neben dem Prüf-Modell (`modell`) das Modell, das die
 geprüfte Änderung schrieb (`bau_modell`), die Runde
 und die Prüfberichte der vorigen Runde — so bleibt die

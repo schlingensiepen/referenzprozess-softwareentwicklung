@@ -101,7 +101,13 @@ ARC-Register (§Festlegungen) und die Lage-Entität
   Felder und Lint-Prüfung: [[Katalog-Systemarchitektur]],
   SP-1-Typ `architecture-description`).
 - **`software-system-component`-Detail-Knoten-
-  Konventionen:** Frontmatter-Felder:
+  Konventionen:** Frontmatter `type:
+  software-system-component` und der Spiegel
+  `replaces_type: system-component` (Ersetzung:
+  [[Katalog]] §Typ-Konventionen — die Katalog-Zeile
+  führt, das Frontmatter spiegelt; fehlt der Spiegel,
+  meldet der Lint `REPLACES-SPIEGEL`); übrige
+  Frontmatter-Felder:
   [[Katalog-Softwaresystemarchitektur]]; Dateiname im
   Title-Case. Sektionen: Zweck (ein bis drei Sätze) /
   Schnittstellen (API, Contract, Protokoll,

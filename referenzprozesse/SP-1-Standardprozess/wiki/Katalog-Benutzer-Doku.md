@@ -64,7 +64,14 @@ verankert.
   ([[Katalog-Anforderungen-Stand]]) und der
   Funktionsbeschreibung
   ([[Katalog-Funktionsbeschreibung-Stand]]) sowie der
-  Tag der Implementierung; bei einer Komponente mit
+  Tag der Implementierung — der Tag ist Quell-Stand für
+  alles, was nur das Produkt selbst trägt: Aufruf,
+  Voraussetzungen (z.B. Laufzeitumgebung), Bedienung,
+  Beispielausgaben kommen aus dem getaggten Produkt
+  (Code, Hilfe-Ausgabe, Konfiguration), nicht aus
+  weiteren Ständen; Architekturdokument und
+  Entwickler-Doku sind keine Quell-Stände der
+  Benutzer-Doku; bei einer Komponente mit
   eigener Zielumgebung tritt der Übergabe-Stand an die
   Stelle der Glieder, die er vertritt
   ([[Kettenpruefung]] §Fehlende und vertretene

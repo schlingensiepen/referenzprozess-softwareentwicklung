@@ -421,8 +421,9 @@ Commit „Upgrade: Herkunft“.
 
 1. **Lint:** `sh _template/tools/lint.sh` aus dem
    Projekt-Root ohne FEHLER; Hinweise zum Bestand sind
-   erwartet (Liste: Sprung-Datei §5) — jeden anderen
-   Hinweis begründet dein Bericht.
+   erwartet (Liste: Abschnitt „Prüfung“ der Sprung-Datei
+   — `1.x-nach-2.0.md` §5, `2.0-nach-2.1.md` §6) — jeden
+   anderen Hinweis begründet dein Bericht.
 2. **Stufe 1 — maschinelle Vorprüfung:** zwei Prüfer
    verschiedener Modelle als frische Agenten,
    unabhängig voneinander (möglichst beide ungleich

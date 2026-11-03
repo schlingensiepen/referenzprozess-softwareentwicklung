@@ -2,8 +2,13 @@
 
 _(Kopiervorlage, Quelle: MasterPrompt §7.5. Gerüst
 für `Tools.md` im Anwender-Root — bei Anlage
-kopieren und Beispiele ersetzen. Keine
-Wiki-Knoten-Datei.)_
+kopieren und Beispiele ersetzen. Die Kategorien
+(Überschriften `##`) bleiben alle stehen, auch ohne
+Werkzeug: dann trägt die Kategorie die Wahl „ohne
+Werkzeug“ bzw. „keines“ mit Datum (Vorgehen.md §7b —
+die Wahl ohne Werkzeug ist eine Wahl); ersetzt oder
+entfernt werden nur die Beispiel-Einträge `###` und
+Platzhalter. Keine Wiki-Knoten-Datei.)_
 
 ```markdown
 # Tools — installierte MCPs und Erweiterungen

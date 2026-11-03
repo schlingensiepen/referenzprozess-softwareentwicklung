@@ -48,7 +48,14 @@ Anwender-`wiki/` kopiert und in [[Katalog]] verankert.
   Technologie-Entscheidung in den Stand) oder
   **weglassen** (keine Technologie-Entscheidung); die
   Einordnung steht im Stand, die DEC bleibt
-  unverändert.
+  unverändert. Weggelassene DEC weist der Kopf des
+  Stands in einer eigenen Zeile direkt unter dem Titel
+  aus — `Nicht berücksichtigt (keine
+  Technologie-Entscheidung): <ID>, …` — nach dem
+  Muster der Ausweis-Zeile in
+  [[Einfrieren-und-Abloesen]] §Ableitungsprüfung; die
+  Zeile `Nicht berücksichtigt (offen): …` bleibt den
+  `offen`en Elementen vorbehalten.
   Kopiert werden referenzierte Glossar-Einträge.
 - **Pflichtfelder:** `type: technologie-entscheidungen`,
   `marke`, `zweck`, `herkunft`, `datum` (seit 2.0)

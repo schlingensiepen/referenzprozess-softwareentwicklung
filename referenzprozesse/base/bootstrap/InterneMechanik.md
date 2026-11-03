@@ -41,7 +41,7 @@ Wiki.md §3a („mandatory vs. optional beim Init“,
   aktive Prozess-Präfixe nach Merge — und der
   **Herkunfts-Vermerk** als Abschnitt `## Herkunft`
   mit den festen Zeilen `Template-Stand` (Version der
-  Vorlage und Tag der Anlage: `2.0 seit JJJJ-MM-TT` —
+  Vorlage und Tag der Anlage: `2.1 seit JJJJ-MM-TT` —
   das Datum ist der Stichtag des Bestandsschutzes),
   `Quelle` (Quelle und Stand, z.B. Commit/Tag — bei
   Modus A der Stand der Einmal-Kopie unter

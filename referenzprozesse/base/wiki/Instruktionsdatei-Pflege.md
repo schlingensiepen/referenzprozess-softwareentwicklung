@@ -47,7 +47,9 @@ Jede Instruktionsdatei enthält verbindlich:
    - `wiki/Fristen.md` — Fristenbuch
    - `wiki/index.md` — Wiki-Katalog
    - `Tools.md` — installierte Erweiterungen
-   - `Offene Fragen.md` — offene Fragen
+   - `Offene Fragen.md` — offene Fragen (optional,
+     MasterPrompt §1; nur nennen, wenn die Datei
+     angelegt ist)
 4. **Arbeitsmodi-Verweis** auf MasterPrompt §5.1.
 5. **git-Commit-Kadenz-Verweis** auf MasterPrompt §6.
 6. **Projektsprache** (meist Deutsch).

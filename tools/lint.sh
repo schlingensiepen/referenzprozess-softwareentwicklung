@@ -43,7 +43,10 @@
 #     wiki/ (`type: deployment`, `type: testplan`) im Bestand als Hinweis
 #     mit Überführungs-Angebot statt Fehler (ALTBESTAND)
 #   Katalog-Grammatik: Art, Klasse, Basis, `Freeze ab`, Präfix,
-#     Dokumenttypen, Dokumenttyp-Block, Reihenfolge (KAT-*)
+#     Dokumenttypen, Dokumenttyp-Block, Reihenfolge; Katalog nach dem
+#     Upgrade auf 2.1 (`Template-Stand: 2.1`) noch mit den Phasen von 2.0
+#     (Deploy-Stand als P11 oder keine Pflicht-Phase P15): Hinweis, bis
+#     dahin keine Umlesung alter Verzichts-DECs (KAT-*, KAT-STAND)
 #   Wikilinks und Anker (LINK-TOT, LINK-ANKER, ALIAS; Paket-Grenze auf
 #     der Template-Quelle: LINK-PAKET; ein toter Link im sichtbaren
 #     Ablöse-Vermerk `> **⚠ Abgelöst durch [[<ID>]]**` eines
@@ -131,7 +134,8 @@
 #     Verzichts-DEC mit `phase: P11`, `P12` oder `P13`, deren Anlage-Datum
 #     (`datum:` des Knotens, sonst Zeile `Angelegt` des Eintrags) vor dem
 #     Stichtag liegt, liest sich — solange `Template-Stand` die Version 2.1
-#     nennt und der Katalog die Phase P15 führt — über die Zuordnungstabelle
+#     nennt und der Katalog die Phase P15 führt (sonst Hinweis KAT-STAND,
+#     keine Umlesung) — über die Zuordnungstabelle
 #     2.0 → 2.1 als P13, P14 bzw. P15 (Hinweis), die alte P13 Betreiben
 #     ohne `umgebung:` als Verzicht für alle Umgebungen; ohne lesbares
 #     Anlage-Datum keine Umlesung, Hinweis),
@@ -155,7 +159,12 @@
 #     Deploy-Stand seiner Umgebung als Quell-Stand: fehlt er, Hinweis, andere
 #     Umgebung Hinweis, andere Marke Fehler MARKE-HERKUNFT; ein freigegebener
 #     Pflicht-Stand der Phasen P11–P13 ohne Testbericht TRES-NNN in
-#     `herkunft`: Hinweis; `basis:` eines Änderungsdokuments als Stand-Datei
+#     `herkunft`: Hinweis; ein freigegebener Testplan-Stand (P10) ohne den
+#     Tag seiner Marke in `herkunft` — gelesen gegen die Tag-Freigaben der
+#     Marke, ohne Tag-Freigabe nicht geprüft: Hinweis; eine Kopie im
+#     Kopien-Ordner eines Stands (`<Ketten-ID>_VV_TLA/<Name>.md`, die
+#     Setup-Kopie des Testberichts) nur darauf, ob der Stand des Ordners in
+#     output/ liegt; `basis:` eines Änderungsdokuments als Stand-Datei
 #     mit Version in der Form des Felds „Verweise“ — fehlend in output/,
 #     ohne Version, anderer Dokumenttyp oder der Stand selbst: Hinweis),
 #     Marke je Ketten-ID, `datum`,
@@ -186,7 +195,11 @@
 #     Stichtag angelegt) — am Tätigkeitsnamen („für P11 Ausliefern“ eines
 #     eingefrorenen 2.0-Eintrags liest sich als P13 Ausliefern, „für P13
 #     Betreiben“ als P15 Betreiben; ab dem Stichtag bleibt eine falsche
-#     Nummer ein Hinweis; Kettenpruefung.md §Lint-Anteil),
+#     Nummer ein Hinweis; Kettenpruefung.md §Lint-Anteil), jüngste Version
+#     (eine Pflicht-Freigabe trifft eine ältere Version, während in output/
+#     eine jüngere derselben Ketten-ID liegt, die weder Eintrag noch
+#     Nachtrag freigibt: Hinweis einmal je Ketten-ID — die Freigabe trifft
+#     die jüngste Version, Lebenslauf-eines-Stands Schritt 6),
 #     Freigabe-Ordnung
 #     je Marke mit Übernahme aus den Vormarken (Stände und — bei
 #     unverändertem Produkt — der Tag auf Basis der für die Vormarke
@@ -197,7 +210,12 @@
 #     Zielumgebung bis P11 — ohne P12, P13, P15 —, mit eigener Zielumgebung
 #     alle, Koordinator auch ohne eigene Bauteile P11 und P12; P13 und P15
 #     nur mit Zielumgebungen; ein fehlendes Doku-Glied P11/P12 vor dem
-#     Deploy-Stand nennt die Einschränkung „Doku folgt“; die
+#     Deploy-Stand nennt die Einschränkung „Doku folgt“ — der Hinweis steht,
+#     bis der Doku-Stand freigegeben ist oder ein Verzicht gilt; eine vor dem
+#     Stichtag abgeschlossene Marke (Freigabe ihres Abschluss-Stands vor dem
+#     Stichtag angelegt, ohne Abschluss-Stand-Freigabe: alle ihre
+#     Freigabe-Einträge) hatte die Doku-Glieder P11, P12 und P15 noch nicht —
+#     für sie nicht verlangt, kein „Doku folgt“ (Bestandsschutz 2.0 → 2.1); die
 #     Betriebs-Anleitung je Umgebung erst nach dem freigegebenen Deploy-Stand
 #     derselben Umgebung — Eintrag oder Nachtrag —, und am Abschluss-Stand je
 #     Umgebung mit eigenem Deploy-Stand zu M: Freigabe, Übernahme oder
@@ -1825,6 +1843,17 @@ END {
     # Meldung ist dort eine Fix-Anforderung. Aktiv ohne Voraussetzung: Fehler.
     if (("bug-report-log" in pff) && !("requirement-log" in pff))
       err("PFLICHT-FASSADE", pff["bug-report-log"], "Fassade Fehlermeldungen (`type: bug-report-log`) ist aktiv, die vorausgesetzte Fassade Anforderungen (`type: requirement-log`) fehlt oder ist deaktiviert — wer kein Anforderungs-Register hat, braucht keine Fehlermeldungen: Anforderungen aktivieren oder Fehlermeldungen deaktivieren (Wiki.md §3a „Abhängigkeiten“)")
+    # Katalog nach dem Upgrade 2.0 → 2.1 (Aktivierter-Prozess §Herkunft,
+    # `Template-Stand: 2.1`): Phasen und Zwecke der Doku-Glieder und die
+    # Umlesung alter Verzichts-DECs (unten) liest der Lint aus den lebenden
+    # Katalog-Einträgen des Projekts (Katalog-Deploy-Stand als P13,
+    # Katalog-Betriebs-Anleitung als Pflicht-Stand P15); führt der Katalog
+    # noch die Nummern von 2.0 — Deploy-Stand als P11 oder keine
+    # Pflicht-Phase P15 —, Hinweis: Delta-Nachzug der Katalog-Einträge
+    if (TSVER == "2.1" && maxph >= 10 && (!(15 in ppt) || (", " ppt[11] ", ") ~ /, deploy-stand, /)) {
+      katf = ("catalog" in pff) ? pff["catalog"] : ROOT "/wiki/Katalog.md"
+      hin("KAT-STAND", katf, "`Template-Stand: 2.1`, aber der Katalog führt noch die Phasen von 2.0 (" ((", " ppt[11] ", ") ~ /, deploy-stand, / ? "Deploy-Stand als P11" : "keine Pflicht-Phase P15") ") — Phasen und Zwecke der Doku-Glieder und die Umlesung alter Verzichts-DECs liest der Lint aus den Katalog-Einträgen des Projekts: `Katalog-Deploy-Stand.md` (P13, „für P13 Ausliefern“), `Katalog-Betriebs-Anleitung.md` (Pflicht-Stand P15), `Katalog-Entwickler-Doku.md`, `Katalog-Benutzer-Doku.md` und die Zeilen in `Katalog.md` aus der Vorlage nachziehen (Upgrade-Anleitung, Delta-Nachzug); bis dahin keine Umlesung")
+    }
   }
   # --- Marken (Fassade der Zielmarken), Komponenten, Alias
   # Zustand je Marke (Zielmarken §Meta, Marken-Dreiklang): Zeile
@@ -2248,6 +2277,15 @@ END {
       m = vals(f, "herkunft", varr); hkq = 0
       for (i = 1; i <= m; i++) {
         w = varr[i]
+        # Kopie im Kopien-Ordner eines Stands (Einfrieren-und-Abloesen §Stand,
+        # Herkunftszeile des Testberichts: die Setup-Kopie als
+        # `<Ketten-ID>_VV_TLA/<Name>.md`): gelesen wird nur, ob der Stand des
+        # Ordners in output/ liegt; die Kopie selbst liest der Lint nicht
+        if (w ~ /_[0-9][0-9][0-9]*_[A-Za-z][A-Za-z][A-Za-z]\/[^\/]+\.[A-Za-z0-9]+$/) {
+          hkd = substr(w, 1, index(w, "/") - 1)
+          if (OUTP != "" && !((OUTP hkd ".md") in files)) hin("HERKUNFT", f, "`herkunft`: Kopie `" w "` — kein Stand `" hkd ".md` in output/ (Kopie im Kopien-Ordner eines Stands, Einfrieren-und-Abloesen §Kopien)")
+          continue
+        }
         if (bn(w) ~ /_[0-9][0-9][0-9]*_[A-Za-z][A-Za-z][A-Za-z]\.[A-Za-z0-9]+$/ || w ~ /\.md$/) {
           if (bn(w) !~ /_[0-9][0-9][0-9]*_[A-Za-z][A-Za-z][A-Za-z]\.[A-Za-z0-9]+$/) { err("HERKUNFT", f, "`herkunft`: `" w "` — Stand ohne `_VV_TLA` im Dateinamen"); continue }
           if (index(w, "/") > 0) {
@@ -2484,7 +2522,9 @@ END {
     # Verzichts-DEC trägt `phase:` in den alten Nummern; führt der Katalog die
     # Phase P15, liest der Lint sie über die Tabelle (alt P11 → P13, P12 →
     # P14, P13 → P15) und sagt es als Hinweis; die alte P13 Betreiben ohne
-    # `umgebung:` gilt als Verzicht für alle Umgebungen ihrer Marke (W6)
+    # `umgebung:` gilt als Verzicht für alle Umgebungen ihrer Marke (W6).
+    # Führt der Katalog P15 noch nicht (Delta-Nachzug offen), keine Umlesung
+    # — das sagt der Hinweis KAT-STAND (oben, Pflicht-Fassaden)
     if (p == "DEC" && fw(fmget(f, "decision_type")) == "verzicht" && (stat(f) in AKTIV)) {
       z = trim(fmget(f, "zielmarke")); vp = trim(fmget(f, "phase")); vu = trim(fmget(f, "umgebung")); valt = ""
       if (vp ~ /^P1[123]$/ && (15 in ppt) && STICHTAG != "" && TSVER == "2.1") {
@@ -2980,6 +3020,19 @@ END {
       for (j = 1; j <= m; j++) if (harr[j] ~ /^([A-Za-z0-9_.-]+\/)?TRES-[0-9]+$/) ok = 1
       if (!ok) hin("HERKUNFT", f, "freigegebener Stand der Phase P" phnum(stand[f]) " (`" stand[f] "`) ohne Testbericht (TRES-NNN) in `herkunft` — der Testbericht ist Vorbedingung der Freigabe von Entwickler-Doku, Benutzer-Doku und Deploy-Stand (Kettenpruefung §Code-Glieder; Zeile Herkunft des Katalog-Eintrags)")
     }
+    # Tag der Implementierung in `herkunft` des Testplan-Stands (SP-1
+    # Katalog-Testplan, Zeile Herkunft; Einfrieren-und-Abloesen §Stand): ein
+    # freigegebener Pflicht-Stand der Phase P10 nennt den Tag seiner Marke —
+    # gelesen gegen die Tag-Namen der Tag-Freigaben dieser Marke (`tagx`);
+    # ohne Tag-Freigabe nicht geprüft (P10 ohne P9 meldet die Freigabe-Ordnung)
+    if ((f in freist) && verb[stand[f]] == "pflicht" && phnum(stand[f]) == 10) {
+      tm = trim(fmget(f, "marke"))
+      if (tm != "" && tagx[tm] != "") {
+        m = vals(f, "herkunft", harr); ok = 0; tn = split(tagx[tm], tarr, "\t")
+        for (j = 1; j <= m && !ok; j++) for (tq = 1; tq <= tn; tq++) if (tarr[tq] != "" && trim(harr[j]) == trim(tarr[tq])) ok = 1
+        if (!ok) hin("HERKUNFT", f, "freigegebener Stand der Phase P10 (`" stand[f] "`) ohne den Tag der Implementierung zu Marke " tm " in `herkunft` (Tag-Freigabe nennt `" trim(tarr[tn]) "`) — der Testplan-Stand wird nach dem Tag freigegeben und führt ihn in `herkunft` (SP-1 Katalog-Testplan, Zeile Herkunft; Einfrieren-und-Abloesen §Stand)")
+      }
+    }
     for (j = 1; j <= nstref[f]; j++) {
       g0 = stref[f, j]; id = idof[g0]
       cs = ((id in regid) && rf[regf[id], id, "Status"] != "") ? fw(rf[regf[id], id, "Status"]) : stat(g0)
@@ -3022,6 +3075,29 @@ END {
   # richtet sich nach der Rolle. Fehlender Vorgänger: Hinweis; fehlende
   # Tag-Bedingung des Testplan-Stands (P10 ohne P9): Fehler — je Marke und
   # Phase einmal je Schwere (ein früherer Hinweis verdeckt keinen Fehler).
+  # Vorab je Pflicht-Freigabe: (a) die Freigabe trifft die jüngste Version
+  # (Lebenslauf-eines-Stands Schritt 6; Einfrieren-und-Abloesen §Stand) —
+  # liegt in output/ eine jüngere Version derselben Ketten-ID, die weder
+  # ein Eintrag noch ein Nachtrag freigibt, Hinweis einmal je Ketten-ID;
+  # (b) Marken, die vor dem Stichtag abgeschlossen wurden (Upgrade 2.0 →
+  # 2.1, Bestandsschutz): ihre Kette hatte die Doku-Glieder P11, P12 und P15
+  # noch nicht — sie werden für sie nicht verlangt, kein „Doku folgt“.
+  # Gelesen wird das Anlage-Datum des Freigabe-Eintrags ihres
+  # Abschluss-Stands (`freialt`); ohne Abschluss-Stand-Freigabe gilt die
+  # Marke als vor dem Stichtag abgeschlossen, wenn alle ihre
+  # Freigabe-Einträge vor dem Stichtag angelegt sind (`altabg`)
+  for (i = 1; i <= nfl; i++) {
+    split(fl[i], f5, "\t"); M = f5[1]; n = f5[2] + 0; id = f5[3]; f = f5[4]; sfo = f5[6]
+    if (sfo != "" && (kid(sfo) in neuf) && neuf[kid(sfo)] != sfo && !(neuf[kid(sfo)] in freist) && !(("v", kid(sfo)) in ordseen)) {
+      ordseen["v", kid(sfo)] = 1
+      hin("FREIGABE-STAND", f, id ": freigegeben ist " bn(sfo) ", in output/ liegt die jüngere Version " bn(neuf[kid(sfo)]) " derselben Ketten-ID ohne Freigabe — die Freigabe trifft die jüngste Version (Lebenslauf-eines-Stands Schritt 6; Einfrieren-und-Abloesen §Stand): die jüngere Version prüfen und freigeben (der neue Eintrag löst diesen ab) oder sie zurücknehmen, wenn sie nicht gilt; bis dahin gilt die freigegebene Version")
+    }
+    if (!(M in abgeschl) || n == 0) continue
+    if (!(M in allalt)) allalt[M] = 1
+    if (!freialt(f, id)) allalt[M] = 0
+    if (n == 99) { hasabs[M] = 1; absalt[M] = freialt(f, id) }
+  }
+  for (M in abgeschl) if ((M in hasabs) ? absalt[M] : ((M in allalt) && allalt[M])) altabg[M] = 1
   for (i = 1; i <= nfl; i++) {
     split(fl[i], f5, "\t"); M = f5[1]; n = f5[2] + 0; id = f5[3]; f = f5[4]; g = f5[5]; sfo = f5[6]
     if (n == 0) continue
@@ -3030,6 +3106,8 @@ END {
     uo = (sfo != "" && (stand[sfo] in hatumg) && hatumg[stand[sfo]]) ? umgvon(sfo) : ""
     for (k = 1; k < n; k++) {
       if (!(k in ppt)) continue
+      # Doku-Glieder einer vor dem Stichtag abgeschlossenen Marke (oben, b)
+      if ((k == 11 || k == 12 || k == 15) && (M in altabg)) continue
       # Rolle (Kettenpruefung §Fehlende und vertretene Glieder): Standalone
       # ohne P6; Koordinator ohne eigene Bauteile ohne P7–P9 (P9 vertreten
       # durch die Lieferungen, unten je Komponente), seine Doku-Glieder P11
@@ -3133,7 +3211,7 @@ END {
       # fehlt Entwickler-Doku (P11) oder Benutzer-Doku (P12) ohne Verzicht,
       # nennt der Freigabe-Eintrag des Deploy-Stands das Glied als
       # Einschränkung „Doku folgt“ — Warnung, keine Blockade
-      if ((k == 11 || k == 12) && (n == 13 || ((M, 13) in frei))) msg = msg "; der Freigabe-Eintrag des Deploy-Stands nennt das fehlende Doku-Glied als Einschränkung „Doku folgt“ (Warnung, keine Blockade; Kettenpruefung §Kette, Doku-Glieder)"
+      if ((k == 11 || k == 12) && (n == 13 || ((M, 13) in frei))) msg = msg "; Doku-Glied fehlt vor dem Deploy-Stand: der Hinweis steht, bis der Doku-Stand freigegeben ist (Eintrag, nach dem Wechsel Nachtrag) oder ein Verzicht gilt — der Freigabe-Eintrag des Deploy-Stands bleibt unverändert und trägt „Doku folgt“ als Einschränkung (Warnung, keine Blockade; ob er sie nennt, liest der Lint nicht; Kettenpruefung §Kette, Doku-Glieder)"
       if (sev == "E") ordfehler("FREIGABE-ORDNUNG", f, id, msg "; Tag-Bedingung des Testplan-Stands")
       else hin("FREIGABE-ORDNUNG", f, msg)
     }
@@ -3657,15 +3735,30 @@ cat <<'EOF'
   Wikilinks auskommt, wird nicht geprüft (eine ID im Text zählt wie bei
   jedem Stand als Verweis); welche Quell-Stände `herkunft` nach dem
   Katalog-Eintrag nennen müsste, nur beim Testbericht (TRES-NNN, Phasen
-  P11–P13, nur am freigegebenen Stand) und beim Deploy-Stand der
-  Betriebs-Anleitung (Vorhandensein, Umgebung, Marke) — nicht bei
-  Architektur, Konzept und den übrigen Quell-Ständen; Quell-Stände über
+  P11–P13, nur am freigegebenen Stand), beim Tag des Testplan-Stands (P10,
+  nur am freigegebenen Stand, nur gegen die Tag-Freigaben seiner Marke)
+  und beim Deploy-Stand der Betriebs-Anleitung (Vorhandensein, Umgebung,
+  Marke) — nicht bei Architektur, Konzept und den übrigen Quell-Ständen;
+  die Setup-Kopie in `herkunft` des Testberichts (`<Ketten-ID>_VV_TLA/
+  <Name>.md`) nur darauf, ob der Stand des Ordners in output/ liegt — die
+  Kopie selbst, ihr Inhalt und ob sie im Ordner liegt, nicht; Quell-Stände über
   Repo-Grenzen nur auf Vorhandensein des Dateinamens in output/ des
   Nachbarn (Marke, Typ und Freigabe dort nicht gelesen); `basis:` nur als
   Stand-Datei (Vorhandensein, Version, gleicher Dokumenttyp) — ob die
   Vollfassung freigegeben ist, ob das Änderungsdokument kumulativ ist und
   ob die Heuristik „ab zwei Änderungsdokumenten“ greift, nicht; der
   M6-Bericht wird nirgends gelesen.
+- Doku-Abfrage: ob sie nach dem Tag der Marke stattfand (Zeilen-DECs
+  „jetzt / später / gar nicht“ je Doku-Art, Kettenpruefung §Kette) und ob
+  ihr Ergebnis zu Freigaben, Nachträgen und Verzichten passt — auch die
+  nachgeholte Abfrage nach einem Upgrade, wenn die laufende Marke den Tag
+  schon trägt; der Lint liest nur Freigabe-Einträge, Nachträge und
+  Verzichts-DECs. Eine jüngere Version ohne Freigabe neben einer
+  freigegebenen älteren derselben Ketten-ID nur für Pflicht-Freigaben mit
+  Stand-Datei (Hinweis); ob die jüngere Version im Freigabe-Zug ist oder
+  verworfen wurde, nicht. Marken „vor dem Stichtag abgeschlossen“ nur über
+  das Anlage-Datum ihrer Freigabe-Einträge (Abschluss-Stand-Freigabe,
+  sonst alle) — den Marken-Wechsel-Eintrag liest der Lint nicht.
 - Widerspruch und Unbegründetes bleiben Prüfer-Sache.
 EOF
 

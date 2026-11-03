@@ -512,7 +512,14 @@ Element bis zur Freigabe: [[Lebenslauf-eines-Stands]].
   `herkunft` mit dem Testplan-Stand, dem Tag der
   Implementierung (beim Koordinator den Lieferungs-Tags
   der geprüften Komponenten) und der Setup-Kopie, je
-  mit Version.
+  mit Version. Die Setup-Kopie liegt im Kopien-Ordner
+  des Testplan-Stands (§Kopien) und wird als Pfad
+  darin genannt — `<Ketten-ID des
+  Testplan-Stands>_VV_TLA/<Name der Setup-Fassade>.md`
+  (z.B. `2026-05-04 - Testplan_01_ABC/Systemtest-Setup.md`);
+  ihre Version ist die des Ordners. Der Lint liest
+  diese Form als Kopie (nur ob der Stand des Ordners
+  in `output/` liegt), nicht als Stand.
 - **Stände sind Voll-Stände:** ein Stand zu Marke M
   beschreibt das ganze Produkt zu M, einschließlich
   weiter gültiger Elemente früherer Marken. Den Zuwachs
