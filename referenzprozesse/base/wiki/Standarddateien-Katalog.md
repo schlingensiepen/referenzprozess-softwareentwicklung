@@ -25,18 +25,58 @@ bei Bedarf konsultiert.
 ## 2.3 KI-Agent-Instruktionsdatei
 
 Agent-spezifisch; jeder Agent erzeugt seine eigene
-native Datei:
+native Datei. Die Vorlage nennt dafür **keinen
+Dateinamen**: Sie weiß nicht, in welchem Harness
+(der Umgebung, in der der Agent läuft) sie gelesen
+wird. Es gilt:
 
-| Agent | Instruktionsdatei |
+1. **Nimm die für dich passende.** Der Agent legt die
+   Datei an, die **sein eigener Harness beim
+   Sessionstart automatisch lädt** — unter dem Namen
+   und an dem Ort, den dieser Harness erwartet.
+2. **Selbst feststellen.** Welche Datei das ist,
+   stellt der Agent selbst fest: aus der Dokumentation
+   und der Konvention seines Harness, aus dem, was der
+   Harness ihm über sich mitteilt, oder aus einer
+   Datei dieser Art, die im Projekt schon liegt. Er
+   übernimmt keinen Namen aus einem Beispiel, nur
+   weil er dort steht.
+3. **Wahl festhalten.** Der Agent hält fest, welche
+   Datei er für welchen Harness gewählt hat und woraus
+   er das entnommen hat: in `Tools.md`, Kategorie
+   „Instruktionsdateien“ (Kopiervorlage
+   `wiki/templates/Tools-Vorlage.md`), je Harness ein
+   Eintrag. Im Erledigt-Block nennt er die Datei.
+4. **Unsicherheit melden.** Kann der Agent nicht
+   sicher feststellen, welche Datei sein Harness lädt
+   — oder lädt der Harness mehrere Namen —, sagt er
+   das dem Anwender, nennt seine Wahl mit Grund und
+   trägt „unsicher“ in den Eintrag ein. Der Nachweis
+   ist eine zweite Sitzung: Kennt der Agent dort die
+   eisernen Regeln, ohne den MasterPrompt gelesen zu
+   haben, ist die Datei die richtige.
+5. **Eine Datei je Harness.** Lädt ein Harness mehrere
+   Dateinamen, legt der Agent eine Datei an. Verlangt
+   der Harness eine zweite, verweist sie auf die erste
+   und wiederholt deren Inhalt nicht.
+
+Mehrere Instruktionsdateien verschiedener Agenten
+dürfen im selben Projekt koexistieren; jeder Agent
+pflegt nur seine. Die Datei wird beim Sessionstart
+automatisch geladen. Grundsatz, Rolle,
+Pflichtabschnitte: MasterPrompt §8.
+
+**Beispiele, keine Regel.** Die folgende Tabelle zeigt,
+wie solche Dateien zum Zeitpunkt der Niederschrift bei
+einigen Harnesses hießen. Sie ist weder vollständig
+noch verbindlich und kann veraltet sein; maßgeblich ist
+Punkt 2.
+
+| Harness (Beispiel) | Instruktionsdatei (Beispiel) |
 |---|---|
 | Claude Code | `CLAUDE.md` |
 | Cursor | `.cursorrules` |
 | Windsurf | `.windsurfrules` oder `.windsurf/rules` |
-
-Weitere Agenten nach ihrer Konvention. Mehrere solche
-Dateien dürfen im selben Projekt koexistieren. Wird bei
-Sessionstart automatisch geladen. Grundsatz, Rolle,
-Pflichtabschnitte: MasterPrompt §8.
 
 **Template:** wird nicht mitgeliefert. Der Agent legt
 sie beim Init an (MasterPrompt §5.3).
@@ -97,23 +137,39 @@ Agent-Erweiterungen (Skills, Rules, Workflows je nach
 Agent) sowie der Projekt-Skripte im Ordner `tools/`
 (MasterPrompt §1.9). Details MasterPrompt §7.
 
+Dazu führt `Tools.md` die vom Anwender beim Init
+gewählten **Kommunikationskanäle** (Abschnitt
+„Kommunikationskanäle“; Liste und Angebots-Regel:
+`Outgoing.md` §3.2) und die **Ausnahmen der
+Geheimnis-Prüfung** (Abschnitt „Ausnahmen der
+Geheimnis-Prüfung“: Pfad und Grund je dauerhaftem
+Fehlalarm; MasterPrompt §6.3).
+
 **Template:** Kopiervorlage mit den Kategorien
 `wiki/templates/Tools-Vorlage.md`. Der Agent legt
 `Tools.md` an, sobald das erste Tool installiert oder
 die erste Werkzeug-Wahl getroffen wird (Vorgehen.md
-§7b).
+§7b) — spätestens mit der Kanal-Frage im Init.
 
-## 2.10 Offene Fragen.md (optional)
+## 2.10 Offene Fragen.md
 
-Offene Fragen aus dem Arbeitsmodus (MasterPrompt §5.1.3). Wird
-beim Sessionstart mit hoher Priorität gelesen.
+Persistenz aller offenen Fragen an den Anwender, **in
+jedem Modus**: Was nicht im selben Zug beantwortet
+wird, steht hier — auch eine Briefing-Kette, aus der
+der Anwender ausgestiegen ist (MasterPrompt §5.2). Wird
+beim Sessionstart mit hoher Priorität gelesen; eine
+unabgeschlossene Kette bietet der Agent zur Fortsetzung
+an.
 
-**Template:** wird nicht mitgeliefert. Der Agent legt
-sie beim ersten Eintrag an.
+**Template:** wird als **Rumpf** mitgeliefert
+(Platzhalter-Grundsatz, Wiki.md §3a) und beim Init
+unverändert ins Projekt-Root übernommen; der Agent
+trägt ab der ersten offenen Frage ein. Ein Upgrade legt
+die Datei nur an, wo sie fehlt.
 
 ## 2.11 TODO.md
 
-Offene Punkte und Erinnerungen des Users. Die KI
+Offene Punkte und Erinnerungen des Anwenders. Die KI
 prüft beim Sessionstart und bei relevanten Aufgaben,
 fügt aber nur auf Anweisung neue Einträge hinzu. Als
 Anweisung gilt auch die Antwort des Anwenders auf die
@@ -121,7 +177,13 @@ Frage, wann der Agent ihm eine offene Frage erneut
 stellen soll (Datum oder Anlass): Diese Wiedervorlage
 trägt der Agent ohne weitere Rückfrage ein, führt sie
 fort, bis der Anwender die Frage entschieden hat, und
-erledigt sie mit dieser Entscheidung. Abläufe: die
+erledigt sie mit dieser Entscheidung. **Keine
+Erwartungen an Dritte:** Was ein Dritter uns schuldet
+(Antwort, Entscheidung, Lieferung, Bestätigung), ist
+keine Wiedervorlage, sondern eine Frist mit
+`richtung: für-uns` in `wiki/Fristen.md`
+([[Katalog-Fristen]]); hier stehen nur eigene Fragen
+und Erinnerungen. Abläufe: die
 Nachfrage nach der Bestätigung einer ausgelieferten
 Behebung — bei der Freigabe des Deploy-Stands wie nach
 einer Antwort „noch nicht“ — in SP-1 `Anforderungen.md`
@@ -181,7 +243,36 @@ Instruktionsdatei) und verweist für die Erklärung der
 Vorlage auf `_template/docs/Einfuehrung.md` bzw. für
 den Update-Weg auf `_template/README.md` §Template
 aktualisieren; der Startweg „Lies … und setze das
-Projekt auf“ entfällt in der Projekt-README.
+Projekt auf“ entfällt in der Projekt-README, ebenso
+die Zeile „Version der Vorlage“ (mit welchem Stand das
+Projekt arbeitet, steht im Herkunfts-Vermerk).
+
+## 2.15 devstate_active.md
+
+**Einstieg jedes Projekts.** Wer das Projekt
+erschließen will — ein anderer Agent, ein
+abgespaltenes Projekt über den Übergabe-Punkt
+([[Zuschnitt-aendern]]), ein Mensch —, beginnt hier.
+Die Datei trägt den aktuellen Stand in wenigen Sätzen
+(erste Zeile „Zielmarke: <Bezeichnung der
+in-progress-Marke>“ — die Fassade [[Zielmarken]] führt
+den Zeiger, diese Datei verweist nur), die nächsten
+Schritte, Blockaden und Risiken und die Verweise, über
+die sich das Projekt erschließen lässt. Sie ist eine
+Root-Session-Datei, kein Wiki-Knoten; ihre Pflege
+gehört zur Doku-Pflicht (MasterPrompt §9.1). Den
+ausführlichen Zustandsbericht (Marken, Komponenten,
+Stände) füllt der aktive Prozess nach seiner
+`Vorgehen-<Prozess>.md` (mit SP-1 der Gesamtstand des
+Koordinators; ein Verfahrens-Prozess nennt Verfahren,
+Stelle, Aktenzeichen, Stufe, laufende Marke, offene
+Fristen).
+
+**Template:** wird als **Rumpf** mitgeliefert
+(Platzhalter-Grundsatz, Wiki.md §3a); der Init füllt den
+Kopf (Projekt, Prozess) mit der ersten Marke
+([[Init-Choreografie]] Phase D Turn 3). Ein Upgrade legt
+die Datei nur an, wo sie fehlt.
 
 ## Bezüge
 

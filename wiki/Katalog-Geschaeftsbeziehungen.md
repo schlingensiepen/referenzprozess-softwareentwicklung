@@ -25,6 +25,20 @@ Anwender-`wiki/` kopiert und in [[Katalog]] verankert.
 - **Datei:** `wiki/Geschaeftsbeziehungen.md`
 - **Singleton** — optional, Vorauswahl deaktiviert
   (Steckbrief § Mitgebrachte Fassaden)
+- **Abgrenzung zu den Rollen-Fassaden der Basis:**
+  Geschäftsbeziehungen = **Organisation zum Projekt**
+  („Organisation X ist Kunde für Aspekt Y“);
+  [[Ansprechpartner]] = Rolle einer **Person im
+  Projekt**; [[Mitgliedschaften]] = **Zugehörigkeit
+  unabhängig vom Projekt** („Maier ist Geschäftsführer
+  in der Bau-Mich-Auf GmbH“); Beteiligte (mit dem
+  Standardprozess Recht und Verwaltung) = Rolle im
+  Verfahren mit Vertretung. Diese Fassaden teilen die
+  Bauform — Relation Person oder Organisation ↔ etwas
+  —, nicht den Gegenstand. Die Mitgliedschaften bleiben
+  `active: false`; wird eine Zugehörigkeit über
+  Projekte oder Zeit hinweg erheblich, schlägt der
+  Agent ihr Einschalten vor, statt sie hier zu führen.
 
 ### customer
 

@@ -151,7 +151,8 @@ nach ID; Eintragsformat in `## Meta`.)_
 _(Register der Komponenten und ihrer Lage — führender
 Ort. Eine Zeile je Komponente; Detail-Knoten nach der
 Anlage-Schwelle in `## Meta`. Standalone: eine Zeile
-mit dem eigenen Repo.)_
+mit dem eigenen Repo; als Pfad steht dort `.` — der
+Projektordner selbst.)_
 
 | Komponente | Aufgabe | Repo-Name | Pfad | Remote | Detail |
 |---|---|---|---|---|---|

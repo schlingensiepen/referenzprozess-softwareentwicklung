@@ -1,3 +1,13 @@
+# raw/ und input/ stehen bewusst nicht in dieser Datei:
+# beide Ordner werden in jedem Projekt versioniert
+# (MasterPrompt §1.2, §1.3).
+
+# Lokale Einstellungen der Agenten-Umgebung (MasterPrompt §6.3).
+# Jeder Agent ergänzt hier die lokale Einstellungs-Datei
+# seines eigenen Harness, falls der eine anlegt. Die
+# folgende Zeile ist ein Beispiel, keine Liste.
+.claude/settings.local.json
+
 # Microsoft Office temporäre Dateien
 ~$*.docx
 ~$*.doc

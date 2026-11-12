@@ -5,8 +5,9 @@ type: internal-rule
 # Konzept-Repositories
 
 **Register der Konzept-/Proposal-Repositories**, aus
-denen das Konzept-Angebot beim Init (MasterPrompt
-§5.3, Turn „Konzept-Angebot") und spätere
+denen das Konzept-Angebot beim Init
+([[Init-Choreografie]] §Baustein Konzept-Angebot) und
+spätere
 Übernahme-Angebote schöpfen. Ein Eintrag je
 Repository:
 
@@ -39,10 +40,10 @@ Repository:
   wird nicht ins Anwender-`wiki/` kopiert (anders als
   die Katalog-Einträge, die als Dateien mitkommen).
 - **Übernahme-Wirkung:** was aus einem Repository
-  übernommen wird, regelt MasterPrompt §5.3
-  (DEC-Buchung, Quell-Kopie als `document` mit
-  `document_type: proposal`, Fassaden-Wirkung als
-  Aktions-Entwurf).
+  übernommen wird, regelt [[Init-Choreografie]]
+  §Baustein Konzept-Angebot (DEC-Buchung, Quell-Kopie
+  als `document` mit `document_type: proposal`,
+  Fassaden-Wirkung als Aktions-Entwurf).
 
 _(Kein Fassaden-Knoten — `internal-rule`-Detail-Knoten,
 indexiert über [[InterneMechanik]].)_

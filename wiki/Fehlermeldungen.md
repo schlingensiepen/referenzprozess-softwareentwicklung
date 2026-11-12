@@ -153,6 +153,32 @@ Wahl von SP-1 (Wiki.md §11 Prozess-Teil-Wikis).
   [[Testfaelle]]); sie trägt die `marke` des
   Testberichts als Zielmarke (oben) — weicht sie ab,
   meldet der Lint einen Hinweis.
+- **RP-2-Präzisierung** (gilt bei aktivem RP-2): Eine
+  Fehlermeldung ist hier eine **Störung** an einer
+  Anlage und trägt ausdrücklich die **Ursache**
+  (`ursache`: Produkt / Umwelt / Anbieter — liegt der
+  Fehler im betriebenen Produkt, in der Umgebung
+  (Netz, Hardware, Nachbarsystem) oder im Verhalten
+  eines Fremdanbieters) und den **Klärungsstand**
+  (`klaerungsstand`: beobachtet / Workaround /
+  ungeklärt); die **Vorkommen** (Datum, Journal-Eintrag)
+  kann sie als Liste im Feld `vorkommen` führen — ein
+  Kann-Feld, nützlich bei wiederkehrenden Störungen.
+  Die Leichtform ist die
+  **Kurzstörung** im `Betriebsjournal.md` (RP-2) — ohne BUG,
+  solange sich kein Produkt-Stand falsch verhält. Der
+  Übergang Störung → Fix-Anforderung → Marke der Art
+  „Ändern“ bleibt wie oben (`Marken-RP-2.md` §3); eine
+  Störung mit Ursache im Produkt eines
+  Software-Projekts wird **dort** als Fehlermeldung
+  gebucht (Nachricht an das Software-Projekt,
+  `Vorgehen-RP-2.md` §7), hier bleibt die Störung mit
+  Verweis. Eine Meldung aus einer Abnahme am Ziel nennt
+  per `gefunden_in:` das Abnahmeprotokoll und die
+  TEST-ID (`Abnahmeprotokolle.md` (RP-2)). Felder:
+  [[Katalog-Fehlermeldungen]] RP-2-Präzisierung.
+  Eintragsformat zusätzlich: Ursache / Klärungsstand,
+  bei Bedarf Vorkommen.
 - **Eintragsformat:** `### BUG-NNN — <Beobachtetes
   Verhalten in einem Satz>` mit Feldern Status
   (8-Zustand) / Datum (letzter Statuswechsel) /

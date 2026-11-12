@@ -15,7 +15,7 @@ Version.
 **empirische Studien und Forschungsvorhaben** — von der
 Frage- und Hypothesenbildung über Erhebung und
 Auswertung bis zur zitierbaren Ergebnis-Dokumentation.
-Basis für die spezifischen Referenzprozesse RP-7
+Basis für die spezifischen Referenzprozesse RP-40
 (Sozialforschung) und perspektivisch weitere Forschungs-
 zweige.
 

@@ -5,9 +5,11 @@ aus diesem Starter entstehen soll** — typischerweise
 nach dem Start-Satz „Richte dieses Verzeichnis als
 neues Projekt nach der Anleitung unter
 https://github.com/schlingensiepen/referenzprozess-softwareentwicklung
-ein.“ oder nach dem Startprompt eines Koordinators,
-der mit diesem Satz beginnt (Rolle Komponent,
-Schritt 3). Das aktuelle Verzeichnis ist der
+ein.“
+Oder du kommst über den Startprompt eines
+Koordinators, der mit diesem Satz beginnt (Rolle
+Komponent, Schritt 3).
+Das aktuelle Verzeichnis ist der
 Projektordner. Du darfst dieses Dokument und jede
 Datei, auf die es verweist, **direkt von der Repo-URL
 lesen, bevor irgendetwas eingebunden ist** (Raw-Pfad
@@ -18,14 +20,14 @@ ab der Kopie (Schritt 1) die Wiki-Knoten aus deinem
 Projekt-`wiki/`.
 
 Dein Projekt-`wiki/` kommt vorbereitet aus dem
-Starter — RP-1 (Entwicklung eines Softwaresystems)
-auf SP-1 ist aktiviert, die Vorfestlegungen bucht
+Starter — RP-1 Entwicklung eines Softwaresystems auf SP-1 ist
+aktiviert, die Vorauswahlen bucht
 [[Aktivierter-Prozess]]. **Du baust kein wiki, du
 füllst eines.** Der Starter weiß, dass es andere
-Referenzprozesse gibt (Regelwerk unter
-`_template/referenzprozesse/`, keine abschließende
-Liste); passt der Software-Prozess nicht zum
-Vorhaben, fragst du (Schritt 3 Nr. 1). Diese
+Referenzprozesse und andere Starter gibt (Regelwerk
+unter `_template/referenzprozesse/`, Landkarte
+[[Schwester-Templates]]); passt der Prozess für Softwareentwicklung
+nicht zum Vorhaben, fragst du (Schritt 3, A). Diese
 Anleitung regelt nur, was am Starter-Fall besonders
 ist; alles Übrige regeln MasterPrompt §5.3 und
 [[Init-Choreografie]]. Ihre Verweise auf
@@ -63,7 +65,7 @@ etwas kollidiert, das der Init kopiert — Schritt 1 —
 oder anlegt — Schritt 4 und 5: `TODO.md`,
 `README.md`, Instruktionsdatei, `Tools.md`; „Datei des
 Inits“ unten meint beides): Du stellst im Fragen-Block
-(Nr. 11) je Fall die Frage mit drei Möglichkeiten und
+(D) je Fall die Frage mit drei Möglichkeiten und
 gibst eine Empfehlung mit Grund; der Anwender darf
 gesammelt antworten („alles wie empfohlen“, „überall
 (c)“):
@@ -104,8 +106,8 @@ Instruktionsdatei.
 
 **Nur-Lese-Regel:** `_template/` wird **nie
 beschrieben** und nie gelöscht; es bleibt dauerhaft
-im Projekt. `referenzprozesse/`, `tools/` (der
-Lint-Kern, den du aus `_template/tools/` aufrufst)
+im Projekt. `referenzprozesse/`, das Prüfprogramm
+(`_template/tools/lint.sh`, das du von dort aufrufst)
 und `upgrade/` liegen **nur** dort.
 
 **Keine Ausführung ohne Zustimmung:** `git init`,
@@ -152,8 +154,9 @@ Frage** die Einbindungs-Frage mit diesem Wortlaut:
 >   dauerhaft im Projekt bleibt, damit du immer
 >   siehst, womit du gestartet bist** (technisch eine
 >   Einmal-Kopie ohne Git-Verbindung, die mit deinem
->   Projekt gespeichert wird, ca. 3 MB). Neuere
->   Vorlagen-Stände übernimmst du später durch
+>   Projekt gespeichert wird, ca. 40 MB — der größte
+>   Teil sind die mitgelieferten Gesetzestexte).
+>   Neuere Vorlagen-Stände übernimmst du später durch
 >   bewussten Austausch der Kopie.
 
 Nach der Antwort nennst du die exakten Kommandos und
@@ -167,9 +170,10 @@ führst sie nach Zustimmung aus (Repo-URL
   A1).
 - **Modus B:**
   `git submodule add https://github.com/schlingensiepen/referenzprozess-softwareentwicklung _template`.
-  Schlägt das fehl (kein Netz, URL nicht erreichbar):
-  melden; der Anwender entscheidet — erneut
-  versuchen, andere URL, Modus A oder Abbruch.
+  Schlägt das fehl (kein Netz, URL nicht erreichbar,
+  kein Zugriffsrecht): melden; der Anwender
+  entscheidet — erneut versuchen, andere URL oder
+  lokaler Klon, Modus A oder Abbruch.
 - **Modus A:**
   `git clone --depth 1 https://github.com/schlingensiepen/referenzprozess-softwareentwicklung _template`,
   dann die Herkunft ablesen
@@ -221,13 +225,16 @@ erst nach seiner Zustimmung:
 | `Styleguide.md` | `Styleguide.md` | Styleguide |
 | `Styleguide-md.md` | `Styleguide-md.md` | Styleguide |
 | `Styleguide-wiki.md` | `Styleguide-wiki.md` | Styleguide |
+| `Offene Fragen.md` | `Offene Fragen.md` | Rumpf, unverändert |
 | `.gitignore` | `.gitignore` | nur wenn im Projekt keine existiert |
-| `wiki/` (komplett, inkl. `templates/`) | `wiki/` | vorbereitetes `wiki/`, inkl. deaktivierter Fassaden (Reaktivierung per Zuruf) |
-| `devstate_active.md` | `devstate_active.md` | Frisch-Fassung |
+| `wiki/` (komplett, mit `templates/` und allen Unterordnern) | `wiki/` | vorbereitetes `wiki/`, inkl. deaktivierter Fassaden (Reaktivierung per Zuruf) |
+| `devstate_active.md` | `devstate_active.md` | Rumpf mit Prozess-Zeile, Frisch-Fassung |
 
-**Nie kopiert werden:** `referenzprozesse/`,
-`tools/` (du rufst `_template/tools/lint.sh` auf und
-trägst es so in `Tools.md` ein, Schritt 4),
+**Nie kopiert werden:** `referenzprozesse/`
+(ausgenommen die Zeilen der Liste oben, die von dort
+kopieren), `tools/` des Starters (du rufst
+`_template/tools/lint.sh` auf und trägst es so in
+`Tools.md` ein, Schritt 4),
 `upgrade/`, `README.md` (die des Starters; die
 Projekt-README legst du in Schritt 5 neu an — das ist
 für diesen Starter das „Anpassen“ der mitgelieferten
@@ -235,12 +242,17 @@ README aus [[Init-Choreografie]] §Phase A0 und
 [[Standarddateien-Katalog]] §2.14), `INIT.md`,
 `migration/`, `docs/`, `setup/`, `LICENSE`, `.git/`.
 
+**Standardordner:** Die Ordner aus MasterPrompt §5.3
+A2 legst du an wie dort beschrieben (leere Ordner mit
+dem Platzhalter `.gitkeep`); das Skript legt sie nicht
+an.
+
 **Kollisionen** — die Liste des Skripts (bzw. deiner
 Handkopie) ist der Eingang der Kollisionsfrage
-(Grundsätze; Nr. 11): die kollidierende Starter-Datei
-bleibt bis zur Antwort ausgelassen. Beispiele: Ein
-vorgefundenes `wiki/`, das nicht aus diesem Starter
-stammt (kein inhaltsgleiches
+(Grundsätze; Schritt 3, D): die kollidierende
+Starter-Datei bleibt bis zur Antwort ausgelassen.
+Beispiele: Ein vorgefundenes `wiki/`, das nicht aus
+diesem Starter stammt (kein inhaltsgleiches
 `wiki/Init-Choreografie.md`), ist **eine** Kollision
 auf Ordner-Ebene — nichts wird hineinkopiert. Das
 Skript sieht nur die Kopier-Liste; was du in
@@ -269,11 +281,12 @@ Fall für diesen Weg, sondern für die Migration
   den Rest — er kommt nach der Kollisionsfrage mit dem
   ersten eigenen Commit (Schritt 5) ins Repo; sonst
   `git add -A && git commit -m "Setup: Starter-Stand aufgenommen"`.
-  Ignorierte Dateien bleiben ignoriert (nie
-  `git add -f`); fehlende git-Identität erfragst du,
-  statt sie zu setzen; bei abweisendem Hook oder
-  verlangter Signatur hältst du an und beschreibst
-  die Lage — nie `--no-verify`.
+  Originale in `raw/` und `input/` gehören ins Repo
+  (MasterPrompt §1.2, §1.3). Ignorierte Dateien
+  bleiben ignoriert (nie `git add -f`); fehlende
+  git-Identität erfragst du, statt sie zu setzen; bei
+  abweisendem Hook oder verlangter Signatur hältst du
+  an und beschreibst die Lage — nie `--no-verify`.
 - Das Remote-Ziel ist Punkt im Fragen-Block — nicht
   jetzt einrichten.
 
@@ -281,22 +294,23 @@ Fall für diesen Weg, sondern für die Migration
 
 **Übersicht zuerst:** Zeige dem Anwender die Punkte
 unten als Fahrplan (je Punkt eine Zeile mit dem, was
-feststeht oder ableitbar ist, MasterPrompt §5.1.0)
-und biete den Briefing-Modus an: wählt er ihn,
-stellst du die Fragen einzeln, sonst alle in
-**einem** Block (nummeriert, je Punkt dein Vorschlag
-zuerst; Ableitbares als Entwurf, nicht abfragen).
-Dieser Block ersetzt die Turns 1 und 2 der
+feststeht oder ableitbar ist, MasterPrompt §5.1.0;
+[[Fahrplan-Vorlage]]) und biete den Briefing-Modus
+an: wählt er ihn, stellst du die Fragen einzeln,
+sonst alle in **einem** Block (je Punkt dein
+Vorschlag zuerst; Ableitbares als Entwurf, nicht
+abfragen). Dieser Block ersetzt die Turns 1 und 2 der
 [[Init-Choreografie]] §Phase D; was dort Turn 3 und
 die Folge-Turns tun, ist Schritt 4 (einschließlich
-Konzept-Angebot und Mission-Statement-Dialog).
-Frage nichts, was vorfestgelegt ist
+Mission-Statement-Dialog und Konzept-Angebot).
+Wortlaut und Voreinstellung jeder Frage stehen an der
+Stelle, auf die der Punkt verweist
+([[Init-Choreografie]] §Init-Fragen im Frage-Block,
+„Wortlaut und Voreinstellung“); du erfindest keine
+Optionen. Frage nichts, was vorfestgelegt ist
 ([[Aktivierter-Prozess]]); die Fassaden-Auswahl ist
 Starter-Vorauswahl ([[Fassaden]]; deaktivierte
-Fassaden werden per Zuruf reaktiviert —
-[[Geschaeftsbeziehungen]] empfiehlt der Prozess bei
-Produktentwicklung, [[Fehlermeldungen]] setzt
-[[Anforderungen]] voraus).
+Fassaden werden per Zuruf reaktiviert).
 
 **Mit Startprompt (Rolle Komponent):** Was der
 Startprompt des Koordinators vorgibt, legst du als
@@ -304,82 +318,126 @@ abgeleitet vor und fragst es nicht — Rolle Komponent,
 eigener Repo-Name, Pfad und Remote, Koordinator-Pfad,
 **Übernahme-Art**, Start und Transport, Verweis auf
 den **Übergabe-Stand** ([[Init-Choreografie]] §Init
-mit Startprompt). Den Referenzprozess gibt der
-Startprompt **nicht** vor (Nr. 1). Seine Form: eine
-Markdown-Datei in `output/` des Koordinators
+mit Startprompt (Komponente)). Den Referenzprozess
+gibt der Startprompt **nicht** vor (A). Seine Form:
+eine Markdown-Datei in `output/` des Koordinators
 (Einmal-Instanz, kein Wiki-Knoten), die mit dem
 Start-Satz der README beginnt und danach die Angaben
 der Tabelle in [[Init-Choreografie]] §Init mit
 Startprompt in deren Reihenfolge nennt, je Angabe
 eine Zeile; die Rolle heißt darin „Komponent“ wie im
-Herkunfts-Vermerk.
+Herkunfts-Vermerk. Ein Startprompt einer
+**Abspaltung** läuft nach [[Init-Choreografie]] §Init
+mit Startprompt (Abspaltung).
 
-1. **Prozess-Nachfrage** — nur, wenn der
-   Software-Prozess nach dem, was du bis hierher
-   weißt (Startprompt und Übergabe-Stand, Originale
-   in `raw/`, Aussagen des Anwenders), nicht zum
-   Vorhaben passt oder du nicht sicher bist: „Bist du
-   sicher, dass das der richtige Prozess ist? Ich
-   erkenne nicht, dass er zum Vorhaben passt — willst
-   du mir einen anderen nennen?“ Keine Liste. Das ist
-   die Nachfrage, die [[Init-Choreografie]] §Init mit
-   Startprompt der Init-Anleitung der Vorlage
-   zuweist. Nennt der Anwender einen anderen Prozess,
-   richtest du das Projekt damit ein (Schritt 4);
-   bleibt er beim Software-Prozess, geht es damit
-   weiter. Ergibt sich der Zweifel erst aus Nr. 8,
-   fragst du vor der Umsetzung nach. _Legt vorab
-   fest:_ ob das vorbereitete `wiki/` gefüllt oder
-   ersetzt wird.
-2. **Ein Repo oder zwei?** ([[Init-Choreografie]]
-   §Baustein Ein-/Zwei-Repo-Frage;
-   [[Two-Repo-Submodul-Muster]]). _Legt vorab fest:_
-   ob ein Produkt-Repo entsteht und wo die
-   selbsttragenden Dokumente liegen.
-3. **WorkspaceManager verfügbar?** — beide Rollen
-   ([[Init-Choreografie]] §Baustein
-   WorkspaceManager-Frage); füllt die
-   Betriebs-Konfiguration des
-   [[WorkspaceManager-Kontrakt]].
-4. **Bearbeiter-TLA** (MasterPrompt §4.2).
-5. **Commit-Sprache** — reguläres Menü (A
-   Projektsprache / B Sprache folgt Artefakt / C
-   Englisch; Vorauswahl bei Codeprojekten: B).
-6. **Ersatzweg für Prüfungen ohne zweites Modell** —
-   nur, wenn du aus deiner Umgebung kein Werkzeug
-   nennen kannst, über das ein zweites Modell prüft:
-   (a) Ein-Modell-Weg (dasselbe Modell in frischem
-   Kontext, Einschränkung „Prüf-Modell = Bau-Modell“
-   im Freigabe-Eintrag) oder (b) Anwender als Prüfer
-   (`Reviewmuster.md` §2 Schleife 2). _Legt vorab
-   fest:_ wie jede Prüfung läuft, die Prüf-Modell ≠
-   Bau-Modell verlangt; Eintrag in `Tools.md`
-   §Prüf-Werkzeuge.
-7. **Rolle** des Projekts: Standalone, Koordinator
-   oder Komponent (SP-1 `index.md` §5); entfällt mit
-   Startprompt. Bei „Koordinator“: ankündigen, dass
-   du den Contract-Index aktivierst (Schritt 4).
-   _Legt vorab fest:_ die Zeilen `Rolle` und
-   `Übernahme-Art` des Herkunfts-Vermerks und damit
-   die Kette ([[Kettenpruefung]]).
-8. **Mission/Auftrag** des Projekts — speist
-   [[Mission Statement]] und [[Facts]].
-9. **Bezeichnung der ersten Marke** — Vorschlag die
-   typische Marke des Prozesses aus [[Marken-RP-1]]
-   („1.0“, Benennung z.B. „Erster Release“);
-   ableitbar aus Aufruf-Prompt oder Startprompt (bei
-   einer Komponente dazu `fuer_marke:` aus dem
-   Übergabe-Stand). _Legt vorab fest:_ die
-   `in-progress`-Marke, die danach fest bleibt
-   ([[Zielmarken]] §Meta).
-10. **Remote-Ziel**, falls nicht aus Schritt 2 oder
-    dem Startprompt ableitbar.
-11. **Kollisionsfrage** aus Schritt 1 und für die
-    Dateien, die Schritt 4 und 5 anlegen, falls es
-    Kollisionen gab — je Datei oder Ordner (a), (b)
-    oder (c) mit Empfehlung und Namensvorschlag
-    (Regel in den Grundsätzen). _Legt vorab fest:_
-    die Reihenfolge in Schritt 4.
+**A — Prozess-Nachfrage** — nur, wenn
+der Prozess für Softwareentwicklung nach dem, was du bis hierher weißt
+(Startprompt, Originale in `raw/`, Aussagen des
+Anwenders), nicht zum Vorhaben passt oder du nicht
+sicher bist: „Bist du sicher, dass das der richtige
+Prozess ist? Ich erkenne nicht, dass er zum Vorhaben
+passt — willst du mir einen anderen nennen?“
+Keine Liste — aber zwei Fälle erkennst du selbst und
+nennst den passenden Starter aus
+[[Schwester-Templates]]: Geht es um den **Betrieb
+einer selbst betriebenen Anlage** (installieren,
+konfigurieren, aktualisieren, abbauen; Kriterium „Wer
+betreibt?“), ist es RP-2 mit dem Starter
+`referenzprozess-infrastruktur`; geht es um ein
+**Verfahren mit einem Gegenüber** (Behörde, Gericht,
+Gegenpartei), ist es SP-2 mit den Startern
+`referenzprozess-rechtsfall` bzw.
+`referenzprozess-abgabenfall`. Das ist die Nachfrage,
+die [[Init-Choreografie]] §Init mit Startprompt der
+Init-Anleitung der Vorlage zuweist.
+Nennt der Anwender einen anderen Prozess, für den
+die Landkarte [[Schwester-Templates]] einen eigenen
+Starter nennt, empfiehlst du diesen Starter und
+nennst seinen Start-Satz („Richte dieses Verzeichnis
+als neues Projekt nach der Anleitung unter
+<Repository des Starters> ein.“) — Einbindung und
+Kopie dieses Starters nimmst du dafür nach
+Zustimmung zurück, solange nichts gebucht ist. Will
+der Anwender bei diesem Starter bleiben oder gibt es
+für den genannten Prozess keinen Starter, richtest
+du das Projekt aus dem Regelwerk dieses Starters mit
+dem genannten Prozess ein (Schritt 4, „Anderer
+Prozess“). Bleibt er bei diesem Prozess, geht es
+damit weiter. Ergibt sich der Zweifel erst aus der
+Antwort zu Mission und Auftrag, fragst du vor der
+Umsetzung nach. _Legt vorab fest:_ ob das
+vorbereitete `wiki/` gefüllt oder ersetzt wird.
+
+**B — Fragen der Basis** ([[Init-Choreografie]]
+§Init-Fragen im Frage-Block, Turn 1, Punkte 2 bis 8;
+das Prozess-Angebot dort entfällt — der Prozess ist
+Vorauswahl des Starters):
+
+- **B1 Ein Repo oder zwei?** (§Baustein
+  Ein-/Zwei-Repo-Frage; [[Two-Repo-Submodul-Muster]]).
+  _Legt vorab fest:_ ob ein Produkt-Repo entsteht und
+  wo die selbsttragenden Dokumente liegen.
+- **B2 WorkspaceManager verfügbar?** (§Baustein
+  WorkspaceManager-Frage); füllt die
+  Betriebs-Konfiguration des
+  [[WorkspaceManager-Kontrakt]].
+- **B3 Bearbeiter-TLA** (MasterPrompt §4.2).
+- **B4 Commit-Sprache** — reguläres Menü (§Baustein
+  Commit-Sprache); Vorschlag dieses Starters:
+  [[Commit-Sprache]].
+- **B5 Ersatzweg für Prüfungen ohne zweites Modell** —
+  nur, wenn du aus deiner Umgebung kein Werkzeug
+  nennen kannst, über das ein zweites Modell prüft.
+  _Legt vorab fest:_ wie jede Prüfung läuft, die
+  Prüf-Modell ≠ Bau-Modell verlangt; Eintrag in
+  `Tools.md` §Prüf-Werkzeuge.
+- **B6 Kommunikationskanäle** (§Baustein Kanal-Frage;
+  den Vorschlag des Prozesses liest du aus
+  `_template/referenzprozesse/SP-1-Standardprozess/index.md`).
+  Eintrag in `Tools.md` §Kommunikationskanäle.
+- **B7 Werkzeug-Angebot** (§Baustein Werkzeug-Angebot;
+  Startkatalog [[MCP-Setup]]).
+- **B8 Remote-Ziel**, falls nicht aus Schritt 2 oder
+  einem Startprompt ableitbar.
+
+**C — Fragen des Prozesses** (führender Ort sind die
+Abschnitte „Prozess-spezifische Init-Fragen“ der
+Prozess-Definition unter
+`_template/referenzprozesse/`; hier steht nur, was
+der Starter dazu vorgibt):
+
+- **C1 Rolle** des Projekts: Standalone, Koordinator
+  oder Komponent (RP-1 `index.md` §6.1, SP-1
+  `index.md` §5); entfällt mit Startprompt. Bei
+  „Koordinator“: ankündigen, dass du den
+  Contract-Index aktivierst (Schritt 4). _Legt vorab
+  fest:_ die Zeilen `Rolle` und `Übernahme-Art` des
+  Herkunfts-Vermerks und damit die Kette
+  ([[Kettenpruefung]]).
+- **C2 Mission/Auftrag** des Projekts — speist
+  [[Mission Statement]] und [[Facts]].
+- **C3 Bezeichnung der ersten Marke** — Vorschlag die
+  typische Marke des Prozesses aus [[Marken-RP-1]]
+  („1.0“, Benennung z.B. „Erster Release“);
+  ableitbar aus Aufruf-Prompt oder Startprompt (bei
+  einer Komponente dazu `fuer_marke:` aus dem
+  Übergabe-Stand). _Legt vorab fest:_ die
+  `in-progress`-Marke, die danach fest bleibt
+  ([[Zielmarken]] §Meta).
+- **C4 MADR-kompatible Form der Entscheidungen** —
+  Ja/Nein, Voreinstellung Nein (SP-1 `index.md`
+  §4.12); zuletzt.
+
+[[Geschaeftsbeziehungen]] empfiehlt der Prozess bei
+Produktentwicklung; [[Fehlermeldungen]] setzt
+[[Anforderungen]] voraus.
+
+**D — Kollisionsfrage** aus Schritt 1 und für die
+Dateien, die Schritt 4 und 5 anlegen, falls es
+Kollisionen gab — je Datei oder Ordner (a), (b)
+oder (c) mit Empfehlung und Namensvorschlag
+(Regel in den Grundsätzen). _Legt vorab fest:_
+die Reihenfolge in Schritt 4.
 
 ## 4. Umsetzung der Antworten
 
@@ -390,7 +448,7 @@ Anlage-Datum ([[Zielmarken]] §Meta; `datum:` im
 Detail-Knoten bzw. `- **Angelegt:** JJJJ-MM-TT` im
 Register-Eintrag).
 
-- **Kollisionen** (Nr. 11): umbenennen — `git mv` für
+- **Kollisionen** (D): umbenennen — `git mv` für
   eine versionierte Datei; beim Init ist sie meist
   noch nicht versioniert (Schritt 2), dann `mv`, und
   sie kommt mit dem ersten eigenen Commit (Schritt 5)
@@ -407,89 +465,97 @@ Register-Eintrag).
   Inhalt an den vereinbarten Ort. Links in
   vorgefundenen Dateien ziehst du nicht nach; bricht
   einer, nennst du die Stelle.
-- **Anderer Prozess** (Nr. 1): das vorbereitete
-  `wiki/` wird ersetzt — Basis-Wiki aus
-  `_template/referenzprozesse/base/wiki/` und
+- **Anderer Prozess** (A, ohne Wechsel des Starters):
+  das vorbereitete `wiki/` wird ersetzt — Basis-Wiki
+  aus `_template/referenzprozesse/base/wiki/` und
   Prozess-Merge nach [[Init-Choreografie]] §Phase A0
   und §Baustein Prozess-Angebot (ein geplanter
   Prozess: Basis-Only-Modus), Ablauf ab dort wie der
   Init der allgemeinen Vorlage
   (`_template/MasterPrompt.md` §5.3); der Starter
   bleibt `_template/`. Von den Punkten unten entfällt,
-  was RP-1 oder SP-1 voraussetzt (Rollen,
-  Contract-Index); Herkunft, erste Marke, `Tools.md`,
+  was RP-1 oder SP-1 voraussetzt;
+  Herkunft, erste Marke, `Tools.md`,
   Instruktionsdatei und die Buchungen in
-  [[Commit-Sprache]] (aus dem Basis-Bootstrap
-  `InterneMechanik.md`) und
-  [[WorkspaceManager-Kontrakt]] (Basis-Wiki) bleiben.
-  Wo bei Rolle Komponent die eigene Zeile, die Lage
-  des Koordinators und die Nachbarn stehen, wenn es
-  keine [[Softwaresystemarchitektur]] gibt, legt die
-  Vorlage nicht fest — du fragst den Anwender
-  (Grundsätze).
+  [[Commit-Sprache]] und
+  [[WorkspaceManager-Kontrakt]] bleiben.
 - **Erste Marke** nach dem Bootstrap
   `_template/referenzprozesse/base/bootstrap/Zielmarken.md`:
-  Marken-Dreiklang mit der Bezeichnung aus Nr. 9,
-  Zustand `in-progress`; bei einer Komponente die
-  Zeile `fuer_marke:`. **Keine Marke trägt
-  `current`**, solange keine abgeschlossen ist.
+  Marken-Dreiklang mit der Bezeichnung aus dem
+  Fragen-Block, Zustand `in-progress` — der Init legt
+  genau eine Marke an. **Keine Marke trägt
+  `current`**, solange keine abgeschlossen ist. Den
+  Kopf von `devstate_active.md` (Projekt, Zielmarke)
+  füllst du mit.
 - **Herkunft** in [[Aktivierter-Prozess]]
   `## Herkunft` (Format: [[Init-Choreografie]]
-  §Phase A0): `Template-Stand: 2.1 seit JJJJ-MM-TT`
+  §Phase A0): `Template-Stand: 2.2 seit JJJJ-MM-TT`
   (Tag des Inits — der Stichtag, den der Lint liest),
   `Quelle` und `Anbindungs-Modus` aus Schritt 0,
-  `Rolle` aus Nr. 7 bzw. dem Startprompt,
-  `Übernahme-Art` (nur bei Rolle Komponent, sonst
-  „—“). Keine Zeile `Vorher` — die schreibt nur ein
-  Upgrade.
+  `Repo` (Repo-Name des Projekts — Name des Remotes,
+  ohne Remote der des Projektordners; weicht der
+  Ordnername erkennbar vom Projektnamen ab, fragst
+  du) und die übrigen offenen Zeilen nach den
+  Antworten. Keine Zeile `Vorher` — die schreibt nur
+  ein Upgrade.
 - **Buchungen:** [[Commit-Sprache]],
   [[WorkspaceManager-Kontrakt]]
-  (Betriebs-Konfiguration); die Freigaben der Ordner
-  aus dem SP-1-Steckbrief §Mitgebrachte Ordner als
-  je ein Eintrag in [[Entscheidungen]] nach dem
-  Muster `### DEC-NNN — Freigabe: Ordner src/` (wie
-  in der Migration; der Gegenstand nennt den Ordner,
-  nicht „freigegeben“ — das Wort liest der Lint als
-  Stand-Freigabe), je mit `zielmarke:` und
-  Anlage-Datum; die Wahl aus Nr. 2 nach
-  [[Two-Repo-Submodul-Muster]].
-- **`Tools.md`** aus `wiki/templates/Tools-Vorlage.md`:
-  Prüf-Werkzeuge und Ersatzweg aus Nr. 6
-  (§Prüf-Werkzeuge), `_template/tools/lint.sh` als
-  Template-Werkzeug (§Projekt-Skripte, keine Kopie),
-  bei einer Komponente Start und Transport aus dem
-  Startprompt (§Peer-Agenten).
+  (Betriebs-Konfiguration); die Wahl aus B1 nach
+  [[Two-Repo-Submodul-Muster]]; nach der ersten Marke
+  die **ersten Entscheidungen** in der Reihenfolge
+  der [[Init-Choreografie]] §Phase D Punkt 6 — die
+  Freigabe der mitgebrachten Ordner (unten), dann die
+  Wahl des Anbindungs-Modus.
+- **Ordner-Freigaben:** die Freigaben der Ordner aus
+  dem SP-1-Steckbrief §Mitgebrachte Ordner als je ein
+  Eintrag in [[Entscheidungen]] nach dem Muster
+  `### DEC-NNN — Freigabe: Ordner src/` (der
+  Gegenstand nennt den Ordner, nicht „freigegeben“ —
+  das Wort liest der Lint als Stand-Freigabe), je mit
+  `zielmarke:` und Anlage-Datum; der Eintrag nennt die
+  Steckbrief-Sektion als Pfad
+  (`_template/referenzprozesse/SP-1-Standardprozess/Steckbrief.md`).
 - **Rolle Koordinator:** Contract-Index aktivieren —
   Skelett und Bootstrap aus
   `_template/referenzprozesse/SP-1-Standardprozess/`
   (Quelle Nur-Lese), [[Fassaden]] nachführen; dazu
   die eigene Zeile in §Komponenten von
-  [[Softwaresystemarchitektur]] (Lage im eigenen Repo
-  — daran erkennt der Lint das eigene Repo; die
-  Komponenten kommen mit P5 und P6 hinzu,
-  [[Kettenpruefung]] §Freigabe-Ordnung des
-  Koordinators).
+  [[Softwaresystemarchitektur]] (die Komponenten
+  kommen mit P5 und P6 hinzu, [[Kettenpruefung]]
+  §Freigabe-Ordnung des Koordinators).
   **Rolle Komponent:** eigene Zeile und Lage des
   Koordinators in §Komponenten von
   [[Softwaresystemarchitektur]]; Kette nach
-  [[Kettenpruefung]] §Komponenten-Kette.
+  [[Kettenpruefung]] §Komponenten-Kette; bei einer
+  Komponente die Zeile `fuer_marke:` an der ersten
+  Marke und Start und Transport in `Tools.md`
+  §Peer-Agenten.
+- **`Tools.md`** aus `wiki/templates/Tools-Vorlage.md`:
+  Prüf-Werkzeuge und Ersatzweg aus B5
+  (§Prüf-Werkzeuge), Kanäle aus B6,
+  `_template/tools/lint.sh` als Template-Werkzeug
+  (§Projekt-Skripte, keine Kopie), was B7 ergibt.
 - **Mission/Facts-Bootstraps** aus
   `_template/referenzprozesse/base/bootstrap/`
   abarbeiten. Die Aktivierungs-Wahl des
   Mission-Statement-Bootstraps ist Starter-Vorauswahl
   (die Fassade ist aktiv), du fragst sie nicht. Am
-  Ende dieses Schritts, nach den Buchungen: erst das
-  **Konzept-Angebot** ([[Init-Choreografie]] §Baustein
-  Konzept-Angebot; ohne Netz entfällt das Listing,
-  ohne Subagenten die Empfehlungs-Stufe — mit
-  Vermerk), dann der **Mission-Statement-Setup-Dialog**
-  (§Baustein Mission-Statement-Setup-Dialog; Entwurf
-  aus Nr. 8 und [[Facts]] §Projekteinstieg).
-- **Instruktionsdatei** anlegen (deine native Datei,
-  z.B. `CLAUDE.md`) nach MasterPrompt §8.3 /
-  [[Instruktionsdatei-Pflege]], einschließlich des
-  Grundgesetzes oben; dazu `Styleguide-project.md`
-  und `Styleguide-chat.md` (Kopiervorlage
+  Ende dieses Schritts, nach den Buchungen: erst der
+  **Mission-Statement-Setup-Dialog**
+  ([[Init-Choreografie]] §Baustein
+  Mission-Statement-Setup-Dialog; Entwurf aus den
+  Antworten und [[Facts]] §Projekteinstieg), dann das
+  **Konzept-Angebot** (§Baustein Konzept-Angebot; ohne
+  Netz entfällt das Listing, ohne Subagenten die
+  Empfehlungs-Stufe — mit Vermerk).
+- **Instruktionsdatei** anlegen — die Datei, die dein
+  eigener Harness beim Start automatisch lädt; welche
+  das ist, stellst du selbst fest
+  ([[Standarddateien-Katalog]] §2.3) — nach
+  MasterPrompt §8.3 / [[Instruktionsdatei-Pflege]],
+  einschließlich des Grundgesetzes oben; dazu
+  `Styleguide-project.md` und `Styleguide-chat.md`
+  (Kopiervorlage
   `wiki/templates/Styleguide-chat-Vorlage.md`).
 
 ## 5. Abschluss
@@ -503,12 +569,13 @@ Starter und bleibt in `_template/` lesbar.
   Instruktionsdatei; Verweis auf
   `_template/docs/Einfuehrung.md` und für spätere
   Stände auf `_template/README.md` §Template
-  aktualisieren) und **`TODO.md`**
-  (offene Punkte des Anwenders; sie verlinkt eine in
-  Schritt 4 umbenannte `TODO-vorgefunden.md`).
+  aktualisieren), **`TODO.md`** (offene Punkte des
+  Anwenders; sie verlinkt eine in Schritt 4
+  umbenannte `TODO-vorgefunden.md`) und die Indizes
+  nach `wiki/templates/Index-Format-Vorlage.md`.
 - **Chronologie-Eintrag** „Projekt aus
   referenzprozess-softwareentwicklung angelegt
-  (Template-Stand 2.1 seit <Datum>, Quelle
+  (Template-Stand 2.2 seit <Datum>, Quelle
   <Commit/Tag>, Modus A/B)“ — Werte wie im
   Herkunfts-Vermerk.
 - `devstate_active.md` nachführen (Zielmarke,
@@ -519,6 +586,8 @@ Starter und bleibt in `_template/` lesbar.
 - **Erster eigener Commit**, danach Push aufs Remote
   aus dem Fragen-Block (Remote-Einrichtung nur auf
   die dort gegebene Anweisung).
+- **Nächster Prozess-Schritt:** Weise auf die
+  Scaffolding-Vorlagen-Kette hin ([[Vorgehen-SP-1]]).
 
 Ab hier gilt der normale Betrieb nach MasterPrompt
 (§5.3).
@@ -526,8 +595,9 @@ Ab hier gilt der normale Betrieb nach MasterPrompt
 ---
 
 **Bleibt Verweis (steht bewusst nicht hier):**
-Fassaden-Auswahl-Mechanik, Ablauf von Konzept-Angebot
-und Mission-Statement-Setup (Zeitpunkt: Schritt 4),
-Startprompt-Tabelle → [[Init-Choreografie]];
-Sessionstart-Phasen A–E, Commit-Regeln,
-Ordner-Semantik → MasterPrompt.
+Fassaden-Auswahl-Mechanik, Ablauf von
+Mission-Statement-Setup und Konzept-Angebot
+(Zeitpunkt: Schritt 4), Wortlaut und Voreinstellung
+der Init-Fragen, Startprompt-Tabellen →
+[[Init-Choreografie]]; Sessionstart-Phasen A–E,
+Commit-Regeln, Ordner-Semantik → MasterPrompt.

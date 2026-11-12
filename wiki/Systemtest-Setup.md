@@ -55,6 +55,16 @@ Systemtest-Setup ist bei jedem Entwicklungsvorhaben
   aufbewahrt werden muss: eingefrorene Kopie nach
   `overview/` mit Verweis auf TRES bzw. REP. Außer
   TRES gibt es keinen eigenen Testergebnis-Typ.
+- **Testumgebung aus einem Betriebs-Projekt:** ist der
+  Betrieb einer Zielumgebung an ein
+  Infrastruktur-Projekt überführt ([[Vorgehen-SP-1]]
+  §2 Anmerkung P13), stellt jenes Projekt auf
+  Anforderung eine Testumgebung für die Systemtests
+  bereit und liefert dazu ein **Dienstblatt** (Verbindung,
+  Grenzen, Ansprechpartner, Änderungen). Die
+  Sektion „Testumgebung“ hält weiter die Solllage
+  dieses Projekts und verweist auf das Dienstblatt;
+  Zugangsdaten stehen auch dann nur als Verweis hier.
 - **Ablösung:** RP-1 löst diese Fassade mit
   `Softwaresystemtest-Setup` ab (per `replaces_type:`,
   Wiki.md §11.4).

@@ -130,7 +130,8 @@ auch der koordinierende Agent bei eigenen Edits).
   Zwei-Modelle-Regel; Ablauf und `review:`-Pflichtfeld:
   `Outgoing.md` §3.2/§6). Verzicht ist
   Anwender-Entscheid mit benanntem Impact
-  (`review: verzichtet`). Für `output/`-Freigabestände
+  (`review: verzichtet`); ein Prozess kann den Verzicht
+  ausschließen (`Outgoing.md` §6b). Für `output/`-Freigabestände
   gilt keine zusätzliche Pflicht — dort greift die
   Freigabe-Mechanik (Basis-Prüfung an Phasen mit
   Freigabe-Zweck).
@@ -225,6 +226,70 @@ Phase D Turn 1 aus seiner Umgebung im Erledigt-Block
 (Liste oder Vermerk „keine verfügbar") und trägt sie
 mit der ersten Wahl in `Tools.md` ein
 ([[Init-Choreografie]] §Phase D).
+
+### Auftrag „Antworten suchen“ (Such-Subagent)
+
+Im Arbeitsmodus (MasterPrompt §5.1.3) beauftragt der
+Agent einen Subagenten, zu den offenen Fragen in
+`Offene Fragen.md` **Antworten zu suchen**. Der Auftrag
+folgt dem Standard-Beauftragungs-Rahmen und nennt:
+
+- **Fragen:** die offenen Einträge (Nummer, Frage,
+  Kontext) — nicht die Frage wird gesucht, sondern
+  ihre Antwort;
+- **Suchraum:** der bisherige Sitzungsverlauf (soweit
+  der Subagent ihn lesen kann), die Festlegungen des
+  Projekts (`wiki/`, besonders [[Entscheidungen]] samt
+  Vermerken und [[Facts]]), die Eingangsdokumente;
+- **Ergebnisform:** je Frage Fundstelle mit
+  wörtlichem Zitat und — bei einem Fund im Verlauf —
+  Zeitpunkt, oder „nicht gefunden“; dazu, was der Fund
+  beantwortet und was offen bleibt;
+- **Grenze:** der Subagent schreibt in kein Register
+  und nicht in `Offene Fragen.md`; sein Ergebnis ist
+  ein Bericht in [[Agent-Berichte]]
+  ([[Katalog-Agent-Berichte]], Berichtsart
+  Such-Bericht).
+
+Die Buchung bleibt beim beauftragenden Agenten
+(Zitat und Zeitpunkt in der Entscheidung, Fakten nur
+als Facts-Vorschlag, Einträge auf erledigt mit
+Verweis); die Liste „durch Suche geklärt, bitte
+bestätigen“ gehört in den Bericht am Ende des
+Arbeitsmodus. Die Freigabe für diese Aufträge gilt mit
+dem Eintritt in den Arbeitsmodus als erteilt.
+
+### Begleit-Dokumentation mit einem Wissens-Werkzeug
+
+Werkzeug-neutrales Muster für Begleit-Dokumentation
+(Erläuterungen, Übersichten, Folien zu Hintergrund,
+Vorbereitung, Testplan, Handbuch), die mit einem
+Wissens- oder Medien-Werkzeug aus den Quellen des
+Projekts erzeugt wird. Der allgemeine Teil ist die
+Werkzeug-Wahl (`Vorgehen.md` §7b) und die
+Auftragsliste (unten: Quellen, Staffelung,
+Wiederholungs-Regel); spezifisch sind zwei Schritte:
+
+- **Quellen-Bereinigung nach der Recherche:** vor dem
+  Auftrag die Quellenliste prüfen — tote Quellen
+  (nicht erreichbar, überholt, abgelöst) streichen,
+  Passung jeder Quelle zum Dokument prüfen; nur
+  freigegebene oder eingefrorene Quellen.
+- **Kennzeichnung eigener Quellen:** Quellen aus dem
+  Projekt (Stände, Berichte, Notizen) tragen im
+  Werkzeug ein Präfix (etwa „Projekt - “), damit sie
+  von fremden Quellen (Normen, Literatur, Fremd-Doku)
+  unterscheidbar bleiben.
+
+Was das Werkzeug erzeugt, ist Ableitung, kein Nachweis:
+Ablage mit Herkunftszeile (Quell-Stände mit Version,
+Werkzeug, Datum), Prüfung nach dem Dokumenttyp, bei
+Befund neuer Auftrag aus denselben Quellen (MasterPrompt
+§9.6). Was ins Werkzeug geht, verlässt das Repo: vorher
+MasterPrompt §6.3 und den Hinweis zur Vertrauenszone
+lesen. Ausformuliertes Beispiel für ein konkretes
+Werkzeug: [[NotebookLM]] — lesen, wenn der Anwender
+dieses Werkzeug gewählt hat.
 
 ### Auftragsliste zur Freigabe
 

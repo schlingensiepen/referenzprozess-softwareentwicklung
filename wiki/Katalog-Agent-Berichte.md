@@ -47,3 +47,14 @@ in [[Katalog-review-report]] und
   Anlage.
 - **Struktur-Konventionen:** `## Meta` der Fassade
   [[Agent-Berichte]].
+- **Berichtsarten:** Prüfung (Kind-Typ
+  `review-report`), Recherche-Auswertung, Ausführung
+  eines Sonder-Auftrags — und der **Such-Bericht** des
+  Such-Subagenten im Arbeitsmodus (MasterPrompt
+  §5.1.3): je offener Frage Fundstelle (Verlauf mit
+  Zeitpunkt und wörtlichem Zitat, Festlegung im `wiki/`,
+  Eingangsdokument) oder „nicht gefunden“; der Bericht
+  bucht nichts, die Buchung bleibt beim beauftragenden
+  Agenten (Auftragsvorlage:
+  [[Angebots-und-Beauftragungs-Muster]] §Auftrag
+  „Antworten suchen“).

@@ -126,6 +126,18 @@ Nach Vorlage des Fahrplans kann der Anwender:
 Erst nach dieser Rückmeldung startet der Agent mit
 der ersten Einzel-Vorlage.
 
+**Eintrag in `Offene Fragen.md` — schon mit der
+Übersicht.** Eine Kette von Entscheidungen ist das
+Paradebeispiel offener Fragen: mit dem Fahrplan legt
+der Agent einen Eintrag in `Offene Fragen.md` an
+(MasterPrompt §5.2) — Anlass, die Punkte, Status je
+Punkt, Details per Verweis (Vorlage-Datei, Bericht);
+jeder entschiedene Punkt wird mit Verweis auf die
+Buchung (DEC) erledigt, der Eintrag schließt mit dem
+letzten Punkt. Steigt der Anwender aus der Kette aus,
+bleibt sie so sichtbar, und der Sitzungsstart bietet
+die Fortsetzung an.
+
 ## Ausgabe-Format
 
 Der Fahrplan wird im **Frage-Block** des

@@ -201,7 +201,13 @@ Katalog-Einträge nach genau diesen Regeln.
   genau eine am Fassaden-Typ eines Register-Eintrags.
   Sie nennt den ID-Präfix des Registers; das
   Präfix-Muster am `id`-Feld des Element-Typs muss
-  dazu passen. `—` steht bei Registern ohne ID-Präfix
+  dazu passen. Führt ein Register zwei intern
+  nummerierte Element-Typen (etwa Strategie mit
+  Eventualplänen), nennt die Zeile beide Präfixe durch
+  Komma getrennt (`` `STR`, `EVP` ``); jedes
+  Präfix-Muster der Element-Typen muss in der Liste
+  stehen und jedes Präfix der Liste einen Element-Typ
+  haben. `—` steht bei Registern ohne ID-Präfix
   (Entitäten, Inline-Einträge).
 - **Dokumenttypen-Zeile:** `- **Dokumenttypen:**
   [[Katalog-<Name>]], …` oder `—` — am Element-Typ
@@ -296,6 +302,26 @@ Katalog-Einträge nach genau diesen Regeln.
   mit eigenem Anlass (z.B. der Abschluss-Stand in der
   Marken-Wechsel-Prozedur) tragen einen
   `eigener Auslöser:`.
+- **Entfällt-abgeleitet-Zeile:** `- **Entfällt
+  abgeleitet, wenn:** <Bedingung>` — Kann-Zeile am
+  Abschnitt eines Dokumenttyps oder einer Fassade: die
+  Pflicht entfällt ohne Verzichts-Entscheidung, solange
+  die Bedingung gilt — ein Register leer, ein Eintrag
+  in einem bestimmten Zustand (etwa eine Zielumgebung
+  `abgebaut`), eine Fassade inaktiv (`active: false`),
+  die Ausbaustufe unter der im Steckbrief verlangten.
+  Der Lint liest die Zeile und verlangt das Glied
+  nicht, solange die Bedingung gilt; ohne die Zeile
+  gilt der Eintrag wie bisher. Was „abgeleitet
+  entfallen“ in der Kette bedeutet:
+  [[Kettenpruefung]] §Fehlende und vertretene Glieder.
+- **Teilaufsätze-Zeile:** `- **Teilaufsätze:** ja` —
+  Kann-Zeile am Abschnitt eines Typs, dessen Knoten
+  Unterseiten im gleichnamigen Unterordner tragen
+  dürfen (Wiki.md §5.4); ohne die Zeile keine
+  Unterseiten. Der Lint liest Unterordner, Rücklink und
+  Eindeutigkeit der Dateinamen unabhängig von dieser
+  Zeile.
 - **Kennung und Dateiname eines Dokumenttyps:**
   Kennung klein, ohne Umlaut, deutsch; Dateiname
   `Katalog-<Name>.md` ohne Umlaut. Stimmt der Name im
@@ -332,6 +358,8 @@ Typ-Abschnitts, auch bei Einzeltypen):
 | Beispielname, Kanonizität, Struktur-Konventionen | Kann | Kann | Kann | Kann | verboten |
 | Ablage | verboten | Kann | Kann | Kann | Pflicht |
 | Phase, Verbindlichkeit, Grad, Auslöser, Quell-Register und Filter | verboten | verboten | verboten | verboten | Pflicht |
+| Entfällt abgeleitet, wenn | Kann | verboten | verboten | verboten | Kann |
+| Teilaufsätze | Kann | Kann | Kann | Kann | verboten |
 
 Datei und Singleton stehen bei einem Einzeltyp, der
 eine Fassade ohne Element-Typ ist. „Verboten“ betrifft
@@ -529,19 +557,15 @@ Prüfung der Freigaben: [[Kettenpruefung]].
   Verbund (`message`, Präfix MSG, ohne Fassade, Ablage
   `output/nachrichten/` des Absenders); lesen, bevor
   eine Nachricht geschrieben oder aus ihr gebucht wird.
-- [[Katalog-case]] — laufendes Verfahren (Rechtsfall,
-  `case`); lesen, wenn ein Verfahren angelegt wird;
-  bleibt bis zur SP-2-Ausarbeitung in der Basis.
-- [[Katalog-argument]] — Argumentationslinie
-  (Rechtsfall, `argument`); lesen, wenn eine
-  Argumentationslinie angelegt wird; bleibt bis zur
-  SP-2-Ausarbeitung in der Basis.
-
-**Relations ohne Register:**
-
-- [[Katalog-evidence]] — Beweismittel-Beziehung
-  (`evidence`); lesen, wenn eine Quelle als
-  Beweismittel verknüpft wird.
+**Prozesse bringen eigene Typen mit.** Die Basis führt
+keine Domänen-Typen; was ein Prozess fachlich braucht
+(etwa das Verfahren `case`, das Argument `argument`
+und die Beweismittel-Relation `evidence` des Prozesses
+Recht und Verwaltung), kommt als Katalog-Eintrag mit
+dem Prozess und beim Merge in diesen Katalog
+(Wiki.md §3.3, §11.3). Welche Typen ein Prozess
+mitbringt, nennt sein Steckbrief
+(`_template/referenzprozesse/<Prozess>/Steckbrief.md`).
 
 **Infrastruktur-Typen der Template-Quelle** (brauchen
 keine indexierende Fassade; nur die beim Merge
@@ -564,6 +588,13 @@ kopierten landen im Anwender-wiki):
   Fassade (`facade-bootstrap`); Template-Quelle, nie
   kopiert; lesen bei der Bootstrap-Abarbeitung nach dem
   Merge (Wiki.md §11.3).
+- [[Katalog-glossary-appendix]] — Glossar-Anhang eines
+  Prozesses (`glossary-appendix`:
+  `Glossar-Anhang-<Prozess-Kennung>.md`);
+  Template-Quelle, nie kopiert — der Merge übernimmt
+  seine Einträge ins [[Glossar]]; lesen beim Merge und
+  beim Update der Vorlage (Wiki.md §11.3
+  „Glossar-Anhang“).
 
 ### Prozess-mitgebrachte Einträge
 

@@ -36,6 +36,13 @@ vor der Aktivierungs-Wahl lesen. Beim Init:
   (Begriffe des Regelwerks) bleiben stehen; sie gelten
   als freigegeben mit dem Template-Stand und
   durchlaufen den Review-Prozess nicht.
+- Dasselbe gilt für die Einträge, die der
+  Prozess-Merge aus den Glossar-Anhängen der aktiven
+  Prozesse übernommen hat (Wiki.md §11.3 Schritt 2,
+  „Glossar-Anhang“). Prüfen, dass die Anhänge aller
+  aktiven Prozesse samt ihrer `extends:`-Kette
+  übernommen sind; fehlt einer, die Übernahme
+  nachholen.
 - Die Aktivierung dieser Fassade legt keine
   `internal-*`-Knoten an. Projekt-eigene
   Steuerungs-Regeln (Dauerfreigaben, gewünschte

@@ -57,3 +57,23 @@ und in [[Katalog]] verankert.
   `wiki/Testfaelle.md` (Wiki.md §1.1a).
 - **Struktur-Konventionen:** `## Meta` der Fassade
   [[Testfaelle]].
+- **RP-2-Präzisierung** (gilt bei aktivem RP-2): Jeder
+  Testfall trägt zusätzlich als Pflichtfelder den
+  **Prüfort** `pruefort` (`attrappe` | `wegwerf` |
+  `ziel` — wo geprüft wird: an einer Attrappe, in einer
+  Wegwerf-Instanz oder an der Zielumgebung) und den
+  **Ausführenden** `ausfuehrender` (`mensch` oder
+  `agent`). Der Prüfort sagt nur „wo“; **in welchen
+  Nachweis das Ergebnis gehört, entscheidet der
+  Zeitpunkt**: Was vor der Freigabe des Deploy-Stands
+  geprüft wird, steht im Testbericht ([[Testberichte]]) —
+  auch mit Prüfort `ziel`, etwa ein Pre-Flight vor dem
+  Abschalten; was erst nach dem Ausrollen am Ziel
+  prüfbar ist, steht im Abnahmeprotokoll
+  (`Abnahmeprotokolle.md` (RP-2)) und gilt im Testbericht weder
+  als `blockiert` noch als fehlend (`Vorgehen-RP-2.md`
+  §2 Anmerkung P10/P13). Das Prüfprogramm liest den
+  Prüfort nicht gegen den Nachweis. Beim Abbau sind die
+  Verifikations-Testfälle (Trockenlauf, Prüfsumme gegen
+  das Ziel, Pre-Flight) Testfälle wie alle anderen
+  (`Marken-RP-2.md` §4).

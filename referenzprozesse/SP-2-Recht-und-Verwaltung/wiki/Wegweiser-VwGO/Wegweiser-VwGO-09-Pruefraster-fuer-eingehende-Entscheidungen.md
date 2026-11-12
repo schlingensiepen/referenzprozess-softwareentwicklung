@@ -1,0 +1,27 @@
+# Wegweiser VwGO — Verwaltungsgerichtsverfahren — 9. Prüfraster für eingehende Entscheidungen
+
+[↑ Übersicht: Wegweiser VwGO — Verwaltungsgerichtsverfahren](../Wegweiser-VwGO.md) · [← 8. Vertretung und Anwaltszwang](Wegweiser-VwGO-08-Vertretung-und-Anwaltszwang.md)
+
+---
+
+Beim Einlesen eines Verwaltungsakts, Widerspruchsbescheids, Beschlusses oder Urteils jede Zeile beantworten und das Ergebnis als Option festhalten (Prüfpfad, kein Rat).
+
+| # | Frage | Woran prüfen | Norm |
+|---|---|---|---|
+| 1 | Richtige Rechtsbehelfsbelehrung? Frist läuft erst dann | Rechtsbehelf, Stelle, Sitz, Frist genannt? Sonst Jahresfrist | [§ 58](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwgo.md#p58), [§ 73 Abs. 3](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwgo.md#p73) |
+| 2 | Wann wurde bekanntgegeben/zugestellt? | Fristbeginn nach Zustellung; Bekanntgabefiktionen im Verwaltungsverfahren | [§ 57](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwgo.md#p57), [§ 56](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwgo.md#p56), [§ 41 VwVfG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwvfg.md#p41) |
+| 3 | Setzt sich die Entscheidung mit dem Vorbringen auseinander? | Widerspruchsbescheid muss begründet sein; Behörde hat alle, auch günstige Umstände zu berücksichtigen | [§ 73 Abs. 3](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwgo.md#p73), [§ 39 VwVfG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwvfg.md#p39), [§ 24 Abs. 2 VwVfG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwvfg.md#p24) |
+| 4 | Richtiger Gegenstand? | Entscheidet der Bescheid über das, was angegriffen/beantragt war? Enthält der Widerspruchsbescheid erstmals oder zusätzlich eine Beschwer? Anhörung davor? | [§ 79](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwgo.md#p79), [§ 68 Abs. 1 Nr. 2](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwgo.md#p68), [§ 71](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwgo.md#p71) |
+| 5 | Begründung tragend? Heilbar? | Fehlende Begründung/Anhörung ist heilbar bis zur letzten Tatsacheninstanz; Fehler ohne Einfluss auf die Sache trägt keine Aufhebung → Erfolg nur, wenn auch die Sache unrichtig ist | [§ 45 VwVfG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwvfg.md#p45), [§ 46 VwVfG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwvfg.md#p46), [§ 113 Abs. 1](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwgo.md#p113) |
+| 6 | Ermessen ausgeübt? | Begründung soll die Ermessensgesichtspunkte erkennen lassen; Grenzen/Zweck; Ergänzung im Prozess möglich | [§ 39 Abs. 1 Satz 3 VwVfG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwvfg.md#p39), [§ 40 VwVfG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwvfg.md#p40), [§ 114](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwgo.md#p114) |
+| 7 | Nichtig statt nur rechtswidrig? | Besonders schwerwiegender, offensichtlicher Fehler; Katalog | [§ 44 VwVfG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwvfg.md#p44); Feststellungsklage [§ 43](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwgo.md#p43) |
+| 8 | Sofortvollzug begründet? Vollstreckung droht? | Schriftliche Begründung; Eilantrag; Eventualplan | [§ 80 Abs. 3, 5, 6](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwgo.md#p80) |
+| 9 | Gerichtsbescheid statt Urteil? | Antrag auf mündliche Verhandlung binnen 1 Monat | [§ 84](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwgo.md#p84) |
+| 10 | Urteil vollständig? | Tatbestand, Gründe, Rechtsmittelbelehrung; übergangener Antrag → Ergänzung binnen 2 Wochen | [§ 117 Abs. 2](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwgo.md#p117), [§ 120](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwgo.md#p120) |
+| 11 | Rechtsmittel zugelassen? Welche Frist? | Zulassungsgründe; Fristen aus [Abschnitt 2](Wegweiser-VwGO-02-Rechtsbehelfe-und-Fristen.md) | [§ 124 Abs. 2](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwgo.md#p124), [§ 132 Abs. 2](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwgo.md#p132) |
+| 12 | Kostenentscheidung vorhanden und richtig? | Pflichtinhalt; Vorverfahrenskosten; Notwendigkeit des Bevollmächtigten erklärt? | [§ 161 Abs. 1](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwgo.md#p161), [§ 162 Abs. 2](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwgo.md#p162) |
+| 13 | Eventualplan angelegt? | „Behörde bessert nach → Erledigung/Rücknahme mit Kostenantrag“ ([Abschnitt 7](Wegweiser-VwGO-07-Erledigung-und-Ruecknahme.md)) | [§ 161 Abs. 2](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20vwgo.md#p161) |
+
+---
+
+[↑ Übersicht: Wegweiser VwGO — Verwaltungsgerichtsverfahren](../Wegweiser-VwGO.md) · [← 8. Vertretung und Anwaltszwang](Wegweiser-VwGO-08-Vertretung-und-Anwaltszwang.md)

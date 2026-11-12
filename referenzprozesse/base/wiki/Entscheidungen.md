@@ -123,7 +123,15 @@ active: true   # kann nicht deaktiviert werden — Entscheidungen ist Pflicht-Fa
     §Code-Glieder); **Prüf-Modell = Bau-Modell** — die
     Prüfung lief im Ein-Modell-Weg (`Reviewmuster.md`
     §2 Schleife 2). Ebenso eine Notfall-Freigabe
-    (`Reviewmuster.md` §1).
+    (`Reviewmuster.md` §1). Hat eine Einschränkung eine
+    Frist (Wiedervorlage in [[Fristen]]), nennt der
+    Eintrag sie mit ihrem Wikilink in der Feldzeile
+    `- **Frist:** [[<Frist>]]` — der Link zeigt auf den
+    Frist-Knoten oder auf den Eintrag in der Fassade
+    (`[[Fristen#<Überschrift>]]`), mehrere Fristen durch
+    Komma getrennt in derselben Zeile; über diesen Link
+    liest das Prüfprogramm die Frist und meldet sie,
+    wenn sie abgelaufen und noch offen ist.
   - **Zielmarke:** die Marke der Freigabe — mit
     Stand-Datei die `marke` aus dem Kopf des Stands,
     ohne Stand-Datei die Marke aus „zu Marke M“; beide
@@ -276,8 +284,12 @@ active: true   # kann nicht deaktiviert werden — Entscheidungen ist Pflicht-Fa
   lassen.
 - **Detail-Knoten-Pflicht:** sobald verworfene
   Alternativen, Vermerke, Nachweise oder ausführliche
-  Wahl-Begründung anfallen. Einzeilige Einträge
-  brauchen keinen Detail-Knoten.
+  Wahl-Begründung anfallen. Weil die verworfenen
+  Alternativen Pflichtteil sind (unten), hat damit
+  jede Entscheidung einen Detail-Knoten — außer dem
+  Freigabe-Eintrag und dem Marken-Wechsel-Eintrag.
+  Einzeilig, ohne Detail-Knoten, bleiben nur diese
+  beiden Arten.
 - **`decision`-Detail-Knoten-Konventionen:**
   Frontmatter-Felder (Pflicht und Kann, Werte von
   `decision_type`): [[Katalog-Entscheidungen]] — lesen

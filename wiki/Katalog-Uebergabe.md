@@ -67,5 +67,27 @@ und in [[Katalog]] verankert.
   FUNC des Koordinators deckt — [[Kettenpruefung]]
   §Komponenten-Kette nach Übernahme-Art; lesen, bevor
   die Komponente ihren ersten eigenen Stand bildet.
+- **Abgrenzung — Komponente ja, Abspaltung nein:**
+  diesen Stand gibt es nur für **Komponenten**
+  (Übernahme-Arten selbstständig und Auftrag), die
+  ein Koordinator in P6 startet. Ein Projekt, das
+  durch **Abspalten** entsteht — ein überführter
+  Betrieb, ein Verfahren aus einem Software-Projekt,
+  ein Fork eines Teils —, bekommt **kein**
+  Übergabe-Dokument: Die Übergabe ist dort ein
+  Zeitpunkt, der **Übergabe-Punkt** `<repo>/<tag>` mit
+  Startprompt, und der andere Agent holt sich, was er
+  braucht, über `devstate_active.md` des Abgebenden
+  ([[Zuschnitt-aendern]] §Übergabe-Punkt;
+  [[Init-Choreografie]] §Init mit Startprompt
+  (Abspaltung); Kette der Abspaltung:
+  [[Kettenpruefung]] §Komponenten-Kette nach
+  Übernahme-Art). Die selbsttragende Fassung ohne
+  Lesezugriff bleibt — auch für den Übergabe-Punkt:
+  für eine Komponente als Übergabe-Dokument
+  ([[Katalog-Uebergabe-Dokument]]), bei einer
+  Abspaltung ohne Lesezugriff als selbsttragender
+  Stand zum Tag, den der Abgebende anlegt
+  ([[Zuschnitt-aendern]]).
 - **Ableitung nach außen:** [[Katalog-Uebergabe-Dokument]]
   (selbsttragend, nur ohne Lesezugriff).

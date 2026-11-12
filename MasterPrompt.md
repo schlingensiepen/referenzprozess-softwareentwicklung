@@ -1,6 +1,8 @@
 # MasterPrompt — Projektkonventionen für KI-gestützte Arbeit
 
-**Bearbeitungsstand: 2026-10-25**
+**Bearbeitungsstand: 2026-11-12** — Version der
+Vorlage: siehe Kopf der `README.md` der Template-Quelle
+(führender Ort).
 
 Dieses Dokument ist die **KI-agnostische Quelle** aller
 Konventionen für die Zusammenarbeit zwischen User und
@@ -66,9 +68,10 @@ Root/                             ← Arbeitsverzeichnis
 ├── Styleguide*.md                ← Styleguides
 ├── README.md                     ← verzweigender Einstieg (§2)
 ├── <Instruktionsdatei>           ← z.B. CLAUDE.md, .cursorrules
-├── Tools.md                      ← installierte MCPs/Erweiterungen
-├── Offene Fragen.md              ← aus Arbeitsmodus (optional)
-├── TODO.md                       ← offene Punkte des Users
+├── Tools.md                      ← installierte MCPs/Erweiterungen, Kanäle, Ausnahmen
+├── Offene Fragen.md              ← Persistenz offener Fragen, jeder Modus (Rumpf mitgeliefert)
+├── devstate_active.md            ← Einstieg in das Projekt für Dritte (Rumpf mitgeliefert)
+├── TODO.md                       ← offene Punkte und Wiedervorlagen des Anwenders
 ├── docsources.yml                ← Quellen für Konvertierung
 ├── index.md                      ← Gesamtindex
 ├── index-output.md               ← Index der Ausgangsdokumente
@@ -78,10 +81,10 @@ Root/                             ← Arbeitsverzeichnis
 │   └── referenzprozesse/         ← Prozess-Vorlagen (siehe Anbindungs-Modi)
 │       ├── base/
 │       │   ├── bootstrap/        ← Einmal-Anweisungen je Fassade (nie kopiert; Wiki.md §11)
-│       │   └── wiki/             ← Basis-Fassaden-Skelette
-│       ├── SP-1-Standardprozess/ ← ausgearbeiteter Prozess
-│       ├── RP-1-Systementwicklung/ ← ausgearbeiteter Prozess
-│       └── <weitere>/            ← Platzhalter mit `status: geplant`
+│       │   └── wiki/             ← Basis-Wiki: Fassaden-Skelette, Katalog-Einträge und Regel-Knoten (u. a. Init-Choreografie)
+│       ├── <Kennung>-<Name>/     ← je Prozess ein Ordner; ausgearbeitet (`status: ausgearbeitet` im Steckbrief) oder
+│       │                           Platzhalter (`status: geplant`) — welche es gibt, zeigt der Steckbrief-Scan beim Init
+│       └── …
 ├── raw/                          ← Originaldokumente (immutable)
 ├── input/                        ← Volltext-Konvertierungen (immutable)
 │   ├── raw/                      ← aus raw/ konvertiert
@@ -105,6 +108,7 @@ Root/                             ← Arbeitsverzeichnis
 ├── output/                       ← eingefrorene Übergabe-Stände, versioniert
 ├── overview/                     ← eingefrorene Selbst-Auswertungen, versioniert
 └── outgoing/                     ← Versandstand-Ordner (siehe Outgoing.md)
+    └── <Versandstand>/nachweis/  ← Belege nach dem Versand, nur hinzufügen
 ```
 
 Alles projektspezifische Wissen — inkl. Meta-Wissen wie
@@ -214,10 +218,18 @@ Enthält Eingangsdokumente im **Originalformat**:
 eingescannte PDFs, empfangene Briefe, Formulare,
 amtliche Dokumente — so wie sie eingegangen sind.
 
-Dateien in `raw/` werden **nicht versioniert** und
-**nicht umbenannt**. Sie werden vom User abgelegt und
-verbleiben dort als unveränderliche Originale unter
-ihrem Originalnamen.
+Dateien in `raw/` tragen **keinen Versionsteil im
+Dateinamen** (§4.1) und werden **nicht umbenannt**. Sie
+werden vom User abgelegt und verbleiben dort als
+unveränderliche Originale unter ihrem Originalnamen.
+
+**`raw/` wird in git versioniert** — in jedem Projekt:
+Jede Datei in `raw/` wird committet, sie steht nicht in
+`.gitignore`. Das Repo gehört zur Vertrauenszone des
+Projekts, und der Arbeitsstand muss sich aus ihm
+wiederherstellen lassen (§6.3). Eingefroren heißt:
+Inhalt und Name bleiben — nicht: aus dem Repo halten
+([[Git-Hygiene]]).
 
 **Eiserne Regel:** Der **Agent** verändert Dateien
 in `raw/` nie. Der **User** darf `raw/`-Dateien
@@ -273,7 +285,10 @@ Die KI arbeitet **nicht direkt** mit `input/`,
 sondern mit den daraus abgeleiteten Wiki-Knoten in
 `wiki/` (siehe `Wiki.md`).
 
-Eingangsdokumente werden nicht versioniert.
+Eingangsdokumente tragen keinen Versionsteil im
+Dateinamen (§4.1). **`input/` wird in git versioniert**
+wie `raw/` (§1.2): Jede Konvertierung wird committet,
+der Ordner steht nicht in `.gitignore`.
 
 **Eiserne Regel:** Dateien in `input/` werden nie
 verändert.
@@ -304,20 +319,24 @@ KI-Arbeit.** Ebenen:
 - **Detail-Knoten (atomar):** pro eigenständig
   zitierbarem Dokument bzw. Wissensobjekt ein
   Wiki-Knoten (`document`, `entity`, `concept`,
-  `event`, `deadline`, `case`, `argument` etc.).
+  `event`, `deadline` und die vom Prozess
+  mitgebrachten Typen).
 
 Vollständig beschrieben in **`Wiki.md`**.
 
-Das Wiki ist ein **lebender, unversionierter
-Sachstand**. Die Ordnerstruktur ist flach
+Das Wiki ist ein **lebender Sachstand ohne
+Versionsteil im Dateinamen** (den Verlauf trägt git).
+Die Ordnerstruktur ist flach
 (Obsidian-flavored), ohne Unterordner. Die
 Detail-Typ-Konventionen (Frontmatter, Aufbau) trägt
 jede Fassade selbst in ihrer `## Meta`-Sektion —
 es gibt keinen Kopiervorlagen-Ordner für
-Knoten-Instanzen. Einzige Unterordner-Ausnahme:
-`wiki/templates/` mit Kopiervorlagen für
-Root-Setup-Dateien ([[Standarddateien-Katalog]]
-§2.7a/§2.13, §7.5).
+Knoten-Instanzen. Unterordner-Ausnahmen (führender
+Ort: `Wiki.md` §5.4): `wiki/templates/` mit
+Kopiervorlagen für Root-Setup-Dateien
+([[Standarddateien-Katalog]] §2.7a/§2.13, §7.5) und
+der gleichnamige Unterordner `wiki/<Knoten>/` mit den
+Teilaufsätzen einer Seite.
 
 **Progressive Disclosure:** wie Fassaden und
 Detail-Knoten zusammen gelesen werden: §5.4 — lesen,
@@ -423,11 +442,16 @@ Menschen. Übergaben an andere Agenten oder Repos sind
 Stände in `output/`, Nachrichten im Verbund liegen in
 `output/nachrichten/` (§1.5).
 
-Ein Versandstand-Ordner ist als Ganzes
-**unveränderlich** ab Erzeugung und wird **nicht
+Der versandte Inhalt eines Versandstand-Ordners ist ab
+Erzeugung **eingefroren** und wird **nicht
 versioniert** — erneuter Versand ist ein neuer Ordner
 mit neuem Zeitstempel; der führende Zeitstempel
-sortiert chronologisch.
+sortiert chronologisch. Ergänzt wird der Ordner nur
+durch Belege im Unterordner `nachweis/` (Sendebericht,
+Empfangsbekenntnis, Zustellnachweis) und durch
+angehängte, datierte Vermerke — Nachweise wachsen nur
+(`Outgoing.md` §2, [[Einfrieren-und-Abloesen]]
+§Nachweis).
 
 ### 1.8 research/
 
@@ -497,11 +521,21 @@ vom Agenten angelegt:
   `## Meta`-Sektion selbst vor; Landkarte
   `wiki/Fassaden.md`.
 - **`Tools.md`** — Verzeichnis installierter MCPs
-  und Erweiterungen (§7).
-- **`Offene Fragen.md`** (optional) — offene Fragen
-  aus dem Arbeitsmodus (§5.1.3).
-- **`TODO.md`** — offene Punkte und Erinnerungen
-  des Users.
+  und Erweiterungen, der Werkzeug-Wahlen, der
+  gewählten Kommunikationskanäle und der Ausnahmen
+  der Geheimnis-Prüfung (§7).
+- **`Offene Fragen.md`** — Persistenz aller offenen
+  Fragen an den Anwender, in jedem Modus (§5.2);
+  mitgeliefert als Rumpf.
+- **`devstate_active.md`** — Einstieg in das Projekt
+  für jeden, der es erschließen will (ein anderer
+  Agent, ein abgespaltenes Projekt, ein Mensch);
+  mitgeliefert als Rumpf, der Init füllt den Kopf, der
+  aktive Prozess füllt den Stand.
+- **`TODO.md`** — offene Punkte und Wiedervorlagen
+  des Anwenders; Erwartungen an Dritte stehen nicht
+  hier, sondern als Fristen `für-uns` in
+  `wiki/Fristen.md`.
 - **`docsources.yml`** (optional) —
   Quellen-Definition für den WorkspaceManager
   (§1.3.1).
@@ -590,8 +624,8 @@ Beispiele:
 Versandstand-**Ordner** nach eigener Konvention
 `YYYY-MM-DD HH-mm - <Adressat> - <Benennung>/`, darin
 `Anschreiben.md` als fester Name; **ohne Versionsteil**
-(`_VV_TLA`), weil nicht versioniert — der Zeitstempel
-disambiguiert. Details siehe `Outgoing.md`.
+(`_VV_TLA`) — der Zeitstempel disambiguiert. Details
+siehe `Outgoing.md`.
 
 ### 3.7 Sonderzeichen in Dateinamen
 
@@ -662,12 +696,18 @@ ein solches Wort im Namen als Hinweis.
 
 ### 4.1 Grundprinzip
 
-**Versioniert** (mit `_VV_TLA`):
+Dieser Abschnitt meint die **Versionierung im
+Dateinamen** (`_VV_TLA`), nicht git. In git steht der
+ganze Projektordner, auch `raw/` und `input/` (§1.2,
+§1.3, §6.5); ausgenommen ist nur, was §6.3 nennt.
+
+**Mit Versionsteil im Dateinamen** (`_VV_TLA`):
 
 - `output/` — inhaltliche Ausgangsdokumente
 - `overview/` — Analysen und Snapshots
 
-**Nicht versioniert:**
+**Ohne Versionsteil im Dateinamen** (in git trotzdem
+versioniert):
 
 - `raw/` — Originaldokumente
 - `input/` — Volltext-Konvertierungen
@@ -732,6 +772,35 @@ zu einem bestimmten Anlass in einer `overview/`-Datei
 ein. Details siehe `Wiki.md`.
 
 ## 5. Verhalten der KI
+
+**Grundsatz: Arbeitsweise ist Basis, Fachliches kommt
+mit dem Prozess.** Alles, was beschreibt, **wie der
+Agent arbeitet** — Sitzungsregeln (Start, Persistenz,
+Commit), Umgang mit Geheimnissen (§6.3), Melden von
+Prüfergebnissen, Arten von Entscheidungen
+([[Katalog-Entscheidungen]]), Erkennen des eigenen
+Projekts ([[Aktivierter-Prozess]]) —, steht in der
+Basis und gilt in jedem Projekt, gleich welcher
+Prozess aktiv ist. Prozesse **ergänzen** solche Regeln
+(eigene Prüfungen, eigene Entscheidungsarten, eigene
+Hinweise beim Start), sie **schränken sie nicht
+ein**. Was ein Verfahren, eine Anlage, ein Produkt ist
+und welche Dokumente es braucht, kommt mit dem
+Prozess. Die Arbeitsregeln des Agenten stehen als
+`internal-rule`-Knoten in [[InterneMechanik]] —
+darunter [[Do-first-mit-Veto]],
+[[Berichten-statt-Blockieren]],
+[[Keine-Analogie-Schluesse]],
+[[Bestehende-Traeger-pruefen]],
+[[Keine-Wiederherstellung-ohne-Absicht]],
+[[Git-Hygiene]], [[Umbenennen-per-Einzel-Edit]] und
+[[Zuschnitt-aendern]]. Zwei Regeln daraus, die in
+jedem Projekt gelten: Der Agent gibt den Inhalt von
+Dateien mit Zugangsdaten **nie in den
+Sitzungsverlauf** aus (§6.3), und er meldet einen
+Lauf des Prüfprogramms **nur dann als grün, wenn er
+ohne Fehler endete** — Hinweise nennt er
+([[Kettenpruefung]] §Lint-Anteil).
 
 ### 5.1 Grundhaltung — drei Modi
 
@@ -879,9 +948,53 @@ bearbeiten und dokumentiert unklare Teile in
 
 **Facts-Vorschläge im Arbeitsmodus** folgen derselben
 Regel: sie landen in `Offene Fragen.md` und werden
-am Batch-Ende präsentiert (nicht ad-hoc gefragt).
+am Batch-Ende präsentiert (nicht ad-hoc gefragt;
+Buchung nur als Facts-Vorschlag, §9.4).
+
+**Such-Subagent: Antworten suchen, bevor gefragt
+wird.** Im Arbeitsmodus startet der Agent einen
+Subagenten mit den offenen Fragen aus
+`Offene Fragen.md` als Auftrag: **Antworten suchen**
+im bisherigen Sitzungsverlauf, in den Festlegungen des
+Projekts (`wiki/`, besonders [[Entscheidungen]] und
+[[Facts]]) und in den Eingangsdokumenten. Zwei
+Anlässe: (1) **vor einem Abbruch** — wenn eine offene
+Frage den Arbeitsmodus abbrechen würde (Kriterium
+„kritisch“ oben: eine Antwort würde erhebliche
+Nacharbeit erfordern); (2) **nach Ermessen** — wenn
+der Agent meint, dass es sich nach Menge oder Art der
+Fragen lohnt, nachschauen zu lassen. Das Ergebnis ist
+ein **Bericht** in [[Agent-Berichte]] wie bei jedem
+Subagenten-Auftrag (Auftragsvorlage:
+[[Angebots-und-Beauftragungs-Muster]] §Auftrag
+„Antworten suchen“); der Subagent schreibt in kein
+Register und nicht in `Offene Fragen.md`. **Buchung
+durch den beauftragenden Agenten:** eine Antwort, die
+nur im Verlauf stand, bucht er als Entscheidung **mit
+wörtlichem Zitat und Zeitpunkt**; Fakten nur als
+Facts-Vorschlag (§9.4); die Einträge in
+`Offene Fragen.md` setzt er auf erledigt mit Verweis
+auf Bericht und Buchung. Der Bericht am Ende des
+Arbeitsmodus führt die Liste **„durch Suche geklärt,
+bitte bestätigen“**; widerspricht der Anwender, nimmt
+der Agent die Buchung zurück (ablösende Entscheidung,
+Eintrag wieder offen). Mit dem Eintritt in den
+Arbeitsmodus gilt die Freigabe für Suchaufträge dieser
+Art als erteilt — keine Einzelfrage je Auftrag.
+**Rückfall:** ohne Subagenten-Fähigkeit sucht der Agent
+selbst; ohne Zugriff auf den Verlauf nur in der
+Persistenz.
 
 ### 5.2 Offene Fragen.md
+
+`Offene Fragen.md` ist die **Persistenz aller offenen
+Fragen an den Anwender, in jedem Modus**: Jede Frage,
+die **nicht im selben Zug beantwortet** wird, steht
+hier — im Standard-Modus wie im Arbeitsmodus. Die
+Datei kommt als Rumpf mit der Basis
+([[Standarddateien-Katalog]] §2.10). Warum: eine
+Frage, die nur im Sitzungsverlauf steht, geht mit dem
+Verlauf verloren (§9, persist first).
 
 Format eines Eintrags:
 
@@ -895,9 +1008,19 @@ Format eines Eintrags:
 - **Status:** offen | erledigt
 ```
 
-Pflege: Der Agent ergänzt im Arbeitsmodus; der User
-beantwortet im Chat; der Agent führt die Nacharbeit
-aus und setzt den Status.
+**Briefing-Kette als Eintrag.** Eine Briefing-Kette
+(§5.1.0) ist das Paradebeispiel offener Fragen: der
+Eintrag entsteht **schon mit der Übersicht** — Anlass,
+Punkte, Status je Punkt, Details per Verweis
+(Vorlage-Datei, Bericht); ein Punkt wird erledigt mit
+Verweis auf die Buchung (DEC); der Eintrag schließt mit
+dem letzten Punkt. Steigt der Anwender aus einer Kette
+aus, bleibt sie so sichtbar, und der Sitzungsstart
+bietet sie zur Fortsetzung an (§5.3, Phase B).
+
+Pflege: Der Agent trägt ein, sobald eine Frage offen
+bleibt; der Anwender beantwortet im Chat; der Agent
+führt die Nacharbeit aus und setzt den Status.
 
 ### 5.3 Sessionstart-Ablauf
 
@@ -907,20 +1030,57 @@ Init-spezifische Schritte sind markiert.
 
 #### Phase A — Orientierung
 
+**Start-Prüfung des Arbeitsbaums — vor allem Neuen.**
+Bei jedem Sitzungsstart prüft der Agent zuerst den
+Arbeitsbaum (`git status`). Nicht committete
+Änderungen meldet er als **vermutlich abgebrochenen
+Zug** mit Dateiliste und, soweit erkennbar,
+Gegenstand. Er prüft sie und legt vor: **committen**
+(mit passender Commit-Nachricht, [[Commit-Prozedur]])
+oder **verwerfen** — die Entscheidung trifft der
+Anwender; nichts wird eigenmächtig zurückgesetzt
+([[Keine-Wiederherstellung-ohne-Absicht]]). Ein
+Sitzungsende ist kein Moment, an dem der Agent noch
+handelt; der Schutz liegt in persist first (§9) und
+im Commit je Zug (§6.1) — was dennoch liegen bleibt,
+fängt diese Prüfung. Danach `Offene Fragen.md`
+(Phase B) und der übrige Ablauf.
+
 **A1 git-Prüfung** — bei jedem Sessionstart, nicht
 nur beim Init (Checkliste: [[Git-Bestandsaufnahme]]):
 
 - Wenn `.git/` vorhanden: OK, weiter mit
-  `git status`. Dirty-Zustand informativ melden,
+  `git status`. Dirty-Zustand nach der Start-Prüfung
+  vorlegen,
   **nicht blockierend**; Agent committet dirty
   Änderungen nicht automatisch.
+- Wenn `.git/` vorhanden, aber **noch kein Commit**
+  (frisch angelegtes oder leer geklontes Repo):
+  Init-Situation. Kein `git init`; `.gitignore` und
+  Initial-Commit wie im nächsten Punkt (Reihenfolge
+  dort). Dateien, die schon in `raw/`
+  oder `input/` liegen, gehören in diesen Commit
+  (§1.2, §1.3). Andere unversionierte Dateien legt
+  der Agent dem Anwender vor (committen oder
+  ausnehmen); die Start-Prüfung oben meldet sie hier
+  nicht als abgebrochenen Zug.
 - Wenn nicht vorhanden **und** Ordner leer/frisch
-  (Init-Situation): `git init` anbieten,
-  `.gitignore` mitliefern (Kopie aus
-  `_template/.gitignore`, sobald die Modus-Wahl
-  `_template/` angelegt hat), Initial-Commit mit
-  Präfix `Setup:` (§6.2; die Commit-Sprache ist noch
-  nicht gewählt, der Präfix ist sprachneutral). Dieser
+  (Init-Situation): `git init` anbieten — sofort,
+  vor der Modus-Frage. **Reihenfolge danach:** Hat
+  der Anwender einen Pfad zur Template-Quelle
+  übergeben, folgt zuerst die Modus-Frage (unten);
+  erst wenn `_template/` angelegt ist, kopiert der
+  Agent `_template/.gitignore` als `.gitignore` in
+  den Projekt-Root (nur wenn dort keine liegt) und
+  legt den **Initial-Commit** an — mit `.gitignore`,
+  `_template/` bzw. dem Submodul-Eintrag und dem, was
+  schon in `raw/` und `input/` liegt; Präfix `Setup:`
+  (§6.2; die Commit-Sprache ist noch nicht gewählt,
+  der Präfix ist sprachneutral). Vor der Modus-Wahl
+  gibt es keinen Commit. Ohne übergebenen Pfad (die
+  Vorlage liegt schon im Projekt) nimmt der Agent die
+  `.gitignore` aus `_template/` bzw. die im Root
+  mitgelieferte und committet gleich. Dieser
   Commit ist **nicht** der Scaffolding-Commit
   `Initial project scaffolding` (§6.1), der erst das
   Ende des Startfähigkeits-Vorgangs markiert.
@@ -980,7 +1140,12 @@ Wenn die URL nicht ableitbar ist oder das Einbinden
 fehlschlägt, entscheidet der Anwender: alternative
 URL, Rückfall auf Modus A, oder Abbruch. Die
 getroffene Modus-Wahl wird als DEC im
-Anwender-Register gebucht.
+Anwender-Register gebucht — in Turn 3, unmittelbar
+nach der ersten Marke (jeder Eintrag trägt
+`zielmarke:`; [[Init-Choreografie]] §Phase D,
+Turn 3). Bis dahin steht sie im Herkunfts-Vermerk
+(Zeile `Anbindungs-Modus`) und im Fahrplan-Eintrag in
+`Offene Fragen.md`.
 
 **A2 Ordner-Struktur:**
 
@@ -988,12 +1153,23 @@ Erwartete Ordner: `raw/`, `input/`, `research/`,
 `tools/`, `output/`, `overview/`, `wiki/`,
 `outgoing/`.
 Fehlende werden **ohne Rückfrage** angelegt
-(Standardaufgabe §5.1.2).
+(Standardaufgabe §5.1.2). Einen Ordner, der dabei
+leer bleibt, legt der Agent mit der leeren
+Platzhalter-Datei `.gitkeep` an — git versioniert
+keine leeren Ordner, nach einem Klon fehlten sie
+sonst. Der Platzhalter ist kein Inhalt: Er zählt in
+keiner Prüfung als Datei des Ordners (auch nicht in
+`raw/`, wo sonst jede Datei ein Gegenstück in
+`input/raw/` braucht) und darf entfernt werden,
+sobald der Ordner eine Datei trägt.
 
 **A3 KI-Agent-Instruktionsdatei:**
 
-- Existiert die für den Agenten zutreffende Datei
-  (z.B. `CLAUDE.md`)?
+- Existiert die für den Agenten zutreffende Datei —
+  die Datei, die sein eigener Harness beim
+  Sessionstart automatisch lädt (§8.1; welche das ist,
+  stellt der Agent selbst fest,
+  [[Standarddateien-Katalog]] §2.3)?
 - Fehlt → für Phase D vormerken (Anlegen mit
   User-Dialog).
 - Existiert → Pflichtabschnitte gemäß §8.3
@@ -1008,8 +1184,15 @@ Was der Agent nach der Modus-Wahl aus `_template/`
 als lebende Kopien ins Anwender-Projekt übernimmt
 (Kopierliste) und was dort bleibt:
 [[Init-Choreografie]] §Phase A0 — lesen direkt nach
-der Modus-Wahl (beim allerersten Init über die
-Template-Quelle erreichbar).
+der Modus-Wahl (beim allerersten Init in der
+Template-Quelle:
+`<Pfad zur Vorlage>/referenzprozesse/base/wiki/Init-Choreografie.md`,
+nach der Modus-Wahl auch unter
+`_template/referenzprozesse/base/wiki/`). Bis Phase A0
+das Basis-Wiki kopiert hat, lösen die Wikilinks dieses
+Dokuments (`[[Name]]`) unter
+`<Template-Quelle>/referenzprozesse/base/wiki/Name.md`
+auf.
 
 #### Phase B — Kontext laden
 
@@ -1035,7 +1218,10 @@ und externe Agenten.
 4. `Styleguide-chat.md` — Chat-Interaktion mit dem
    User (der Agent kommuniziert ab der ersten
    Ausgabe nach diesen Regeln).
-5. `Offene Fragen.md` — Nacharbeit nicht vergessen.
+5. `Offene Fragen.md` — mit hoher Priorität: offene
+   Fragen und Nacharbeit; eine unabgeschlossene
+   Briefing-Kette bietet der Agent zur Fortsetzung an
+   (§5.2).
 6. `wiki/Fristen.md` — akute und abgelaufene Fristen
    erkennen (falls Fassade aktiv).
 7. `Tools.md` — verfügbare Werkzeuge und die
@@ -1135,6 +1321,9 @@ als einen zu wenig.**
   (§1.3.1 Fallback).
 - Aktualität: `input/raw/`-Datei älter als
   `raw/`-Datei → Phase D (analog).
+- Rechercheartefakte in `research/` — auch
+  mitgelieferte Normtexte eines Prozesses — liegen
+  nicht in `raw/`; C1 vergleicht sie nicht (§1.8).
 
 **C2 docsources.yml ↔ input/<name>/:**
 
@@ -1346,6 +1535,32 @@ Nachbarn kein C8; berichtet nur, blockiert nie):
 - Meldung im Erledigt-Block **nur bei Befund**
   (kein Rauschen).
 
+**C9 Posteingang** (nur aktiv, wenn die Fassade
+[[Eingangsdokumente]] aktiv ist; berichtet nur,
+blockiert nie; Stufe HINWEIS):
+
+- **Verglichen** werden die Eingangsordner des
+  Projekts (`raw/`, `mails/`, weitere) und die in
+  `## Eingangsorte` der Fassade registrierten,
+  **maschinell lesbaren** Eingangsorte mit dem
+  Register der Eingangsdokumente — **nur
+  Dateivergleich, kein Lesen von Inhalten**
+  (Kostenregel: keine Token dafür, festzustellen, ob
+  etwas eingelesen ist; Inhalte liest erst der
+  Ingest).
+- **Gemeldet** wird: eine Datei ohne Eintrag im
+  Register; ein Eintrag ohne Status `eingelesen`; ein
+  manueller Eingangsort, dessen Abrufturnus
+  überschritten ist (Erinnerung an den Abruf).
+- Woher die Eingangsorte kommen (drei Schichten beim
+  Init) und das Eintragsformat: `## Meta` der Fassade
+  [[Eingangsdokumente]] — lesen vor dem ersten
+  C9-Lauf. Prozesse können die Fassade zur Pflicht
+  machen und je Eintrag Felder verlangen (Zugangsdatum,
+  Zustellart, ausgelöste Frist); C9 bleibt derselbe.
+- **Anlässe:** wie C4 (T1, T2, der tägliche Rückfall).
+  Kein Upgrade-Schritt: C9 wirkt nur mit der Fassade.
+
 **Bewusst nicht Teil:** `output/` (außer
 `output/nachrichten/`, C8), `overview/`,
 `outgoing/` (dort gibt es keinen Drift) sowie
@@ -1367,12 +1582,12 @@ getrennten Abschnitten**.
 [[Fahrplan-Vorlage]]; Turn 1 Basis-Fragen; Turn 2
 Umsetzung mit Prozess-Merge und
 Fassaden-Auswahl-Vorlage; Turn 3
-Fassaden-Umsetzung; danach Konzept-Angebot,
-Mission-Statement-Setup und Abschluss-Turn. Die
+Fassaden-Umsetzung; danach Mission-Statement-Setup,
+Konzept-Angebot und Abschluss-Turn. Die
 vollständige Turn-Choreografie samt
 Frage-Bausteinen: [[Init-Choreografie]] — beim Init
-lesen (beim allerersten Init über die
-Template-Quelle erreichbar).
+lesen (beim allerersten Init in der Template-Quelle:
+`<Pfad zur Vorlage>/referenzprozesse/base/wiki/Init-Choreografie.md`).
 
 Im **regulären Sessionstart** (nicht Init) ist Phase
 D **ein einziger Turn** — Erledigt + Aktion + ggf.
@@ -1635,10 +1850,16 @@ Arbeitsmodi (§5.1) gelten ab dieser Stelle.
     analog C4/C5).
   - **T2 Meilenstein-Vorgang** (prozess-
     spezifische Erweiterung, mit SP-1; weitere
-    Prozesse können analoge T2-Trigger definieren) —
-    volle Wächter-Runde C4–C8 bei den
+    Prozesse definieren analoge T2-Trigger und
+    bringen eigene Wächter-Anlässe und Prüfungen mit —
+    als Tabelle in ihrer `Vorgehen-<Prozess>.md`,
+    eingelesen vom gemeinsamen Prüfprogramm je aktiver
+    Prozesskette, [[Kettenpruefung]] §Lint-Anteil) —
+    volle Wächter-Runde C4–C9 bei den
     prozess-definierten Meilensteinen (z.B. Ende einer
-    Scaffolding-Vorlage, Freigabe-Buchung).
+    Scaffolding-Vorlage, Freigabe-Buchung). Mit SP-2
+    stehen T2-Anlässe und Prüf-Tabelle (Codes `SP2-…`,
+    Stufen) in `Vorgehen-SP-2.md` §8 Wächter.
   - **T4 Freigabe-Bezugsprüfung** (Basis, während der
     Arbeit; dazu der Zielmarken-Wechsel als
     gebündelter Lauf) — Auslöser, Prüfung und
@@ -1659,7 +1880,7 @@ Arbeitsmodi (§5.1) gelten ab dieser Stelle.
     Kategorie „Peer-Agenten: Start und Transport“
     (Werkzeug-Wahl, `Vorgehen.md` §7b); installiert
     wird nichts ohne Zustimmung des Anwenders.
-  
+
   Ausgabeform bei Befund: Erledigt/Aktion/Frage-
   Raster. Bei leerem Befund keine Ausgabe.
 - **Feld-Kanonizität.** Welche Ebene beim Ändern
@@ -1782,14 +2003,16 @@ Phase, kein Zug (`Vorgehen.md` §4). Typische Züge:
 
 Keine Leer-Commits.
 
-**Am Session-Ende:** Der Agent legt einen
-**abschließenden Commit** für alle Änderungen an,
-die durch die Zug-Commits noch nicht
-erfasst wurden — Rest-Aufräumen (z.B. redaktionelle
-Kleinständerungen, aggregierte Statusnotizen), damit
-die Session mit sauberem Arbeitsbaum endet. Wenn
-alle Änderungen bereits committet sind, entfällt der
-Abschluss-Commit.
+**Kein Abschluss-Commit am Sitzungsende.** Ein
+Sitzungsende ist kein Moment, an dem der Agent noch
+handelt. Der Schutz liegt im Commit je Zug (oben) und
+in persist first (§9); was dennoch liegen bleibt,
+meldet die Sitzungsstart-Prüfung des Arbeitsbaums als
+vermutlich abgebrochenen Zug (§5.3 Phase A,
+Start-Prüfung des Arbeitsbaums), und
+der Anwender entscheidet über Committen oder
+Verwerfen. Welche Dateien in einen Commit kommen:
+[[Git-Hygiene]].
 
 **Werkzeug-Kadenz-Bericht:** Bei Commits, die
 prozess-relevante Änderungen enthalten (was
@@ -1818,7 +2041,10 @@ trägt das englische Commit-Message-Präfix
 Repo**. Er markiert das Ende des
 Startfähigkeits-Vorgangs und die Grenze für
 zweistufige Prozess-Regeln (die vor und nach ihm
-unterschiedlich greifen). Details in
+unterschiedlich greifen). Den Vorgang gibt es nur mit
+einem Prozess, der eine Scaffolding-Phase definiert;
+ohne Prozess oder mit einem Prozess ohne Scaffolding
+entfällt der Commit. Details in
 `Vorgehen.md` §7a.
 
 ### 6.2 Commit-Nachrichten
@@ -1877,21 +2103,70 @@ der Kurzbeschreibung.
   `.claude/settings.local.json`).
 - Temporäre Dateien und Build-Artefakte außerhalb der
   versionierten Ordner.
-- Sehr große Binärinhalte in `raw/` — ggf. via
-  `.gitignore` ausklammern und git-lfs nutzen.
-- **Zugangsdaten und Geheimnisse** gehören in keine
-  committete Datei — API-Keys, Passwörter, Tokens,
-  SSH-Private-Keys, WikiJS-Credentials, SMTP-Zugänge etc.
-  Bereitstellung über Umgebungsvariablen. Eine lokale
-  Datei mit Werten ist zulässig, sofern sie von
-  `.gitignore` erfasst ist — der Ausschluss ist
-  **sicherzustellen, bevor** der erste Wert
-  hineingeschrieben wird. Eine Vorlagendatei mit
-  Variablennamen und Platzhaltern (ohne Werte) darf
-  committet werden. Erhält der Agent Zugangsdaten im
-  Klartext im Chat, schreibt er sie nur in die
+- `raw/` und `input/` gehören **nicht** in diese Liste:
+  Sie werden in jedem Projekt committet (§1.2, §1.3).
+  Für sehr große Binärdateien in `raw/` schlägt der
+  Agent dem Anwender git-lfs vor; aus dem Repo
+  ausgeklammert werden sie nicht.
+- **Betriebs-Zugangsdaten und Geheimnisse** gehören
+  in keine committete Datei — in jedem Projekt, ohne
+  Ausnahme: Zugänge, mit denen der Agent oder das
+  Projekt arbeitet (API-Keys, Passwörter, Tokens,
+  SSH-Private-Keys, Wiki- und SMTP-Zugänge,
+  Zertifikate für den Versand über Justiz- oder
+  Steuer-Postfächer). Bereitstellung über
+  Umgebungsvariablen. Eine lokale Datei mit Werten ist
+  zulässig, sofern sie von `.gitignore` erfasst ist —
+  der Ausschluss ist **sicherzustellen, bevor** der
+  erste Wert hineingeschrieben wird. Eine Vorlagendatei
+  mit Variablennamen und Platzhaltern (ohne Werte)
+  darf committet werden. Erhält der Agent Zugangsdaten
+  im Klartext im Chat, schreibt er sie nur in die
   ausgeschlossene lokale Konfiguration und weist
   darauf hin, dass sie im Gesprächsverlauf stehen.
+- **Keine Geheimnisdateien in die Sitzung ausgeben.**
+  Der Agent gibt den Inhalt von Dateien mit
+  Zugangsdaten (lokale Konfiguration, `.env`-Dateien,
+  Schlüssel) nicht in den Sitzungsverlauf aus — nicht
+  per `cat`, nicht als Zitat, nicht als Auszug. Er
+  nennt den Pfad und, wo nötig, die Variablennamen.
+- **Zugangsdaten als Akteninhalt** sind etwas anderes:
+  Ein Eingangsdokument, das Zugangsdaten enthält (eine
+  Vollmacht mit Zugang, ein Vertrag mit Passwörtern,
+  ein Bescheid mit Kennung), ist **Inhalt des
+  Projekts**, kein Betriebs-Zugang. **Ohne Prozess**
+  wird ein solches Dokument **im Original committet**,
+  unmaskiert: Das Repo gehört zur Vertrauenszone des
+  Projekts (Arbeitsverzeichnis, Git-Server,
+  Modellanbieter), und git dient hier der
+  Rekonstruktion des Arbeitsstands, nicht der
+  Publikation — ein Repo mit verstümmelten Dokumenten
+  gibt den Arbeitsstand nicht wieder. Rückfall sind die
+  eingebauten Schutzmechanismen des Agenten; der
+  Anwender kann per Entscheidung abweichen. **Mit einem
+  Prozess** legt dieser den Umgang beim Start fest —
+  unmaskiert committen, maskieren, auslagern —, im
+  Hinweis zur Vertrauenszone ([[Init-Choreografie]]
+  §Hinweis zur Vertrauenszone); die Wahl steht im
+  Herkunfts-Vermerk von [[Aktivierter-Prozess]]. Der
+  Software-Prozess legt nichts fest; dort gilt wie
+  bisher, dass Zugangsdaten in keine committete Datei
+  gehören, auch als Akteninhalt (sein Repo soll einmal
+  weitergegeben werden können).
+  Für Betriebs-Zugangsdaten (oben) ändert das nichts.
+- **Das Prüfprogramm ist das Netz:** Es prüft
+  verfolgte Dateien auf Muster von Zugangsdaten und
+  meldet Treffer als HINWEIS mit dem Befund-Text „Keine
+  Panik — für Zugangsdaten hast du eigene Regeln;
+  folge ihnen und besprich den Fund mit dem Anwender.
+  Überstimmen kann diese Regeln nur der Anwender.“
+  Der Agent löscht, maskiert oder schreibt nichts
+  eigenmächtig um. Gegen dauerhafte Fehlalarme (etwa
+  Fixtures mit Beispiel-Schlüsseln) führt der Anwender
+  eine **Ausnahme-Datei** (je Eintrag Pfad und Grund),
+  die in `Tools.md` §Ausnahmen der Geheimnis-Prüfung
+  registriert ist; das Template liefert keine mit
+  ([[Kettenpruefung]] §Lint-Anteil, Geheimnis-Prüfung).
 
 ### 6.4 Push und Remote
 
@@ -1900,7 +2175,10 @@ der Kurzbeschreibung.
   Einrichtung neuer Remotes nur auf ausdrückliche
   Anweisung.
 - Ein Tag der Implementierung ist eine Freigabe, kein
-  Commit-Schritt: Wortlaut des Eintrags, wer den Tag
+  Commit-Schritt: Wortlaut des Eintrags („Stand
+  <Tag-Name> von <Produkt-Dokumenttyp des Prozesses>,
+  freigegeben für P10 <Tätigkeit> zu Marke M“;
+  „Implementierung“ als Altform), wer den Tag
   setzt, Tag-Konvention und Pfade des Produkts in
   `wiki/Facts.md`, Projekt ohne Prozess —
   `Vorgehen.md` §4 „Freigabe per Tag“ (führender Ort);
@@ -1917,7 +2195,9 @@ Muster [[Two-Repo-Submodul-Muster]].
 Die `_VV_TLA`-Kette dokumentiert **fachliche Stände**
 eines Dokuments; git dokumentiert den **technischen
 Verlauf** der Projektdatei-Basis. Beide Ebenen sind
-unabhängig voneinander.
+unabhängig voneinander. „Nicht versioniert“ in §4 heißt
+deshalb nur „ohne `_VV_TLA` im Dateinamen“ — in git
+stehen auch diese Ordner.
 
 ## 7. MCPs und Agent-Erweiterungen
 
@@ -1936,10 +2216,13 @@ Installation wird in `Tools.md` dokumentiert (§7.5).
 
 Alle installierten MCPs und Erweiterungen und die
 Werkzeug-Wahlen des Projekts werden in `Tools.md`
-dokumentiert. Welche Kategorien `Tools.md` führt, samt
-Beispielen: Kopiervorlage
-`wiki/templates/Tools-Vorlage.md` — bei Anlage von
-`Tools.md` kopieren und die Beispiele ersetzen.
+dokumentiert — dazu die vom Anwender gewählten
+Kommunikationskanäle (`Outgoing.md` §3.2) und die
+Ausnahmen der Geheimnis-Prüfung (§6.3). Welche
+Kategorien `Tools.md` führt, samt Beispielen:
+Kopiervorlage `wiki/templates/Tools-Vorlage.md` — bei
+Anlage von `Tools.md` kopieren und die Beispiele
+ersetzen.
 
 ## 8. KI-Agent-Instruktionsdatei
 
@@ -1948,10 +2231,16 @@ Beispielen: Kopiervorlage
 Der MasterPrompt ist **KI-agnostisch**. Jeder Agent
 erzeugt daraus **seine eigene native
 Instruktionsdatei**; alle sind abgeleitete Sichten auf
-denselben MasterPrompt. Welche Datei zu welchem
-Agenten gehört und ob mehrere nebeneinander stehen
-dürfen: [[Standarddateien-Katalog]] §2.3 — lesen bei
-Anlage der Instruktionsdatei.
+denselben MasterPrompt. Die Vorlage schreibt dafür
+keinen Dateinamen vor: **Nimm die für dich passende**
+— die Datei, die dein eigener Harness beim
+Sessionstart automatisch lädt. Der Agent stellt das
+selbst fest, hält seine Wahl fest und meldet, wenn er
+unsicher ist. Wie er das feststellt, wo die Wahl steht
+und ob mehrere Dateien nebeneinander stehen dürfen:
+[[Standarddateien-Katalog]] §2.3 — lesen bei Anlage
+der Instruktionsdatei. Dateinamen in diesem Dokument
+(`CLAUDE.md`, `.cursorrules`) sind Beispiele.
 
 Dieselbe Agnostik gilt für die **Mechanismen**: der
 Agent adaptiert jede beschriebene Prozedur auf seine
@@ -2008,7 +2297,12 @@ Pflichten:
   Stände werden **im selben Zug** abgelegt —
   Berichte vor der Chat-Zusammenfassung, Fassaden
   im Arbeits-Rhythmus (C6 wacht über das Alter der
-  Bearbeitungsstand-Zeile).
+  Bearbeitungsstand-Zeile). Dasselbe gilt für
+  **Fragen**: Eine Frage an den Anwender, die nicht im
+  selben Zug beantwortet wird, steht in
+  `Offene Fragen.md` (§5.2) — in jedem Modus; eine
+  Frage, die nur im Sitzungsverlauf steht, geht mit dem
+  Verlauf verloren.
 
 Grundprinzip dahinter: **Wissen lebt auf der Platte,
 nicht im Kopf.** Wer die Session fortsetzt (der gleiche Agent
@@ -2038,9 +2332,10 @@ verankert.
 Zielort je nach Klärung:
 
 - Neue Projekt-Wahrheit → DEC-Register-Eintrag
-  (`wiki/Entscheidungen.md`), dünn oder mit
-  Detail-Knoten — Konventionen siehe `## Meta` der
-  Fassade [[Entscheidungen]].
+  (`wiki/Entscheidungen.md`), mit Detail-Knoten
+  (einzeilig bleiben nur Freigabe- und
+  Marken-Wechsel-Einträge) — Konventionen siehe
+  `## Meta` der Fassade [[Entscheidungen]].
 - Prozess-spezifische Wahrheit (Klärungen zur
   Anwendung des aktiven Prozesses in diesem
   Projekt) → als Entscheidung ins DEC-Register,
@@ -2114,7 +2409,9 @@ Berührung; analog zur Anzahl-Ansage-Regel in
 ### 9.4 Umgang mit Facts.md
 
 `wiki/Facts.md` ist **Anwender-Terrain** mit zwei
-Regel-Aspekten:
+Regel-Aspekten (das gilt auch für Fakten, die ein
+Such-Subagent im Arbeitsmodus gefunden hat, §5.1.3:
+nur als Facts-Vorschlag):
 
 **(1) Autorschaft.** Der Anwender ist der einzige
 inhaltliche Autor. Der Agent editiert Facts
@@ -2125,8 +2422,11 @@ selbständiger Nachtrag — auch nicht wenn der Agent
 die Information für nützlich hält. Wenn dem Agent
 eine Info in Facts fehlt, schlägt er sie dem
 Anwender vor; erst nach Freigabe wird sie
-eingetragen. Ausnahme: rein technische Frontmatter-
-Wartung (Aktivierungs-Prozeduren, `active`-Feld).
+eingetragen. Ausnahmen: rein technische Frontmatter-
+Wartung (Aktivierungs-Prozeduren, `active`-Feld) und
+die Init-Buchungen aus den Antworten des Anwenders
+auf die Init-Fragen — die Frage ist die Anweisung
+([[Init-Choreografie]], Bootstrap der Fassade Facts).
 
 **(2) Inhaltscharakter.** Facts trägt **Kondensat** —
 prominent platzierte Klarstellungen, die der

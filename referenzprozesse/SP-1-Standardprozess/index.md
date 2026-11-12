@@ -411,12 +411,15 @@ im Instanz-Projekt.
 
 ### 4.5 `devstate_active.md` im Repo-Root
 
-SP-1 legt eine spezielle Datei `devstate_active.md` im
-Repo-Root an (nicht im `wiki/`): den **aktuellen
-Zustandsbericht** als externen Einstiegspunkt für
-Dritte, die den Stand brauchen, ohne das Wiki zu
-lesen. Anlage-Zeitpunkt, Minimal-Skelett
-(Sektionen, Zielmarken-Zeile) und der Gesamtstand des
+Die Datei `devstate_active.md` im Repo-Root (nicht im
+`wiki/`) ist der **Basis-Einstieg jedes Projekts**;
+sie kommt als Rumpf mit der Basis, der Init füllt den
+Kopf ([[Standarddateien-Katalog]] §2.15). SP-1 trägt
+die **Füllung** bei: den aktuellen Zustandsbericht
+nach Phasen und Pflicht-Ständen der Kette als
+Einstiegspunkt für Dritte, die den Stand brauchen,
+ohne das Wiki zu lesen. Zeitpunkt der ersten Füllung,
+Inhalt der Abschnitte und der Gesamtstand des
 Koordinators: [[devstate-Skelett]] — beim
 Scaffolding und bei devstate-Pflege lesen.
 
@@ -696,7 +699,14 @@ präzisiert nur die Software-spezifische Ausstattung
   (Komponente) — lesen beim Init mit Startprompt. Der
   Agent bucht Rolle und Übernahme-Art im
   Herkunfts-Vermerk von [[Aktivierter-Prozess]]
-  ([[Init-Choreografie]] §Phase A0).
+  ([[Init-Choreografie]] §Phase A0). Ein Startprompt
+  kann auch eine **Abspaltung** einleiten
+  ([[Init-Choreografie]] §Init mit Startprompt
+  (Abspaltung); [[Zuschnitt-aendern]]): dann ist die
+  Rolle **Standalone** mit Übernahme-Art
+  „Abspaltung“ — kein Komponent, kein Übergabe-Stand,
+  kein Kettenglied bei der Mutter ([[Kettenpruefung]]
+  §Komponenten-Kette nach Übernahme-Art).
 - **Ohne Startprompt:** Standalone ist die
   Voreinstellung. Mit RP-1 fragt der Init die Rolle
   ausdrücklich (Vorauswahl Standalone, Umschalt-Option

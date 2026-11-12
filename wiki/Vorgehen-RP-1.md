@@ -6,10 +6,11 @@ extends: [SP-1]
 
 # RP-1 — Vorgehen (Softwaresystem-Entwicklung)
 
-**Bearbeitungsstand:** 2026-10-25 (Start-Tabelle nach
-`Vorgehen.md` §3, Außerkraftsetzung eines CON,
-Prozess-Definition als Pfad; Produkt in P9, Tag in
-der Folge-Marke)
+**Bearbeitungsstand:** 2026-11-11 (Überführung des
+Betriebs bei P13, Grenze von P14; davor 2026-10-25:
+Start-Tabelle nach `Vorgehen.md` §3, Außerkraftsetzung
+eines CON, Prozess-Definition als Pfad; Produkt in P9,
+Tag in der Folge-Marke)
 
 Adaptiert das SP-1-Vorgehen ([[Vorgehen-SP-1]]) für die
 Entwicklung eines Softwaresystems.
@@ -44,8 +45,8 @@ Software-typisch sind.
 | P10 | Testen | **Testplan** ([[Katalog-Testplan]]) **mit nicht-automatisierbaren Anteilen** (manuelle Integrationstests + Anwender-Tests) aus den Testfällen ([[Testfaelle]]) + Testberichte (TRES, [[Testberichte]]); Angebot Durchführungs-Instanz je Testdurchgang (§4 Anmerkung P10) |
 | P11 | Dokumentieren für Entwickler | **Entwickler-Doku** ([[Katalog-Entwickler-Doku]]) als selbsttragender Stand in `output/`, Kopie in `docs/developer/`: Aufbau, Entscheidungen, Einstieg und Build in der Projektsprache; die aus Docstrings erzeugte API-Doku (Zone 1, §12) ist Teil davon, nicht ihr Ersatz; bei einer Komponente die Entwickler-Doku für ihr Bauteil — das letzte Glied ihrer Kette (§8) |
 | P12 | Dokumentieren für Benutzer | **Benutzer-Doku** ([[Katalog-Benutzer-Doku]]) als selbsttragender Stand in `output/`, Kopie in `docs/user/`; Zone 3 (§12): projekt-primär Deutsch; beim Koordinator bzw. Standalone, bei einer Komponente nur mit eigener Zielumgebung (§8) |
-| P13 | Ausliefern | **Deploy-Stand** je Umgebung ([[Katalog-Deploy-Stand]]) in `output/` mit `_VV_TLA` (index §4), beim Koordinator für alle Komponenten (§7 Punkt 6, §8) + Startprompts; **CI-Pipeline-Konfiguration** (V6a — Deploy-Zielumgebung ist hier verankert) |
-| P14 | Produzieren | Bereitstellen und Konfigurieren der Ziel-Umgebung — bei Standard-Software oft weitgehend durch P13-Rückverweis (Deploy-Stand) abgedeckt; bei RP-11 Cloudanwendung eigener Substanz-Bereich (Vertragsaspekte, laufender Betrieb); CI-/Deploy-Feinheiten aus V6a greifen hier |
+| P13 | Ausliefern | **Deploy-Stand** je Umgebung ([[Katalog-Deploy-Stand]]) in `output/` mit `_VV_TLA` (index §4), beim Koordinator für alle Komponenten (§7 Punkt 6, §8) + Startprompts; **CI-Pipeline-Konfiguration** (V6a — Deploy-Zielumgebung ist hier verankert); beim **ersten Deploy-Stand einer Zielumgebung** die **Überführungs-Frage** je Umgebung — überführen in ein Infrastruktur-Projekt (RP-2) mit eigenem Agenten, behalten mit RP-2-Bausteinen oder behalten wie bisher ([[Vorgehen-SP-1]] §2 Anmerkung P13; Anmerkung P13/P14 unten) |
+| P14 | Produzieren | **Bereitstellen und Konfigurieren der Ziel-Umgebung bis zur Auslieferung** — bei Standard-Software oft weitgehend durch P13-Rückverweis (Deploy-Stand) abgedeckt; CI-/Deploy-Feinheiten aus V6a greifen hier. Grenze: Bereitstellen bleibt beim Software-Projekt bis zur Auslieferung; der **Betrieb** der Anlage (installieren, härten, aktualisieren, umziehen, abbauen) ist Sache des Infrastruktur-Projekts, wenn die Umgebung überführt ist (Anmerkung P13/P14 unten); bei RP-11 Cloudanwendung eigener Substanz-Bereich (Vertragsaspekte, laufender Betrieb) |
 | P15 | Betreiben | **Betriebs-Anleitung** je Umgebung ([[Katalog-Betriebs-Anleitung]]) als selbsttragender Stand in `output/`, Kopie in `docs/ops/`, aus dem Deploy-Stand der Umgebung; laufende `bug-report`-Ingestion; Fehlerbilder-Recherche R10 aktiv |
 | — | Ablauf je Stand | vom ersten `offen`en Element über Lese-Klammer, Bildung, Prüfung, Vorlage und Korrektur bis zur Freigabe: [[Lebenslauf-eines-Stands]] (gilt für jeden Stand dieser Tabelle) |
 
@@ -114,6 +115,40 @@ Migrations-Werkzeug — erweiterbare Liste, nicht
 erschöpfend. Vorgelegt als V5-Vorlage der
 Scaffolding-Kette ([[Vorgehen-SP-1]] §4a), gebucht als
 Technologie-Stack-Entscheidungen an P7.
+
+**Anmerkung P13/P14 Überführung des Betriebs (V6a):**
+Die Deploy-Zielumgebung ist in V6a verankert; der
+Software-Prozess trägt sie **bis zur Auslieferung**
+(P13 Deploy-Stand, P14 Bereitstellen und
+Konfigurieren). Beim ersten Deploy-Stand je
+Zielumgebung stellt der Agent die Überführungs-Frage
+aus [[Vorgehen-SP-1]] §2 Anmerkung P13 — der Ablauf
+(Abspaltung mit Übergabe-Punkt und Startprompt oder
+Nachricht an ein bestehendes Infrastruktur-Projekt;
+Bausteine aus RP-2; behalten) steht dort und wird hier
+nicht wiederholt. RP-1 präzisiert nur, was im
+Software-Projekt bleibt: Code und Tag, Image, die
+**CI-Pipeline, Build, Paketierung und Registry** (V6a)
+sowie das Bereitstellen der Umgebung bis zur
+Auslieferung; der Betrieb der Anlage (installieren,
+härten, aktualisieren, umziehen, abbauen) geht mit der
+Überführung an das Infrastruktur-Projekt; der zuletzt
+freigegebene Deploy-Stand bleibt als Lieferung bis zum
+Übergabe-Punkt gültig, neue Deploy-Stände der Umgebung
+führt das Betriebs-Projekt, und das Software-Projekt
+verzichtet für die Marke des Übergabe-Punkts für diese
+Umgebung auf P15 (Grund „übergeben an `<repo>`“); die
+Umgebung trägt ab dann `uebergeben_an: <repo>`, womit
+P13 und P15 für sie in den weiteren Marken abgeleitet
+entfallen (`Vorgehen-SP-1.md` §2 Anmerkung P13). Eine neue Version
+ist hier ein neuer Tag und eine Nachricht an den
+Betrieb; Fehler aus dem Betrieb kommen als
+`bug-report`-Ingestion zurück (§2 P15).
+Stellt das Infrastruktur-Projekt eine Testumgebung für
+die Integrationstests bereit, liefert es dazu ein
+Dienstblatt (Verbindung, Grenzen, Ansprechpartner,
+Änderungen); die Solllage bleibt in
+[[Softwaresystemtest-Setup]] §Meta.
 
 ## 3. Test-Automatisierungs-Regel
 
@@ -354,7 +389,7 @@ Scaffolding-Vorlagen-Präzisierung (Vorgehen.md §7a,
 | V | **V3**-Präzisierung: mehrere Sprachen möglich, Runtime-Version explizit | P7 Auswählen der Technologie | Wurzelentscheidung |
 | V | **V4**-Präzisierung: Architekturmuster explizit als Sub-Wahl (MVC, Hexagonal, Layered, Microservices) | P5 Zerlegen in Bausteine | mit Architektur-Entscheidung |
 | V | **V5**-Präzisierung: Werkzeugketten-Liste (§2 Anmerkung P7) | P7 Auswählen der Technologie | nach V3 |
-| V | **V6a**-Präzisierung: CI-Pipeline-Konfiguration, Deploy-Zielumgebung | P13 Ausliefern · P14 Produzieren | mit Deploy-Entscheidungen |
+| V | **V6a**-Präzisierung: CI-Pipeline-Konfiguration, Deploy-Zielumgebung; Überführungs-Frage je Zielumgebung beim ersten Deploy-Stand (§2 Anmerkung P13/P14) | P13 Ausliefern · P14 Produzieren | mit Deploy-Entscheidungen; die Überführungs-Frage beim ersten Deploy-Stand der Umgebung |
 
 (V1 und V6b sind Basis-Angelegenheit — siehe
 Vorgehen.md §7a.)
@@ -584,8 +619,19 @@ Marken-Abschluss an den Koordinator
 **P14 „Produzieren"** trägt keine eigene
 Standard-Freigabe — bei Standard-Software ist es
 weitgehend durch den P13-Deploy-Stand abgedeckt
-(§2); RP-11 Cloudanwendung präzisiert P14/P15 später
-(dominante Vertragsaspekte, laufender Betrieb).
+(§2); es endet mit der Auslieferung. Ist der Betrieb
+einer Umgebung an ein Infrastruktur-Projekt überführt
+(§2 Anmerkung P13/P14), bleibt der zuletzt
+freigegebene Deploy-Stand dieser Umgebung (Zeile
+„P10+P13-Aggregat, Teil P13“) als Lieferung bis zum
+Übergabe-Punkt gültig; neue Deploy-Stände der Umgebung
+führt das Betriebs-Projekt, und P15 (Zeile
+„P15-Artefakt“) entfällt für sie — in der Marke des
+Übergabe-Punkts per Verzicht „übergeben an `<repo>`“,
+danach abgeleitet aus dem Feld `uebergeben_an` an der
+Umgebung. RP-11 Cloudanwendung
+präzisiert P14/P15 später (dominante Vertragsaspekte,
+laufender Betrieb).
 
 **Anmerkung Split P3/P4:** Anforderungen sammeln (P3)
 und Beschreiben der Funktion (P4) sind zwei getrennte

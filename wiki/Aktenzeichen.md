@@ -12,14 +12,18 @@ active: false   # Vorfestlegung (Reaktivierung per Zuruf); führend: wiki/Fassad
 - **Kategorie:** (b) Inline-Fassade im wiki/ — siehe
   Wiki.md §Kategorisierung der Register.
 - **Kein eigener Detail-Knoten:** der Kontext eines
-  Aktenzeichens lebt im Metadatenblock der zugehörigen
-  `case`- oder `document`-Knoten. Dieses Register ist
-  eine denormalisierte Sicht, gruppiert nach Absender
-  oder Case.
+  Aktenzeichens lebt im Metadatenblock des zugehörigen
+  `document`-Knotens — jedes Eingangs- oder
+  Ausgangsdokument trägt sein Aktenzeichen —; in
+  Prozessen mit eigenem Fall-Typ (etwa `case` mit
+  SP-2) gehört es auch zu dessen Knoten. Dieses
+  Register ist eine denormalisierte Sicht, gruppiert
+  nach Absender oder Fall.
 - **Eintragsformat:** `### <Aktenzeichen>` mit Feldern
   Typ (z.B. Ticket / Bestell-Nr. / Aktenzeichen) /
-  Absender / Zuordnung ([[case-Knoten]] und/oder
-  [[document-Knoten]]) / kurzer Notiz falls sinnvoll.
+  Absender / Zuordnung ([[document-Knoten]]; in
+  Prozessen mit eigenem Fall-Typ auch dessen Knoten) /
+  kurzer Notiz falls sinnvoll.
 - **Einträge ohne Detail-Knoten sind zulässig** — auch
   ein einzeln erwähntes Aktenzeichen ist gültig.
 - **Pflege:** beim Ingest und laufend.

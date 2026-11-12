@@ -77,6 +77,15 @@ if [ -e "$DST/wiki" ]; then
     fi
 fi
 
+# Quelle einer Zeile der Kopier-Liste relativ zum Starter-Root: in der
+# Regel derselbe Pfad wie das Ziel; die Zusatz-Zeilen dieses Starters
+# kopieren aus referenzprozesse/ in einen Ordner des Projekt-Roots.
+quelle() {
+    case $1 in
+        *) printf '%s' "$1" ;;
+    esac
+}
+
 # vom Projekt bearbeitet statt vorgefunden? (nur unter einem wiki/, das
 # aus diesem Starter stammt, ist das sicher entscheidbar)
 bearbeitet() {
@@ -91,7 +100,7 @@ bearbeitet() {
 {
     for f in MasterPrompt.md Wiki.md Vorgehen.md Reviewmuster.md \
              Outgoing.md Styleguide.md Styleguide-md.md \
-             Styleguide-wiki.md devstate_active.md; do
+             Styleguide-wiki.md "Offene Fragen.md" devstate_active.md; do
         printf '%s\n' "$f"
     done
     # referenzprozesse/, tools/ und upgrade/ werden NICHT kopiert —
@@ -100,6 +109,8 @@ bearbeitet() {
     if [ "$WIKI_FREMD" -eq 0 ]; then
         ( cd "$SRC" && find wiki -type f | sort )
     fi
+    # Zusatz-Zeilen der Kopier-Liste dieses Starters (Quelle unter
+    # referenzprozesse/, Ziel im Projekt-Root — siehe quelle() oben):
 } | {
     COPIED=0
     SAME=0
@@ -121,7 +132,7 @@ bearbeitet() {
     while IFS= read -r rel; do
         case $rel in wiki/*) WIKI_TOTAL=$((WIKI_TOTAL + 1)) ;; esac
         if [ -e "$DST/$rel" ]; then
-            if cmp -s -- "$SRC/$rel" "$DST/$rel"; then
+            if cmp -s -- "$SRC/$(quelle "$rel")" "$DST/$rel"; then
                 SAME=$((SAME + 1))
             elif bearbeitet "$rel"; then
                 EDITREL="${EDITREL}${rel}
@@ -136,7 +147,7 @@ bearbeitet() {
             case $rel in
                 */*) mkdir -p "$DST/${rel%/*}" ;;
             esac
-            cp -- "$SRC/$rel" "$DST/$rel"
+            cp -- "$SRC/$(quelle "$rel")" "$DST/$rel"
             COPIED=$((COPIED + 1))
             case $rel in
                 wiki/*) WIKI_COPIED=$((WIKI_COPIED + 1)); WIKI_REL="${WIKI_REL}${rel}

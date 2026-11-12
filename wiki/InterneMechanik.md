@@ -74,8 +74,10 @@ Format pro Eintrag:
 
 ## internal-rule
 
-_(mitgelieferte Basis-Regeln; Betriebs-Konfiguration
-kommt beim Init hinzu)_
+_(mitgelieferte Basis-Regeln — Arbeitsweise des Agenten,
+gilt in jedem Projekt, Prozesse ergänzen sie (MasterPrompt
+§5); die Betriebs-Konfiguration liegt als Rumpf bei und
+wird beim Init gefüllt)_
 
 ### [[Berichten-statt-Blockieren]]
 
@@ -90,7 +92,77 @@ kommt beim Init hinzu)_
 - **Kurzform:** mechanische Folge-Schritte einer
   ausgelösten Standardaufgabe ohne Einzel-Rückfrage,
   sichtbar gemeldet, Veto möglich; Grenzen, darunter
-  Aufträge mit Außenwirkung, Kosten oder Kontingent.
+  Aufträge mit Außenwirkung, Kosten oder Kontingent
+  sowie Zuschnitt ändern und Einrichtungen übernehmen.
+
+### [[Keine-Analogie-Schluesse]]
+
+- **Typ:** internal-rule
+- **Kurzform:** eine Festlegung des Anwenders gilt nur
+  für den genannten Aspekt; Nachbarfälle werden gesucht
+  und zur Entscheidung vorgelegt, nicht abgeleitet.
+  Lesen, bevor eine Entscheidung übertragen wird.
+
+### [[Bestehende-Traeger-pruefen]]
+
+- **Typ:** internal-rule
+- **Kurzform:** vor neuen Rollen, Orten, Begriffen oder
+  Typen den Bestand sichten und das Ergebnis nennen; vor
+  jeder Frage prüfen, ob sie schon entschieden ist; bei
+  einem Befund erst das Ganze prüfen, dann die Stelle
+  flicken. Lesen vor jeder Empfehlung für etwas Neues.
+
+### [[Keine-Wiederherstellung-ohne-Absicht]]
+
+- **Typ:** internal-rule
+- **Kurzform:** ein unerwarteter Zustand kann Absicht
+  sein — vor Restore oder Aufräumen die Absicht prüfen,
+  im Zweifel fragen; nie reparieren und zugleich als
+  Befund buchen. Lesen, bevor etwas zurückgesetzt wird.
+
+### [[Git-Hygiene]]
+
+- **Typ:** internal-rule
+- **Kurzform:** `git add` nur mit ausdrücklichen Pfaden,
+  lokale Einstellungs- und Cache-Dateien nie committen,
+  kein `--no-verify`, vor dem Commit den Index lesen.
+  Lesen vor jedem Commit (ergänzt die Commit-Prozedur).
+
+### [[Umbenennen-per-Einzel-Edit]]
+
+- **Typ:** internal-rule
+- **Kurzform:** kontext-sensitive Bezeichner nie per
+  globaler Ersetzung ändern, sondern per Einzel-Edit;
+  danach auf Reste und falsche Treffer prüfen. Lesen vor
+  jeder Umbenennung.
+
+### [[Zuschnitt-aendern]]
+
+- **Typ:** internal-rule
+- **Kurzform:** drei Wege eines Projekts (Abspalten,
+  Umbauen, Zusammenführen), drei Reichweiten der
+  Übernahme von Einrichtungen (Baustein, Merge, Join),
+  Prüfsatz
+  „braucht es eigene Phasen?“, Übergabe-Punkt mit
+  Startprompt-Vorlage, Rückfrage-Pflicht — nie
+  Do-first. Lesen, sobald ein Anlass auftaucht.
+
+### [[Aktivierter-Prozess]]
+
+- **Typ:** internal-rule
+- **Kurzform:** Betriebs-Konfiguration — gewählter
+  Prozess (nach Join beide), Abweichungen,
+  Prozess-Präfixe und der Herkunfts-Vermerk
+  (Template-Stand, Quelle, Modus, Prozess, Repo, Rolle,
+  Übernahme-Art, Ausbaustufe, Abgespalten von); Rumpf
+  mitgeliefert, Init füllt.
+
+### [[Commit-Sprache]]
+
+- **Typ:** internal-rule
+- **Kurzform:** Betriebs-Konfiguration — gewählte
+  Variante der Commit-Sprache (A/B/C); Rumpf
+  mitgeliefert, Init füllt.
 
 ### [[Konzept-Repositories]]
 
@@ -99,6 +171,13 @@ kommt beim Init hinzu)_
   Repositories fürs Konzept-Angebot (Geltung Basis
   oder Prozess, Betreiber-Vorbelegung ersetzbar,
   Prozess-Anhänge werden beim Merge übernommen).
+
+### [[Schwester-Templates]]
+
+- **Typ:** internal-rule
+- **Kurzform:** Landkarte der Schwester-Starter (GitHub-URL,
+  Prozess, Kurzbeschreibung) als Quelle für Baustein, Merge
+  und Join.
 
 ### [[Projekt-Praefixe]]
 
@@ -147,9 +226,11 @@ kommt beim Init hinzu)_
   Freeze-Zeitpunkt, vollständige Ablösung unter neuer
   ID, Eintrittsregel, Bildung eines Stands
   (Ableitungsprüfung, Kopien, Herkunftszeile,
-  Leseregel, Überholt-Regel); vor der Bildung eines
-  Stands, vor jeder Ablösung und beim Anlegen eines
-  Register-Elements lesen.
+  Leseregel, Überholt-Regel), Grundsatz Nachweis
+  (nie ändern, nur ergänzen — Vermerk oder
+  `nachweis/`); vor der Bildung eines Stands, vor jeder
+  Ablösung, beim Anlegen eines Register-Elements und
+  vor jeder Ergänzung an einem Nachweis lesen.
 
 ### [[Kettenpruefung]]
 
@@ -157,13 +238,18 @@ kommt beim Init hinzu)_
 - **Kurzform:** Prüfung eines Pflicht-Stands gegen
   alle freigegebenen Vorgänger derselben Marke
   (Widerspruch, Abdeckung, Unbegründetes; Lint- und
-  Reviewer-Anteil), Freigabe-Ordnung als Warnung mit
-  Tag als Pflicht-Glied P9 und Übernahme aus der
-  Vormarke, fehlende und vertretene Glieder (Verzicht
-  je Phase, Koordinator ohne Bauteile, Übergabe-Stand,
-  Ende der Komponenten-Kette), Freigabe-Ordnung des
+  Reviewer-Anteil), ein gemeinsames Prüfprogramm mit
+  Prozess-Prüfungen je Prozesskette und der
+  Schwere-Tabelle FEHLER/HINWEIS, Freigabe-Ordnung als
+  Warnung mit Tag als Pflicht-Glied P9 und Übernahme
+  aus der Vormarke, fehlende und vertretene Glieder
+  (Verzicht je Phase, abgeleitet entfallen durch
+  Zustand, Stufe oder inaktive Fassade, Koordinator
+  ohne Bauteile, Übergabe-Stand, Ende der
+  Komponenten-Kette), Freigabe-Ordnung des
   Koordinators, Komponenten-Kette nach Übernahme-Art
-  mit Consumer-Prüfung und Rücklauf; vor jeder
+  (selbstständig, Auftrag, Abspaltung) mit
+  Consumer-Prüfung und Rücklauf; vor jeder
   Freigabe eines Pflicht-Stands lesen.
 
 ### [[Marken]]
@@ -171,18 +257,20 @@ kommt beim Init hinzu)_
 - **Typ:** internal-rule
 - **Kurzform:** die Marke als Zwischenziel-Anker jeder
   Projektart — was sie abschließt (Produkt, Tag,
-  Abschluss-Stand), wann eine neue beginnt, Frist als
-  Eigenschaft, Beispiele je Projektart, Projekt ohne
-  Prozess, Marken-Dokument je Prozess; beim Init
-  (erste Marke) und vor einem Marken-Wechsel lesen.
+  Abschluss-Stand), wann eine neue beginnt, Eilsache
+  als vorgezogene Marke, Entfall einer Marke per
+  Entscheidung, Frist als Eigenschaft, Beispiele je
+  Projektart, Projekt ohne Prozess, Marken-Dokument je
+  Prozess; beim Init (erste Marke) und vor einem
+  Marken-Wechsel lesen.
 
 ### [[Meilenstein-und-T2]]
 
 - **Typ:** internal-rule
 - **Kurzform:** Wächter-Trigger T2
   (Prozess-Meilenstein-Wechsel, volle Runde C4–C8),
-  Meilenstein-Anlässe, Meilenstein-Regel „agent-lokal“
-  mit Koordinator-Meilenstein, Meilenstein-Vorgang
+  Meilenstein-Anlässe, Meilenstein-Regel „agent-lokal" mit
+  Koordinator-Meilenstein, Meilenstein-Vorgang
   (Prozess-mitgebracht, SP-1).
 
 ## internal-procedure
@@ -219,10 +307,25 @@ _(mitgelieferte Basis-Prozeduren)_
   der Vorlage, Vorlage des Stands selbst, Korrektur in
   die Elemente mit neuer Version, Freigabe mit Annahme
   der verwiesenen Elemente, Überholt und Übernahme)
-  samt Arten der Abweichung; Mechanik bleibt an den
-  führenden Orten. Lesen, sobald in einer Phase das
-  erste Element entsteht, und vor der Bildung eines
-  Stands.
+  samt Arten der Abweichung und dem Rückzug eines
+  verteilten Stands (Fehler feststellen, Empfänger,
+  Anwender-Entscheidung Rückzug / Berichtigung /
+  Ersatz, Folge-Versand, Vermerk, Erwartung
+  Bestätigung); Mechanik bleibt an den führenden
+  Orten. Lesen, sobald in einer Phase das erste
+  Element entsteht, vor der Bildung eines Stands und
+  wenn ein verteilter Stand fehlerhaft ist.
+
+### [[NotebookLM]]
+
+- **Typ:** internal-procedure
+- **Kurzform:** ausformuliertes Beispiel des Musters
+  „Begleit-Dokumentation mit einem Wissens-Werkzeug“
+  für ein konkretes Werkzeug (Quellen bestimmen und
+  bereinigen, eigene Quellen kennzeichnen,
+  Auftragsliste mit Staffelung, Übernahme als
+  Ableitung, Prüfung); lesen, wenn der Anwender dieses
+  Werkzeug gewählt hat.
 
 ## internal-concept
 
@@ -260,11 +363,15 @@ _(mitgelieferte Basis-Muster)_
 
 - **Typ:** internal-pattern
 - **Kurzform:** vollständige Init-Choreografie des
-  Sessionstarts (Phase A0 mit Anbindungs-Modi und
-  Kopierliste, Phase-D-Turns, Init-Fragen samt
-  Ein-/Zwei-Repo-Frage, Init mit Startprompt einer
-  Komponente, Prozess-Angebot, Fassaden-Auswahl,
-  Konzept-Angebot, Mission-Statement-Setup); beim Init
+  Sessionstarts (Phase A0 mit Anbindungs-Modi,
+  Herkunfts-Vermerk und Kopierliste, Phase-D-Turns,
+  Init-Fragen samt Ein-/Zwei-Repo-Frage, Kanal-Frage
+  und Eingangsorten, Init mit Startprompt einer
+  Komponente oder einer Abspaltung, Join,
+  nachträglicher Init-Merge, Hinweis zur
+  Vertrauenszone, Prozess-Angebot, Werkzeug-Angebot,
+  Fassaden-Auswahl, Mission-Statement-Setup,
+  Konzept-Angebot); beim Init
   lesen, beim allerersten Init über die
   Template-Quelle.
 
@@ -275,9 +382,11 @@ _(mitgelieferte Basis-Muster)_
   Standard-Beauftragungs-Rahmen für Sub-Agenten
   (Recherche-Prompt, Angebots-Tabelle, Review-Auslöser,
   Ingest- und Archiv-Regeln; Ablauf eines Prüflaufs in
-  `Reviewmuster.md` §2), Auftragsliste zur Freigabe und
-  Werkzeug-Dauerfreigabe; vor jedem Angebot und jeder
-  Beauftragung lesen.
+  `Reviewmuster.md` §2), Auftrag „Antworten suchen“
+  des Such-Subagenten, Muster Begleit-Dokumentation
+  mit einem Wissens-Werkzeug, Auftragsliste zur
+  Freigabe und Werkzeug-Dauerfreigabe; vor jedem
+  Angebot und jeder Beauftragung lesen.
 
 ### [[Fahrplan-Vorlage]]
 
@@ -300,38 +409,39 @@ _(mitgelieferte Basis-Muster)_
 ### [[Register-Grundmuster]]
 
 - **Typ:** internal-pattern
-- **Kurzform:** Register-Status-Kanonizität als
-  Ausnahme von Wiki.md §1.1a: Vier-Schichten-
-  Absicherung, Feldliste kanonisch vs. gespiegelt
-  (Prozess-mitgebracht, SP-1).
+- **Kurzform:** Register-Status-Kanonizität als Ausnahme
+  von Wiki.md §1.1a: Vier-Schichten-Absicherung, Feldliste
+  kanonisch vs. gespiegelt (Prozess-mitgebracht, SP-1).
 
 ### [[devstate-Skelett]]
 
 - **Typ:** internal-pattern
-- **Kurzform:** `devstate_active.md` im Repo-Root:
-  Anlage-Zeitpunkt, Minimal-Skelett, Koordinator-Regel
+- **Kurzform:** Füllung von `devstate_active.md` unter
+  SP-1: Aktueller Stand aus Phase und Pflicht-Ständen,
+  Gesamtstand des Koordinators als abgeleitete Sicht
   (Prozess-mitgebracht, SP-1).
 
 ## Einträge (Vorbelegung beim Starter-Bau)
 
 - **[[Aktivierter-Prozess]]** (internal-rule) —
-  RP-1 auf SP-1, Vorfestlegungen eingearbeitet; der
+  RP-1 auf SP-1, Vorauswahlen eingearbeitet; der
   Herkunfts-Vermerk (Template-Stand, Quelle,
-  Anbindungs-Modus) und die Rolle sind offen und
+  Anbindungs-Modus, Repo) und die offenen Zeilen
   werden beim Init geschrieben.
 - **[[Commit-Sprache]]** (internal-rule) — Entscheid
-  offen, reguläres Menü im INIT.md-Fragen-Block.
+  offen, Frage im INIT.md-Fragen-Block.
 - **[[WorkspaceManager-Kontrakt]]** (internal-rule) —
   Betriebs-Konfiguration offen, wird mit der
   Init-Frage (INIT.md Fragen-Block) gefüllt.
 - **Prozess-mitgebracht (SP-1):** die Mechanik-Knoten
   [[Register-Lebenszyklus]], [[Meilenstein-und-T2]],
-  [[Register-Grundmuster]] und [[devstate-Skelett]]
-  sind beim Starter-Bau kopiert und oben in ihren
-  Typ-Sektionen eingetragen; RP-1 bringt keine
-  eigenen Mechanik-Knoten mit.
+  [[Register-Grundmuster]], [[devstate-Skelett]] sind beim
+  Starter-Bau kopiert und oben in ihren Typ-Sektionen
+  eingetragen.
+- RP-1 bringt keine eigenen Mechanik-Knoten mit
+  (Steckbrief §Mitgebrachte Mechanik).
 - Die Basis-Knoten (u.a. [[Init-Choreografie]],
   [[Commit-Prozedur]], [[Fahrplan-Vorlage]],
   [[Two-Repo-Submodul-Muster]], [[Handoff-Prozedur]],
   [[Angebots-und-Beauftragungs-Muster]]) liegen mit
-  und sind über ihre §Bezüge katalogisiert.
+  und sind oben katalogisiert.

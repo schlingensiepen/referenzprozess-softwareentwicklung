@@ -83,7 +83,20 @@ der Anwender:
   folgt als eigene Zwischenmarke nach dem Abschluss der
   ersten, und die zurückgestellte Marke kehrt erst nach
   der letzten zurück ([[Zielmarken]] §Meta,
-  Zwischenmarke).
+  Zwischenmarke). Nach demselben Muster tritt eine
+  **Eilsache** (Eilantrag, Hotfix mit Außenwirkung) als
+  vorgezogene Marke vor die laufende — ohne eigenen
+  Git-Zweig ([[Zielmarken]] §Meta, Eilsache).
+- **Eine Marke kann entfallen.** Erreicht eine Marke
+  ihr Ergebnis nicht mehr (Frist versäumt, Verfahren
+  anders erledigt, Vorhaben aufgegeben), wechselt sie
+  per Entscheidung mit Grund in den Zustand
+  `entfallen` — kein Abschluss-Stand, offene Elemente
+  über den Vollständigkeits-Scan des Wechsels
+  ([[Zielmarken]] §Meta). Frist und Marke sind zwei
+  verschiedene Dinge: eine Frist ist Eigenschaft einer
+  Marke oder eines Elements, ihr Versäumen kann der
+  Grund für den Entfall sein.
 - **Dasselbe Ergebnis in neuer Umgebung oder anders
   ausgerollt** — nichts in der Kette bis zum Tag ändert
   sich (dieselbe Software auf einem weiteren Zielsystem

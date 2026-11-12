@@ -117,3 +117,33 @@ Anwender-`wiki/` kopiert und in [[Katalog]] verankert.
   eines Freigabe-Eintrags); es ist kumulativ gegenüber
   dieser Vollfassung ([[Kettenpruefung]] §Regel,
   Änderungsdokument).
+- **RP-2-Präzisierung** (gilt bei aktivem RP-2): Die
+  Freigabe der Betriebs-Anleitung je Umgebung **ist die
+  Inbetriebnahme** dieser Umgebung. Zusätzliche
+  **Vorbedingung** neben dem Deploy-Stand ist ein
+  **Abnahmeprotokoll** zum geltenden Deploy-Stand
+  derselben Umgebung (`Abnahmeprotokolle.md` (RP-2);
+  [[Kettenpruefung]] §Code-Glieder) — fehlt es, meldet
+  das Prüfprogramm (`RP2-L3`). **Inbetriebnahme-Tor** —
+  Bedingungen der Freigabe in Kurzform: Abnahmeprotokoll,
+  Sicherung mit geprüftem Rückweg (Beleg
+  Probe-Rücksicherung), Überwachung, zweiter Zugang, bei
+  fremden Nutzern das Dienstblatt ([[Katalog-Benutzer-Doku]]
+  RP-2-Präzisierung); die Aspekte des Deploy-Stands
+  belegen Sicherung, Überwachung und Zugang
+  ([[Katalog-Deployments]] RP-2-Präzisierung). Fehlt eine
+  Bedingung: Einschränkung im Freigabe-Eintrag mit Frist,
+  nie still übergangen. Das Tor ist Bedingung dieser
+  Stand-Freigabe, keine eigene Freigabe. **Führender Ort
+  der Bedingungen, Belege, Fristen und Prüfungen:
+  `Vorgehen-RP-2.md` §5** — lesen vor der Vorlage der
+  Freigabe. Gliederung: ein Kapitel je
+  Aspekt mit dem Deploy-Eintrag als Quelle; der
+  Fremder-Maßstab gilt für den Nachfolger des
+  Administrators. Bei kleinen Eingriffen (Ändern,
+  Aktualisieren) genügt ein Änderungsdokument, gemeinsam
+  mit Testplan und Deploy-Stand vorgelegt, je Stand eine
+  Freigabe (`Vorgehen-RP-2.md` §5). Bei der Marken-Art
+  Abbauen entfällt die Betriebs-Anleitung der
+  abgebauten Umgebung per Verzicht je Umgebung
+  (`Marken-RP-2.md` §4).

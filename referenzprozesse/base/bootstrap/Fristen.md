@@ -24,7 +24,11 @@ vor der Aktivierungs-Wahl lesen. Beim Init:
 1. Aktivierungs-Wahl des Anwenders als
    `active: true|false` im Frontmatter setzen
    (Ja/Nein-Frage mit Empfehlung „aktivieren").
-2. Bei Aktivierung: **Fristensammler-Frage** — der
+2. Bei Aktivierung: **Fristensammler-Frage** (hat
+   eine Init-Frage des aktiven Prozesses sie schon
+   beantwortet, übernimmt der Agent die Antwort und
+   fragt nicht noch einmal; ohne Antwort gilt „kein
+   Sammler“) — der
    Agent erklärt kurz, was die Fristen-Fassade
    macht (vorwärtsgerichtete Fälligkeitsübersicht
    Offen/Erledigt/Abgelaufen, automatischer

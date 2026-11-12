@@ -110,3 +110,25 @@ und in [[Katalog]] verankert.
   `wiki/Fehlermeldungen.md`.
 - **Struktur-Konventionen:** `## Meta` der Fassade
   [[Fehlermeldungen]].
+- **RP-2-Präzisierung** (gilt bei aktivem RP-2):
+  **Pflichtfelder** zusätzlich: `ursache` (`produkt` |
+  `umwelt` | `anbieter` — der Feldname, weil `herkunft`
+  im Template für die Herkunftszeile der Stände steht),
+  `klaerungsstand` (`beobachtet` | `workaround` |
+  `ungeklaert`; unabhängig von der Status-Achse
+  `status`, die wie in SP-1 Meldung und Behebung
+  ordnet). **Optional** zusätzlich: `vorkommen` (Liste:
+  Datum und JNL-Eintrag, `Katalog-Betriebsjournal.md` (RP-2)).
+  `gefunden_in` darf auf ein Abnahmeprotokoll und die
+  TEST-ID zeigen (`Katalog-Abnahmeprotokolle.md` (RP-2)); die
+  `marke` des Abnahmeprotokolls ist dann die Marke der
+  Meldung. Eine Störung mit `ursache: anbieter` wird
+  meist nur umgangen (`klaerungsstand: workaround`) und
+  bleibt als Meldung stehen; eine Störung mit `ursache:
+  produkt` an einem Produkt aus einem Software-Projekt
+  wird dort gebucht ([[Fehlermeldungen]] §Meta,
+  RP-2-Präzisierung). Grund aus realen
+  Infrastruktur-Projekten: in einem
+  Dauerbetrieb war die Hälfte der Störungen Verhalten
+  eines Fremdanbieters, das nur umgangen, nie behoben
+  wurde.

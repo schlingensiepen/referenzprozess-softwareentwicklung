@@ -35,6 +35,33 @@ Klärung **pro Repository** durchgeführt.
 Sichtbarkeits-Entscheid als Register-Eintrag,
 Meldung im Erledigt-Block.
 
+## SP-2-Teil (gilt bei aktivem SP-2)
+
+Im Verfahrens-Prozess gibt es kein Scaffolding; die
+Klärung läuft mit dem Hinweis zur Vertrauenszone im
+Init (SP-2-`index.md` §4.7; `Vorgehen-SP-2.md` §9):
+
+- **Sichtbarkeit:** das Repo dient der Rekonstruktion
+  des Verfahrens, nicht der Weitergabe; die
+  Voreinstellung ist **privat**. Arbeitsverzeichnis,
+  Git-Server und Anbieter des Sprachmodells sind die
+  Vertrauenszone — der Anwender wählt den Git-Server und
+  das Modell in Kenntnis dessen, was sie sehen; alles
+  wird committet, auch Zugangsdaten als Akteninhalt im
+  Original (Zeile im Herkunfts-Vermerk).
+- **Lizenz:** eine Lizenz-Wahl für das Verfahrens-Repo
+  ist selten nötig (Akteninhalte sind keine Werke des
+  Projekts); der Agent fragt nur, wenn Inhalte
+  veröffentlicht werden sollen. Mitgelieferte amtliche
+  Normtexte eines Prozesses (Normen-Paket) sind
+  gemeinfreie Inhalte; sie unterliegen nicht der Lizenz
+  des Projekts. Den Satz dazu trägt die Lizenz-Datei
+  des Templates.
+- **Sichtbarkeit je Abspaltung:** ein abgespaltener
+  Strang mit anderem Vertraulichkeitskreis bekommt ein
+  eigenes Repo mit eigener Sichtbarkeit; die Nachricht
+  an die Mutter trägt `vertraulich:`.
+
 ## Bezüge
 
 - Fassaden-Eintrag: [[InterneMechanik]]

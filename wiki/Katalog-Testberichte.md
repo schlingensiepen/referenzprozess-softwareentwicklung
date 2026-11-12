@@ -45,6 +45,14 @@ und in [[Katalog]] verankert.
 - **Beispielname:** `TRES-001 Systemtest Marke 1.0.md`
 - **Struktur-Konventionen:** `## Meta` der Fassade
   [[Testberichte]].
+- **Nachweis wächst nur:** ein Testbericht wird nach
+  der Anlage nie geändert, nur ergänzt — durch einen
+  angehängten, datierten Vermerk oder durch Dateien im
+  Unterordner `nachweis/` neben dem Bericht
+  (Roh-Protokolle, Screenshots, Logauszüge, die später
+  dazukommen; nur hinzufügen, nie überschreiben oder
+  löschen). Ein weiterer Durchgang ist ein neuer
+  Testbericht ([[Einfrieren-und-Abloesen]] §Nachweis).
 - **Nicht Bestandenes:** was ein Testbericht mit nicht
   bestandenen oder blockierten Testfällen für die
   Freigabe des Deploy-Stands bedeutet (Anwender

@@ -6,7 +6,10 @@ extends: []
 
 # SP-1 — Vorgehen
 
-**Bearbeitungsstand:** 2026-11-03 (Doku-Phasen P11 und
+**Bearbeitungsstand:** 2026-11-11 (Überführung des
+Betriebs bei P13, Umbenennen durch einen
+Referenzprozess, Übergabe-Punkt neben dem
+Übergabe-Stand; davor 2026-11-03: Doku-Phasen P11 und
 P12, Betriebs-Anleitung als Pflicht-Stand P15,
 Doku-Abfrage; Komponenten-Kette bis P11)
 
@@ -23,7 +26,15 @@ konkreten Artefakten und bindet R-Themen und
 Prüfungen an konkrete Phasen. Kein
 Weglassen, kein Umbenennen, kein Hinzufügen von
 Phasen — die Standard-Belegung passt für allgemeine
-Entwicklungsprojekte.
+Entwicklungsprojekte. Dieser Satz bindet SP-1
+gegenüber der Basis; ein **Referenzprozess auf SP-1
+darf eine Phase umbenennen** (etwa P2 oder P8 für
+Infrastruktur-Vorhaben), die Nummern bleiben, und das
+Prüfprogramm liest die Nummer (`Vorgehen.md` §3). Die
+Zweck-Wortlaute dieser Datei („für P13 Ausliefern“,
+„für P15 Betreiben“) sind die SP-1-Namen; ein
+Referenzprozess mit eigenen Phasennamen setzt seine
+in die Freigabe-Formel (`Vorgehen.md` §4).
 
 ## 2. Phasen mit SP-1-Artefakten
 
@@ -41,13 +52,16 @@ Entwicklungsprojekte.
 | P10 | Testen | Testplan ([[Katalog-Testplan]]) aus dem Register [[Testfaelle]] (TEST); Testberichte (TRES) in [[Testberichte]]; Umgebung und Ausführung: [[Systemtest-Setup]] |
 | P11 | Dokumentieren für Entwickler | Entwickler-Doku ([[Katalog-Entwickler-Doku]], selbsttragender Stand in `output/`, Kopie in `docs/developer/`) aus Architekturdokument, Technologie-Entscheidungen, Spezifikation und Tag |
 | P12 | Dokumentieren für Benutzer | Benutzer-Doku ([[Katalog-Benutzer-Doku]], selbsttragender Stand in `output/`, Kopie in `docs/user/`) aus Konzept, Anforderungen, Funktionsbeschreibung und Tag |
-| P13 | Ausliefern | Deploy-Stand je Umgebung ([[Katalog-Deploy-Stand]], in `output/` mit `_VV_TLA`) aus dem Register [[Deployments]] (DEPL) |
+| P13 | Ausliefern | Deploy-Stand je Umgebung ([[Katalog-Deploy-Stand]], in `output/` mit `_VV_TLA`) aus dem Register [[Deployments]] (DEPL); beim **ersten** Deploy-Stand einer Zielumgebung die Überführungs-Frage an den Anwender (Anmerkung P13 unten) |
 | P14 | Produzieren | Produktions-Plan + Produktions-Beschreibung (prozess-spezifisch — RPs präzisieren; kein Pflicht-Stand) |
 | P15 | Betreiben | Betriebs-Anleitung je Umgebung ([[Katalog-Betriebs-Anleitung]], selbsttragender Stand in `output/`, Kopie in `docs/ops/`) aus dem Deploy-Stand der Umgebung; `bug-report`-Rückfluss ins Register |
 | — | Ablauf je Stand | vom ersten `offen`en Element über Lese-Klammer, Bildung, Prüfung, Vorlage und Korrektur bis zur Freigabe: [[Lebenslauf-eines-Stands]] |
 
 Zweck, Filter und Auslöser jedes Stands stehen in
 seinem Dokumenttyp-Eintrag (verlinkt in der Tabelle);
+die Namen dieser Tabelle — Dokumenttyp und Tätigkeit —
+trägt die Freigabe-Formel („Stand x von <Dokumenttyp>,
+freigegeben für Pn <Tätigkeit>“, `Vorgehen.md` §4);
 die Ordnung der Freigaben in [[Kettenpruefung]] —
 **Phasen ordnen Freigaben, nicht Arbeit:** ein Element
 jedes Registers darf jederzeit entstehen, nur die
@@ -76,11 +90,18 @@ Marke ([[Glossar]]) — Software-RP-1 präzisiert zu
 Integrationstests" (Produkt: der Code); Hardware-RP-10
 zu „Prototyp bauen" (Produkt: der Prototyp);
 Publikations-SP-3 zu „Ausformulieren der Kapitel"
-(Produkt: die Kapitel); Rechtsfall-RP-3: je Marke ein
+(Produkt: die Kapitel); Rechtsfall-RP-20: je Marke ein
 Schriftsatz oder eine Kommentierung; etc. SP-1 gibt
 hier keinen generischen Namen jenseits von
 „Ausarbeiten". Das Glied P9 heißt in der
-Freigabe-Ordnung in jeder Domäne „Implementierung“;
+Freigabe-Ordnung von SP-1 „Implementierung“ — so steht
+es in der Tag-Freigabe von SP-1 und seinen
+Referenzprozessen ohne eigenen Produkt-Dokumenttyp
+(Rückfall, `Vorgehen.md` §4 „Freigabe per Tag“); in
+anderen Domänen trägt das Glied den Namen des
+Produkt-Dokumenttyps aus der Phasentabelle des
+Prozesses, „Implementierung“ bleibt dort als Altform
+gültig;
 dass der Tag das Produkt auch ohne Code markiert und
 ein Verzicht auf P9 nicht möglich ist, steht in
 [[Kettenpruefung]] §Kette und §Fehlende und
@@ -107,7 +128,98 @@ und Komponenten schreiben, melden und buchen
 Teilaktivität gilt in jedem Prozess mit P6, auch mit
 SP-1 allein (`Vorgehen.md` §3); RP-1 präzisiert sie für
 Komponenten-Repositories in `Vorgehen-RP-1.md` §2
-Anmerkung P6.
+Anmerkung P6. Der Übergabe-Stand gilt nur für
+Komponenten (Übernahme-Arten selbstständig und
+Auftrag); ein Projekt, das durch **Abspalten**
+entsteht — etwa der überführte Betrieb einer
+Zielumgebung (Anmerkung P13) —, bekommt kein
+Übergabe-Dokument, sondern den **Übergabe-Punkt**
+([[Zuschnitt-aendern]] §Übergabe-Punkt;
+[[Katalog-Uebergabe]] §Abgrenzung).
+
+**Anmerkung P13 (Überführung des Betriebs):**
+Software-Entwicklung geht bis zur Auslieferung; der
+Betrieb einer Anlage ist eine andere Arbeit mit
+eigenem Referenzprozess (RP-2 IT-Infrastruktur, auf
+SP-1). Sobald das Projekt seinen **ersten Deploy-Stand
+für eine Zielumgebung** bildet, fragt der Agent je
+Umgebung — mit Empfehlung, nie von sich aus
+([[Zuschnitt-aendern]] §Rückfrage-Pflicht):
+
+- **(a) überführen** — der Betrieb dieser Umgebung geht
+  an ein Infrastruktur-Projekt mit eigenem Agenten,
+  gestartet wie eine Komponente: ein **neues** Projekt
+  entsteht als Abspaltung (Übernahme-Art
+  „Abspaltung“) mit Übergabe-Punkt `<repo>/<tag>` und
+  Startprompt nach der Vorlage
+  ([[Zuschnitt-aendern]] §Übergabe-Punkt und
+  §Startprompt-Vorlage; [[Init-Choreografie]] §Init
+  mit Startprompt (Abspaltung)); ein **bestehendes**
+  Infrastruktur-Projekt erhält eine Nachricht mit dem
+  Übergabe-Punkt und beginnt dort nach seinem Prozess
+  (Marke „Aufbauen“ oder Einstieg „Bestand
+  erfassen“). Ein Übergabe-Dokument an den Betrieb
+  gibt es nicht: der Startprompt nennt den Anlass in
+  den Worten des Abgebenden (wofür das Betriebs-Projekt
+  eingeschaltet wird), der Betriebs-Agent holt sich,
+  was er braucht, über `devstate_active.md` dieses
+  Projekts; Zielumgebung und Lieferbeziehung nimmt er
+  aus dem Startprompt.
+- **(b) im Projekt behalten mit Bausteinen aus RP-2** —
+  der vorhandene Agent bietet die passenden Bausteine
+  einzeln an (erweiterte Felder der Zielumgebung,
+  Betriebsjournal, Prüfort und Abnahmeprotokoll,
+  Inbetriebnahme-Tor), der Anwender wählt; das ist die
+  Baustein-Übernahme über [[Schwester-Templates]]
+  ([[Zuschnitt-aendern]] §Einrichtungen eines anderen
+  Templates übernehmen), [[Fassaden]] führt jede
+  übernommene Fassade als „Prozess-mitgebracht
+  (RP-2)“. Passend für kleine Fälle und Lieferungen an
+  Dritte.
+- **(c) im Projekt behalten wie bisher** — P13, P14 und
+  P15 bleiben in diesem Projekt.
+
+Bei (a) gilt ab dem Übergabe-Punkt: Der **zuletzt
+freigegebene Deploy-Stand** dieser Umgebung bleibt im
+Software-Projekt als **Lieferung** bis zum
+Übergabe-Punkt gültig; neue Deploy-Stände dieser
+Umgebung und den Betrieb führt ab dann das
+Betriebs-Projekt. Der Eintrag der Umgebung in
+[[Zielumgebungen]] bleibt und erhält am Übergabe-Punkt
+das Feld `uebergeben_an: <repo>`
+([[Katalog-Zielumgebungen]]) — ein Zustand des
+Eintrags, kein Fließtext-Vermerk. Für die Marke des
+Übergabe-Punkts **verzichtet** das Projekt auf P15 für
+diese Umgebung — eine Verzichts-DEC mit dem Grund
+„übergeben an `<repo>`“ und Verweis auf das
+Betriebs-Projekt (Form und Felder: [[Kettenpruefung]]
+§Fehlende und vertretene Glieder, Zeile P15); sie ist
+der Beleg der Entscheidung — das Prüfprogramm verlangt
+sie nicht, denn das Feld wirkt unabhängig von der
+Marke; fehlt sie, meldet es einen Hinweis, nicht
+sperrend. In allen weiteren Marken
+entfallen P13 (neue Deploy-Stände) und P15 dieser
+Umgebung **abgeleitet** aus dem Feld, ohne weitere
+Verzichts-DEC (ebenda, Zeile „P13, P15 je übergebener
+Umgebung“); die Betriebs-Anleitung dieser Umgebung
+führt dann jenes Projekt. Hier bleiben
+Code, Tag, Image, CI, Build, Paketierung und
+Registry; eine neue Version geht als Nachricht an den
+Betrieb (dort Marke „Aktualisieren“). Der Betrieb
+**meldet nur zurück** — ein Produktfehler als
+Fehlermeldung in dieses Projekt, Fix, neuer Tag —; ein
+Kettenglied bei der Mutter entsteht nicht
+([[Kettenpruefung]] §Komponenten-Kette nach
+Übernahme-Art, Abspaltung). Das Betriebs-Projekt führt
+Aufbau-Rezept, seine Deploy-Stände je Umgebung,
+Journal, Abnahmeprotokoll und Betriebs-Anleitung; eine
+Testumgebung für Software-Tests stellt es auf
+Anforderung mit einem Dienstblatt bereit
+([[Systemtest-Setup]] §Meta). Die Frage wird je
+Umgebung einmal gestellt; wer sie beim ersten
+Deploy-Stand mit (c) beantwortet hat, kann später
+abspalten — der Weg ist derselbe ([[Zuschnitt-aendern]]
+§Drei Wege für Projekte).
 
 ## 3. Angebote an Phasen (R / M / V)
 

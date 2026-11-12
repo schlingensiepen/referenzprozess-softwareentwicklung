@@ -1,16 +1,38 @@
 # Vorgehen
 
-**Bearbeitungsstand: 2026-10-25**
+**Bearbeitungsstand: 2026-11-11**
 
 Dieses Dokument beschreibt den **Vorgehensrahmen** des
 Templates: wie Projekt-Arbeit in Phasen mit Ergebnis-
 Artefakten und zweck-gebundenen Freigaben organisiert
 ist. Es ist eine Teildatei des MasterPrompts und gilt
 zusammen mit den Regeln aus `MasterPrompt.md`. Es ist
-bewusst domänen-neutral — jeder Prozess (SP-1, SP-2, …,
-RP-1, RP-2, …) bringt seine eigene
-`Vorgehen-<Prozess>.md` mit, die die generischen Phasen
-für seine Domäne belegt (§8).
+bewusst domänen-neutral — jeder Prozess bringt seine
+eigene `Vorgehen-<Prozess>.md` mit, die die
+generischen Phasen für seine Domäne belegt (§8). Zwei
+Standardprozesse belegen den Rahmen heute: **SP-1**
+für Entwicklungsprojekte (darauf RP-1 Systementwicklung
+und RP-2 IT-Infrastruktur) und **SP-2** für Vorgänge
+mit einem Gegenüber und einem Verfahren — Recht und
+Verwaltung (darauf RP-20 Rechtsfall und RP-21 Steuer-
+und Abgabenfall). Ein Verfahren ist ein Projekt im Sinne
+dieses Rahmens: je Marke geht ein Produkt nach außen, es
+entsteht in einer Versionskette und wird vor dem Versand
+geprüft und freigegeben.
+
+**Arbeitsweise ist Basis, Fachliches kommt mit dem
+Prozess.** Wie der Agent arbeitet — Sitzungsregeln,
+Geheimnisse, Melden von Prüfergebnissen,
+Entscheidungsarten, Erkennen des Projekts, Prüfprogramm
+—, steht in der Basis und gilt in jedem Projekt;
+Prozesse **ergänzen** diese Arbeitsregeln (eigene
+Prüfungen, eigene Entscheidungsarten, eigene Hinweise
+beim Start) und **schränken sie nicht ein**
+(MasterPrompt §5). Die Struktur ist in jedem Projekt
+gleich, deshalb benutzen alle Projekte dieselben
+Werkzeuge: ein gemeinsames Prüfprogramm, in das jeder
+Prozess seine Prüfungen einhängt ([[Kettenpruefung]]
+§Lint-Anteil).
 
 ## 1. Grundhaltung
 
@@ -61,6 +83,24 @@ Grund: Entscheidungen durch eine Kette, deren Ende der
 Anwender nicht kennt, sind nicht wirklich autonom.
 Konkrete Anleitung siehe [[Fahrplan-Vorlage]].
 
+**Zuschnitt ändern ist Anwender-Sache.** Ein Projekt
+ändert seinen Zuschnitt auf drei Wegen — Abspalten (ein
+Teil wird eigenes Projekt, gestartet mit einem
+Übergabe-Punkt), Umbauen (Wechsel der Ausbaustufe oder
+Join eines zweiten Prozesses derselben Familie),
+Zusammenführen — und übernimmt Einrichtungen eines
+anderen Templates in drei Reichweiten (Baustein, Merge,
+Join). Jeder dieser Wege ist eine Entscheidung; der
+Agent spricht den Anlass an, legt eine Empfehlung mit
+dem Prüfsatz „braucht es eigene Phasen?“ vor und führt
+erst auf das Wort des Anwenders aus:
+[[Zuschnitt-aendern]] — lesen, sobald ein solcher
+Anlass auftaucht. **Stufen bilden eine Lage ab, die von
+außen kommt. Wo der Anwender die Strenge selbst wählt,
+gilt der Verzicht** (Ausbaustufen und „Pflicht ab“:
+[[Katalog-process-brief]]; Wirkung in der Kette:
+[[Kettenpruefung]] §Fehlende und vertretene Glieder).
+
 ## 2. Zieldefinition (Vorstufe)
 
 Vor den Phasen steht typischerweise eine
@@ -75,9 +115,16 @@ stehen.
 
 ## 3. Phasen (Standard-Belegung, adaptierbar)
 
-Fünfzehn generische Phasen als Angebot. Jeder Prozess kann
-Phasen umbenennen, weglassen oder ergänzen — dies ist
-die Basis-Standard-Belegung.
+Fünfzehn generische Phasen als Angebot — dies ist die
+Basis-Standard-Belegung. Jeder Prozess belegt die
+Phasen mit seinen Tätigkeitsnamen und Dokumenttypen;
+die Nummern P1–P15 sind die der Basis, das
+Prüfprogramm liest die Nummer. Was ein Prozess an den
+Phasen ändern darf, sagt seine `Vorgehen-<Prozess>.md`
+(SP-1: kein Weglassen, kein Umbenennen, kein Hinzufügen
+von Phasen; ein Referenzprozess auf SP-1 darf
+umbenennen). Glieder ohne Phasennummer vor dem
+Marken-Abschluss: §8 und [[Kettenpruefung]] §Kette.
 
 **Aktivitäts-Verb-Konvention:** Phasen und Vorgangs-
 Bezeichnungen werden als **Aktivität** ausgedrückt —
@@ -178,17 +225,49 @@ eigenständig:
      bei denen eigene frühe Phasen unverhältnismäßig
      wären.
 
+   - **Abspaltung:** Ein Teil des Projekts wird ein
+     eigenes Projekt mit eigenem Repo — der Fork (ein
+     Teil wird eigenständig, etwa ein Honorarstreit
+     aus einem Mietstreit), der abgegebene Betrieb
+     (ein Software-Projekt gibt den Betrieb einer
+     Umgebung an ein Infrastruktur-Projekt ab) und
+     jedes Abspalten nach [[Zuschnitt-aendern]]. Das
+     neue Projekt startet mit dem **Übergabe-Punkt**
+     (Tag `<repo>/<tag>` im abgebenden Repo) und dem
+     Startprompt nach [[Zuschnitt-aendern]]
+     §Startprompt-Vorlage; es führt die Kette seines
+     eigenen Prozesses von Anfang an, kein Glied ist
+     vertreten, und bei der Mutter entsteht kein
+     Kettenglied — ein abgegebener Betrieb liefert
+     nichts zu, er meldet nur (Nachricht, §3a).
+     Geeignet, wenn der Teil eigene Phasen braucht
+     oder einen anderen Prozess (Prüfsatz
+     [[Zuschnitt-aendern]]).
+
+   **Auftrag ohne Repo:** Eine Vertretung (Kanzlei,
+   Steuerberater, Dienstleister) startet als Auftrag
+   mit Repo „—“ in der Start-Tabelle; Lieferweg ist das
+   Eingangsdokument — die Lieferung kommt als Eingang
+   in `raw/` ([[Eingangsdokumente]]); das Prüfprogramm
+   nimmt eine Komponente ohne Repo von SPEC- und
+   DEPL-Deckung und vom Verweis-Abgleich aus.
+
    Was die Übergabe der Mutter in der Kette der
    Teilaktivität je Art ersetzt oder vertritt:
    [[Kettenpruefung]] §Komponenten-Kette nach
    Übernahme-Art — lesen, bevor die Art vorgeschlagen
    wird. Der Agent schlägt eine Art vor und benennt
-   die grundsätzliche Funktion beider Arten sowie ihre
+   die grundsätzliche Funktion der Arten sowie ihre
    Vor- und Nachteile in der konkreten Situation; der
    Anwender entscheidet. Die Wahl wird als DEC gebucht
-   („Teilaktivität X startet als selbstständig bzw.
-   Auftrag, weil Z“) und steht in der Start-Tabelle
-   (unten) und im Startprompt der Teilaktivität.
+   („Teilaktivität X startet als selbstständig,
+   Auftrag bzw. Abspaltung, weil Z“) und steht in der
+   Start-Tabelle (unten), im Startprompt der
+   Teilaktivität und in der Zeile `Übernahme-Art` des
+   Herkunfts-Vermerks des neuen Projekts
+   ([[Init-Choreografie]] §Phase A0). Eine Abspaltung
+   legt der Agent nie von sich aus an
+   ([[Zuschnitt-aendern]] §Rückfrage-Pflicht).
 
 2. **Start und Transport.** Wie der Peer-Agent der
    Teilaktivität gestartet wird und wie Nachrichten
@@ -198,9 +277,11 @@ eigenständig:
    - **(a) Peer-Werkzeug:** Empfohlen ist
      `schlingensiepen/peeragent` für den Start mit
      `schlingensiepen/simple-a2a` oder
-     `schlingensiepen/skill-a2a` für den Transport;
-     zugestellt wird der unveränderte Inhalt der
-     Nachrichten-Datei.
+     `schlingensiepen/skill-a2a` für den Transport
+     (Quellen: [[MCP-Setup]] §Empfohlener
+     Startkatalog; der Agent hat sie schon beim Init
+     angeboten); zugestellt wird der unveränderte
+     Inhalt der Nachrichten-Datei.
    - **(b) Datei-Variante** ohne Werkzeug: Der
      Empfänger liest die Nachricht beim Absender; den
      Anstoß gibt der Anwender oder der
@@ -227,7 +308,10 @@ Teilaktivität: Name, Repo-Name, lokaler Pfad, Remote,
 Repo-Name `<projekt>-<komponente>`, Ablage als
 Nachbarverzeichnis (`../<projekt>-<komponente>`),
 Remote nach bekanntem Hoster; der Anwender kann jeden
-Wert ändern. Der Repo-Name ist der Qualifizierer in
+Wert ändern. Bei einem Auftrag ohne Repo (Vertretung)
+stehen Repo-Name, Pfad und Remote auf „—“; bei einer
+Abspaltung tritt der Übergabe-Punkt an die Stelle des
+Übergabe-Stands ([[Zuschnitt-aendern]]). Der Repo-Name ist der Qualifizierer in
 Verweisen über Repo-Grenzen (§3a); Repo-Name, Pfad und
 Remote stehen als Lage in §Komponenten der
 Architektur-Fassade (mit SP-1 `Systemarchitektur.md`;
@@ -408,20 +492,32 @@ Stelle die Stand-Datei
 mit Version ([[Zielmarken]] §Meta „Nachtrag“) —,
 ⟨Artefakt⟩ der Dokumenttyp — als
 Dokumentname des Stands, als Typ-Kennung oder als Name
-seines Katalog-Eintrags. Beispiel: „Stand 01_ABC von
+seines Katalog-Eintrags. **Dokumenttyp und
+Tätigkeit sind die Fachnamen des aktiven Prozesses**
+aus seiner Phasentabelle (`Vorgehen-<Prozess>.md`):
+in einem Entwicklungsprojekt „Stand 01_ABC von
 Spezifikation, freigegeben für P9 Ausarbeiten zu
-Marke 1.0“. Die Formel wird wörtlich eingehalten:
+Marke 1.0“ und „von Implementierung, freigegeben für
+P10 Testen“; im Verfahren „Stand `klageerwiderung-1.0`
+von Schriftsatz, freigegeben für P10 Prüfen vor
+Versand“. Kein Prozess schreibt die Namen eines
+anderen. Die Formel wird wörtlich eingehalten:
 sie ist das Kennzeichen, an dem der Lint
 Freigabe-Einträge erkennt ([[Entscheidungen]] Meta
-„Freigabe-Einträge“). Das Wort „Zweck“ darf dabei
+„Freigabe-Einträge“); die **Phase erkennt er an der
+Nummer `Pn`**, den Dokumenttyp über die Phasentabelle
+des aktiven Prozesses. Das Wort „Zweck“ darf dabei
 entfallen („freigegeben für P5 Zerlegen in
 Bausteine“); der Tätigkeits-Name gehört zur
-kanonischen Form, sein Fehlen ist kein Fehler. Wie
-der Lint die Formel liest und was er bei einer
+kanonischen Form, sein Fehlen ist kein Fehler. Alte
+Einträge bleiben gültig, nichts wird umgeschrieben.
+Wie der Lint die Formel liest und was er bei einer
 Abweichung meldet: [[Kettenpruefung]] §Lint-Anteil.
 Beim Tag der Implementierung (Glied P9, Freigabe per
-Tag) steht an Stelle der Version der Tag-Name und an
-Stelle des Dokumenttyps „Implementierung“ (Wortlaut
+Tag) steht an Stelle der Version der Tag-Name und als
+⟨Artefakt⟩ der Produkt-Dokumenttyp von P9 — in SP-1
+„Implementierung“, zugleich Altform in jedem Prozess
+(Wortlaut
 unter „Freigabe per Tag“ unten); welche Nachweise der
 Eintrag dann nennt: [[Entscheidungen]] Meta
 „Freigabe-Einträge“.
@@ -453,11 +549,30 @@ Lint meldet eine Freigabe ohne Stand-Datei und ohne
 Marke als Fehler).
 
 **Freigabe per Tag (Glied P9):** Der Freigabe-Eintrag
-lautet „**Stand <Tag-Name> von Implementierung,
-freigegeben für P10 Testen zu Marke M**“ — ⟨Artefakt⟩
-ist „Implementierung“ (das Glied P9), der Zweck P10;
-daran erkennt der Lint den Tag, ein anderer Eintrag
-mit einem Wert ohne Versions-Muster ist keine
+lautet „**Stand <Tag-Name> von <Produkt-Dokumenttyp
+des Prozesses>, freigegeben für P10 <Tätigkeit> zu
+Marke M**“ — ⟨Artefakt⟩ ist der Dokumenttyp, den die
+Phasentabelle des aktiven Prozesses für P9 nennt
+(Name seines Katalog-Eintrags oder Typ-Kennung), die
+Tätigkeit die von P10 derselben Tabelle: in einem
+Entwicklungsprojekt „Stand <Tag-Name> von
+Implementierung, freigegeben für P10 Testen zu Marke
+M“, im Verfahren „Stand <Tag-Name> von Schriftsatz,
+freigegeben für P10 Prüfen vor Versand zu Marke M“.
+„Implementierung“ ist der SP-1-Fachname des Glieds
+und bleibt in jedem Prozess als Altform gültig (alte
+Einträge bleiben gültig). **Rückfall:** Nennt die
+Phasentabelle für P9 keinen Dokumenttyp mit
+Katalog-Eintrag — das Produkt ist kein Dokument:
+Code (SP-1, RP-1), Rezept (RP-2) —, lautet
+⟨Artefakt⟩ „Implementierung“; ein Produkt-Name aus
+der Phasentabelle („von Rezept“) ist keine
+Tag-Freigabe, der Lint meldet ihn als Hinweis mit der
+erwarteten Formel. Der Lint erkennt den Tag am
+Zweck P10, am Wert ohne Versions-Muster und am
+Dokumenttyp von P9 aus dem Katalog des aktiven
+Prozesses (oder „Implementierung“); ein anderer
+Eintrag mit einem Wert ohne Versions-Muster ist keine
 Tag-Freigabe; in einem Projekt ohne Prozess entfällt
 diese Freigabe, der Abschluss-Stand führt und
 bestätigt den Tag ([[Kettenpruefung]] §Kette, Projekt
@@ -926,8 +1041,22 @@ Vorgehen-Datei:
 - **präzisiert** ggf. die Anwendung der Überholt-Regel
   (§4 „Änderung nach der Freigabe“) und
   Delegations-Kriterien,
+- **deklariert** ggf. Glieder ohne Phasennummer
+  zwischen P13 und dem Marken-Abschluss (ein Ergebnis,
+  das nach der Einreichung entsteht — etwa „Termin
+  auswerten“ im Verfahren; [[Kettenpruefung]] §Kette),
+- **führt** die Tabelle seiner **Prüfungen und
+  Wächter-Anlässe** mit Code (`<Prozess>-…`), Befund
+  und Stufe nach der Schwere-Tabelle der Basis
+  ([[Kettenpruefung]] §Lint-Anteil) — der führende Ort
+  der Prozess-Prüfungen, die das gemeinsame
+  Prüfprogramm einliest —,
+- **ergänzt** ggf. eigene Entscheidungsarten
+  ([[Katalog-Entscheidungen]]) und eigene Hinweise
+  beim Start (Hinweis zur Vertrauenszone,
+  [[Init-Choreografie]]),
 - **dokumentiert** Abweichungen (weggelassene Phasen,
-  neue Phasen, umbenannte Phasen).
+  neue Phasen, umbenannte Phasen, Standard-Verzichte).
 
 Nach demselben Muster bringt jedes Prozess-Template
 sein **Marken-Dokument `Marken-<Prozess>.md`** mit
@@ -964,7 +1093,9 @@ präzisiert für seine Domäne.
   `wiki/Agent-Berichte.md` (Prüfberichte, Präfix
   `REP-`), `wiki/Entscheidungen.md` (Freigabe-DECs).
 - Wiki-Knoten: [[Fahrplan-Vorlage]],
-  [[Berichten-statt-Blockieren]].
+  [[Berichten-statt-Blockieren]], [[Zuschnitt-aendern]]
+  (Abspalten, Umbauen, Zusammenführen; Baustein, Merge,
+  Join; Übergabe-Punkt).
 - Prozess-eigene `Vorgehen-<Prozess>.md` —
   Phasen-Belegung, „Angebote an Phasen"-Tabelle,
   Abweichungen.

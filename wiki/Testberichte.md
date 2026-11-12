@@ -58,6 +58,22 @@ nach dem Testplan der Phase P10.
   normale Läufe belegt werden: Testergebnis-Regel in
   der `## Meta` von [[Systemtest-Setup]] — lesen,
   bevor ein Lauf außerhalb des Testplans belegt wird.
+- **RP-2-Präzisierung** (gilt bei aktivem RP-2): Der
+  Testbericht nimmt alles auf, was **vor der Freigabe
+  des Deploy-Stands** geprüft wird — gleich wo: an
+  Attrappen, in einer Wegwerf-Instanz oder am Ziel (etwa
+  Pre-Flight-Prüfungen vor dem Abschalten). Was erst
+  **nach dem Ausrollen am Ziel** prüfbar ist, gehört in
+  den zweiten Nachweis, das **Abnahmeprotokoll**
+  (`Abnahmeprotokolle.md` (RP-2)), und gilt hier weder als
+  `blockiert` noch als fehlend; der Prüfort eines
+  Testfalls ([[Katalog-Testfaelle]] RP-2-Präzisierung)
+  entscheidet das nicht, der Zeitpunkt entscheidet
+  (`Vorgehen-RP-2.md` §2 Anmerkung P10/P13). Ein
+  Pre-Flight am Ziel vor der Freigabe ist ein weiterer
+  Durchgang zum selben Tag — ein neuer Testbericht; der
+  Deploy-Stand nennt in `herkunft`, an welchem seine
+  Freigabe hängt.
 - **Eintragsformat:** `### TRES-NNN — <Durchgang>` mit
   Feldern Status (`angenommen` ab Anlage, ohne weitere
   Übergänge, [[Register-Lebenszyklus]]) / Datum /

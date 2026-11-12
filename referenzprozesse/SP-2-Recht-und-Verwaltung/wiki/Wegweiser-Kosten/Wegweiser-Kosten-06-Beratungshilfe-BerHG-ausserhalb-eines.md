@@ -1,0 +1,13 @@
+# Wegweiser Kosten — Gerichtskosten, Anwaltsvergütung, Auslagen, PKH, Beratungshilfe — 6. Beratungshilfe (BerHG) — außerhalb eines gerichtlichen Verfahrens
+
+[↑ Übersicht: Wegweiser Kosten — Gerichtskosten, Anwaltsvergütung, Auslagen, PKH, Beratungshilfe](../Wegweiser-Kosten.md) · [← 5. Prozesskostenhilfe (PKH)](Wegweiser-Kosten-05-Prozesskostenhilfe-PKH.md) · [7. Kostengrundentscheidung und Kostenfestsetzung je Ordnung →](Wegweiser-Kosten-07-Kostengrundentscheidung-und-Kostenfestsetzung.md)
+
+---
+
+- Voraussetzungen: Mittel fehlen (Maßstab: PKH ohne Eigenbeitrag), keine andere zumutbare Hilfe, nicht mutwillig ([§ 1 BerHG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20berhg.md#p1)); Beratung und, wenn erforderlich, Vertretung in allen rechtlichen Angelegenheiten ([§ 2 BerHG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20berhg.md#p2)); durch Anwälte, Steuerberater, Rentenberater u. a. oder das Amtsgericht selbst ([§ 3 BerHG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20berhg.md#p3)).
+- Verfahren: Antrag beim Amtsgericht des allgemeinen Gerichtsstands, mit Erklärung über die Verhältnisse und Versicherung, dass kein gerichtliches Verfahren anhängig ist ([§ 4 BerHG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20berhg.md#p4)); Berechtigungsschein; **nachträglicher Antrag spätestens 4 Wochen nach Beginn** der Tätigkeit ([§ 6 BerHG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20berhg.md#p6)); Rechtsbehelf nur Erinnerung ([§ 7 BerHG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20berhg.md#p7)).
+- Vergütung nach RVG aus der Landeskasse; Rechtsuchender schuldet nur die Beratungshilfegebühr ([§ 8 BerHG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20berhg.md#p8), [§ 44 RVG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20rvg.md#p44)); Aufhebung der Bewilligung und Folgen ([§ 6a BerHG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20berhg.md#p6a), [§ 8a BerHG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20berhg.md#p8a)); ersatzpflichtiger Gegner zahlt die volle Vergütung ([§ 9 BerHG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20berhg.md#p9)).
+
+---
+
+[↑ Übersicht: Wegweiser Kosten — Gerichtskosten, Anwaltsvergütung, Auslagen, PKH, Beratungshilfe](../Wegweiser-Kosten.md) · [← 5. Prozesskostenhilfe (PKH)](Wegweiser-Kosten-05-Prozesskostenhilfe-PKH.md) · [7. Kostengrundentscheidung und Kostenfestsetzung je Ordnung →](Wegweiser-Kosten-07-Kostengrundentscheidung-und-Kostenfestsetzung.md)

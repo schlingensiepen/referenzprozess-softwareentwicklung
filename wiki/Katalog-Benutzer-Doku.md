@@ -114,3 +114,34 @@ verankert.
   eines Freigabe-Eintrags); es ist kumulativ gegenüber
   dieser Vollfassung ([[Kettenpruefung]] §Regel,
   Änderungsdokument).
+- **RP-2-Präzisierung** (gilt bei aktivem RP-2): Die
+  Benutzer-Doku hat bei Infrastruktur die **Gestalt
+  eines Dienstblatts** — kein eigener Dokumenttyp, keine
+  eigene Form der Doku-Abfrage. **Dienstblatt:** die
+  kurze Beschreibung einer Umgebung für ihre **fremden
+  Nutzer** (Nachbarprojekte, Nutzer eines Dienstes) mit
+  den Kapiteln **Verbindung** (wie man den Dienst
+  erreicht: Adressen, Ports, Protokolle, Verweis auf den
+  Ablageort der Zugangsdaten — nie die Zugangsdaten
+  selbst), **Grenzen** (was die Umgebung bietet und was
+  nicht: Kapazität, Zeiten, Zusagen), **Ansprechpartner**
+  (Ansprechstelle für Störungen und Wünsche) und
+  **Änderungen** (wie Änderungen angekündigt werden,
+  was zuletzt geändert wurde). Quellen sind der
+  freigegebene Deploy-Stand und die darin kopierte
+  Zielumgebung; der Stand der Marke enthält **ein
+  Kapitel je Umgebung mit fremden Nutzern**; die Kopie
+  liegt in `docs/user/`. **Ohne fremde Nutzer Verzicht**
+  (Doku-Abfrage). Die Doku-Abfrage empfiehlt für das
+  Dienstblatt **„später“**, weil die Verbindungsdaten
+  erst nach dem Ausrollen feststehen; die Heuristik der
+  Basis bleibt für Form und Folge-Marken gültig. **Bei
+  fremden Nutzern ist das Dienstblatt Bedingung (e) des
+  Inbetriebnahme-Tors** ([[Katalog-Betriebs-Anleitung]]
+  RP-2-Präzisierung) und damit spätestens bei der
+  Freigabe der Betriebs-Anleitung dieser Umgebung fällig
+  — vor dem Marken-Abschluss; Ausweg Einschränkung mit
+  Frist, das Prüfprogramm meldet die abgelaufene Frist
+  (`RP2-L6`). Eine Testumgebung, die ein RP-2-Projekt
+  einem Software-Projekt bereitstellt, hat ein
+  Dienstblatt ([[Systemtest-Setup]] §Meta).

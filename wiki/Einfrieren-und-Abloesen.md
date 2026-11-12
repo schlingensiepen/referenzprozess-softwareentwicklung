@@ -806,15 +806,107 @@ nichts, ist ein Nachtrag am Marken-Eintrag möglich
   Stand an seiner abgelösten Freigabe-DEC, an der
   höheren Version derselben Ketten-ID oder am Lint.
 
+## Nachweis
+
+Grundsatz für Nachweise und eingefrorene Stände —
+dieser Abschnitt ist der führende Ort: **Ein Nachweis
+und ein eingefrorener Stand werden nie geändert, nur
+ergänzt.** Ergänzt wird auf zwei Wegen:
+
+- durch einen **angehängten Vermerk** mit Datum im
+  Dokument selbst (die `## Vermerke`-Sektion oder der
+  Vermerk-Block am Ende; §Freeze und Ausnahmen);
+- durch **Dateien in einem Unterordner `nachweis/`**
+  neben dem Nachweis — im Versandstand-Ordner, im
+  Ordner eines Stands. In `nachweis/` wird nur
+  hinzugefügt, nie überschrieben oder gelöscht; jede
+  Ergänzung trägt einen datierten Vermerk (im Dokument
+  oder als Zeile in einer Liste der Nachweise).
+
+Warum: Ein Nachweis beweist, was zu einem Zeitpunkt
+war — ein versandter Schriftsatz, ein Testbericht, ein
+ausgelieferter Stand. Jede nachträgliche Änderung
+nähme ihm diese Kraft, und das ist nicht rückgängig zu
+machen; Belege, die später kommen (Sendebericht,
+Empfangsbekenntnis, Zustellnachweis, Abnahmebestätigung
+zum ausgelieferten Stand), ändern nichts am
+Nachgewiesenen und kommen deshalb daneben.
+
+Anwendungen: der **Versandstand** in `outgoing/` (der
+versandte Inhalt eingefroren, `nachweis/` für
+Sendebericht, Empfangsbekenntnis, Zustellnachweis,
+Quittung eines Portals; `Outgoing.md` §2) und dasselbe
+in der Software — etwa die Abnahmebestätigung zum
+ausgelieferten Stand neben dem Deploy-Stand, oder
+das Abnahmeprotokoll eines Infrastruktur-Prozesses
+als eigener Nachweis. Ein verteilter Stand, der sich
+als fehlerhaft herausstellt, wird nicht geändert,
+sondern zurückgezogen oder ersetzt
+([[Lebenslauf-eines-Stands]] §Rückzug); der Vermerk
+„zurückgezogen am …“ am alten Stand ist ein
+angehängter Vermerk nach diesem Grundsatz.
+
+Das Prüfprogramm meldet geänderte Dateien in
+eingefrorenen Nachweisen (Versandstand-Ordner, Stände
+mit Freigabe und jeder Knoten eines Dokumenttyps der
+Klasse Nachweis mit „Freeze ab: Anlage“, dessen Feld
+`status` im Katalog-Eintrag nicht mehrere Werte nennt
+— Testbericht, mit Infrastruktur Abnahmeprotokoll und
+Betriebsjournal-Eintrag, in der Basis Nachricht,
+Eingangsdokument, Agent-, Review- und
+Konvergenz-Bericht, Rechercheartefakt, im Steuerfall
+der Bescheid; nicht Einreichung und Schriftsatz-Knoten,
+deren `status` mehrere Werte durchläuft — sie prüft das
+Prüfprogramm nicht) — Grundlage ist der
+Git-Zustand: geänderter Inhalt einer Datei, die nach
+ihrer Einfrierung committet war. **Ein Nachweis wächst
+nur:** kein Befund sind neue Dateien unter `nachweis/`,
+angehängte Vermerke und ein bisher fehlendes Kopf-Feld,
+das ohne Änderung oder Löschung einer bestehenden Zeile
+hinzukommt (so werden Pflichtfelder am Bestand
+nachgetragen, etwa `case` an einem Eingangsdokument;
+das neue Feld steht vor einem anderen Kopf-Feld oder
+am Ende des Kopfs, nicht innerhalb des Werts eines
+bestehenden Felds — einer Liste oder eines
+mehrzeiligen Texts —, und es kommt nur einmal hinzu).
+Ein Feld, das schon im Kopf steht, wird nie geändert —
+auch kein Platzhalter; deshalb bleibt ein Feld, dessen
+Wert bei der Anlage noch nicht feststeht, weg, bis es
+ihn gibt.
+**Zum Kopf-Nachtrag gehört ein angehängter, datierter
+Vermerk** in derselben Änderung, je nachgetragenem
+Feld, am Ende des Dokuments oder in seiner
+`## Vermerke`-Sektion. Die Zeile lautet (die Fettung
+ist nicht nötig, das Prüfprogramm liest den Wortlaut
+ab „Feld“):
+
+```
+- **Vermerk JJJJ-MM-TT:** Feld `<name>` nachgetragen am JJJJ-MM-TT
+```
+
+So bleibt am
+Nachweis selbst sichtbar, was später hinzukam; ein
+Kopf-Nachtrag ohne diesen Vermerk ist ein Befund wie
+jede geänderte oder gelöschte Zeile (Stufe:
+[[Kettenpruefung]] §Lint-Anteil, Schwere-Tabelle). Das
+Prüfprogramm verlangt den Vermerk vor und nach dem
+Commit: Es liest den Kopf gegen den ersten Commit der
+Datei, und jedes seither hinzugekommene Kopf-Feld
+braucht seinen Vermerk; ein nachgereichter Vermerk
+heilt den Befund. Ohne git gibt es keinen ersten
+Commit — das Prüfprogramm prüft dann nicht und nennt
+das in seiner Zusammenfassung.
+
 ## Abgrenzungen
 
 - **Version** ist der `_VV_TLA`-Dateistand
   ([[Versionsketten]]), **Stand** das abgeleitete
   Dokument; in der Freigabe-Formel (`Vorgehen.md` §4)
-  ist x die Version. „Fassung“ wird nicht verwendet.
+  ist x die Version. „Fassung“ wird nicht als Synonym für Stand verwendet.
 - **Versandstände** (Kopien in `outgoing/`) sind
-  unveränderlich, aber keine Stände im Sinn dieses
-  Knotens — sie tragen keine Freigabe.
+  Nachweise (§Nachweis: eingefroren, nur ergänzt),
+  aber keine Stände im Sinn dieses Knotens — sie
+  tragen keine Freigabe.
 - **Marken-Bezeichnung** („1.1“) ist weder Version
   noch Stand ([[Zielmarken]]).
 - **eingefroren** (Inhalt wird nicht mehr geändert) ist

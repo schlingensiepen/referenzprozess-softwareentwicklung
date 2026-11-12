@@ -29,7 +29,8 @@ laufende Arbeit ein fehlendes Werkzeug braucht.
 ## Wann der Agent fragt
 
 - **Beim Init:** empfohlene Tools als Katalog
-  vorstellen.
+  vorstellen ([[Init-Choreografie]] §Baustein
+  Werkzeug-Angebot, Turn 1).
 - **Ad-hoc bei laufender Arbeit:** wenn eine Aufgabe
   ein fehlendes Tool benötigt.
 
@@ -46,6 +47,23 @@ laufende Arbeit ein fehlendes Werkzeug braucht.
 | Name | Typ | Quelle |
 |---|---|---|
 | WebMCP | MCP | https://webmcp.dev/ |
+
+**Peer-Agenten (Zusammenarbeit mehrerer Agenten):**
+
+| Name | Wofür | Quelle |
+|---|---|---|
+| `schlingensiepen/peeragent` | Start eines Peer-Agenten in einem anderen Repo | https://github.com/schlingensiepen/peeragent |
+| `schlingensiepen/simple-a2a` | Transport von Nachrichten zwischen Agenten | https://github.com/schlingensiepen/simple-a2a |
+| `schlingensiepen/skill-a2a` | Transport von Nachrichten zwischen Agenten, als Erweiterung des Agenten | https://github.com/schlingensiepen/skill-a2a |
+
+Diese Werkzeuge sind eine **Empfehlung** — die Ausnahme zur
+werkzeug-agnostischen Werkzeug-Wahl (`Vorgehen.md`
+§7b). Der Agent bietet sie beim Init mit dem
+Startkatalog an; **gewählt** wird die Variante für
+Start und Transport weiter beim Start einer
+Teilaktivität, gleichwertig mit der Datei-Variante
+ohne Werkzeug (`Vorgehen.md` §3 — dort die Regel).
+Eingerichtetes steht in `Tools.md` §Peer-Agenten.
 
 ## Bezüge
 

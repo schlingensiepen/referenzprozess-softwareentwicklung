@@ -70,6 +70,21 @@ kein T2-Ereignis neben den Meilenstein-Vorgängen,
 sondern der Moment, in dem der Meilenstein
 „Marken-Abschluss“ eintritt — ein T2-Lauf je Abschluss.
 
+**Review ≠ Meilenstein.** Das Review — die
+Kettenprüfung ([[Kettenpruefung]]) — hängt an jedem
+einzelnen Stand und läuft **vor** seiner Freigabe. Der
+Meilenstein (T2) läuft **nach** einer Freigabe und ist
+eine Aufräumrunde über die Register (C4–C8); er prüft
+nicht die Kette. Beides ist unabhängig: jede Freigabe
+eines Pflicht-Stands der laufenden Marke löst ihr
+eigenes Review und ihren eigenen Meilenstein aus
+(welche Freigaben Anlass sind und welche nicht —
+Abschluss-Stand, Nachtrag —, steht in den Anlässen
+oben) — jeder räumt für sich auf. Mehrere solche
+Stände, die unabhängig voneinander geprüft und
+freigegeben werden, haben deshalb je ein Review und je
+einen Meilenstein, nie eine Zusammenfassung.
+
 **Nicht triggern:** einzelne Register-Statuswechsel
 (werden gebucht und im Erledigt-Block gemeldet),
 Alltags-Commits (Ingest, Wiki-Änderung,

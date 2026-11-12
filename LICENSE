@@ -9,11 +9,25 @@ Creative Commons Attribution 4.0 International License
 https://github.com/schlingensiepen/referenzprozess-softwareentwicklung
 
 EXCEPTION — source code in setup/ and tools/:
-The shell scripts in the setup/ and tools/ directories
-are licensed under the Apache License, Version 2.0
+The scripts in the setup/ and tools/ directories and
+the tools shipped with a process under
+referenzprozesse/*/tools/ are licensed under the Apache
+License, Version 2.0
 (http://www.apache.org/licenses/LICENSE-2.0). The
 scripts in setup/ carry the corresponding license
-header; tools/lint.sh is covered by this notice.
+header; tools/lint.sh and the tools under
+referenzprozesse/*/tools/ are covered by this notice.
+
+EXCEPTION — statutory texts:
+The statutory texts shipped with this repository — the
+law files of the "Normen-Paket" (one .xml, .pdf and .md
+file per statute) under
+referenzprozesse/SP-2-Recht-und-Verwaltung/research/ —
+are official works and in the public domain under
+section 5 of the German Copyright Act (§ 5 UrhG). They
+are not licensed under CC BY 4.0. The other files next
+to them (manifest, log, the description of the package
+in the wiki) remain under CC BY 4.0.
 
 Der Inhalt dieses Repositories steht unter der Lizenz
 Creative Commons Namensnennung 4.0 International
@@ -21,11 +35,25 @@ Creative Commons Namensnennung 4.0 International
 https://github.com/schlingensiepen/referenzprozess-softwareentwicklung
 
 AUSNAHME — Quelltext in setup/ und tools/:
-Die Shell-Skripte in den Ordnern setup/ und tools/
-stehen unter der Apache License, Version 2.0
+Die Skripte in den Ordnern setup/ und tools/ und die
+mit einem Prozess gelieferten Werkzeuge unter
+referenzprozesse/*/tools/ stehen unter der Apache
+License, Version 2.0
 (http://www.apache.org/licenses/LICENSE-2.0); die
 Skripte in setup/ tragen den Lizenz-Vermerk im
-Skript-Kopf, tools/lint.sh deckt dieser Hinweis.
+Skript-Kopf, tools/lint.sh und die Werkzeuge unter
+referenzprozesse/*/tools/ deckt dieser Hinweis.
+
+AUSNAHME — Normtexte:
+Die mitgelieferten Normtexte — die Gesetzes-Dateien des
+Normen-Pakets (je Gesetz eine .xml-, .pdf- und
+.md-Datei) unter
+referenzprozesse/SP-2-Recht-und-Verwaltung/research/ —
+sind amtliche Werke und gemeinfrei nach § 5 UrhG. Sie
+stehen nicht unter der CC BY 4.0, die für den übrigen
+Inhalt dieses Repositories gilt; die übrigen Dateien
+daneben (Manifest, Protokoll, die Beschreibung des
+Pakets im Wiki) bleiben unter CC BY 4.0.
 
 The full text of the CC BY 4.0 license follows.
 

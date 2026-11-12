@@ -25,7 +25,14 @@ lesen. Beim Merge:
 1. `active: true` bestätigen (Default).
 2. Erste Umgebung erst anlegen, wenn sie feststeht
    (spätestens vor dem ersten Deploy-Stand); nichts
-   vorab erfinden.
+   vorab erfinden. Soweit bekannt, die Kann-Felder
+   Zugriffsstufe des Agenten und Ausführende (Mensch
+   oder Agent) mit eintragen (`## Meta` der Fassade);
+   der Init fragt sie nicht ab. Ist RP-2 aktiv, sind
+   diese und die weiteren Felder der RP-2-Präzisierung
+   Pflicht; der Einstieg „Bestand erfassen“ füllt sie,
+   die Init-Frage von RP-2 erhebt Zugriffsstufe und
+   Ausführende (RP-2 `index.md` §5).
 3. `### Verankerungen` abarbeiten.
 
 ### Verankerungen

@@ -83,6 +83,15 @@ if [ -e "$DST/wiki" ]; then
     fi
 fi
 
+# Quelle einer Zeile der Kopier-Liste relativ zum Starter-Root: in der
+# Regel derselbe Pfad wie das Ziel; die Zusatz-Zeilen dieses Starters
+# kopieren aus referenzprozesse/ in einen Ordner des Projekt-Roots.
+quelle() {
+    case $1 in
+        *) printf '%s' "$1" ;;
+    esac
+}
+
 # vom Projekt bearbeitet statt vorgefunden? (nur unter einem wiki/, das
 # aus diesem Starter stammt, ist das sicher entscheidbar)
 bearbeitet() {
@@ -113,7 +122,7 @@ variant_of() {
 {
     for f in MasterPrompt.md Wiki.md Vorgehen.md Reviewmuster.md \
              Outgoing.md Styleguide.md Styleguide-md.md \
-             Styleguide-wiki.md devstate_active.md; do
+             Styleguide-wiki.md "Offene Fragen.md" devstate_active.md; do
         printf '%s\n' "$f"
     done
     # referenzprozesse/, tools/ und upgrade/ werden NICHT kopiert —
@@ -122,6 +131,8 @@ variant_of() {
     if [ "$WIKI_FREMD" -eq 0 ]; then
         ( cd "$SRC" && find wiki -type f | sort )
     fi
+    # Zusatz-Zeilen der Kopier-Liste dieses Starters (Quelle unter
+    # referenzprozesse/, Ziel im Projekt-Root — siehe quelle() oben):
 } | {
     COPIED=0
     SAME=0
@@ -140,7 +151,7 @@ variant_of() {
     while IFS= read -r rel; do
         if [ -e "$DST/$rel" ]; then
             var=$(variant_of "$rel")
-            if cmp -s -- "$SRC/$rel" "$DST/$rel" \
+            if cmp -s -- "$SRC/$(quelle "$rel")" "$DST/$rel" \
                || { [ -n "$var" ] && cmp -s -- "$SRC/$var" "$DST/$rel"; }; then
                 SAME=$((SAME + 1))
             elif bearbeitet "$rel"; then
@@ -156,7 +167,7 @@ variant_of() {
             case $rel in
                 */*) mkdir -p "$DST/${rel%/*}" ;;
             esac
-            cp -- "$SRC/$rel" "$DST/$rel"
+            cp -- "$SRC/$(quelle "$rel")" "$DST/$rel"
             COPIED=$((COPIED + 1))
         fi
     done

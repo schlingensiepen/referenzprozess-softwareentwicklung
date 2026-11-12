@@ -39,11 +39,20 @@ liegen als Dateien beim Absender.
   seiner Folge-Marke die Marke, für die die Komponente
   weiter liefert — Vorgehen.md §3a, [[Zielmarken]]
   §Meta „Zuliefernde Komponenten“; der Lint prüft das
-  Format)
+  Format), `vertraulich` (Grad oder Hinweis — Pflicht,
+  wenn die Nachricht über eine
+  **Vertraulichkeitsgrenze** geht: an ein Projekt in
+  einer anderen Vertrauenszone, an eine Vertretung ohne
+  Repo (Auftrag ohne Repo, Vorgehen.md §3); welche
+  Grade es gibt und was der Agent vor dem Versand
+  gegen den Empfänger prüft, legt der Prozess fest —
+  die Basis kennt nur das Feld; sonst wie jede
+  Nachricht)
 - **Beispielname:** `MSG-007 — Lieferung-Tag-v1-2.md`
 - **Ablage:** `output/nachrichten/` im Repo des
-  Absenders, ohne `_VV_TLA` (nicht versioniert,
-  MasterPrompt §1.5); keine Kopie beim Empfänger.
+  Absenders, ohne `_VV_TLA` (kein Versionsteil im
+  Dateinamen, MasterPrompt §1.5); keine Kopie beim
+  Empfänger.
 - **Struktur-Konventionen:** Frontmatter mit den
   Feldern, darunter der Text der Nachricht. Anlagen
   stehen als Verweis in `bezug`, nicht als Kopie.

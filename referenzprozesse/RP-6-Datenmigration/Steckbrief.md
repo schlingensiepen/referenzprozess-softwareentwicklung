@@ -38,3 +38,19 @@ projekt).
 
 **Volle Definition:** noch nicht angelegt — folgt in
 einer späteren Version.
+
+## Vermerke
+
+- **2026-11-12 — Abgrenzung zu RP-2 IT-Infrastruktur:**
+  Die Datenübertragung beim Umzug einer Anlage deckt
+  RP-2 mit der Marken-Art Abbauen; eine große
+  Datenmenge ist ein eigenes RP-6-Projekt, RP-2 baut
+  danach ab. Bei der Ausarbeitung von RP-6 werden die
+  Verifikations-Testfälle der Migration und das
+  Abschalt-Tor des Altsystems gemeinsam mit RP-2
+  definiert (RP-2:
+  `../RP-2-IT-Infrastruktur/wiki/Vorgehen-RP-2.md`
+  Abschnitt „1. Erbschaft und Zuschnitt“ und Abschnitt
+  „5. Kette, Tore und Anwender-OK“;
+  `../RP-2-IT-Infrastruktur/wiki/Marken-RP-2.md`
+  Abschnitt „4. Abbauen“).

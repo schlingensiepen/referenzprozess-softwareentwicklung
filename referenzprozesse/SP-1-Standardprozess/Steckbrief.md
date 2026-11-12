@@ -7,7 +7,9 @@ extends: []
 
 # SP-1 — Standardprozess Entwicklungsprojekt
 
-**Bearbeitungsstand:** 2026-10-25
+**Bearbeitungsstand:** 2026-11-11 („Pflicht ab“ für
+Contract-Index und Übergabe; `devstate_active.md`
+kommt als Rumpf aus der Basis, SP-1 füllt)
 
 **Was ich bin:** Der allgemeine Standardprozess für
 Entwicklungsprojekte im Template-Umfeld — allgemein für alle
@@ -37,7 +39,7 @@ ob eine Fassade aktiv ist, führt [[Fassaden]].
 | Testberichte | mandatory | [[Katalog-Testberichte]] | TRES-Register | — |
 | Deployments | mandatory | [[Katalog-Deployments]] | DEPL-Register | — |
 | Zielumgebungen | mandatory | [[Katalog-Zielumgebungen]] | Zielumgebungen (Entitäten) | — |
-| Contract-Index | optional | [[Katalog-Contract-Index]] | CON-Register | vorausgewählt, sobald ein Schnitt in Komponenten stattfindet; aktiv nur beim Koordinator |
+| Contract-Index | optional | [[Katalog-Contract-Index]] | CON-Register | **Pflicht ab:** Auslöser „Schnitt in Komponenten“ (§„Pflicht ab“ unten) — vorausgewählt, sobald ein Schnitt in Komponenten stattfindet; aktiv nur beim Koordinator |
 | Geschäftsbeziehungen | optional | [[Katalog-Geschaeftsbeziehungen]] | Kunden, Wettbewerber, Partner | Vorauswahl deaktiviert — bei Produktentwicklung Empfehlung aktivieren |
 
 **Basis-Fassaden, die SP-1 voraussetzt:** Eine
@@ -67,6 +69,34 @@ welche Phase sie tragen, steht in `index.md` §3.2
 (lesen beim Merge und vor der Bildung eines Stands);
 sie werden beim Merge wie die Register-Einträge als
 Dateien kopiert und im Katalog verankert.
+
+## Pflicht ab
+
+SP-1 deklariert **keine Ausbaustufen**: in der
+Entwicklung wählt der Anwender die Strenge selbst —
+per Verzicht, per schmalem Zuschnitt, in der
+Doku-Abfrage und in der Init-Auswahl; wo er sie selbst
+wählt, gilt der Verzicht ([[Katalog-process-brief]]
+„Ausbaustufen und ‚Pflicht ab‘“). Der Herkunfts-Vermerk
+in [[Aktivierter-Prozess]] trägt deshalb keine Zeile
+`Ausbaustufe`. Für alle mitgebrachten Fassaden und
+Dokumenttypen gilt die Pflicht ab Start; die
+Ausnahmen schaltet ein **Auslöser** ein:
+
+| Fassade / Dokumenttyp | Pflicht ab |
+|---|---|
+| Contract-Index ([[Katalog-Contract-Index]]) | Auslöser „Schnitt in Komponenten“ — aktiv nur beim Koordinator |
+| Übergabe je Komponente ([[Katalog-Uebergabe]], Phase P6) | Auslöser „Schnitt in Komponenten“ — je Komponente, sobald der Zuschnitt im Architekturdokument freigegeben ist |
+
+Das Prüfprogramm liest einen Auslöser nicht; der Agent
+meldet ihn als Hinweis, wenn der Zuschnitt in
+Komponenten freigegeben wird (Start-Tabelle,
+`Vorgehen.md` §3). Vor dem Auslöser entfallen die
+Glieder abgeleitet ([[Kettenpruefung]] §Fehlende und
+vertretene Glieder). Deploy-Stand und
+Betriebs-Anleitung je Zielumgebung sind kein Fall von
+„Pflicht ab“: ohne Zielumgebung entfallen sie
+abgeleitet (ebenda).
 
 ## Mitgebrachte Ordner
 
@@ -143,7 +173,7 @@ Merge ins Anwender-`wiki/` kopiert):
 | [[Register-Lebenszyklus]] | `internal-concept` | Status-Achse der Register-Einträge, Zustände je Register-Art, samt Feld-Regeln |
 | [[Meilenstein-und-T2]] | `internal-rule` | Wächter-Trigger T2 (Prozess-Meilenstein-Wechsel, volle Runde C4–C8), Meilenstein-Anlässe, Meilenstein-Regel „agent-lokal" mit Koordinator-Meilenstein, Meilenstein-Vorgang |
 | [[Register-Grundmuster]] | `internal-pattern` | Register-Status-Kanonizität als Ausnahme von Wiki.md §1.1a: Vier-Schichten-Absicherung, Feldliste kanonisch vs. gespiegelt |
-| [[devstate-Skelett]] | `internal-pattern` | `devstate_active.md` im Repo-Root: Anlage-Zeitpunkt, Minimal-Skelett, Koordinator-Regel |
+| [[devstate-Skelett]] | `internal-pattern` | Füllung von `devstate_active.md` unter SP-1 (die Datei selbst kommt als Rumpf mit der Basis, [[Standarddateien-Katalog]] §2.15): Aktueller Stand aus Phase und Pflicht-Ständen, Gesamtstand des Koordinators als abgeleitete Sicht |
 
 **Einführungs-Anweisungen (je Knoten, beim Merge):**
 
@@ -158,9 +188,8 @@ Merge ins Anwender-`wiki/` kopiert):
 2. **Neuverdrahtung:** nach dem Merge müssen folgende
    Zeiger auf die Knoten zeigen — prüfen, dass sie
    auflösen, und **fehlende Zeiger nachtragen**
-   (z.B. die devstate-Referenz in der
-   Zielmarken-`## Meta`, die Grundmuster-Nennungen
-   der Register-Fassaden-Metas); wird dabei eine bestehende projekt-eigene
+   (z.B. die Grundmuster-Nennungen der
+   Register-Fassaden-Metas); wird dabei eine bestehende projekt-eigene
    Regel ersetzt, trägt sie den Vermerk „abgelöst
    durch `[[<neu>]]`" (kein stiller Ersatz):
    - [[Register-Lebenszyklus]] ← SP-1-`index.md`
@@ -177,8 +206,12 @@ Merge ins Anwender-`wiki/` kopiert):
      Fassaden-Metas der Ketten-Register nennen
      dieselbe Regel in Kurzform.
    - [[devstate-Skelett]] ← SP-1-`index.md`
-     §4.5-Kurzform; `## Meta` der Fassade
-     [[Zielmarken]] (devstate-Referenz-Zeile).
+     §4.5-Kurzform; der Rumpf `devstate_active.md`
+     selbst und die devstate-Referenz-Zeile der
+     Fassade [[Zielmarken]] kommen aus der Basis
+     ([[Standarddateien-Katalog]] §2.15) und werden
+     nicht neu verdrahtet — SP-1 ergänzt nur die
+     Füllung.
 3. **Kollisions-Regel:** existiert im Anwender-`wiki/`
    bereits ein gleichnamiger oder funktions-gleicher
    `internal-*`-Knoten, wird er nicht überschrieben —
@@ -255,3 +288,20 @@ Mechanik-Knoten:
 [[Register-Lebenszyklus]] · [[Meilenstein-und-T2]] ·
 [[Register-Grundmuster]] · [[devstate-Skelett]]
 (Deklaration: §„Mitgebrachte Mechanik" oben)
+
+## Mitgebrachte Begriffe
+
+_(Führender Deklarations-Ort — beim Prozess-Merge
+übernimmt der Agent die Einträge des Glossar-Anhangs
+in `wiki/Glossar.md` des Projekts, Wiki.md §11.3
+Schritt 2, „Glossar-Anhang“.)_
+
+SP-1 bringt den Glossar-Anhang `Glossar-Anhang-SP-1.md`
+(`wiki/` des Prozess-Ordners) mit — die Begriffe, die
+die Basis selbst nicht benutzt: Ausführungsrolle,
+Dienstblatt, Testfall, Überführung, Zugriffsstufe. Die
+Referenzprozesse auf SP-1 erben sie. Die Einträge
+gelten als freigegeben mit dem Template-Stand; der
+Anhang selbst wird nicht ins Projekt kopiert. Ein
+vorhandener Eintrag gleichen Namens wird nicht
+überschrieben, sondern dem Anwender vorgelegt.

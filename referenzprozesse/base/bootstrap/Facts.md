@@ -23,7 +23,12 @@ Wiki.md §3a („mandatory vs. optional beim Init“,
 
 1. §1 Projekteinstieg aus den Init-Angaben des Anwenders
    füllen — kurz und mit Wikilinks auf Hauptbeteiligte
-   und zentrale Themen.
+   und zentrale Themen. Einen Wikilink setzt der Agent
+   erst, wenn der Knoten besteht: Beteiligte und Themen,
+   deren Knoten erst mit den Fassaden-Bootstraps in
+   Turn 3 entstehen, nennt er bis dahin im Klartext und
+   verlinkt sie am Ende von Turn 3
+   ([[Init-Choreografie]] §Phase D, Punkt 6).
 2. Bearbeitungsstand-Zeile setzen.
 3. `### Verankerungen` als Checkliste abarbeiten.
 

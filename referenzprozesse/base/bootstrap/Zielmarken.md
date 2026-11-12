@@ -24,7 +24,11 @@ bleibt. Beim Init:
 
 1. **Erste Marke anlegen** (dieser Schritt ist der
    führende Ort der Regel): der Init legt genau eine
-   Marke mit `- **Zustand:** in-progress` an. Ihre
+   Marke mit `- **Zustand:** in-progress` an — auch
+   dann, wenn der Prozess Ereignis-Marken kennt und ein
+   auslösendes Ereignis schon vorliegt: Ereignis und
+   Antwort sind eine Marke, die Antwort ist ihr Produkt
+   ([[Marken]]). Ihre
    **Bezeichnung nennt der Anwender** — er hat sie in
    Turn 2 genannt ([[Init-Choreografie]] §Init-Fragen;
    der Agent hatte dort die typische Marke des

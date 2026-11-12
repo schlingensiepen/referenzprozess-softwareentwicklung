@@ -24,8 +24,9 @@ vor der Aktivierungs-Wahl lesen. Beim Init:
 1. Aktivierungs-Wahl des Anwenders als
    `active: true|false` im Frontmatter setzen
    (Ja/Nein-Frage mit Empfehlung „aktivieren").
-2. Bei Aktivierung: Setup-Dialog am Ende von
-   Sessionstart Phase D führen (Wiki.md §3a.2): aktiv
+2. Bei Aktivierung: Setup-Dialog in Sessionstart
+   Phase D nach der Fassaden-Umsetzung und vor dem
+   Konzept-Angebot führen (Wiki.md §3a.2): aktiv
    fragen → Entwurf vorschlagen → User bestätigt/
    korrigiert/ergänzt. Fallback: minimalistisch, nur
    Projektname + Zweck aus [[Facts]] §Projekteinstieg.

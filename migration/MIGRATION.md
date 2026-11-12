@@ -43,6 +43,12 @@ der Einbindung (Phase 0) liest du aus `_template/`.
   oder bist du nicht sicher, fragst du im
   Fragen-Block (Phase 1 Nr. 1); besteht der Anwender
   auf dem Software-Prozess, migrierst du damit.
+  Zwei Fälle erkennst du selbst und nennst den
+  passenden Starter aus [[Schwester-Templates]]: den
+  Betrieb einer selbst betriebenen Anlage
+  (`referenzprozess-infrastruktur`) und ein Verfahren
+  mit einem Gegenüber (`referenzprozess-rechtsfall`
+  bzw. `referenzprozess-abgabenfall`).
 
 ## Grundsätze
 
@@ -184,7 +190,7 @@ Starter-`wiki/` (Frisch-Vorlage) **plus Eintausch der
 Migrations-Varianten aus `migration/`**, ausgeführt
 durch `setup/init-migration.sh` oder von Hand nach der
 Kopier-Liste (Phase 0). Alle Fassaden des
-Software-Zuschnitts liegen bereit,
+Prozesses (RP-1 auf SP-1) liegen bereit,
 [[Aktivierter-Prozess]] bucht die Vorfestlegungen, der
 [[Katalog]] trägt die mitgebrachten Einträge. **Du
 baust kein wiki — du füllst eines.** Offen sind nur:
@@ -192,10 +198,10 @@ die Bootstraps von `Mission Statement` und `Facts`
 (füllst du in Phase 3 aus deinem Wissen), die Fragen
 aus Phase 1 und die Restfragen in Phase 5. Bootstraps
 **deaktivierter** Fassaden bleiben liegen — bis zu
-einer Reaktivierung per Zuruf
-([[Geschaeftsbeziehungen]] empfiehlt der Prozess bei
+einer Reaktivierung per Zuruf.
+[[Geschaeftsbeziehungen]] empfiehlt der Prozess bei
 Produktentwicklung; [[Fehlermeldungen]] setzt
-[[Anforderungen]] voraus).
+[[Anforderungen]] voraus.
 
 Die eingetauschten **Varianten** — jede ist das
 Frisch-Pendant plus genau einem Unterschied:
@@ -208,8 +214,8 @@ Frisch-Pendant plus genau einem Unterschied:
   in Phase 1 anlegst, statt der Marke des Inits.
 - `wiki/Aktivierter-Prozess.md` — die Zeile
   `Template-Stand` schreibt die Migration mit dem
-  Übernahme-Tag; die Rolle entscheidet der Anwender
-  im Fragen-Block.
+  Übernahme-Tag; die offenen Zeilen entscheidet der
+  Anwender im Fragen-Block.
 - `wiki/Commit-Sprache.md` — Vorschlag, die bisherige
   Sprach-Regelung für die Dauer der Migration
   beizubehalten; reguläre Frage in Phase 5.
@@ -322,14 +328,16 @@ Alt-Zustands → (b) Einbindung (mit Modus-Frage) →
    Kopie, vor dem Aufnahme-Commit, schreibst du in den
    Abschnitt `## Herkunft` von [[Aktivierter-Prozess]]
    (Format: [[Init-Choreografie]] §Phase A0):
-   `Template-Stand: 2.1 seit JJJJ-MM-TT` mit dem
+   `Template-Stand: 2.2 seit JJJJ-MM-TT` mit dem
    **Übernahme-Tag** — dem Tag des Aufnahme-Commits;
    er ist der Stichtag, den der Lint liest, und das
    Datum in der Bezeichnung der Übernahme-Marke
    (Phase 1) —, `Quelle` (Repo-URL und Commit/Tag;
    Modus A der abgelesene Stand, Modus B der
-   Submodul-Pin aus `git submodule status _template`)
-   und `Anbindungs-Modus: A` bzw. `B`. Keine Zeile
+   Submodul-Pin aus `git submodule status _template`),
+   `Anbindungs-Modus: A` bzw. `B` und `Repo` (der
+   Repo-Name des Projekts — Name des Remotes, ohne
+   Remote der des Projektordners). Keine Zeile
    `Vorher` — die schreibt nur ein Upgrade. Liegt
    `wiki/Aktivierter-Prozess.md` wegen einer Kollision
    noch nicht vor, holst du den Vermerk nach der
@@ -357,8 +365,9 @@ Alt-Zustands → (b) Einbindung (mit Modus-Frage) →
    | `Styleguide.md` | `Styleguide.md` | Styleguide |
    | `Styleguide-md.md` | `Styleguide-md.md` | Styleguide |
    | `Styleguide-wiki.md` | `Styleguide-wiki.md` | Styleguide |
+   | `Offene Fragen.md` | `Offene Fragen.md` | Rumpf, unverändert |
    | `.gitignore` | `.gitignore` | nur wenn im Projekt keine existiert |
-   | `wiki/` (komplett, inkl. `templates/`) | `wiki/` | Frisch-Vorlage, inkl. deaktivierter Fassaden (Reaktivierung per Zuruf) |
+   | `wiki/` (komplett, mit `templates/` und allen Unterordnern) | `wiki/` | Frisch-Vorlage, inkl. deaktivierter Fassaden (Reaktivierung per Zuruf) |
    | `devstate_active.md` | `devstate_active.md` | wird gleich ersetzt (s.u.) |
 
    **Danach eintauschen** (Variante ersetzt das eben
@@ -373,8 +382,10 @@ Alt-Zustands → (b) Einbindung (mit Modus-Frage) →
    | `migration/wiki/WorkspaceManager-Kontrakt.md` | `wiki/WorkspaceManager-Kontrakt.md` |
    | `migration/wiki/InterneMechanik.md` | `wiki/InterneMechanik.md` |
 
-   **Nie kopiert werden:** `referenzprozesse/`,
-   `tools/` (du rufst `_template/tools/lint.sh` auf),
+   **Nie kopiert werden:** `referenzprozesse/`
+   (ausgenommen die Zeilen der Liste oben, die von dort
+   kopieren), `tools/` des Starters (du rufst
+   `_template/tools/lint.sh` auf),
    `upgrade/`, `README.md`, `INIT.md`, `migration/`
    samt dieser MIGRATION.md, `docs/`, `setup/`,
    `LICENSE`, `.git/` — alles in `_template/` lesbar;
@@ -395,15 +406,24 @@ Fragen einzeln, sonst **alle** in einem Block
 nichts einzeln nach, was hier steht — und nichts, was
 vorfestgelegt ist ([[Aktivierter-Prozess]]).
 
-1. **Prozess-Nachfrage** — nur ohne Software-Bezug
-   oder bei Zweifel (Warnung oben): „Bist du sicher,
-   dass das der richtige Prozess ist? Ich erkenne
-   nicht, dass er zum Vorgefundenen passt — willst du
-   mir einen anderen nennen?“ Keine Liste. Nennt der
-   Anwender einen anderen Prozess, geht die
-   Transformation in die Struktur dieses Prozesses;
-   der Starter bleibt `_template/`:
-   - Das kopierte Software-`wiki/` ersetzt du durch
+1. **Prozess-Nachfrage** — nur, wenn das Vorgefundene
+   nicht zum Prozess passt oder bei Zweifel (Warnung
+   oben): „Bist du sicher, dass das der richtige
+   Prozess ist? Ich erkenne nicht, dass er zum
+   Vorgefundenen passt — willst du mir einen anderen
+   nennen?“ Nennt die Landkarte
+   [[Schwester-Templates]] für den genannten Prozess
+   einen eigenen Starter, empfiehlst du die Migration
+   mit dessen Satz („Migriere das Projekt in diesem
+   Verzeichnis nach der Anleitung unter <Repository
+   des Starters>.“); Einbindung und Kopie dieses
+   Starters nimmst du dafür nach Zustimmung zurück
+   (ein eigener Commit, der Sicherungs-Commit bleibt).
+   Will der Anwender bei diesem Starter bleiben oder
+   gibt es für den Prozess keinen Starter, geht die
+   Transformation in die Struktur des genannten
+   Prozesses; der Starter bleibt `_template/`:
+   - Das kopierte `wiki/` ersetzt du durch
      das Basis-Wiki und die Skelette des gewählten
      Prozesses aus `_template/referenzprozesse/` nach
      [[Init-Choreografie]] §Phase A0 und §Baustein
@@ -414,7 +434,7 @@ vorfestgelegt ist ([[Aktivierter-Prozess]]).
      `InterneMechanik.md`; in den Herkunfts-Vermerk
      übernimmst du `Template-Stand`, `Quelle` und
      `Anbindungs-Modus` aus der Variante, `Prozess` ist
-     der gewählte, `Rolle` kommt aus Nr. 5; in
+     der gewählte, die übrigen Zeilen kommen aus Nr. 5; in
      `Commit-Sprache` trägst du den Vorschlag aus Nr. 4
      ein.
    - Von den übrigen Varianten gilt der jeweilige
@@ -502,9 +522,9 @@ ausgelassenen Starter-Dateien und Varianten einspielen
 Links in vorgefundenen Dateien ziehst du nicht nach —
 bricht einer, notierst du die Stelle für den Bericht
 zur Gesamt-Annahme); bei einem anderen Prozess das
-`wiki/` umbauen (Nr. 1); Rolle in
-[[Aktivierter-Prozess]] (`Übernahme-Art` nur bei
-Komponent), [[Commit-Sprache]] nachführen; die
+`wiki/` umbauen (Nr. 1); die Antworten aus Nr. 5 in
+[[Aktivierter-Prozess]], [[Commit-Sprache]]
+nachführen; die
 **Übernahme-Marke** in [[Zielmarken]] anlegen
 (Marken-Dreiklang, Zustand `in-progress`; keine Marke
 trägt `current`, bis die erste abgeschlossen ist) —
@@ -522,9 +542,9 @@ Grundgesetz und die Grundsätze; außerdem:
 
 - **Übernommenes ist Bestand, Neues trägt die
   Marke.** Elemente aus dem Vorgefundenen
-  (Anforderungen, Fehler, Entscheidungen,
-  Architektur, Deployments, Testfälle, Bedarfe,
-  Szenarien, Contracts) tragen **kein** `zielmarke:`
+  (jeder Register-Eintrag und Detail-Knoten, den du
+  aus dem Bestand überträgst) tragen **kein**
+  `zielmarke:`
   und **kein** Anlage-Datum — sie gelten ab ihrer
   Annahme für jede Marke; der Lint meldet das
   fehlende Feld als Hinweis, nachgetragen wird
@@ -537,7 +557,7 @@ Grundgesetz und die Grundsätze; außerdem:
 - **Keine erfundenen Daten:** niemals rekonstruierte
   Datumsangaben, Zahlen oder Fakten. Einschätzungen
   sind erlaubt (etwa die Status-Wahl: nach dem, was
-  Code oder Vorgefundenes belegt; im Zweifel `offen`
+  das Vorgefundene belegt; im Zweifel `offen`
   bzw. `angenommen` und der Fall nach
   `Migrations-Grundlagen` §Ungeklärt).
 - **Nichts löschen:** Die alten Wissensbasis-Dateien
@@ -708,8 +728,10 @@ Anlage-Datum.
    [[Two-Repo-Submodul-Muster]]) — Entscheid jetzt,
    Umsetzung als erstes Vorhaben nach der
    Übernahme-Marke.
-5. **Instruktionsdatei** erzeugen (deine native
-   Datei, z.B. `CLAUDE.md`) nach MasterPrompt §8.3 /
+5. **Instruktionsdatei** erzeugen (die Datei, die
+   dein eigener Harness beim Start automatisch lädt;
+   [[Standarddateien-Katalog]] §2.3) nach
+   MasterPrompt §8.3 /
    [[Instruktionsdatei-Pflege]], einschließlich des
    Grundgesetzes oben; eine vorgefundene
    Instruktionsdatei ist ein Kollisionsfall aus
@@ -727,7 +749,7 @@ Anlage-Datum.
    Abschluss-Stand und Wechsel-Prozedur
    ([[Zielmarken]] §Meta).
 8. **Abschluss-Buchung:** Chronologie-Eintrag
-   „Migration abgeschlossen (Template-Stand 2.1 seit
+   „Migration abgeschlossen (Template-Stand 2.2 seit
    <Übernahme-Tag>, Quelle <Commit/Tag>, Modus A/B)“
    — Werte wie im Herkunfts-Vermerk. Eine
    vorgefundene README bleibt; schlage dem Anwender

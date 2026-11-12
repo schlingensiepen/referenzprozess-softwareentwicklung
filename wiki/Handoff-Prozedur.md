@@ -37,7 +37,9 @@ diesen Zustand aktiv her. Handoff-Momente:
 Standard-Konsolidierungs-Aktionen an diesen Momenten:
 
 - Offene mündliche Klärungen aus dieser Session in
-  Dateien überführen (MasterPrompt §9.1).
+  Dateien überführen (MasterPrompt §9.1); offene
+  Fragen an den Anwender in `Offene Fragen.md`
+  (MasterPrompt §5.2 — in jedem Modus).
 - `wiki/Chronologie.md` Nachtrag für die
   abgeschlossene Session-Phase.
 - `TODO.md` Erledigt-Punkte markieren, Fahrplan-
@@ -49,7 +51,12 @@ Standard-Konsolidierungs-Aktionen an diesen Momenten:
   Anweisung** (MasterPrompt §9.4) — nicht aus eigener
   Konsolidierungs-Initiative.
 - **Commit** der Konsolidierung — damit der git-Log
-  einen sichtbaren Handoff-Anker trägt.
+  einen sichtbaren Handoff-Anker trägt
+  ([[Commit-Prozedur]], [[Git-Hygiene]]). Ein
+  Sitzungsende selbst ist kein Handoff-Moment: Was
+  dann uncommittet liegen bleibt, fängt die
+  Sitzungsstart-Prüfung des Arbeitsbaums (MasterPrompt
+  §5.3 Phase A, Start-Prüfung des Arbeitsbaums).
 
 **Standard-Vorgehen bereitlegen:** Der Agent hält
 sich diese Konsolidierungs-Aktionen als routiniertes

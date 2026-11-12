@@ -18,6 +18,10 @@ Die Instruktionsdatei wird beim Sessionstart
 MasterPrompt, der nur auf Anweisung gelesen wird.
 Sie ist der verpflichtende Minimal-Kontext, den die
 KI bereits vor der ersten User-Nachricht kennt.
+Welche Datei das für den jeweiligen Agenten ist,
+stellt er selbst fest (die Datei, die sein eigener
+Harness automatisch lädt) und hält die Wahl in
+`Tools.md` fest: [[Standarddateien-Katalog]] §2.3.
 
 ## Pflichtabschnitte
 
@@ -47,9 +51,10 @@ Jede Instruktionsdatei enthält verbindlich:
    - `wiki/Fristen.md` — Fristenbuch
    - `wiki/index.md` — Wiki-Katalog
    - `Tools.md` — installierte Erweiterungen
-   - `Offene Fragen.md` — offene Fragen (optional,
-     MasterPrompt §1; nur nennen, wenn die Datei
-     angelegt ist)
+   - `Offene Fragen.md` — Persistenz offener Fragen,
+     jeder Modus (Rumpf, MasterPrompt §5.2)
+   - `devstate_active.md` — Einstieg in das Projekt für
+     Dritte (Rumpf, MasterPrompt §2)
 4. **Arbeitsmodi-Verweis** auf MasterPrompt §5.1.
 5. **git-Commit-Kadenz-Verweis** auf MasterPrompt §6.
 6. **Projektsprache** (meist Deutsch).

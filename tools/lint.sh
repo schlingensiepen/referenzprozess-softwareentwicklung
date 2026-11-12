@@ -193,8 +193,10 @@
 #     Fehler ab Stichtag; das `zielmarke:` des Eintrags gegen die Marke der
 #     Freigabe, Abweichung: Hinweis; ein abgelöster Freigabe-Eintrag gilt
 #     für seine Marke weiter, solange kein Nachfolger für sie gilt —
-#     Marken-Regel), Tag-Eintrag („Stand <Tag> von Implementierung,
-#     freigegeben für P10 Testen zu Marke M“), Zweck an der Phasen-Angabe
+#     Marken-Regel), Tag-Eintrag („Stand <Tag> von <Dokumenttyp von P9>,
+#     freigegeben für P10 <Tätigkeit> zu Marke M“ — erkannt an Zweck P10,
+#     Wert ohne Versions-Muster und dem Dokumenttyp von P9 aus dem Katalog;
+#     „Implementierung“ gilt als Altform), Zweck an der Phasen-Angabe
 #     oder — trifft keine Phase und ist der Eintrag Bestand (vor dem
 #     Stichtag angelegt) — am Tätigkeitsnamen („für P11 Ausliefern“ eines
 #     eingefrorenen 2.0-Eintrags liest sich als P13 Ausliefern, „für P13
@@ -217,7 +219,13 @@
 #     unbekannt; die Doku-Glieder wie jede Phase: Komponente ohne eigene
 #     Zielumgebung bis P11 — ohne P12, P13, P15 —, mit eigener Zielumgebung
 #     alle, Koordinator auch ohne eigene Bauteile P11 und P12; P13 und P15
-#     nur mit Zielumgebungen; ein fehlendes Doku-Glied P11/P12 vor dem
+#     nur mit Zielumgebungen, deren Betrieb nicht übergeben ist — eine
+#     Zielumgebung mit `uebergeben_an: <repo>` (Katalog-Zielumgebungen,
+#     Vorgehen-SP-1 Anmerkung P13 (a)) trägt P13 und P15 nicht mehr,
+#     abgeleitet entfallen wie bei `abgebaut`, auch keine DEPL-Deckung
+#     (KETTE-DEPL); nennt keine angenommene Verzichts-DEC auf P15 diese
+#     Umgebung, ein Hinweis (VERZICHT) — der Beleg der Übergabe-Entscheidung,
+#     nicht sperrend; ein fehlendes Doku-Glied P11/P12 vor dem
 #     Deploy-Stand nennt die Einschränkung „Doku folgt“ — der Hinweis steht,
 #     bis der Doku-Stand freigegeben ist oder ein Verzicht gilt; eine vor dem
 #     Stichtag abgeschlossene Marke (Freigabe ihres Abschluss-Stands vor dem
@@ -251,6 +259,131 @@
 #     für C8; eigenes Repo und Nachbarn über §Komponenten (NACHRICHT*,
 #     QUELLE, FUER-MARKE, EIGENES-REPO, OHNE-ZUGRIFF)
 #   Glossar-Begriffe in neuen Knoten (BEGRIFF)
+#   Basis-Prüfungen seit 2.2 (Kettenpruefung §Lint-Anteil „Ein
+#     Prüfprogramm, Prozess-Prüfungen und Schwere“): Pflichtfeld
+#     `richtung` an jeder Frist — Knoten `deadline` und Inline-Eintrag
+#     `### YYYY-MM-DD — …` der Fassade `deadline-log`; fehlend: Fehler ab
+#     Stichtag (Anlage-Datum, am Inline-Eintrag das Datum der Überschrift),
+#     sonst Hinweis; andere Werte als `gegen-uns`/`für-uns`: Fehler
+#     (FRIST-RICHTUNG); Zustand `entfallen` einer Marke ohne
+#     Abschluss-Pflicht; „Pflicht ab Stufe n“ der Steckbrief-Tabellen der
+#     aktiven Prozesse gegen die Zeile `Ausbaustufe` des Herkunfts-Vermerks —
+#     Fassade fehlt oder `active: false`: Fehler; Dokumenttyp oberhalb der
+#     Stufe nicht Pflicht; Auslöser nicht gelesen (PFLICHT-AB,
+#     HERKUNFT-VERMERK); „Entfällt abgeleitet, wenn …“ mit den Fällen
+#     „Ausbaustufe unter n“ und „Fassade [[X]] inaktiv“; zwei Präfixe eines
+#     Registers in einer Präfix-Zeile (`` `STR`, `EVP` ``, KAT-PRAEFIX);
+#     Teilaufsätze `wiki/<Knoten>/<Knoten>-…md` ohne `type:` (kein OHNE-TYP),
+#     Unterordner ohne Seite gleichen Namens, tiefere Unterordner, Name ohne
+#     Knoten-Präfix, Teilaufsatz ohne Rücklink, Übersicht ohne Link auf den
+#     Teilaufsatz, Dateiname unter wiki/ nicht eindeutig
+#     (UNTERORDNER-OHNE-SEITE, UNTERORDNER-TIEFE, TEILAUFSATZ-NAME,
+#     TEILAUFSATZ-RUECKLINK, TEILAUFSATZ-UEBERSICHT, DATEINAME-DOPPELT);
+#     Repo-Name aus der Zeile `Repo` des Herkunfts-Vermerks vor dem
+#     Ordnerpfad (EIGENES-REPO); Übernahme-Art `Abspaltung`; geänderte oder
+#     gelöschte verfolgte Datei in einem eingefrorenen Nachweis nach git —
+#     Versandstand-Ordner unter outgoing/ (auch `nachweis/`: dort nur neue
+#     Dateien oder angehängte Zeilen), freigegebener Stand, Knoten jedes
+#     Dokumenttyps der Klasse Nachweis mit `Freeze ab: Anlage`, dessen
+#     Feld `status` im Katalog-Eintrag nicht mehrere Werte nennt
+#     (Testbericht, Abnahmeprotokoll, Journal-Eintrag, Nachricht,
+#     Eingangsdokument, Berichte, Rechercheartefakt, Bescheid; nicht
+#     Einreichung und Schriftsatz-Knoten, deren `status` weiterläuft — sie
+#     werden nicht geprüft); gelesen werden Arbeitsbaum gegen HEAD
+#     (geänderte oder gelöschte Zeilen, Binärdatei, Einfügen mitten in der
+#     Datei) und die committete Historie seit dem ersten Commit der Datei
+#     (Zeilen gelöscht oder geändert, Binärdatei geändert, Datei unter
+#     outgoing/ gelöscht); kein Befund: neue Datei, Zeilen am Ende
+#     angehängt, im Abschnitt `## Vermerke` eingefügt oder ein bisher
+#     fehlendes Kopf-Feld ohne Änderung oder Löschung einer bestehenden
+#     Zeile hinzugefügt, zusammen mit dem angehängten, datierten Vermerk
+#     „Feld `<name>` nachgetragen am <JJJJ-MM-TT>“ (der Nachweis wächst;
+#     ein Kopf-Nachtrag ohne diesen Vermerk ist ein Befund — auch nach dem
+#     Commit: der Kopf wird gegen den ersten Commit der Datei
+#     gelesen, der Vermerk heilt);
+#     Stufe FEHLER (NACHWEIS-GEAENDERT); geänderter Teil
+#     eines mitgelieferten Normen-Pakets (REC-FREEZE); Nummernbereich ab
+#     REC-9001 nur für `mitgeliefert: template` (REC-BEREICH); Anhang eines
+#     Prozesses (`Glossar-Anhang-*.md`, `Konzept-Repositories-Anhang-*.md`)
+#     im Projekt-`wiki/` (ANHANG-KOPIERT, Hinweis); `.gitignore` nimmt
+#     `raw/` oder `input/` aus (GITIGNORE-EINGANG, Hinweis); Rückzugs-Vermerk
+#     „zurückgezogen am …“ an einem Stand in output/ oder im Anschreiben eines
+#     Versandstands, den kein anderes Anschreiben unter outgoing/ nennt —
+#     Stufe HINWEIS (RUECKZUG-OHNE-FOLGE); Geheimnis-Prüfung:
+#     Muster von Zugangsdaten in verfolgten Dateien (git ls-files, ohne git
+#     alle Dateien), Stufe HINWEIS mit dem Befund-Text der Basis; Ausnahmen:
+#     die in `Tools.md` §Ausnahmen der Geheimnis-Prüfung registrierte Datei
+#     (je Zeile `<Pfad>  # <Grund>`), die Eingangs-Pfade eines aktiven
+#     Prozesses (Prüfart `geheimnis-ausnahme`), Zeilen mit Platzhalter
+#     `<…>` oder `…` (GEHEIMNIS)
+#   Prozess-Prüfungen (PRUEF-MODUL; Codes der Module mit Präfix `SP2-`,
+#     `RP2-` …): je aktivem Prozess — im Projekt die Kennungen aus
+#     `**Gewählter Prozess:**` und der Zeile `Prozess` des
+#     Herkunfts-Vermerks samt der per `extends:` geerbten, auf der
+#     Template-Quelle jeder Prozess mit `pruefungen/` — die Tabellen in
+#     `referenzprozesse/<Prozess>/pruefungen/*.md` (Spalten Code | Stufe |
+#     Prüfart | Parameter | Befund; Stufe FEHLER oder HINWEIS aus der
+#     Zeile). Prüfarten:
+#       waechter              Lesung des Agenten, nur gezählt
+#       pflichtfelder         typ=…; felder=…; seit=… — Frontmatter-Felder;
+#                             am Bestand (vor dem Stichtag) Hinweis;
+#                             ab-knoten=<feld>:<typ> — das Feld ist erst
+#                             Pflicht, wenn ein Knoten des Typs besteht:
+#                             davor darf es fehlen (kein Befund); besteht
+#                             einer, nennt ein gesammelter Hinweis je Lauf
+#                             die Knoten ohne das Feld
+#       feld-fehlt            typ=…; status=…; feld=… — Knoten im Status
+#                             ohne Feld
+#       temp                  typ=…; feld=…; status=… — `temp-`-Wert am
+#                             Knoten im Status (statusfeld=… liest den
+#                             Status aus einem anderen Feld; ausser-status=…
+#                             nimmt Knoten mit diesem `status` aus),
+#                             stand=… `temp-` im Text eines Stands,
+#                             abschnitt=<typ>/<Abschnitt> `temp-` im
+#                             Abschnitt eines Knotens, `temp-` in
+#                             `attachments`/`anlagen` eines Versandstands
+#       versandstand-feld     feld=…; nicht=<Wert>[,<Wert>] — Anschreiben
+#                             eines Versandstands
+#                             (outgoing/<Ordner>/Anschreiben.md) ohne Feld
+#                             oder mit einem Wert, der mit einem Glied
+#                             aus `nicht=` beginnt (ganzes Wort bzw.
+#                             ganze Wortfolge; zählt nicht als Eintrag,
+#                             etwa `verzichtet`, `kein review`, auch mit
+#                             Zusatz wie `verzichtet (Frist)`)
+#       pruefsumme            `pruefsumme: <Datei>: sha256:<Wert>` im
+#                             Anschreiben gegen die Datei im Ordner
+#       wecker                typ=; frist=; fristfeld=; ende=; ruhend=;
+#                             ruht_auf= — aktiver Fall ohne offene Frist
+#       geheimnis-ausnahme    pfade=… — Pfad-Präfixe ohne Geheimnis-Prüfung;
+#                             kopien=… — darunter auch bytegleiche Kopien
+#                             einer Datei aus `pfade` (Prüfsumme)
+#       werkzeug              aufruf=tools/<Skript> <Optionen> — läuft mit
+#                             python3 (im Projekt in `tools/`, auf der
+#                             Template-Quelle über eine gemergte Sicht aus
+#                             dem Prozess und seinen Erben); ohne python3
+#                             „nicht geprüft“
+#       frist-abgelaufen      feld=… — offene Frist, `due` vor dem
+#                             Prüfdatum: jede Frist, die ein gültiger
+#                             Freigabe-Eintrag in seiner Feldzeile
+#                             `- **Frist:** [[…]]` nennt (verweis=… wählt
+#                             den Feldnamen; Wikilink auf den Frist-Knoten
+#                             oder `[[Fristen#<Überschrift>]]` auf den
+#                             Inline-Eintrag), sonst die Frist selbst mit
+#                             einem der Felder aus feld=
+#       umgebung-ohne-stand, umgebung-ohne-netz (ausnahme-feld=…,
+#                             kennzeichen=…, verweis=…: als Ausnahme zählt
+#                             nur eine offene Frist der Umgebung, die das
+#                             Kennzeichen-Feld trägt — Vorgabe
+#                             `einschraenkung` — oder die ein gültiger
+#                             Freigabe-Eintrag in `- **Frist:** [[…]]`
+#                             nennt; `umgebung:` allein genügt nicht),
+#       stand-ohne-protokoll (typ=…), stand-aelter-journal (typ=…),
+#       umgebung-abgebaut-depl (typ=…), abbau-paarung (kopf=…)
+#                             Zielumgebungen (Inline-Einträge mit
+#                             `zustand`, `sicherung`, `ueberwachung`)
+#                             gegen Stände je Umgebung in output/ und
+#                             Knoten je Typ
+#     Unbekannte Prüfart: Hinweis, Zeile nicht geprüft.
 #
 # Optionen:
 #   --template-quelle      Modus Template-Quelle (sonst automatisch,
@@ -283,12 +416,22 @@
 #                          fehlt für NAME die Zeile in §Komponenten:
 #                          Hinweis, SPEC- und DEPL-Deckung entfallen
 #   --ohne-hinweise        nur FEHLER ausgeben
+#   --heute YYYY-MM-DD     Prüfdatum für abgelaufene Fristen (Vorgabe:
+#                          heute)
+#   --template ORDNER      Template-Quelle mit referenzprozesse/ (Prüf-
+#                          Module, Steckbriefe; Vorgabe: der Ordner über
+#                          diesem Skript, auf der Template-Quelle sie
+#                          selbst)
 #   -h, --help             diese Hilfe
 #
 # Ausgabe: je Befund eine Zeile  FEHLER|HINWEIS  CODE  datei: text,
 # danach Zusammenfassung und die Liste „Nicht geprüft“.
 # Exit-Code 1 bei mindestens einem FEHLER, 2 bei Aufruf-Fehler, sonst 0.
-# Benötigt: sh, awk, find, sort (POSIX); kein Netz, nur lesend.
+# Benötigt: sh, awk, find, sort (POSIX); kein Netz, nur lesend
+# (git ohne Index-Aktualisierung). Optional: git (Nachweise, verfolgte
+# Dateien der Geheimnis-Prüfung), sha256sum oder shasum (Prüfsummen),
+# python3 (Prüfart `werkzeug`); fehlen sie, meldet die Zusammenfassung
+# „nicht geprüft“.
 # Getestet mit dash, bash --posix und mawk 1.3.4; CRLF und UTF-8-BOM
 # werden toleriert.
 
@@ -301,6 +444,8 @@ OHNE_HINWEISE=0
 OHNE_NACHBARN=0
 OWNARG=""
 ROOT=""
+HEUTE=""
+TPLARG=""
 
 usage() {
   awk 'NR > 1 && /^#/ { sub(/^# ?/, ""); print; next } NR > 1 { exit }' "$0"
@@ -315,6 +460,8 @@ while [ $# -gt 0 ]; do
     --ohne-nachbarn) OHNE_NACHBARN=1 ;;
     --repo) [ $# -ge 2 ] || fehlt_wert "$1"; shift; OWNARG="$1" ;;
     --ohne-hinweise) OHNE_HINWEISE=1 ;;
+    --heute) [ $# -ge 2 ] || fehlt_wert "$1"; shift; HEUTE="$1" ;;
+    --template) [ $# -ge 2 ] || fehlt_wert "$1"; shift; TPLARG="$1" ;;
     -h|--help) usage; exit 0 ;;
     --) shift; break ;;
     -*) echo "lint.sh: unbekannte Option $1" >&2; exit 2 ;;
@@ -505,22 +652,38 @@ function endsection() {
   }
   sec = ""; pcount = 0; ecount = 0; rcount = 0
 }
-function flush_gt(   v, out, i, c, d, n, arr, w) {
+function flush_gt(   v, out, i, c, d, n, arr, w, br, k, kz) {
   if (!gt_active) return
   gt_active = 0
   v = gt_val; out = ""; d = 0
-  # Klammer-Zusätze (auch über Zeilen) und Code-Spannen sind Erläuterung
+  # Klammer-Zusätze (auch über Zeilen) und Code-Spannen sind Erläuterung;
+  # eine Klammer direkt hinter einem Glied, die mit „als “, „nur “ oder „im
+  # Sinne“ beginnt, macht das Glied zum kontextgebundenen Verbot
+  # (Katalog-Glossar, Lese-Regel) — es wird nicht als Begriff gelesen; nennt
+  # die Klammer „außerhalb von <Prozess-Kennung>“, wird das Glied gelesen und
+  # nur gemeldet, wenn dieser Prozess nicht aktiv ist
   for (i = 1; i <= length(v); i++) {
     c = substr(v, i, 1)
-    if (c == "(") { d++; continue }
+    if (c == "(") {
+      if (d == 0) {
+        # Klammer mit „außerhalb von <Prozess-Kennung>“: das Glied wird nur
+        # gemeldet, wenn dieser Prozess nicht aktiv ist (Fachwort des Prozesses)
+        br = substr(v, i + 1); if (index(br, ")") > 0) br = substr(br, 1, index(br, ")") - 1)
+        if (match(br, /außerhalb von [SR]P-[0-9]+/)) { k = substr(br, RSTART, RLENGTH); sub(/^.* /, "", k); out = out "\002" k "\003" }
+        else if (br ~ /^[ \t]*(als[ \t]|nur[ \t]|im[ \t]+Sinne)/) out = out "\001"
+      }
+      d++; continue }
     if (c == ")") { if (d > 0) d--; continue }
     if (d == 0) out = out c
   }
   gsub(/`[^`]*`/, "", out)
   n = split(out, arr, ",")
   for (i = 1; i <= n; i++) {
+    if (index(arr[i], "\001") > 0) continue
+    kz = ""
+    if (match(arr[i], /\002[^\003]*\003/)) { kz = " (außerhalb von " substr(arr[i], RSTART + 1, RLENGTH - 2) ")"; arr[i] = substr(arr[i], 1, RSTART - 1) substr(arr[i], RSTART + RLENGTH) }
     w = trim(arr[i]); sub(/[.;:]+$/, "", w); w = trim(w)
-    if (w != "" && w != "—") print "GT\t" FILENAME "\t" gt_kind "\t" w
+    if (w != "" && w != "—") print "GT\t" FILENAME "\t" gt_kind kz "\t" w
   }
 }
 function scan_refs(line, kind,   s, r, vor) {
@@ -566,7 +729,7 @@ FNR == 1 {
   infm = 0; fence = 0; comment = 0; key = ""; ftype = ""
   curid = ""; pl_active = 0; pl_line = ""; sec = ""; rlcons = 0
   pcount = 0; ecount = 0; rcount = 0
-  it_active = 0; gt_active = 0; sect2 = ""; kp_hdr = 0; mkcur = ""; mklief = 0
+  it_active = 0; gt_active = 0; sect2 = ""; kp_hdr = 0; mkcur = ""; mklief = 0; cur3 = ""; escur = ""
   isakt = (FILENAME ~ /\/wiki\/Aktivierter-Prozess\.md$/)
   split("", fmlk)
   isout = (OUTP != "" && substr(FILENAME, 1, length(OUTP)) == OUTP \
@@ -637,6 +800,7 @@ infm {
       flush_item(); flush_gt()
       txt = line; sub(/^#+[ \t]+/, "", txt); txt = trim(txt)
       print "HD\t" FILENAME "\t" lvl "\t" txt
+      if (lvl == 3) cur3 = txt; else if (lvl < 3) cur3 = ""
       if (lvl <= 2) { sect2 = (lvl == 2) ? txt : ""; kp_hdr = 0; mkcur = ""; mklief = 0 }
       if (lvl == 2 && ftype == "target-mark-log") mkruhe = (txt == "Marken")
       if (lvl == 3 && ftype == "target-mark-log" && sect2 == "Marken" && index(txt, "<") == 0) {
@@ -758,10 +922,12 @@ infm {
       tkp = index(v, "→"); if (tkp == 0) { tkp = index(v, "->"); tkq = 2 } else tkq = 3
       if (tkp > 0) { tka = trim(substr(v, 1, tkp - 1)); tkb = trim(substr(v, tkp + tkq)); sub(/[,;( \t].*$/, "", tkb) } else { tka = ""; tkb = "" }
       # mit Prozess trägt der Nachtrag die neue Tag-Freigabe in der Formel
-      # „Stand <neu> von Implementierung, freigegeben für P10 … zu Marke M“
-      # (Vorgehen.md §4 „Freigabe per Tag“): Tag-Name und Marke werden gelesen
+      # „Stand <neu> von <Dokumenttyp von P9>, freigegeben für P10 … zu Marke M“
+      # (Vorgehen.md §4 „Freigabe per Tag“; ⟨Artefakt⟩ hier ungeprüft, der
+      # Katalog ist noch nicht gelesen): Tag-Name und Marke werden gelesen
       tfn = ""; tfm = ""
-      tfp = index(v, "Stand "); tfq = index(v, " von Implementierung, freigegeben für ")
+      tfp = index(v, "Stand "); tfq = 0
+      if (tfp > 0 && match(substr(v, tfp), /^Stand [^ ]+ von [^,]+, freigegeben für [^,;]*P10/)) tfq = tfp + index(substr(v, tfp + 6), " von ") + 5
       if (tfp > 0 && tfq > tfp) {
         tfn = trim(substr(v, tfp + 6, tfq - tfp - 6)); sub(/[ \t].*$/, "", tfn)
         tfr = substr(v, tfq); if (match(tfr, / zu Marke [^ ,;]+/)) { tfm = trim(substr(tfr, RSTART + 10, RLENGTH - 10)); sub(/[.,;]+$/, "", tfm) }
@@ -850,6 +1016,30 @@ infm {
       if (match(v, /`[^`]+`/)) print "CR\t" FILENAME "\t" sec "\t" substr(v, RSTART + 1, RLENGTH - 2)
       else print "CX\t" FILENAME "\t" sec "\tReplaces-type-Zeile ohne `alter-typ`"
     }
+  }
+  # Feld-Zeilen jedes `###`-Eintrags (auch ohne ID: Inline-Fassaden wie
+  # Fristen, Zielumgebungen) — für die Prozess-Prüfungen und FRIST-RICHTUNG
+  if (cur3 != "" && !iscat && line ~ /^- \*\*[^*]+\*\*/) {
+    v = line; sub(/^- \*\*/, "", v); nm = substr(v, 1, index(v, "**") - 1); sub(/:$/, "", nm)
+    v = substr(v, index(v, "**") + 2); sub(/^:/, "", v); gsub(/`/, "", v)
+    print "EF\t" FILENAME "\t" cur3 "\t" tolower(trim(nm)) "\t" trim(v)
+  }
+  # Abschnitt (`##`) jedes `###`-Eintrags: der Status eines Inline-Eintrags
+  # der Fristen steht im Abschnitt Offen/Erledigt/Abgelaufen
+  if (cur3 != "" && !iscat && cur3 != escur) { escur = cur3; print "ES\t" FILENAME "\t" cur3 "\t" sect2 }
+  # Aktivierter-Prozess: Zeile `**Gewählter Prozess:** …` (Kennungen der
+  # aktiven Prozesse; Prüf-Module je Prozesskette, Kettenpruefung §Lint-Anteil)
+  if (isakt && line ~ /^\*\*Gew(ä|ae)hlter Prozess:\*\*/) { v = line; sub(/^\*\*[^*]+\*\*/, "", v); print "AP\t" FILENAME "\t" trim(v) }
+  # Rückzugs-Vermerk an einem Stand in output/ (Lebenslauf-eines-Stands §Rückzug)
+  if (isout && line ~ /zur(ü|ue)ckgezogen am/) print "RZ\t" FILENAME "\t" FNR
+  # `temp-`-Kennungen im Text (Prüfart `temp`: Stände und Abschnitte)
+  if (line ~ /(^|[^A-Za-z0-9_-])temp-[A-Za-z0-9]/) print "TP\t" FILENAME "\t" sect2 "\t" FNR
+  # Markdown-Links auf Wiki-Dateien `](…/<Name>.md)` — Rücklink und Liste
+  # der Teilaufsätze (Wiki.md §5.4) dürfen relative Links sein
+  s = line
+  while (match(s, /\]\([^)]*\.md(#[^)]*)?\)/)) {
+    t = substr(s, RSTART + 2, RLENGTH - 3); sub(/#.*$/, "", t); sub(/^.*\//, "", t); sub(/\.md$/, "", t); gsub(/%20/, " ", t)
+    print "ML\t" FILENAME "\t" t; s = substr(s, RSTART + RLENGTH)
   }
   # Feld-Zeilen und Zeile `Detail:` eines Register-Eintrags
   isdet = 0
@@ -989,6 +1179,443 @@ EOF
   fi
 fi
 
+# --- Pass 1d: Prüfdatum, Template-Quelle, aktive Prozesse, Prüf-Module ------
+# Prüfdatum (Fristen, Kettenpruefung §Lint-Anteil): `--heute`, sonst heute.
+case "$HEUTE" in
+  "") HEUTE=$(date +%Y-%m-%d 2>/dev/null) ;;
+  [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]) ;;
+  *) echo "lint.sh: --heute erwartet YYYY-MM-DD" >&2; exit 2 ;;
+esac
+# Template-Quelle mit den Prozess-Ordnern: auf der Template-Quelle der
+# Lesebereich selbst, im Projekt der Ordner über diesem Skript
+# (`_template/tools/lint.sh` → `_template/`); `--template` geht vor.
+if [ -n "$TPLARG" ]; then TPL="${TPLARG%/}"
+elif [ "$MODE" = template-quelle ]; then TPL="$ROOT"
+else TPL=$(cd "$(dirname "$0")/.." 2>/dev/null && pwd -P); fi
+[ -d "$TPL/referenzprozesse" ] || TPL=""
+# Steckbriefe: Kennung, Ordner, extends (Frontmatter)
+: > "$TMP/procs"
+if [ -n "$TPL" ]; then
+  for sb in "$TPL"/referenzprozesse/*/Steckbrief.md; do
+    [ -f "$sb" ] || continue
+    awk -v D="${sb%/Steckbrief.md}" '
+      NR == 1 && $0 != "---" { exit }
+      NR > 1 && ($0 == "---" || $0 == "...") { exit }
+      /^process:/ { p = $0; sub(/^process:[ \t]*/, "", p); gsub(/[`" ]/, "", p) }
+      /^extends:/ { e = $0; sub(/^extends:[ \t]*/, "", e); gsub(/[][`" ]/, "", e) }
+      END { if (p != "") print p "\t" D "\t" e }' "$sb" >> "$TMP/procs"
+  done
+fi
+# Aktive Prozesse: Projekt — Kennungen aus `**Gewählter Prozess:**` und der
+# Zeile `Prozess` des Herkunfts-Vermerks, dazu die geerbten (`extends:`,
+# transitiv); Template-Quelle — jeder Prozess mit `pruefungen/`.
+: > "$TMP/aktiv"
+if [ "$MODE" = projekt ]; then
+  awk -F '\t' '($1 == "AP") || ($1 == "HV" && $3 == "Prozess") { print $NF }' "$DATA" \
+    | grep -o '[SR]P-[0-9][0-9]*' | sort -u > "$TMP/aktiv0" || true
+  while [ -s "$TMP/aktiv0" ]; do
+    cat "$TMP/aktiv0" >> "$TMP/aktiv"; : > "$TMP/aktiv1"
+    while IFS= read -r k; do
+      awk -F '\t' -v K="$k" '$1 == K { n = split($3, a, ","); for (i = 1; i <= n; i++) if (a[i] != "") print a[i] }' "$TMP/procs" >> "$TMP/aktiv1"
+    done < "$TMP/aktiv0"
+    sort -u "$TMP/aktiv1" | while IFS= read -r k; do grep -qx "$k" "$TMP/aktiv" || printf '%s\n' "$k"; done > "$TMP/aktiv0"
+  done
+  sort -u "$TMP/aktiv" -o "$TMP/aktiv"
+else
+  awk -F '\t' '{ print $1 "\t" $2 }' "$TMP/procs" | while IFS="$(printf '\t')" read -r k d; do
+    [ -d "$d/pruefungen" ] && printf '%s\n' "$k"
+  done > "$TMP/aktiv"
+fi
+while IFS= read -r k; do printf 'PA\t%s\n' "$k"; done < "$TMP/aktiv" >> "$DATA"
+# Prüf-Module (Kettenpruefung §Lint-Anteil „Ein Prüfprogramm“): je aktivem
+# Prozess die Tabellen in `pruefungen/*.md` — Spalten Code | Stufe | Prüfart
+# | Parameter | Befund; eine Zeile je Code. Dazu die Steckbrief-Tabellen
+# „Pflicht ab“ (Fassaden und Dokumenttypen) für die Stufen-Lesung.
+GEHAUS=""; GEHKOP=""
+while IFS= read -r k; do
+  d=$(awk -F '\t' -v K="$k" '$1 == K { print $2; exit }' "$TMP/procs")
+  [ -n "$d" ] || continue
+  for pm in "$d"/pruefungen/*.md; do
+    [ -f "$pm" ] || continue
+    awk -v K="$k" -v F="$pm" '
+      function trim(s) { sub(/^[ \t]+/, "", s); sub(/[ \t]+$/, "", s); return s }
+      function cell(i,  c) { c = (i > 0 && i <= nc) ? trim(z[i]) : ""; gsub(/`/, "", c); return c }
+      /^[ \t]*(```|~~~)/ { fence = !fence; next }
+      fence { next }
+      /^[ \t]*\|/ {
+        r = $0; sub(/^[ \t]*\|/, "", r); sub(/\|[ \t]*$/, "", r); nc = split(r, z, "|")
+        if (r ~ /^[ \t:|-]+$/) next
+        if (!hdr) {
+          hdr = 1; ic = is = ia = ip = ib = 0
+          for (i = 1; i <= nc; i++) { c = cell(i); if (c == "Code") ic = i; else if (c == "Stufe") is = i; else if (c == "Prüfart") ia = i; else if (c == "Parameter") ip = i; else if (c == "Befund") ib = i }
+          if (ic == 0 || is == 0 || ia == 0) { print "PMX\t" K "\t" F "\tTabelle ohne die Spalten Code, Stufe, Prüfart"; hdr = 0 }
+          next
+        }
+        c = cell(ic); if (c == "") next
+        print "PM\t" K "\t" F "\t" c "\t" cell(is) "\t" cell(ia) "\t" cell(ip) "\t" cell(ib)
+        next
+      }
+      { hdr = 0 }' "$pm" >> "$DATA"
+  done
+  # Geheimnis-Ausnahme eines Prozesses (Prüfart `geheimnis-ausnahme`, Parameter
+  # `pfade=…`): Pfad-Präfixe unter dem Projekt-Root; `kopien=…`: Pfad-
+  # Präfixe, unter denen eine bytegleiche Kopie einer Datei aus `pfade`
+  # ebenfalls ausgenommen ist (Versandstand-Kopie eines Eingangs)
+  ga=$(awk -F '\t' -v K="$k" '$1 == "PM" && $2 == K && $6 == "geheimnis-ausnahme" { print $7 }' "$DATA" | sed 's/^.*pfade=//; s/;.*$//; s/,/ /g')
+  [ -n "$ga" ] && GEHAUS="$GEHAUS $ga"
+  gk=$(awk -F '\t' -v K="$k" '$1 == "PM" && $2 == K && $6 == "geheimnis-ausnahme" && $7 ~ /kopien=/ { print $7 }' "$DATA" | sed 's/^.*kopien=//; s/;.*$//; s/,/ /g')
+  [ -n "$gk" ] && GEHKOP="${GEHKOP:-} $gk"
+  if [ "$MODE" = projekt ] && [ -f "$d/Steckbrief.md" ]; then
+    awk -v K="$k" '
+      function trim(s) { sub(/^[ \t]+/, "", s); sub(/[ \t]+$/, "", s); return s }
+      function cell(i,  c) { c = (i > 0 && i <= nc) ? trim(z[i]) : ""; gsub(/`|\*/, "", c); return c }
+      function lk(s) { if (match(s, /\[\[[^]|]+/)) return substr(s, RSTART + 2, RLENGTH - 2); return s }
+      /^[ \t]*(```|~~~)/ { fence = !fence; next }
+      fence { next }
+      /^[ \t]*\|/ {
+        r = $0; sub(/^[ \t]*\|/, "", r); sub(/\|[ \t]*$/, "", r); nc = split(r, z, "|")
+        if (r ~ /^[ \t:|-]+$/) next
+        if (!hdr) { hdr = 1; i1 = ip = 0; kindt = ""
+          for (i = 1; i <= nc; i++) { c = cell(i); if (c == "Fassade" || c == "Basis-Fassade") { i1 = i; kindt = "SBF" } else if (c ~ /^Dokumenttyp/) { i1 = i; kindt = "SBD" } else if (c == "Pflicht ab") ip = i }
+          next }
+        if (i1 > 0 && ip > 0) { n = lk(cell(i1)); if (n != "" && n !~ /^</) print kindt "\t" K "\t" n "\t" cell(ip) }
+        next
+      }
+      { hdr = 0 }' "$d/Steckbrief.md" >> "$DATA"
+  fi
+  # Prüfart `werkzeug` (Vorgehen des Prozesses, Normtexte: `wegweiser-quellen.py --pruefen`
+  # als Lint-Schritt): Parameter `aufruf=tools/<skript> <optionen>`; läuft nur
+  # mit python3 und vorhandenem Skript (im Projekt `tools/`, auf der
+  # Template-Quelle im Prozess-Ordner mit `--basis` der Basis), sonst
+  # „nicht geprüft“
+  awk -F '\t' -v K="$k" '$1 == "PM" && $2 == K && $6 == "werkzeug" { print $4 "\t" $7 }' "$DATA" | while IFS="$(printf '\t')" read -r code par; do
+    auf=$(printf '%s' "$par" | sed 's/^.*aufruf=//; s/;.*$//')
+    skr="${auf%% *}"; opt="${auf#"$skr"}"
+    if [ "$MODE" = projekt ]; then base="$ROOT"; extra=""; else base="$d"; extra="--basis $(cd "$TPL" && pwd -P)/referenzprozesse/base/wiki"; fi
+    base=$(cd "$base" 2>/dev/null && pwd -P) || base="$ROOT"
+    # Template-Quelle: die Wurzel des Werkzeugs ist eine gemergte Sicht
+    # (symbolische Links) aus `wiki/` und `research/` dieses Prozesses und
+    # aller Prozesse, die ihn erben (`extends:`) — so liegen etwa die
+    # Fristenkataloge der Referenzprozesse neben dem Normen-Paket des
+    # Standardprozesses wie im Projekt
+    wurzel="$base"
+    if [ "$MODE" != projekt ] && [ -f "$base/$skr" ]; then
+      wurzel="$TMP/wz-$k"; rm -rf "$wurzel"; mkdir -p "$wurzel/wiki" "$wurzel/research"
+      { printf '%s\n' "$base"
+        awk -F '\t' -v K="$k" '{ n = split($3, a, ","); for (i = 1; i <= n; i++) if (a[i] == K) print $2 }' "$TMP/procs"; } \
+        | while IFS= read -r pd; do
+          pd=$(cd "$pd" 2>/dev/null && pwd -P) || continue
+          for x in "$pd"/wiki/* "$pd"/research/*; do
+            [ -e "$x" ] || continue
+            case "$x" in "$pd"/wiki/*) ziel="$wurzel/wiki" ;; *) ziel="$wurzel/research" ;; esac
+            [ -e "$ziel/${x##*/}" ] || ln -s "$x" "$ziel/${x##*/}" 2>/dev/null || true
+          done
+        done
+    fi
+    if ! command -v python3 >/dev/null 2>&1; then printf 'WZ\t%s\t%s\t-\tpython3 nicht verfügbar\n' "$k" "$code" >> "$DATA"
+    elif [ ! -f "$base/$skr" ]; then printf 'WZ\t%s\t%s\t-\t%s fehlt\n' "$k" "$code" "$skr" >> "$DATA"
+    else
+      # shellcheck disable=SC2086
+      wzout=$(cd "$base" && python3 -I "$skr" $opt --wurzel "$wurzel" $extra 2>&1); wzrc=$?
+      wzerst=$( { printf '%s\n' "$wzout" | grep '^FEHLER'; printf '%s\n' "$wzout" | grep '^HINWEIS'; } | head -n 1 | tr -s '\t ' '  ' | cut -c1-300)
+      wzn=$(printf '%s\n' "$wzout" | grep -cE '^(FEHLER|HINWEIS)' || true)
+      printf 'WZ\t%s\t%s\t%s\t%s\t%s\t%s\n' "$k" "$code" "$wzrc" "$(printf '%s\n' "$wzout" | tail -n 1 | tr '\t' ' ')" "$wzerst" "$wzn" >> "$DATA"
+    fi
+  done
+done < "$TMP/aktiv"
+
+# --- Pass 1e: Versandstände (Projekt) ------------------------------------
+# `outgoing/<Ordner>/Anschreiben.md` (Outgoing.md §2): Frontmatter (VSFM),
+# Prüfsummen der Anlagen (VSH, `pruefsumme: <Datei>: sha256:<Wert>`),
+# Rückzugs-Vermerk und Folge-Versand (VSREF: Anschreiben anderer Ordner, die
+# diesen Ordner nennen; RZ für Stände in output/ ebenso)
+SHA=""
+if command -v sha256sum >/dev/null 2>&1; then SHA="sha256sum"
+elif command -v shasum >/dev/null 2>&1; then SHA="shasum -a 256"; fi
+if [ "$MODE" = projekt ] && [ -d "$ROOT/outgoing" ]; then
+  for an in "$ROOT"/outgoing/*/Anschreiben.md; do
+    [ -f "$an" ] || continue
+    vd="${an%/Anschreiben.md}"; vn="${vd##*/}"
+    printf '%s\n' "$an" > "$TMP/vsl"
+    extract "$TMP/vsl" "" | awk -F '\t' '$1 == "FILE" || $1 == "NOFM" || $1 == "FM" { print "VS" $0 }' >> "$DATA"
+    if grep -Eq 'zur(ü|ue)ckgezogen am' "$an" 2>/dev/null; then
+      n=0
+      for an2 in "$ROOT"/outgoing/*/Anschreiben.md; do
+        [ "$an2" = "$an" ] && continue
+        grep -qF -- "$vn" "$an2" 2>/dev/null && n=$((n + 1))
+      done
+      printf 'VSREF\t%s\t%s\n' "$an" "$n" >> "$DATA"
+    fi
+    extract "$TMP/vsl" "" | awk -F '\t' '$1 == "FM" && $3 == "pruefsumme" { print $4 }' | while IFS= read -r pz; do
+      dn="${pz%%:*}"; dn=$(printf '%s' "$dn" | sed 's/^[ \t]*//; s/[ \t]*$//')
+      [ -n "$dn" ] || continue
+      if [ -z "$SHA" ]; then h="?"
+      elif [ -f "$vd/$dn" ]; then h=$($SHA "$vd/$dn" 2>/dev/null | awk '{ print $1 }')
+      else h="-"; fi
+      printf 'VSH\t%s\t%s\t%s\n' "$an" "$dn" "$h" >> "$DATA"
+    done
+  done
+fi
+# Stände in output/ mit Rückzugs-Vermerk: Folge-Versand = ein Anschreiben, das
+# die Stand-Datei nennt
+awk -F '\t' '$1 == "RZ" { print $2 }' "$DATA" | sort -u | while IFS= read -r sf; do
+  n=0; bn="${sf##*/}"
+  for an2 in "$ROOT"/outgoing/*/Anschreiben.md; do
+    [ -f "$an2" ] && grep -qF -- "${bn%.md}" "$an2" 2>/dev/null && n=$((n + 1))
+  done
+  printf 'RZF\t%s\t%s\n' "$sf" "$n" >> "$DATA"
+done
+
+# --- Pass 1f: Git-Zustand eingefrorener Nachweise (Einfrieren-und-Abloesen
+# §Nachweis, Kettenpruefung §Lint-Anteil) ------------------------------------
+# (a) Arbeitsbaum gegen HEAD: geänderte oder gelöschte verfolgte Dateien unter
+# outgoing/, output/, wiki/ (Nachweis-Knoten, NWT) und research/REC-* — GITM Pfad
+# Status Art; Art D gelöscht, B Binärdatei geändert, M Zeilen geändert oder
+# gelöscht (`git diff --numstat`), I Zeilen eingefügt, aber nicht am Ende,
+# nicht in einem Abschnitt `## Vermerke` und nicht als bisher fehlendes
+# Kopf-Feld, V ein bisher fehlendes Kopf-Feld ohne den angehängten,
+# datierten Vermerk „Feld `<name>` nachgetragen am <JJJJ-MM-TT>“, A nur
+# angehängt, im Abschnitt Vermerke eingefügt oder als bisher fehlendes
+# Kopf-Feld `schluessel:` im Frontmatter mit diesem Vermerk hinzugefügt
+# (angehängter Vermerk bzw. Nachtrag im Kopf — der Nachweis wächst; kein
+# Befund; jede geänderte oder gelöschte Zeile bleibt M).
+# (b) Historie: eine committete Änderung nach dem ersten Commit einer Datei
+# (= Einfrierung) unter outgoing/, output/ und an Testberichten — gelöschte
+# oder geänderte Zeilen oder eine geänderte Binärdatei laut `git log
+# --numstat` in einem späteren Commit: GITH Pfad Commit; eine committete
+# Löschung unter outgoing/: GITH Pfad Commit D. Ein nur einfügender Commit
+# zählt als Ergänzung (Einfügen mitten in der Datei sieht die Historie
+# nicht); Umbenennungen werden nicht verfolgt (neuer Pfad = neue Datei).
+# Ob ein Befund daraus wird, entscheidet Pass 2 (Versandstand-Inhalt,
+# freigegebene Stände, Nachweis-Knoten). Ohne git oder außerhalb eines Repos:
+# GITX (nicht geprüft).
+# Nachweis-Typen aus dem Katalog des Projekts (Katalog.md §Typ-Konventionen,
+# Einfrieren-und-Abloesen §Nachweis): jeder Dokumenttyp mit `Klasse: Nachweis`
+# und `Freeze ab: Anlage`, dessen Feld `status` im Katalog-Eintrag nicht
+# mehrere Werte nennt — ein `status` mit mehreren Werten (`a` | `b`:
+# Einreichung, Schriftsatz-Knoten) läuft nach Anlage weiter, der Typ bleibt
+# außen vor. Mit SP-1 der Testbericht, mit Infrastruktur auch
+# Abnahmeprotokoll und Journal-Eintrag, in der Basis Nachricht,
+# Eingangsdokument, Agent-, Review- und Konvergenz-Bericht,
+# Rechercheartefakt, im Steuerfall der Bescheid; NWT Typ je Zeile (auch für
+# Pass 2, Prüfung NACHWEIS-GEAENDERT).
+: > "$TMP/nwt"
+for _k in "$ROOT"/wiki/Katalog-*.md; do [ -f "$_k" ] || continue
+  awk '
+    function flush() { if (t != "" && kl && fr && txt !~ /`status`[ \t]*\(`[^`]*`[ \t]*\|/) print t; t = ""; kl = 0; fr = 0; txt = "" }
+    /^### / { flush(); t = $0; sub(/^### +/, "", t); gsub(/[` \t]/, "", t); next }
+    /^## / { flush(); next }
+    t != "" { if ($0 ~ /^- \*\*Klasse:\*\* *Nachweis/) kl = 1; if ($0 ~ /^- \*\*Freeze ab:\*\* *Anlage/) fr = 1; txt = txt " " $0 }
+    END { flush() }' "$_k"
+done | sort -u > "$TMP/nwt"
+while IFS= read -r _t; do [ -n "$_t" ] && printf 'NWT\t-\t%s\n' "$_t"; done < "$TMP/nwt" >> "$DATA"
+GITTOP=""
+if command -v git >/dev/null 2>&1; then
+  GITTOP=$(GIT_OPTIONAL_LOCKS=0 git -C "$ROOT" rev-parse --show-toplevel 2>/dev/null) || GITTOP=""
+fi
+gitart() {   # gitart PFAD-relativ-zu-GITTOP -> B | M | I | V | A
+  _ns=$(GIT_OPTIONAL_LOCKS=0 git -C "$GITTOP" diff HEAD --numstat -- "$1" 2>/dev/null | head -n 1)
+  [ -n "$_ns" ] || { echo A; return; }
+  # shellcheck disable=SC2086
+  set -- "$1" $_ns
+  [ "$2" = "-" ] && { echo B; return; }
+  [ "$3" -gt 0 ] 2>/dev/null && { echo M; return; }
+  GIT_OPTIONAL_LOCKS=0 git -C "$GITTOP" show "HEAD:$1" > "$TMP/gitalt" 2>/dev/null || { echo M; return; }
+  # nur eingefügte Zeilen: A (Wachsen), wenn jede Einfügung am Ende steht, im
+  # Abschnitt `## Vermerke` liegt oder im Kopf (Frontmatter) der alten Datei
+  # nur bisher fehlende Felder `schluessel:` hinzufügt (Nachtrag eines
+  # Kopf-Felds — der Nachweis wächst; Einfrieren-und-Abloesen §Nachweis).
+  # Eine Kopf-Einfügung zählt nur, wenn die alte Folgezeile (s+1) ein
+  # Schlüssel ohne Einrückung oder das schließende `---` ist — nicht
+  # zwischen einem Schlüssel und seinem Listeneintrag und nicht in einem
+  # Block-Skalar, dort änderte sie den Wert des alten Felds; die
+  # eingefügten Schlüssel dürfen auch untereinander nicht doppelt sein.
+  # Zu jedem nachgetragenen Kopf-Feld gehört in derselben Änderung ein
+  # angehängter, datierter Vermerk „Feld `<name>` nachgetragen am
+  # <JJJJ-MM-TT>“ (am Ende der Datei oder im Abschnitt `## Vermerke`);
+  # fehlt er: V (Kopf-Nachtrag ohne Vermerk).
+  # Sonst I (Zeilen mitten in der Datei eingefügt)
+  GIT_OPTIONAL_LOCKS=0 git -C "$GITTOP" diff HEAD -U0 -- "$1" 2>/dev/null | awk -v ALT="$TMP/gitalt" '
+    BEGIN { while ((getline l < ALT) > 0) { n++; sub(/\r$/, "", l); if (l ~ /^## /) inv = (l ~ /^## +Vermerke/); ve[n] = inv; alt[n] = l
+        if (n == 1 && l == "---") infm = 1
+        else if (infm && l == "---") { infm = 0; fm = n }
+        else if (infm && match(l, /^[A-Za-z_][A-Za-z0-9_-]*:/)) key[substr(l, 1, RLENGTH - 1)] = 1 } }
+    /^@@/ { s = $2; sub(/^-/, "", s); sub(/,.*$/, "", s); s += 0
+      if (s >= n || (s > 0 && ve[s])) ok = 1
+      else if (fm > 0 && s >= 1 && s < fm && (s + 1 == fm || alt[s + 1] ~ /^[A-Za-z_][A-Za-z0-9_-]*:/)) ok = 2
+      else { ok = 0; bad = 1 }; next }
+    /^\+/ && !/^\+\+\+/ { l = substr($0, 2); sub(/\r$/, "", l)
+      if (ok == 2) {
+        if (!match(l, /^[A-Za-z_][A-Za-z0-9_-]*:/) || (substr(l, 1, RLENGTH - 1) in key)) bad = 1
+        else { key[substr(l, 1, RLENGTH - 1)] = 1; neu[++nneu] = substr(l, 1, RLENGTH - 1) } }
+      else if (ok == 1) vm[++nvm] = l }
+    END { if (bad) { print "I"; exit }
+      for (i = 1; i <= nneu; i++) { hat = 0
+        re = "Feld[ \t]+`?" neu[i] "`?[ \t]+nachgetragen am [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]"
+        for (j = 1; j <= nvm; j++) if (vm[j] ~ re) hat = 1
+        if (!hat) { print "V"; exit } }
+      print "A" }'
+}
+if [ -n "$GITTOP" ]; then
+  # Pfade der Datensätze in der Schreibweise des Lesebereichs (ROOT/…), damit
+  # Pass 2 sie mit den gelesenen Knoten und Ständen abgleicht
+  gpre=$(GIT_OPTIONAL_LOCKS=0 git -C "$ROOT" rev-parse --show-prefix 2>/dev/null)
+  GIT_OPTIONAL_LOCKS=0 git -C "$ROOT" status --porcelain=v1 --untracked-files=no -- . 2>/dev/null \
+    | while IFS= read -r st; do
+      code=$(printf '%s' "$st" | cut -c1-2); p=$(printf '%s' "$st" | cut -c4-)
+      case "$p" in *" -> "*) p="${p##* -> }" ;; esac
+      case "$p" in \"*\") p=$(printf '%s' "$p" | sed 's/^"//; s/"$//') ;; esac
+      case "$p" in
+        */outgoing/*|outgoing/*|*/output/*|output/*|*/wiki/*|wiki/*|*/research/REC-*|research/REC-*) ;;
+        *) continue ;;
+      esac
+      case "$code" in *D*) art="D" ;; *) art=$(gitart "$p") ;; esac
+      printf 'GITM\t%s\t%s\t%s\n' "$ROOT/${p#"$gpre"}" "$code" "$art"
+    done >> "$DATA"
+  # (b) Historie in einem git-Aufruf über outgoing/, output/ und wiki/; aus
+  # wiki/ zählen nur die Knoten der Nachweis-Typen (NWT; Pfade relativ zum
+  # Repo-Root)
+  : > "$TMP/gittr"
+  _nwre=$(tr '\n' '|' < "$TMP/nwt" | sed 's/|$//')
+  [ -d "$ROOT/wiki" ] && [ -n "$_nwre" ] && grep -rlE "^type:[ 	]*($_nwre)[ 	]*\$" "$ROOT/wiki" 2>/dev/null | sed "s|^$ROOT/|$gpre|" >> "$TMP/gittr"
+  set --
+  [ -d "$ROOT/outgoing" ] && set -- "$@" outgoing
+  [ -d "$ROOT/output" ] && set -- "$@" output
+  [ -s "$TMP/gittr" ] && set -- "$@" wiki
+  if [ $# -gt 0 ]; then
+    (cd "$ROOT" && GIT_OPTIONAL_LOCKS=0 git log --no-renames --format='C %h' --numstat -- "$@" 2>/dev/null) \
+      | awk -v TOP="$ROOT" -v PRE="$gpre" -v TR="$TMP/gittr" '
+      BEGIN { while ((getline l < TR) > 0) tr[l] = 1 }
+      /^C / { c = $2; next }
+      NF >= 3 { a = $1; d = $2; p = $0; sub(/^[^\t]*\t[^\t]*\t/, "", p)
+        r = substr(p, length(PRE) + 1)
+        if (!(p in tr) && r !~ /^(outgoing|output)\//) next
+        k = ++cnt[p]                       # neueste zuerst; die letzte ist die Anlage
+        erst[p] = c
+        if ((a == "-" || d + 0 > 0) && !(p in fb)) { fb[p] = k; fh[p] = c } }
+      END { for (p in fb) if (fb[p] < cnt[p]) print "GITH\t" TOP "/" substr(p, length(PRE) + 1) "\t" fh[p]
+        for (p in cnt) if (cnt[p] > 1 && p ~ /\.md$/) print p "\t" erst[p] > KAND }' KAND="$TMP/gitkand" >> "$DATA"
+    # (c) Kopf gegen den ersten Commit der Datei: jedes Kopf-Feld, das die
+    # Datei heute trägt und ihre Anlage (erster Commit) nicht trug, braucht im
+    # Dokument den Vermerk „Feld `<name>` nachgetragen am <JJJJ-MM-TT>“ — auch
+    # wenn der Nachtrag schon committet ist. Gelesen werden nur Dateien mit
+    # mehr als einem Commit; der Vermerk heilt auch nachträglich. GITK Pfad
+    # Felder (ohne Vermerk)
+    [ -f "$TMP/gitkand" ] && while IFS="$(printf '\t')" read -r _kp _kh; do
+      [ -f "$GITTOP/$_kp" ] || continue
+      GIT_OPTIONAL_LOCKS=0 git -C "$GITTOP" show "$_kh:$_kp" > "$TMP/gitalt" 2>/dev/null || continue
+      _kf=$(awk '
+        function kopf(l) { return match(l, /^[A-Za-z_][A-Za-z0-9_-]*:/) ? substr(l, 1, RLENGTH - 1) : "" }
+        { sub(/\r$/, "") }
+        FNR == NR { if (FNR == 1) { am = ($0 == "---"); next } if (am) { if ($0 == "---") am = 0; else if ((k = kopf($0)) != "") alt[k] = 1 } next }
+        FNR == 1 { fm = ($0 == "---"); if (!fm) exit; next }
+        fm { if ($0 == "---") fm = 0; else if ((k = kopf($0)) != "" && !(k in alt) && !(k in neu)) { neu[k] = 1; nl[++n] = k } next }
+        /nachgetragen am [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/ { vm[++nv] = $0 }
+        END { for (i = 1; i <= n; i++) { hat = 0; re = "Feld[ \t]+`?" nl[i] "`?[ \t]+nachgetragen am [0-9]"
+            for (j = 1; j <= nv; j++) if (vm[j] ~ re) hat = 1
+            if (!hat) o = o (o == "" ? "" : ", ") nl[i] }
+          print o }' "$TMP/gitalt" "$GITTOP/$_kp")
+      [ -n "$_kf" ] && printf 'GITK\t%s\t%s\n' "$ROOT/${_kp#"$gpre"}" "$_kf"
+    done < "$TMP/gitkand" >> "$DATA"
+    if [ -d "$ROOT/outgoing" ]; then
+      (cd "$ROOT" && GIT_OPTIONAL_LOCKS=0 git log --no-renames --diff-filter=D --format='C %h' --name-only -- outgoing 2>/dev/null) | awk -v TOP="$ROOT" -v PRE="$gpre" '
+        /^C / { c = $2; next } NF > 0 { if (!($0 in g)) { g[$0] = 1; print "GITH\t" TOP "/" substr($0, length(PRE) + 1) "\t" c "\tD" } }' >> "$DATA"
+    fi
+  fi
+else
+  printf 'GITX\t%s\n' "$(command -v git >/dev/null 2>&1 && echo "kein git-Repo" || echo "git nicht verfügbar")" >> "$DATA"
+fi
+
+# --- Pass 1f2: Anhänge im Projekt-Wiki und Eingangsordner in .gitignore
+# (nur Projekt). ANHK: ein `Glossar-Anhang-*.md` oder
+# `Konzept-Repositories-Anhang-*.md` liegt im Projekt-`wiki/` — der Merge
+# spielt die Einträge ein und kopiert den Anhang nicht (Wiki.md §11.3).
+# GIGN: `.gitignore` nimmt `raw/` oder `input/` aus — beide Ordner werden
+# in jedem Projekt versioniert (MasterPrompt §1.2, §1.3)
+if [ "$MODE" = projekt ]; then
+  for _a in "$ROOT"/wiki/Glossar-Anhang-*.md "$ROOT"/wiki/Konzept-Repositories-Anhang-*.md; do
+    [ -f "$_a" ] && printf 'ANHK\t%s\n' "$_a"
+  done >> "$DATA"
+  if [ -f "$ROOT/.gitignore" ]; then
+    awk -v F="$ROOT/.gitignore" '{ l = $0; sub(/\r$/, "", l); sub(/^[ \t]+/, "", l); sub(/[ \t]+$/, "", l) }
+      l !~ /^[#!]/ && l ~ /^(\*\*\/)?\/?(raw|input)(\/.*)?$/ { print "GIGN\t" F "\t" NR "\t" l }' "$ROOT/.gitignore" >> "$DATA"
+  fi
+fi
+
+# --- Pass 1g: Geheimnis-Prüfung (MasterPrompt §6.3, Kettenpruefung §Lint-Anteil)
+# Muster von Zugangsdaten in verfolgten Textdateien (git ls-files, sonst alle
+# Dateien ohne .git/); Stufe HINWEIS. Ausnahmen: die in Tools.md §Ausnahmen
+# der Geheimnis-Prüfung registrierte Datei (je Zeile `<Pfad>  # <Grund>`),
+# die Eingangs-Pfade eines aktiven Prozesses (Prüfart `geheimnis-ausnahme`),
+# Platzhalter (`<…>`), dieses Skript und die Prüf-Definitionen selbst.
+GEHDATEI=""
+if [ -f "$ROOT/Tools.md" ]; then
+  GEHDATEI=$(awk '
+    /^## / { s = ($0 ~ /Ausnahmen der Geheimnis/) }
+    s && /`[^`]+`/ { t = $0; while (match(t, /`[^`]+`/)) { c = substr(t, RSTART + 1, RLENGTH - 2); t = substr(t, RSTART + RLENGTH); if (c ~ /\.[A-Za-z0-9]+$/ && c !~ /^</ && c !~ /^(Tools|MasterPrompt)\.md$/) { print c; exit } } }' "$ROOT/Tools.md")
+fi
+: > "$TMP/gehx"
+if [ -n "$GEHDATEI" ] && [ -f "$ROOT/$GEHDATEI" ]; then
+  sed 's/[ \t]*#.*$//; s/^[ \t]*//; s/[ \t]*$//' "$ROOT/$GEHDATEI" | grep -v '^$' >> "$TMP/gehx"
+fi
+for g in $GEHAUS; do printf '%s\n' "$g" >> "$TMP/gehx"; done
+# Zwei Muster: feste Token-Formen (Groß-/Kleinschreibung zählt) und
+# Zuweisungen an Namen wie password/secret/token/api_key (ohne Groß-/
+# Kleinschreibung) — dort nur, wenn der Wert eine Ziffer enthält (ein
+# Bezeichner wie `owner_token` oder `your_password` ist kein Treffer)
+GEHPAT='((^|[^A-Za-z0-9])AKIA[0-9A-Z]{16}([^A-Za-z0-9]|$))|(-----BEGIN [A-Z ]*PRIVATE KEY-----)|(gh[pousr]_[A-Za-z0-9]{30,})|(xox[baprs]-[A-Za-z0-9-]{10,})|((^|[^A-Za-z0-9_-])sk-[A-Za-z0-9_-]{32,})|(://[^/[:space:]:@<>]+:[^/[:space:]:@<>]{4,}@)'
+GEHPATI='^[[:space:]]*(export[[:space:]]+)?[A-Za-z_.-]*(password|passwd|secret|token|api[_-]?key|private[_-]?key)[A-Za-z_.-]*["'"'"']?[[:space:]]*[:=][[:space:]]*["'"'"']?[A-Za-z0-9_./+=-]{8,}["'"'"']?[[:space:]]*$'
+: > "$TMP/gehl"
+if [ -n "$GITTOP" ]; then
+  GIT_OPTIONAL_LOCKS=0 git -C "$ROOT" ls-files -z -- . 2>/dev/null | tr '\0' '\n' | while IFS= read -r p; do
+    [ -f "$ROOT/$p" ] && printf '%s\n' "$ROOT/$p"
+  done > "$TMP/gehl"
+else
+  find "$ROOT" -type f ! -path '*/.git/*' > "$TMP/gehl"
+fi
+SELF=$(cd "$(dirname "$0")" && pwd -P)/$(basename "$0")
+NGEHD=0
+while IFS= read -r p; do
+  NGEHD=$((NGEHD + 1))
+  [ "$p" = "$SELF" ] && continue
+  case "$p" in */pruefungen/*|*.pdf|*.png|*.jpg|*.jpeg|*.gif|*.zip|*.xml) continue ;; esac
+  rp="${p#"$ROOT"/}"; skip=0
+  while IFS= read -r x; do
+    [ -n "$x" ] || continue
+    case "$rp" in "$x"|"$x"*|"${x%/}"/*) skip=1; break ;; esac
+  done < "$TMP/gehx"
+  [ "$skip" -eq 1 ] && continue
+  # Kopie eines Eingangs (Prüfart `geheimnis-ausnahme`, `kopien=`): erst bei
+  # einem Treffer die Prüfsummen der ausgenommenen Eingangs-Dateien bilden
+  kop=0
+  for x in $GEHKOP; do case "$rp" in "${x%/}"/*) kop=1 ;; esac; done
+  # Treffer: feste Token-Formen immer; Zuweisungen nur mit Ziffer im Wert und
+  # ohne Platzhalter (`<…>`, `…`) im Wert
+  { LC_ALL=C grep -nIE -- "$GEHPAT" "$p" 2>/dev/null
+    LC_ALL=C grep -nIEi -- "$GEHPATI" "$p" 2>/dev/null | awk '{ t = $0; sub(/^[0-9]+:/, "", t); sub(/^[^:=]*[:=]/, "", t); if (t ~ /[0-9]/ && t !~ /<[^>]*>/ && index(t, "…") == 0) print }'
+  } | sort -t: -k1,1n -u | head -n 5 > "$TMP/gehh"
+  [ -s "$TMP/gehh" ] || continue
+  if [ "$kop" -eq 1 ] && [ -n "$SHA" ]; then
+    if [ ! -f "$TMP/gehsha" ]; then
+      : > "$TMP/gehsha"
+      while IFS= read -r q; do
+        rq="${q#"$ROOT"/}"
+        for x in $GEHAUS; do case "$rq" in "${x%/}"/*) $SHA "$q" 2>/dev/null | awk '{ print $1 }' >> "$TMP/gehsha" ;; esac; done
+      done < "$TMP/gehl"
+    fi
+    hq=$($SHA "$p" 2>/dev/null | awk '{ print $1 }')
+    [ -n "$hq" ] && grep -qx -- "$hq" "$TMP/gehsha" && continue
+  fi
+  cat "$TMP/gehh" \
+    | while IFS= read -r hit; do
+      ln="${hit%%:*}"; txt="${hit#*:}"
+      m=$(printf '%s' "$txt" | LC_ALL=C grep -oE -- "$GEHPAT" | head -n 1 | cut -c1-24)
+      [ -n "$m" ] || m=$(printf '%s' "$txt" | sed 's/^[[:space:]]*//' | cut -c1-24)
+      printf 'GEH\t%s\t%s\t%s\n' "$p" "$ln" "$(printf '%s' "$m" | tr '\t' ' ')"
+    done
+done < "$TMP/gehl" >> "$DATA"
+printf 'GEHN\t%s\t%s\t%s\n' "$NGEHD" "$GEHDATEI" "$(printf '%s%s' "$GEHAUS" "${GEHKOP:+ (Kopien daraus unter$GEHKOP)}" | sed 's/^ //')" >> "$DATA"
+
 # --- Pass 2: Prüfungen -----------------------------------------------------
 cat > "$AWK_CHECK" <<'EOF'
 BEGIN {
@@ -1064,6 +1691,60 @@ function rel(f) {
   return f
 }
 function fmget(f, k) { return ((f, k) in fm) ? fm[f, k] : "" }
+function hvf0() { return (hvf != "") ? hvf : ROOT "/wiki/Aktivierter-Prozess.md" }
+# Prüf-Module: Parameter `k=v; k=v`, Listen `a,b`; Meldung nach Stufe der Zeile
+function par(p, k,   n, i, a, kv) { n = split(p, a, ";"); for (i = 1; i <= n; i++) { kv = trim(a[i]); if (substr(kv, 1, length(k) + 1) == k "=") return trim(substr(kv, length(k) + 2)) } ; return "" }
+function inlist(v, l,   n, i, a) { v = trim(v); n = split(l, a, ","); for (i = 1; i <= n; i++) if (trim(a[i]) == v) return 1; return 0 }
+function melde(st, code, f, text) { if (st == "FEHLER") err(code, f, text); else hin(code, f, text) }
+function meldeb(st, code, f, text) { if (st == "FEHLER" && bestand(f)) hin(code, f, text " — Bestand"); else melde(st, code, f, text) }
+# Fristen (Knoten `deadline` und Inline-Einträge `### YYYY-MM-DD — …` in
+# einer Fassade `deadline-log`): frf Datei, frl Eintrag ("" beim Knoten)
+# Inline-Eintrag: Feldnamen ohne Groß-/Kleinschreibung; Status ohne Feld aus
+# dem Abschnitt (Offen → offen, Erledigt → erfuellt, Abgelaufen →
+# abgelaufen); Fälligkeit ohne Feld `due` das Datum der Überschrift;
+# Anlage-Datum die Zeile „Gesetzt am“, sonst das Datum der Überschrift
+function frfeld(i, k,  v, sx) {
+  if (frl[i] == "") return trim(fmget(frf[i], k))
+  v = trim(ef[frf[i], frl[i], k])
+  if (v == "" && k == "status") { sx = tolower(es[frf[i], frl[i]]); if (sx ~ /^offen/) v = "offen"; else if (sx ~ /^erledigt|^erf/) v = "erfuellt"; else if (sx ~ /^abgelaufen/) v = "abgelaufen" }
+  if (v == "" && k == "due") v = substr(frl[i], 1, 10)
+  return v
+}
+function frdatum(i,  d) { d = (frl[i] == "") ? trim(fmget(frf[i], "datum")) : substr(trim(ef[frf[i], frl[i], "gesetzt am"]), 1, 10); if (d !~ /^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]$/ && frl[i] != "") d = substr(frl[i], 1, 10); if (d !~ /^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]$/) d = ""; return d }
+# Feld einer Zielumgebung: Feldzeile des Inline-Eintrags, sonst Frontmatter
+# eines Detail-Knotens `target-environment` gleichen Namens
+function envfeld(e, k,  v, g) { v = ef[envf, e, k]; if (trim(v) == "" && (e in fname)) { g = fname[e]; if ((g in ftype) && ftype[g] == "target-environment") v = fmget(g, k) } ; return v }
+# Übergebene Zielumgebung (SP-1 Katalog-Zielumgebungen, Feld `uebergeben_an:
+# <repo>`; Vorgehen-SP-1 Anmerkung P13 (a)): ihr Betrieb liegt beim
+# Betriebs-Projekt — P13 (neue Deploy-Stände) und P15 (Betriebs-Anleitung)
+# dieser Umgebung entfallen abgeleitet (Kettenpruefung §Fehlende und
+# vertretene Glieder, Fall (b)), wie bei `abgebaut`
+function uebg(e) { return (trim(envfeld(e, "uebergeben_an")) != "") }
+# Fristen, die ein gültiger Freigabe-Eintrag in seiner Feldzeile `- **<vfl>:**
+# [[…]]` nennt (Entscheidungen Meta „Freigabe-Einträge“; Vorgabe `Frist`):
+# frgm[j] = DEC-ID, frgv[j] = Linktext je Frist j (Prüfarten frist-abgelaufen
+# und umgebung-ohne-netz). Wikilink auf den Frist-Knoten (Dateiname, `id`,
+# `alias`) oder auf den Inline-Eintrag `[[<Fassade>#<Überschrift>]]`
+function frverweise(vfl,  i2, fx2, v, w, pg, an, j, ok, m, q, harr) {
+  split("", frgm); split("", frgv)
+  for (i2 = 1; i2 <= nfrx; i2++) { split(frx[i2], fx2, "\t"); v = rf[fx2[1], fx2[2], vfl]; if (v == "") v = rf[fx2[1], fx2[2], tolower(vfl)]
+    while (match(v, /\[\[[^]]+\]\]/)) { w = substr(v, RSTART + 2, RLENGTH - 4); v = substr(v, RSTART + RLENGTH)
+      sub(/\|.*$/, "", w); w = trim(w); pg = w; an = ""; if (index(w, "#") > 0) { pg = trim(substr(w, 1, index(w, "#") - 1)); an = tolower(trim(substr(w, index(w, "#") + 1))) }
+      for (j = 1; j <= nfr; j++) {
+        if (frl[j] != "") { if (an == "" || base(frf[j]) != pg || tolower(trim(frl[j])) != an) continue }
+        else { if (an != "") continue; ok = (base(frf[j]) == pg || trim(fmget(frf[j], "id")) == pg); if (!ok) { m = vals(frf[j], "alias", harr); for (q = 1; q <= m; q++) if (trim(harr[q]) == pg) ok = 1 }; if (!ok) continue }
+        if (!(j in frgm)) { frgm[j] = fx2[2]; frgv[j] = w } } } }
+}
+function nachweisf(p, wie) {
+  if (index(p, "/research/REC-") > 0) { hin("REC-FREEZE", p, "Datei des Normen-Pakets " wie " — ein Paket-Stand ist ab Anlage eingefroren; ein neuer Stand ist ein neuer REC (Vorgehen des Prozesses, §Normtexte)"); return }
+  if (index(p, "/outgoing/") > 0) { err("NACHWEIS-GEAENDERT", p, "Datei im Versandstand-Ordner " wie " — der versandte Inhalt ist ab Erzeugung eingefroren, `nachweis/` wird nur ergänzt; Ergänzungen als neue Datei in `nachweis/` oder als angehängter, datierter Vermerk (Outgoing.md §2, Einfrieren-und-Abloesen §Nachweis)"); return }
+  if ((p in stand) && (p in freist)) { err("NACHWEIS-GEAENDERT", p, "freigegebener Stand " wie " — ein freigegebener Stand wird nie geändert, nur ergänzt (angehängter Vermerk) oder durch eine Folge-Version ersetzt (Einfrieren-und-Abloesen §Nachweis)"); return }
+  if ((p in ftype) && ftype[p] == "research-artifact" && fw(fmget(p, "mitgeliefert")) == "template") { hin("REC-FREEZE", p, "Knoten des mitgelieferten Normen-Pakets " wie " — ab Anlage eingefroren; Ergänzung nur als angehängter Vermerk"); return }
+  # Knoten eines Nachweis-Typs aus dem Katalog (NWT, Pass 1f): Testbericht,
+  # mit Infrastruktur Abnahmeprotokoll und Journal-Eintrag, in der Basis
+  # Nachricht, Eingangsdokument, Berichte, Rechercheartefakt
+  if ((p in ftype) && (ftype[p] in nwt)) { if (ftype[p] == "test-report") err("NACHWEIS-GEAENDERT", p, "Testbericht " wie " — ein Testbericht ist ab Anlage eingefroren, ein neuer Durchgang ist ein neuer Testbericht (Einfrieren-und-Abloesen §Nachweis)"); else err("NACHWEIS-GEAENDERT", p, "Nachweis-Knoten `" ftype[p] "` " wie " — ein Knoten der Klasse Nachweis ist ab Anlage eingefroren (`Freeze ab: Anlage` im Katalog-Eintrag), ergänzt wird nur durch einen angehängten Vermerk oder ein bisher fehlendes Kopf-Feld; ein neuer Durchgang, Lauf oder Eingang ist ein neuer Knoten (Einfrieren-und-Abloesen §Nachweis)"); return }
+}
 function err(code, f, text) { out[++nout] = "FEHLER\t" code "\t" rel(f) ": " text; nerr++ }
 function hin(code, f, text) { if (!OHNE) out[++nout] = "HINWEIS\t" code "\t" rel(f) ": " text; nhin++ }
 # neue Knoten Fehler, Bestand Hinweis (Stichtags-Logik, Wiki.md §9 Bestandsschutz)
@@ -1518,6 +2199,28 @@ function artefakt_passt(a, ff,  t, kn) {
   t = stand[ff]; kn = base(ctf[t]); sub(/^Katalog-/, "", kn); a = tolower(a)
   return (a == tolower(dokname(ff)) || a == tolower(t) || a == tolower(kn))
 }
+# ⟨Artefakt⟩ einer Tag-Freigabe (Vorgehen.md §4 „Freigabe per Tag“): der
+# Produkt-Dokumenttyp von P9 aus der Phasentabelle des aktiven Prozesses,
+# gelesen an seinen Katalog-Einträgen mit `Phase: P9` (Kennung oder Name des
+# Katalog-Eintrags, z.B. „Schriftsatz“ in SP-2); „Implementierung“ ist der
+# SP-1-Fachname, der Rückfall ohne Katalog-Eintrag zu P9 (Code in SP-1 und
+# RP-1, Rezept in RP-2) und gilt in jedem Prozess als Altform
+function tagart(a,  t, kn) {
+  a = tolower(a); if (a == "implementierung") return 1
+  for (t in ctf) if (phnum(t) == 9) { kn = base(ctf[t]); sub(/^Katalog-/, "", kn); if (a == tolower(t) || a == tolower(kn)) return 1 }
+  return 0
+}
+# Formel der Tag-Freigabe zum Tag-Namen n und zur Marke m mit den Fachnamen
+# des aktiven Prozesses (für Meldungstexte): ⟨Artefakt⟩ = erster Pflicht-
+# Dokumenttyp von P9 (Name des Katalog-Eintrags), Zweck = sein Katalog-Zweck,
+# wenn er P10 nennt; ohne P9-Dokumenttyp der Rückfall „Implementierung“ und
+# „P10 Testen“ (Vorgehen.md §4 „Freigabe per Tag“)
+function tagformel(n, m,  t, t0, kn, a, zz) {
+  a = "Implementierung"; zz = "P10 Testen"; t0 = ""
+  for (t in verb) if (verb[t] == "pflicht" && phnum(t) == 9 && (t0 == "" || t < t0)) t0 = t
+  if (t0 != "") { kn = base(ctf[t0]); sub(/^Katalog-/, "", kn); if (kn != "") a = kn; if (index(phasen(katzweck(t0)), " P10 ") > 0) zz = katzweck(t0) }
+  return "Stand " n " von " a ", freigegeben für " zz " zu Marke " m
+}
 # Datum eines Fassaden-Eintrags (Feld `Datum` oder Datum in der Status-Zeile)
 function eintragdatum(f, id,  v) {
   v = rf[f, id, "Datum"]; if (match(v, /[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/)) return substr(v, RSTART, RLENGTH)
@@ -1691,6 +2394,34 @@ $1 == "SOFF" { soff[$2, $3] = 1; next }
 $1 == "SNB" { snb[$2, $3] = 1; next }
 $1 == "OVN" { ovn[$2] = 1; next }
 $1 == "OWN" { OWN = $2; ownrow = 1; next }
+# Feld-Zeilen jedes `###`-Eintrags (Inline-Fassaden): ef[f, eintrag, feld]
+$1 == "EF" { if (!(($2, $3, $4) in ef)) { ef[$2, $3, $4] = $5; if (!(($2, $3) in efe)) { efe[$2, $3] = 1; efl[++nefl] = $2 "\t" $3 } } ; next }
+$1 == "ES" { if (!(($2, $3) in es)) { es[$2, $3] = $4; esl[++nesl] = $2 "\t" $3 } ; next }
+$1 == "AP" { apz = $3; next }
+$1 == "PA" { paktiv[$2] = 1; npa++; palist = palist (palist == "" ? "" : ", ") $2; next }
+$1 == "PM" { pm[++npm] = $2 "\t" $3 "\t" $4 "\t" $5 "\t" $6 "\t" $7 "\t" $8; next }
+$1 == "PMX" { pmx[++npmx] = $2 "\t" $3 "\t" $4; next }
+$1 == "SBF" { sbf[++nsbf] = $2 "\t" $3 "\t" $4; next }
+$1 == "SBD" { sbd[++nsbd] = $2 "\t" $3 "\t" $4; next }
+$1 == "VSFILE" { vs[$2] = 1; nvs++; next }
+$1 == "VSNOFM" { vsnofm[$2] = 1; next }
+$1 == "VSFM" { if (($2, $3) in vsfm) vsfm[$2, $3] = vsfm[$2, $3] "|" $4; else vsfm[$2, $3] = $4; next }
+$1 == "VSREF" { vsref[$2] = $3; next }
+$1 == "VSH" { vsh[$2, $3] = $4; next }
+$1 == "RZ" { rz[$2] = $3; next }
+$1 == "TP" { if (!(($2, $3) in tpx)) tpx[$2, $3] = $4; if (!($2 in tpf)) tpf[$2] = $4; next }
+$1 == "ML" { ml[$2, $3] = 1; next }
+$1 == "RZF" { rzf[$2] = $3; next }
+$1 == "NWT" { nwt[$3] = 1; next }
+$1 == "GITM" { gitm[$2] = $3; gitd[$2] = $4; ngitm++; gitok = 1; next }
+$1 == "GITK" { gitk[$2] = $3; next }
+$1 == "ANHK" { anhk[$2] = 1; next }
+$1 == "GIGN" { gign[$2 "\t" $3 "\t" $4] = 1; next }
+$1 == "GITH" { if (!($2 in gith)) ngith++; if (!($2 in gith) || $4 == "D") gith[$2] = $3 (($4 == "D") ? "\tD" : ""); next }
+$1 == "GITX" { gitx = $2; next }
+$1 == "GEH" { geh[++ngeh] = $2 "\t" $3 "\t" $4; next }
+$1 == "GEHN" { gehn = $2; gehdatei = $3; gehaus = $4; next }
+$1 == "WZ" { wz[++nwz] = $2 "\t" $3 "\t" $4 "\t" $5 "\t" $6 "\t" $7; next }
 $1 == "NBOK" { nbok[$2] = $3; next }
 $1 == "NBX" { nbx[$2] = $3; next }
 $1 == "N" {
@@ -1797,27 +2528,39 @@ END {
       hatumg[t] = (index("," cp[t], ",umgebung|") > 0 || t == "deploy-stand")
     }
     if (kd == 1) {
-      v = trim(clv[t, "Präfix"])
-      if (match(v, /^`[A-Z]+`/)) pv = substr(v, 2, RLENGTH - 2)
+      # Präfix-Zeile: ein Präfix in Code-Spanne, mehrere durch Komma getrennt
+      # (ein Register mit zwei intern nummerierten Typen, Katalog
+      # §Typ-Konventionen) oder `—`; gelesen wird die Liste `pv` (Leerzeichen-
+      # getrennt), geprüft wird jedes id-Format gegen die Liste
+      v = trim(clv[t, "Präfix"]); pv = ""
+      if (v ~ /^`[A-Z]+`([ \t]*,[ \t]*`[A-Z]+`)*/) {
+        s = v
+        while (match(s, /^`[A-Z]+`/)) { pv = pv (pv == "" ? "" : " ") substr(s, 2, RLENGTH - 2); s = substr(s, RLENGTH + 1); if (s ~ /^[ \t]*,[ \t]*`/) sub(/^[ \t]*,[ \t]*/, "", s); else break }
+      }
       else if (v ~ /^`—`/) pv = "—"
       else if (v ~ /^—/) { pv = "—"; katerr("KAT-WERT", f, "Abschnitt `" t "`: Präfix `—` ohne Code-Spanne (Lese-Regel a: `` `—` ``)") }
-      else { katerr("KAT-WERT", f, "Abschnitt `" t "`: Präfix-Zeile ohne `XXX` oder `—` in Code-Spanne"); continue }
+      else { katerr("KAT-WERT", f, "Abschnitt `" t "`: Präfix-Zeile ohne `XXX` (oder `XXX`, `YYY`) bzw. `—` in Code-Spanne"); continue }
       facpfx[t] = pv
     }
   }
   for (f in art) if (art[f] == "register" && !(f in nfac)) katerr("KAT-ZEILE", f, "Register-Eintrag ohne Fassaden-Typ (Abschnitt ohne Klassen-Zeile mit Präfix-Zeile)")
-  # Präfix-Zeile gegen das id-Format (auch über Einträge hinweg)
+  # Präfix-Zeile gegen das id-Format (auch über Einträge hinweg): jedes
+  # id-Format eines Element-Typs steht in der Präfix-Liste, jedes Präfix der
+  # Liste hat einen Element-Typ mit diesem Format
   for (t in facpfx) {
     f = ctf[t]; pv = facpfx[t]; m = split(secs[f], sarr, " "); found = 0
+    np = split(pv, parr, " "); split("", pvs); split("", pvhit); for (j = 1; j <= np; j++) pvs[parr[j]] = 1
     for (i = 1; i <= m; i++) {
       s = sarr[i]; if (s == t || !(s in fmt)) continue
       found = 1
       if (pv == "—") katerr("KAT-PRAEFIX", f, "Präfix `—`, aber `" s "` trägt das id-Format `" fmt[s] "-NNN`")
-      else if (fmt[s] != pv) katerr("KAT-PRAEFIX", f, "Präfix `" pv "` passt nicht zum id-Format `" fmt[s] "-NNN` von `" s "`")
+      else if (!(fmt[s] in pvs)) katerr("KAT-PRAEFIX", f, "Präfix `" pv "` passt nicht zum id-Format `" fmt[s] "-NNN` von `" s "`" ((np > 1) ? "" : " (ein zweites Präfix des Registers steht in derselben Zeile: `` `" pv "`, `" fmt[s] "` ``)"))
+      else pvhit[fmt[s]] = 1
     }
-    if (pv != "—") {
-      regpfx[pv] = t
-      if (!found && !(pv in anyfmt)) katerr("KAT-PRAEFIX", f, "Präfix `" pv "`: kein Element-Typ mit id-Format `" pv "-NNN` im Katalog")
+    if (pv != "—") for (j = 1; j <= np; j++) {
+      regpfx[parr[j]] = t
+      if (!found && !(parr[j] in anyfmt)) katerr("KAT-PRAEFIX", f, "Präfix `" parr[j] "`: kein Element-Typ mit id-Format `" parr[j] "-NNN` im Katalog")
+      else if (found && !(parr[j] in pvhit) && !(parr[j] in anyfmt)) katerr("KAT-PRAEFIX", f, "Präfix `" parr[j] "` der Präfix-Zeile: kein Element-Typ dieses Eintrags trägt das id-Format `" parr[j] "-NNN`")
     }
   }
   # Dokumenttypen-Zeile (Lese-Regel d): Links auf Dokumenttyp-Einträge oder —
@@ -1867,6 +2610,48 @@ END {
   # nicht als Prozess-Phase); der Tag ist Pflicht-Glied P9, sobald eine
   # Pflicht-Phase ab P10 existiert. Ohne Prozess (`maxph` 0) gibt es keine
   # Freigabe-Ordnung.
+  # --- Ausbaustufe, „Pflicht ab Stufe n“ und „Entfällt abgeleitet, wenn …“
+  # (Katalog-process-brief, Katalog §Typ-Konventionen; Kettenpruefung §Lint-Anteil): die
+  # Zeile `Ausbaustufe: <n> seit …` des Herkunfts-Vermerks; Fassaden und
+  # Dokumenttypen der aktiven Prozesse mit „Stufe n“ oberhalb der Stufe sind
+  # nicht Pflicht; eine Dokumenttyp-Zeile „Entfällt abgeleitet, wenn“ nimmt
+  # den Typ aus der Pflicht, solange die Bedingung gilt — gelesen werden die
+  # Fälle „Ausbaustufe unter n“ und „Fassade [[X]] inaktiv“ (`active: false`
+  # oder fehlend); „Register leer“ und Marken-Bedingungen bleiben Reviewer-Sache
+  stufe = -1
+  for (k in hv) if (k ~ /^Ausbaustufe/) { v = hv[k]; if (match(v, /[0-9]+/)) stufe = substr(v, RSTART, RLENGTH) + 0 }
+  for (f in files) if (inwiki(f) && (f in ftype)) { fname[base(f)] = f }
+  if (MODE == "projekt") {
+    for (i = 1; i <= nsbf; i++) {
+      split(sbf[i], s3, "\t"); if (!(s3[1] in paktiv)) continue
+      # „Stufe n“ am Anfang der Zelle; „optional ab Stufe n“ und „Stufe n
+      # aktivierbar — Pflicht, sobald …“ (Auslöser) sind keine Pflicht-Stufe
+      if (s3[3] !~ /^Stufe[ \t]+[0-9]+/ || s3[3] ~ /aktivierbar|sobald/) continue
+      hatstufen = 1; match(s3[3], /Stufe[ \t]+[0-9]+/); n = substr(s3[3], RSTART, RLENGTH); sub(/Stufe[ \t]+/, "", n); n = n + 0
+      if (stufe < 0 || n > stufe) continue
+      g0 = (s3[2] in fname) ? fname[s3[2]] : ""
+      if (g0 == "" || fw(fmget(g0, "active")) == "false")
+        err("PFLICHT-AB", (g0 == "" ? ROOT "/wiki/" s3[2] ".md" : g0), "Fassade `" s3[2] "` ist ab Stufe " n " Pflicht (Steckbrief " s3[1] " „Pflicht ab“), die Ausbaustufe ist " stufe " — Fassade " (g0 == "" ? "fehlt" : "ist `active: false`") " (Katalog-process-brief; Bootstrap der Fassade abarbeiten)")
+    }
+    for (i = 1; i <= nsbd; i++) {
+      split(sbd[i], s3, "\t"); if (!(s3[1] in paktiv)) continue
+      if (s3[3] !~ /^Stufe[ \t]+[0-9]+/ || s3[3] ~ /aktivierbar|sobald/) continue
+      hatstufen = 1; match(s3[3], /Stufe[ \t]+[0-9]+/); n = substr(s3[3], RSTART, RLENGTH); sub(/Stufe[ \t]+/, "", n); n = n + 0
+      if (stufe >= 0 && n > stufe) { g0 = (s3[2] in fname) ? fname[s3[2]] : ""; if (g0 != "") { m = split(secs[g0], sarr, " "); for (j = 1; j <= m; j++) if (kind[sarr[j]] == 5) entf[sarr[j]] = "Pflicht ab Stufe " n } }
+    }
+    if (hatstufen && stufe < 0) hin("HERKUNFT-VERMERK", hvf0(), "ein aktiver Prozess deklariert Ausbaustufen, der Herkunfts-Vermerk hat keine Zeile `- **Ausbaustufe:** <n> seit JJJJ-MM-TT` — „Pflicht ab Stufe n“ nicht geprüft (Init-Choreografie §Phase A0)")
+    for (t in kind) {
+      if (kind[t] != 5 || !((t, "Entfällt abgeleitet, wenn") in clv)) continue
+      v = clv[t, "Entfällt abgeleitet, wenn"]
+      if (v ~ /Ausbaustufe/ && match(v, /unter[ \t]+[0-9]+|Stufe[ \t]+[0-9]+/)) { n = substr(v, RSTART, RLENGTH); sub(/^[^0-9]*/, "", n); if (stufe >= 0 && stufe < n + 0) entf[t] = "Ausbaustufe " stufe " unter " n }
+      else if (v ~ /Fassade/) {
+        x = ""; if (match(v, /\[\[[^]|]+/)) x = substr(v, RSTART + 2, RLENGTH - 2)
+        else if (match(v, /Fassade[ \t]+[A-Za-z][A-Za-z0-9-]*/)) { x = substr(v, RSTART, RLENGTH); sub(/^Fassade[ \t]+/, "", x) }
+        if (x != "" && x != "inaktiv") { g0 = (x in fname) ? fname[x] : ""; if (g0 == "" || fw(fmget(g0, "active")) == "false") entf[t] = "Fassade " x " inaktiv" }
+      }
+    }
+    for (t in entf) if (verb[t] == "pflicht") verb[t] = "optional"
+  }
   maxph = 0
   for (t in verb) if (verb[t] == "pflicht" && kind[t] == 5) { k = phnum(t); if (k > 0) { ppt[k] = ppt[k] (ppt[k] == "" ? "" : ", ") t; if (k > maxph && k < 99) maxph = k } }
   if (maxph >= 10 && !(9 in ppt)) ppt[9] = "Tag der Implementierung"
@@ -1934,7 +2719,8 @@ END {
       if (zv == "") hin("MARKE-ZUSTAND", markf, "Marke `" b "`: `zurückgestellt` ohne Klammer `(für <Zwischenmarke>)` — Rückkehr nicht lesbar (Zielmarken §Meta, Zwischenmarke)")
       else zgz[b] = zv
     }
-    else if (zw != "künftig") hin("MARKE-ZUSTAND", markf, "Marke `" b "`: Zustand `" mkz[b] "` (künftig | in-progress | zurückgestellt | abgeschlossen) — Zustand nicht erkannt")
+    else if (zw == "entfallen") entfm[b] = 1      # Zielmarken §Meta: keine Abschluss-Pflicht, keine laufende Marke; Grund steht in der Entscheidung (Reviewer)
+    else if (zw != "künftig") hin("MARKE-ZUSTAND", markf, "Marke `" b "`: Zustand `" mkz[b] "` (künftig | in-progress | zurückgestellt | abgeschlossen | entfallen) — Zustand nicht erkannt")
   }
   # Ruhe (Zielmarken §Meta, Zeiger): keine Marke `in-progress` ist mit der
   # Ruhe-Zeile kein Hinweis; neben einer `in-progress`-Marke ist die Zeile
@@ -1963,6 +2749,12 @@ END {
     OWN = OWNARG; ownsrc = "--repo"; ownrow = (OWN in kprepo)
     if (MODE == "projekt" && nkp > 0 && !ownrow)
       hin("OHNE-ZUGRIFF", kpf, "`--repo " OWNARG "`, aber keine Zeile für `" OWNARG "` in §Komponenten (Spalte Repo-Name) — SPEC- und DEPL-Deckung nicht geprüft")
+  }
+  # Repo-Name aus der Zeile `Repo` des Herkunfts-Vermerks (Kettenpruefung
+  # §Lint-Anteil „Repo-Erkennung“): vor dem Ordnerpfad, nach `--repo`
+  if (OWNARG == "" && ("Repo" in hv) && hv["Repo"] != "" && hv["Repo"] !~ /^</ && hv["Repo"] != "—") {
+    if (OWN != "" && OWN != hv["Repo"]) hin("EIGENES-REPO", kpf, "Zeile mit Pfad auf dieses Repo nennt `" OWN "`, der Herkunfts-Vermerk `Repo: " hv["Repo"] "` — gelesen wird der Herkunfts-Vermerk (Init-Choreografie §Phase A0)")
+    OWN = hv["Repo"]; ownsrc = "Aktivierter-Prozess (Repo)"; ownrow = (OWN in kprepo)
   }
   if (OWN == "") for (f in files) if (isnach(f) && fmget(f, "von") != "") { OWN = fmget(f, "von"); ownsrc = "`von:` eigener Nachrichten"; break }
   if (MODE == "projekt" && OWN == "" && nkp > 0)
@@ -1993,7 +2785,7 @@ END {
         if (ad == "") hin("PFLICHTFELD-BESTAND", f, "Zeile " ln ": `" id "` ohne Detail-Knoten und ohne Zeile `Angelegt` im Eintrag — Anlage-Datum (Pflichtfeld seit 2.0, Katalog §Typ-Konventionen) fehlt; der Eintrag gilt als Bestand")
         if (z == "" && ad != "" && STICHTAG != "" && ad >= STICHTAG) err("PFLICHTFELD", f, "Zeile " ln ": `" id "` ohne Detail-Knoten und ohne Feld `Zielmarke` im Eintrag — Pflichtfeld `zielmarke`" ((seit != "-") ? " (seit " seit ")" : "") " fehlt an einem Eintrag ab dem Stichtag (Angelegt " ad "); " ((pfx == "DEC") ? "eine DEC ist mit der Buchung angenommen: es heilt der Vermerk" : "vor der Annahme ergänzen, danach heilt es der Vermerk") " `- **Vermerk <Datum>:** Zielmarke <M> (nachgetragen)` am Eintrag (Zielmarken §Meta, Heilweg; Entscheidungen Meta „Eintragsformat“)")
         else if (z == "") hin("PFLICHTFELD-BESTAND", f, "Zeile " ln ": `" id "` ohne Detail-Knoten und ohne Feld `Zielmarke` im Eintrag — Pflichtfeld `zielmarke`" ((seit != "-") ? " (seit " seit ")" : "") " fehlt; Bestand" ((ad == "") ? " oder vergessen (kein Anlage-Datum, Stichtag nicht lesbar) — vor der Annahme ergänzen, danach heilt es der Vermerk `- **Vermerk <Datum>:** Zielmarke <M> (nachgetragen)`; ohne Vermerk gilt der Eintrag als Bestand" : "") " (Zielmarken §Meta, Entscheidungen Meta „Eintragsformat“)")
-        else if (!(z in mark)) err("ZIELMARKE", f, "Zeile " ln ": `" id "`: Zielmarke `" z "` — keine Marke `" z "` in den Zielmarken")
+        else if (!(z in mark)) err("ZIELMARKE", f, "Zeile " ln ": `" id "`: Zielmarke `" z "` — keine Marke `" z "` in den Zielmarken — die Bezeichnung einer Marke ist ihre Kennung ohne Leerzeichen (`### <Bezeichnung> — <Benennung>`): aus dem Feld `Zielmarke` eines Fassaden-Eintrags liest das Prüfprogramm nur bis zum ersten Leerzeichen")
       }
     }
   }
@@ -2019,11 +2811,38 @@ END {
     if (w in byid) err("ALIAS", a2[1], "`alias: " w "` ist zugleich die id von " rel(byid[w]))
     else aliasof[w] = a2[1]
   }
+  # --- Unterseiten eines Wiki-Knotens (Wiki.md §5.4): Dateien in
+  # `wiki/<Knoten>/` sind Teilaufsätze der Seite `wiki/<Knoten>.md` — ohne Typ
+  # (kein OHNE-TYP), eine Ebene tief, Dateiname mit dem Knotennamen als Präfix,
+  # Rücklink auf die Übersicht; die Übersicht listet jeden Teilaufsatz; alle
+  # Dateinamen unter einem wiki/ sind eindeutig (Obsidian-Verträglichkeit)
+  for (f in files) {
+    if (!inwiki(f)) continue
+    p = index(f, "/wiki/"); wr = substr(f, 1, p + 5); r = substr(f, p + 6)
+    if (index(r, "/") == 0) { nmk = base(f); if ((wr, nmk) in wnm) err("DATEINAME-DOPPELT", f, "Dateiname `" nmk ".md` auch in " rel(wnm[wr, nmk]) " — Dateinamen unter wiki/ sind eindeutig (Wiki.md §5.4)"); else wnm[wr, nmk] = f; continue }
+    kn = substr(r, 1, index(r, "/") - 1); rest = substr(r, index(r, "/") + 1)
+    if (kn == "templates") continue
+    # Eindeutigkeit über alle Ordner unter wiki/ (auch Unterordner ohne Seite
+    # und zu tiefe Ordner)
+    nmk = base(f)
+    if ((wr, nmk) in wnm) err("DATEINAME-DOPPELT", f, "Dateiname `" nmk ".md` auch in " rel(wnm[wr, nmk]) " — Dateinamen unter wiki/ sind eindeutig (Wiki.md §5.4)"); else wnm[wr, nmk] = f
+    if (index(rest, "/") > 0) { err("UNTERORDNER-TIEFE", f, "Unterordner `wiki/" kn "/` hat weitere Unterordner — Teilaufsätze liegen eine Ebene tief (Wiki.md §5.4)"); continue }
+    seite = wr kn ".md"
+    if (!(seite in files)) { if (!((wr, kn) in uos)) { uos[wr, kn] = 1; err("UNTERORDNER-OHNE-SEITE", wr kn "/", "Unterordner `wiki/" kn "/` ohne Seite `" kn ".md` gleichen Namens (Wiki.md §5.4: nur neben der Übersichtsseite)") } ; continue }
+    teil[f] = kn; nteil++
+    if (substr(nmk, 1, length(kn) + 1) != kn "-") hin("TEILAUFSATZ-NAME", f, "Dateiname beginnt nicht mit `" kn "-` (Teilaufsatz von `" kn "`: Knotenname als Präfix, Wiki.md §5.4)")
+    hatrueck = 0; hatlist = 0
+    if ((f, kn) in ml) hatrueck = 1
+    if ((seite, nmk) in ml) hatlist = 1
+    for (i = 1; i <= nlk && !(hatrueck && hatlist); i++) { split(lk[i], l4, "\t"); if (l4[1] == f && l4[3] == kn) hatrueck = 1; if (l4[1] == seite && l4[3] == nmk) hatlist = 1 }
+    if (!hatrueck) hin("TEILAUFSATZ-RUECKLINK", f, "Teilaufsatz ohne Rücklink `[[" kn "]]` auf die Übersichtsseite (Wiki.md §5.4)")
+    if (!hatlist) hin("TEILAUFSATZ-UEBERSICHT", seite, "Übersichtsseite nennt den Teilaufsatz `[[" nmk "]]` nicht (Wiki.md §5.4: die Übersicht listet alle Teilaufsätze)")
+  }
   # --- Instanzen
   for (f in files) {
     nm = base(f)
     if ((f in nofm) || !(f in ftype)) {
-      if (inwiki(f) && nm != "index" && nm != "log") hin("OHNE-TYP", f, "kein `type:` im Frontmatter")
+      if (inwiki(f) && nm != "index" && nm != "log" && !(f in teil)) hin("OHNE-TYP", f, "kein `type:` im Frontmatter")
       if (isnach(f)) err("NACHRICHT-TYP", f, "Datei in `output/nachrichten/` ohne `type: message`")
       if (inwiki(f)) namecheck(f, nm, 0)
       continue
@@ -2129,7 +2948,7 @@ END {
       befund("ZIELMARKE-NACHWEIS", f, "Nachweis (`" t "`) trägt `zielmarke:` — abgeleitete Nachweise tragen die Marke als Herkunft")
     # zielmarke ohne Ziel
     if (((f, "zielmarke") in fm) && nmark > 0) {
-      z = trim(fm[f, "zielmarke"]); if (z != "" && !(z in mark)) err("ZIELMARKE", f, "`zielmarke: " z "` — keine Marke `" z "` in den Zielmarken")
+      z = trim(fm[f, "zielmarke"]); if (z != "" && !(z in mark)) err("ZIELMARKE", f, "`zielmarke: " z "` — keine Marke `" z "` in den Zielmarken — die Bezeichnung einer Marke ist ihre Kennung ohne Leerzeichen (`### <Bezeichnung> — <Benennung>`): aus dem Feld `Zielmarke` eines Fassaden-Eintrags liest das Prüfprogramm nur bis zum ersten Leerzeichen")
     }
     # `datum:` an Knoten außer Ständen (die prüft STAND-DATUM): anderes
     # Format als YYYY-MM-DD gilt für den Stichtag als fehlend (Bestand)
@@ -2425,6 +3244,8 @@ END {
   # eigener Zielumgebung). Der Übergabe-Stand ist der Beleg; das erkannte
   # eigene Repo ist dafür nicht nötig
   rolle = (nmkfr > 0) ? "komponente" : (nkp == 0) ? "standalone" : (OWN == "") ? "unbekannt" : "koordinator"
+  # Zielumgebungen ohne übergebenen Betrieb (uebg): nur sie tragen P13 und P15
+  nenvo = 0; for (e in env) if (!uebg(e)) nenvo++
   if (rolle == "koordinator" && nkp == 1 && ownrow) rolle = "standalone"
   for (f in stand) if (stand[f] == "uebergabe") { kk = trim(fmget(f, "komponente")); if (kk == "") kk = gegenstand(f); if (kk != "") uebany[kanon(kk)] = 1 }
   nfremd = 0; nsub = 0
@@ -2446,10 +3267,11 @@ END {
   for (k in hv) if (k ~ /bernahme-Art$/) ua = tolower(hv[k])
   if (ua ~ /^selbstst(ä|ae)ndig/) uebart = "selbstständig"
   else if (ua ~ /^auftrag/) uebart = "auftrag"
+  else if (ua ~ /^abspaltung/) uebart = "abspaltung"      # Init-Choreografie §Phase A0: Rolle Standalone, Kette wie Auftrag ab dem Übergabe-Punkt
   if (hvf == "") hvf = ROOT "/wiki/Aktivierter-Prozess.md"
   if (HVBAD != "") hin("HERKUNFT-VERMERK", hvf, "`Template-Stand: " HVBAD "` im Herkunfts-Vermerk — feste Zeile `<Version> seit YYYY-MM-DD` erwartet (Init-Choreografie §Phase A0); Stichtag nicht gelesen, alles gilt als Bestand")
   if (MODE == "projekt" && istkomp && uebart == "")
-    hin("HERKUNFT-VERMERK", hvf, "Rolle " rolle ", aber " ((ua == "") ? "keine Zeile `- **Übernahme-Art:**`" : "Übernahme-Art `" ua "` nicht erkannt (selbstständig | Auftrag)") " im Abschnitt `## Herkunft` (Init-Choreografie §Phase A0) — P3/P4 der Komponente nicht geprüft (wie Auftrag gelesen)")
+    hin("HERKUNFT-VERMERK", hvf, "Rolle " rolle ", aber " ((ua == "") ? "keine Zeile `- **Übernahme-Art:**`" : "Übernahme-Art `" ua "` nicht erkannt (selbstständig | Auftrag | Abspaltung)") " im Abschnitt `## Herkunft` (Init-Choreografie §Phase A0) — P3/P4 der Komponente nicht geprüft (wie Auftrag gelesen)")
   # --- Bootstrap-Reste im wiki/
   for (i = 1; i <= nbs; i++) { split(bs[i], b2, "\t"); if (inwiki(b2[1])) err("BOOTSTRAP-REST", b2[1], "`## Bootstrap` in Zeile " b2[2]) }
   # --- Wikilinks (Dokumente in output/ nicht: siehe Nicht geprüft)
@@ -2515,7 +3337,10 @@ END {
     m = split(byid[id], bf, "\t")
     if (m > 1) for (j = 1; j <= m; j++) err("ID-DOPPELT", bf[j], "`id: " id "` auch in " rel(bf[(j % m) + 1]))
     if (!(idpfx(id) in regpfx)) continue      # z.B. MSG: ohne Fassade, keine Register-Prüfung
-    if (!(id in regid)) hin("REG-OHNE-EINTRAG", bf[1], "`id: " id "` ohne Eintrag `### " id "` in einer Register-Fassade")
+    # mitgelieferter Normen-REC (`mitgeliefert: template`, SP-2) auf der
+    # Template-Quelle: die Register-Zeile entsteht erst beim Merge
+    if (!(id in regid) && !(MODE == "template-quelle" && fw(fmget(bf[1], "mitgeliefert")) == "template"))
+      hin("REG-OHNE-EINTRAG", bf[1], "`id: " id "` ohne Eintrag `### " id "` in einer Register-Fassade")
     # Drift Ablösung Fassade ↔ Frontmatter (Register-Lebenszyklus)
     if (id in regid) {
       fs = fw(rf[regf[id], id, "Status"]); g0 = bf[1]
@@ -2589,17 +3414,17 @@ END {
         else if (vd < STICHTAG) { valt = vp; vp = "P" (substr(vp, 2) + 2) }
       }
       if (vp != "" && vp !~ /^P[1-9][0-9]*$/) hin("VERZICHT", f, "`phase: " vp "` — erwartet genau eine Phase `Pn` (z.B. `P8`; keine führende Null, keine Liste — je Phase eine Verzichts-DEC, Entscheidungen Meta „Verzichts-Einträge“); gilt nicht als Verzicht")
-      else if (vp == "P9") err("VERZICHT", f, "`phase: P9`" ((z != "") ? " zu Marke " z : " (ohne `zielmarke:`)") " — der Tag der Implementierung ist kein Stand und nicht verzichtbar; jedes Projekt hat ein Produkt, das der Tag markiert (Kettenpruefung §Fehlende und vertretene Glieder). Gilt nicht als Verzicht; die Tag-Bedingung des Testplan-Stands bleibt")
+      else if (vp == "P9") err("VERZICHT", f, "`phase: P9`" ((z != "") ? " zu Marke " z : " (ohne `zielmarke:`)") " — der Tag (Glied P9) ist kein Stand und nicht verzichtbar; jedes Projekt hat ein Produkt, das der Tag markiert (Kettenpruefung §Fehlende und vertretene Glieder). Gilt nicht als Verzicht; die Tag-Bedingung des Testplan-Stands bleibt")
       else if (z == "") hin("VERZICHT", f, "Verzichts-DEC ohne `zielmarke:`" ((vp == "") ? " und `phase:`" : "") " — ohne `zielmarke:` gilt kein Verzicht (Kettenpruefung §Lint-Anteil; das Feld ist seit 2.0 Pflicht, fehlend meldet die Feld-Prüfung)")
       else if (vp == "") vzop[f] = z
       else if (vp == "P15") {
         if (valt != "") {
           hin("VERZICHT", f, "`phase: " valt "` einer vor dem Stichtag " STICHTAG " angenommenen Verzichts-DEC zu Marke " z " — gelesen als P15 Betreiben (Zuordnungstabelle 2.0 → 2.1: alt P13 Betreiben → P15; Aktivierter-Prozess §Herkunft, `Vorher`)" ((vu == "") ? "; ohne `umgebung:` gilt der Verzicht für alle Umgebungen der Marke" : ""))
-          if (vu == "") { verzicht[z, "P15", "*"] = 1; vzany[z, "P15"] = 1 }
+          if (vu == "") { verzicht[z, "P15", "*"] = 1; vzany[z, "P15"] = 1; vzenvall = 1 }
         }
         if (vu == "") { if (valt == "") hin("VERZICHT", f, "`phase: P15` zu Marke " z " ohne `umgebung:` — der Verzicht auf die Betriebs-Anleitung gilt je Umgebung: `umgebung:` mit dem Namen aus den Zielumgebungen (dasselbe Feld wie DEPL), je Umgebung eine DEC; so gilt kein Verzicht, eine ablösende DEC mit dem Feld heilt es (Kettenpruefung §Lint-Anteil, Verzicht; Entscheidungen Meta „Verzichts-Einträge“)") }
         else if (nenv > 0 && !(vu in env)) err("VERZICHT", f, "`umgebung: " vu "` — keine Umgebung dieses Namens in den Zielumgebungen (geprüft wie DEPL-BEZUG); gilt nicht als Verzicht auf die Betriebs-Anleitung")
-        else { verzicht[z, "P15", vu] = 1; vzany[z, "P15"] = 1 }
+        else { verzicht[z, "P15", vu] = 1; vzany[z, "P15"] = 1; vzenv[vu] = 1 }
       }
       else {
         if (valt != "") hin("VERZICHT", f, "`phase: " valt "` einer vor dem Stichtag " STICHTAG " angenommenen Verzichts-DEC zu Marke " z " — gelesen als " vp " (Zuordnungstabelle 2.0 → 2.1: alt P11 Ausliefern → P13, alt P12 Produzieren → P14; Aktivierter-Prozess §Herkunft, `Vorher`)")
@@ -2607,6 +3432,14 @@ END {
       }
     }
   }
+  # Übergebene Zielumgebung (`uebergeben_an`, uebg) ohne Verzichts-DEC auf
+  # P15, die sie nennt: das Feld wirkt unabhängig von der Marke — P13 und P15
+  # entfallen für die Umgebung abgeleitet —, die Verzichts-DEC der Marke des
+  # Übergabe-Punkts ist der Beleg der Entscheidung, keine Bedingung; ihr
+  # Fehlen ist ein Hinweis (Vorgehen-SP-1 Anmerkung P13 (a); Kettenpruefung
+  # §Fehlende und vertretene Glieder, Zeile P15). Ein alter Verzicht für alle
+  # Umgebungen (W6) deckt jede Umgebung.
+  if (!vzenvall) for (e in env) if (uebg(e) && !(e in vzenv)) hin("VERZICHT", envf, "Zielumgebung „" e "“ trägt `uebergeben_an: " trim(envfeld(e, "uebergeben_an")) "`, aber keine angenommene Verzichts-DEC auf P15 nennt sie (`decision_type: verzicht`, `phase: P15`, `umgebung: " e "`, Grund „übergeben an <repo>“) — der Verzicht für die Marke des Übergabe-Punkts belegt die Entscheidung (Vorgehen-SP-1 Anmerkung P13 (a); Kettenpruefung §Fehlende und vertretene Glieder, Zeile P15); P13 und P15 entfallen für die Umgebung aus dem Feld, nicht sperrend")
   for (i = 1; i <= nsref; i++) { split(sref[i], s2, "\t"); if ((s2[1] in stand) && stand[s2[1]] == "uebergabe") delegiert[s2[2]] = 1 }
   ohnebau = (nkp > 0 && !ownrow)
   for (f in idof) {
@@ -2662,7 +3495,9 @@ END {
       else if (rolle == "komponente und koordinator") { if ((i in subrow) || (OWN != "" && k4[2] == OWN)) kl[++nk] = k4[1] }
       else if (k4[3] != "" && OWN != "" && k4[2] == OWN) kl[++nk] = k4[1]
     }
-    for (u in env) for (j = 1; j <= nk; j++) if (!((u, kl[j]) in depl))
+    # eine Umgebung im Zustand `geplant` (Feld `zustand`, wo ein Prozess es
+    # führt) hat noch keinen DEPL: kein Befund, bis sie `aktiv` ist
+    for (u in env) for (j = 1; j <= nk; j++) if (!uebg(u) && fw(envfeld(u, "zustand")) != "geplant" && !((u, kl[j]) in depl))
       hin("KETTE-DEPL", envf, "kein wirksamer DEPL für Umgebung `" u "`" (kl[j] == "*" ? "" : " und Komponente `" kl[j] "`") " (Rolle " rolle ")")
   }
   # --- Contract ↔ Zuschnitt (Katalog-Einträge `contract`, `architecture-description`):
@@ -2797,11 +3632,13 @@ END {
   # --- Freigabe-Einträge (Kettenpruefung §Lint-Anteil; Entscheidungen Meta
   # „Freigabe-Einträge“): erkannt an der kanonischen Formel im Gegenstand
   # eines DEC-Eintrags der Fassade — „Stand x von ⟨Artefakt⟩, freigegeben
-  # für Zweck Z [zu Marke M]“; x ist die Version `VV_TLA`. Der Tag der
-  # Implementierung (Vorgehen.md §4 „Freigabe per Tag“): „Stand <Tag-Name> von
-  # Implementierung, freigegeben für P10 Testen zu Marke M“ — ⟨Artefakt⟩
-  # „Implementierung“, Zweck P10, Marke immer im Zusatz (eine Tag-Freigabe
-  # hat keine Stand-Datei). Marke sonst = `marke` der Stand-Datei; fehlt die
+  # für Zweck Z [zu Marke M]“; x ist die Version `VV_TLA`. Der Tag (Glied P9,
+  # Vorgehen.md §4 „Freigabe per Tag“): „Stand <Tag-Name> von <Dokumenttyp von
+  # P9>, freigegeben für P10 <Tätigkeit> zu Marke M“ — erkannt an Zweck P10,
+  # Wert ohne Versions-Muster und ⟨Artefakt⟩ = Dokumenttyp von P9 aus dem
+  # Katalog (tagart; „Implementierung“ als SP-1-Fachname, als Rückfall ohne
+  # Katalog-Eintrag zu P9 — Code, Rezept — und als Altform immer),
+  # Marke immer im Zusatz (eine Tag-Freigabe hat keine Stand-Datei). Marke sonst = `marke` der Stand-Datei; fehlt die
   # Datei, nennt der Eintrag die Marke immer im Zusatz „zu Marke M“ (fehlt
   # er: Fehler ab Stichtag, wie bei der Tag-Freigabe). Merker `freist`: Stände
   # mit gültiger Freigabe (für UEBERLAGERUNG, unten).
@@ -2824,13 +3661,13 @@ END {
   # Prozess ohne Formel: Hinweis; ohne Prozess mit Formel: Hinweis
   for (b in tagk) {
     if (b in tagfn) {
-      if (maxph == 0) hin("MARKE-ZUSTAND", mktf[b], "Marke `" b "`, Zeile " mktl[b] ": Nachtrag „Tag korrigiert“ mit Tag-Freigabe „Stand " tagfn[b] " von Implementierung …“ — ohne Prozess gibt es keine Tag-Freigabe, der Abschluss-Stand führt den Tag (Kettenpruefung §Kette, Projekt ohne Prozess); nicht als Freigabe gelesen")
+      if (maxph == 0) hin("MARKE-ZUSTAND", mktf[b], "Marke `" b "`, Zeile " mktl[b] ": Nachtrag „Tag korrigiert“ mit Tag-Freigabe „Stand " tagfn[b] " von …, freigegeben für P10 …“ — ohne Prozess gibt es keine Tag-Freigabe, der Abschluss-Stand führt den Tag (Kettenpruefung §Kette, Projekt ohne Prozess); nicht als Freigabe gelesen")
       else {
         if (tagfm[b] != b) hin("MARKE-ZUSTAND", mktf[b], "Marke `" b "`, Zeile " mktl[b] ": die Tag-Freigabe im Nachtrag „Tag korrigiert“ nennt " ((tagfm[b] == "") ? "keine Marke" : "„zu Marke " tagfm[b] "“") " — sie gehört zu derselben Marke `" b "` (Zielmarken §Meta, Nachtrag)")
         if (tagfn[b] != tagk[b]) hin("MARKE-ZUSTAND", mktf[b], "Marke `" b "`, Zeile " mktl[b] ": die Tag-Freigabe im Nachtrag nennt „Stand " tagfn[b] "“, der Nachtrag den neuen Tag `" tagk[b] "` — gelesen wird der Tag der Freigabe")
         frei[b, 9] = 1; freif[b, 9] = freif[b, 9] "\t-"; tagx[b] = tagx[b] "\t" tagfn[b]
       }
-    } else if (maxph >= 10 && (b in abgeschl)) hin("MARKE-ZUSTAND", mktf[b], "Marke `" b "`, Zeile " mktl[b] ": Nachtrag „Tag korrigiert: … → " tagk[b] "“ ohne Tag-Freigabe — mit Prozess enthält der Nachtrag die neue Tag-Freigabe zu derselben Marke („Stand " tagk[b] " von Implementierung, freigegeben für P10 Testen zu Marke " b "“; die alte Tag-Freigabe bleibt stehen; Zielmarken §Meta, Nachtrag)")
+    } else if (maxph >= 10 && (b in abgeschl)) hin("MARKE-ZUSTAND", mktf[b], "Marke `" b "`, Zeile " mktl[b] ": Nachtrag „Tag korrigiert: … → " tagk[b] "“ ohne Tag-Freigabe — mit Prozess enthält der Nachtrag die neue Tag-Freigabe zu derselben Marke („" tagformel(tagk[b], b) "“; die alte Tag-Freigabe bleibt stehen; Zielmarken §Meta, Nachtrag)")
   }
   # Verzichts-DEC mit `zielmarke:` ohne `phase:`: mit Prozess vermutlich ein
   # vergessenes Feld (Hinweis); ohne Prozess der Verzicht auf „Tests grün“
@@ -2870,13 +3707,20 @@ END {
     # Detail-Knotens (ohne Detail-Knoten: nicht gezählt)
     fs = fw(rf[f, id, "Status"])
     if (fs == "verworfen") continue
+    # gültiger Freigabe-Eintrag: Feldzeilen für die Prüfart frist-abgelaufen
+    # (Verweis auf die Frist einer Einschränkung, Entscheidungen Meta)
+    if (fs != "abgelöst") { nfrx++; frx[nfrx] = f "\t" id }
     # Nennung der Stand-Datei in einem Freigabe-Eintrag (auch einem abgelösten):
     # Abgleich mit dem Vermerk einer Fix-Anforderung auf einen Deploy (unten)
-    if (OUTP != "" && tolower(a) != "implementierung") { sfn = standfile(f, id, x, a); if (sfn != "") fxnenn[sfn] = 1 }
+    isver = (x ~ /^[0-9][0-9]+_[A-Za-z][A-Za-z][A-Za-z]$/)
+    # Tag-Eintrag: ⟨Artefakt⟩ „Implementierung“ (Altform, SP-1) oder Wert ohne
+    # Versions-Muster mit dem Dokumenttyp von P9 und Zweck P10 (tagart)
+    istag = (tolower(a) == "implementierung" || (!isver && tagart(a)))
+    if (OUTP != "" && !istag) { sfn = standfile(f, id, x, a); if (sfn != "") fxnenn[sfn] = 1 }
     if (fs == "abgelöst") {
       if (!(id in byid)) continue
       split(byid[id], zba, "\t"); g0 = zba[1]
-      istag = (tolower(a) == "implementierung"); sf = ""; ph = 0; pfl = 0
+      sf = ""; ph = 0; pfl = 0
       if (istag) { if (M != "" && index(phasen(z), " P10 ") > 0) { ph = 9; pfl = 1 } }
       else if (OUTP != "") {
         sf = standfile(f, id, x, a)
@@ -2890,11 +3734,9 @@ END {
       if (sf != "") { freist[sf] = 1; abgn[M, ph, sf] = g0 }
       continue
     }
-    istag = (tolower(a) == "implementierung")
-    isver = (x ~ /^[0-9][0-9]+_[A-Za-z][A-Za-z][A-Za-z]$/)
     sf = ""; t = ""; ph = 0; mq = (M != "")      # mq: Marke der Freigabe sicher gelesen (Zusatz oder Stand-Kopf)
     if (istag) {
-      if (index(phasen(z), " P10 ") == 0) { hin("FREIGABE-STAND", f, id ": Tag-Eintrag (⟨Artefakt⟩ „Implementierung“) mit Zweck „" z "“ — der Tag wird für P10 Testen freigegeben (Vorgehen.md §4 „Freigabe per Tag“); nicht als Tag-Freigabe gelesen"); continue }
+      if (index(phasen(z), " P10 ") == 0) { hin("FREIGABE-STAND", f, id ": Tag-Eintrag (⟨Artefakt⟩ „" a "“) mit Zweck „" z "“ — der Tag wird für P10 freigegeben (Vorgehen.md §4 „Freigabe per Tag“); nicht als Tag-Freigabe gelesen"); continue }
       if (M == "") { ordfehler("FREIGABE-STAND", f, id, id ": Tag-Freigabe ohne Zusatz „zu Marke M“ — eine Tag-Freigabe hat keine Stand-Datei und nennt die Marke immer (Vorgehen.md §4 „Freigabe per Tag“); keiner Marke zugeordnet"); continue }
       if (nmark > 0 && !(M in mark)) hin("FREIGABE-STAND", f, id ": „zu Marke " M "“ — keine Marke dieses Namens in den Zielmarken")
       ph = 9; pfl = 1; tagx[M] = tagx[M] "\t" x
@@ -2910,7 +3752,12 @@ END {
         pfl = (verb[t] == "pflicht" && ph > 0)
         if (pfl && !zweckpasst(t, z, freialt(f, id))) { hin("FREIGABE-STAND", f, id ": Zweck „" z "“ passt nicht zum Katalog-Zweck „für " katzweck(t) "“ des Dokumenttyps `" t "` (Nummer und Tätigkeitsname, Entscheidungen Meta „Freigabe-Einträge“) — nicht als Pflicht-Freigabe gezählt"); pfl = 0 }
       } else {
-        if (OUTP != "" && !isver) hin("FREIGABE-STAND", f, id ": `" x "` ist weder eine Version `VV_TLA` noch ein Tag-Eintrag (⟨Artefakt⟩ „Implementierung“) — keine Stand-Datei, nicht als Pflicht-Freigabe gelesen")
+        # Wert ohne Versions-Muster mit Zweck P10: vermutlich eine Tag-Freigabe
+        # mit falschem ⟨Artefakt⟩ (etwa „von Rezept“ in RP-2) — die erwartete
+        # Formel nennen; ohne P9-Dokumenttyp im Katalog ist ⟨Artefakt⟩ der
+        # Rückfall „Implementierung“ (tagformel; Vorgehen.md §4 „Freigabe per Tag“)
+        if (OUTP != "" && !isver && index(phasen(z), " P10 ") > 0) hin("FREIGABE-STAND", f, id ": `" x "` ist keine Version `VV_TLA`, und ⟨Artefakt⟩ „" a "“ ist nicht der Dokumenttyp von P9 — eine Tag-Freigabe lautet hier „" tagformel(x, (M == "" ? "M" : M)) "“ (Vorgehen.md §4 „Freigabe per Tag“: ⟨Artefakt⟩ ist der Dokumenttyp von P9 aus der Phasentabelle, ohne Katalog-Eintrag zu P9 der Rückfall „Implementierung“); keine Stand-Datei, nicht als Tag-Freigabe gelesen")
+        else if (OUTP != "" && !isver) hin("FREIGABE-STAND", f, id ": `" x "` ist weder eine Version `VV_TLA` noch ein Tag-Eintrag (⟨Artefakt⟩ Dokumenttyp von P9 oder „Implementierung“, Zweck P10) — keine Stand-Datei, nicht als Pflicht-Freigabe gelesen")
         else if (OUTP != "") hin("FREIGABE-STAND", f, id ": keine Stand-Datei mit Version `" x "` zu „" a "“ in output/ — Marke aus dem Zusatz, Dokumenttyp und Ordnung nicht geprüft")
         # Freigabe ohne Stand-Datei: der Eintrag nennt die Marke immer
         # (Vorgehen.md §4; Zielmarken §Meta „Freigaben“), wie die Tag-Freigabe
@@ -3223,10 +4070,10 @@ END {
       # je Umgebung mit eigenem freigegebenem Deploy-Stand zu M; Rolle
       # unbekannt: nur P5, P9 (Tag oder Lieferungen), P10, P11, P12, P13, P15
       # als Hinweis
-      if ((k == 13 || k == 15) && nenv == 0) continue
+      if ((k == 13 || k == 15) && nenvo == 0) continue
       if (rolle == "standalone" && k == 6) continue
       if (istkomp && (k <= 2 || (uebart != "selbstständig" && k <= 4))) continue
-      if (istkomp && k == 12 && nenv == 0) continue
+      if (istkomp && k == 12 && nenvo == 0) continue
       if (rolle == "komponente" && k == 6) continue
       if (rolle == "unbekannt" && (k <= 4 || (k >= 6 && k <= 8))) continue
       if (rolle == "koordinator" && nfremd == 0 && k == 6) continue
@@ -3237,6 +4084,7 @@ END {
       # (eigene Freigabe, Eintrag oder Nachtrag, oder Übernahme aus der
       # Vormarke; Verzicht auf P13 gilt für alle Umgebungen)
       if (k == 13 && uo != "" && n != 13) {
+        if (uebg(uo)) continue
         if (verz(M, 13, "")) continue
         if (vorg_env(M, 13, uo)) continue
         if (("s", M, 13, uo, "H") in ordseen) continue
@@ -3257,6 +4105,7 @@ END {
           if (fa[j] == "" || fa[j] == "-") continue
           ue = umgvon(fa[j]); if (ue in eseen) continue
           eseen[ue] = 1
+          if (uebg(ue)) continue
           if (verz(M, 15, ue)) continue
           if (vorg_env(M, 15, ue)) continue
           if (("s", M, 15, ue, "H") in ordseen) continue
@@ -3435,7 +4284,251 @@ END {
   # --- Glossar-Begriffe `vormals:` / `nicht verwenden:` in neuen Knoten
   for (i = 1; i <= nvw; i++) {
     split(vw[i], v4, "\t")
+    # „… (außerhalb von <Kennung>)“: Fachwort des Prozesses — bei aktivem
+    # Prozess kein Befund (Katalog-Glossar, Lese-Regel)
+    if (match(v4[3], /\(außerhalb von [^)]*\)/)) { k = substr(v4[3], RSTART, RLENGTH); sub(/^.* /, "", k); sub(/\)$/, "", k); if (k in paktiv) continue }
     hin("BEGRIFF", v4[1], "Zeile " v4[2] ": `" v4[4] "` steht im Glossar unter `" v4[3] ":` (Knoten ab Stichtag)")
+  }
+  # --- Fristen: Pflichtfeld `richtung` (Katalog-Fristen) auch an
+  # Inline-Einträgen; Bestandsschutz über den Stichtag (Anlage-Datum des
+  # Knotens, am Inline-Eintrag das Datum der Überschrift). Die Liste nfr
+  # dient auch den Prozess-Prüfungen (Wecker, Einschränkungs-Fristen)
+  nfr = 0
+  for (f in files) if ((f in ftype) && ftype[f] == "deadline") { nfr++; frf[nfr] = f; frl[nfr] = "" }
+  for (i = 1; i <= nesl; i++) {
+    split(esl[i], e2, "\t"); f = e2[1]
+    if (!((f in ftype) && ftype[f] == "deadline-log")) continue
+    if (e2[2] !~ /^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/) continue
+    nfr++; frf[nfr] = f; frl[nfr] = e2[2]
+  }
+  for (i = 1; i <= nfr; i++) {
+    r = frfeld(i, "richtung"); where = (frl[i] == "") ? "" : "Eintrag `" frl[i] "`: "
+    # am Knoten meldet ein fehlendes Feld die Pflichtfeld-Prüfung des
+    # Katalogs (PFLICHTFELD, Bestand PFLICHTFELD-BESTAND) — hier nur der
+    # Inline-Eintrag, den sie nicht sieht; ein falscher Wert überall
+    if (r == "" && frl[i] != "") {
+      d = frdatum(i)
+      if (STICHTAG != "" && d != "" && d >= STICHTAG) err("FRIST-RICHTUNG", frf[i], where "Pflichtfeld `richtung` fehlt (`gegen-uns` | `für-uns`; Vorgabe `gegen-uns` — Katalog-Fristen, Fristen §Meta)")
+      else hin("FRIST-RICHTUNG", frf[i], where "Pflichtfeld `richtung` fehlt (seit 2.2; Vorgabe `gegen-uns`) — Bestand: das Upgrade trägt `gegen-uns` nach")
+    } else if (r != "" && r != "gegen-uns" && r != "für-uns" && r != "fuer-uns") err("FRIST-RICHTUNG", frf[i], where "`richtung: " r "` — erwartet `gegen-uns` oder `für-uns` (Katalog-Fristen)")
+  }
+  # --- Eingefrorene Nachweise (Einfrieren-und-Abloesen §Nachweis,
+  # Kettenpruefung §Lint-Anteil): geänderte verfolgte Datei im Versandstand-
+  # Ordner (auch in `nachweis/`: dort wird nur hinzugefügt), an einem
+  # freigegebenen Stand oder einem Nachweis-Knoten (NWT: Klasse Nachweis,
+  # Freeze ab Anlage, `status` ohne mehrere Werte) — FEHLER (Schwere-Tabelle).
+  # Kein Befund: neue Dateien, angehängte Zeilen am Ende,
+  # Einfügungen im Abschnitt `## Vermerke` (angehängter Vermerk) und ein bisher
+  # fehlendes Kopf-Feld im Frontmatter mit dem angehängten, datierten Vermerk
+  # „Feld `<name>` nachgetragen am <Datum>“ (Nachtrag im Kopf, gitart A; ohne
+  # den Vermerk gitart V — FEHLER). Gelesen
+  # werden Arbeitsbaum gegen HEAD (GITM) und die committete Historie seit dem
+  # ersten Commit (GITH). Mitgelieferter Normen-REC und research-Ordner eines
+  # REC: Freeze ab Anlage — Hinweis REC-FREEZE
+  for (p in gitm) {
+    a = gitd[p]; if (a == "A") continue
+    wie = (a == "D") ? "gelöscht" : (a == "B") ? "geändert (Binärdatei)" : (a == "I") ? "geändert (Zeilen mitten in der Datei eingefügt)" : (a == "V") ? "geändert (Kopf-Feld nachgetragen ohne angehängten, datierten Vermerk „Feld `<name>` nachgetragen am <JJJJ-MM-TT>“)" : "geändert"
+    nachweisf(p, wie " (git, Arbeitsbaum gegen HEAD)")
+  }
+  for (p in gith) {
+    if (p in gitm) continue
+    split(gith[p], g2, "\t")
+    nachweisf(p, ((g2[2] == "D") ? "gelöscht" : "geändert") " (git, Commit " g2[1] " nach dem ersten Commit der Datei)")
+  }
+  # Kopf gegen den ersten Commit der Datei (GITK): ein nachgetragenes
+  # Kopf-Feld ohne Vermerk bleibt FEHLER, auch nach dem Commit
+  for (p in gitk) {
+    if (p in gith) continue
+    if ((p in gitm) && gitd[p] != "A") continue
+    nachweisf(p, "geändert (Kopf-Feld `" gitk[p] "` gegenüber dem ersten Commit der Datei nachgetragen ohne angehängten, datierten Vermerk „Feld `<name>` nachgetragen am <JJJJ-MM-TT>“; der Vermerk heilt)")
+  }
+  # --- Anhang im Projekt-Wiki (Wiki.md §11.3 Schritt 1) und Eingangsordner
+  # in .gitignore (MasterPrompt §1.2, §1.3): Stufe HINWEIS
+  for (p in anhk) hin("ANHANG-KOPIERT", p, "der Anhang eines Prozesses liegt im Projekt-`wiki/` — der Merge spielt seine Einträge ein (Glossar bzw. Register Konzept-Repositories) und kopiert die Datei nicht; sie bleibt in `_template/` (Wiki.md §11.3 Schritt 1 und 2)")
+  for (x in gign) { split(x, g3, "\t"); hin("GITIGNORE-EINGANG", g3[1], "Zeile " g3[2] ": `" g3[3] "` — `raw/` und `input/` werden in jedem Projekt versioniert und stehen nicht in `.gitignore`; „nicht anfassen“ heißt Inhalt und Namen nicht ändern, nicht: aus dem Repo halten (MasterPrompt §1.2, §1.3; Git-Hygiene)") }
+  # --- Nummernbereich der Normen-REC (Katalog-Rechercheartefakte):
+  # mitgelieferte Normen-REC (`mitgeliefert: template`) tragen Nummern ab
+  # REC-9001 (reservierter Bereich), selbst geholte die nächste freie
+  # Nummer darunter — Abweichung in beide Richtungen: Hinweis
+  for (f in files) {
+    if (!((f in ftype) && ftype[f] == "research-artifact")) continue
+    id = trim(fmget(f, "id")); if (id !~ /^REC-[0-9]+$/) continue
+    n = substr(id, 5) + 0; mg = (fw(fmget(f, "mitgeliefert")) == "template")
+    if (mg && n < 9001) hin("REC-BEREICH", f, "`id: " id "` mit `mitgeliefert: template` — mitgelieferte Normen-REC tragen Nummern ab REC-9001 (reservierter Bereich, Katalog-Rechercheartefakte)")
+    else if (!mg && n >= 9001) hin("REC-BEREICH", f, "`id: " id "` liegt im reservierten Bereich ab REC-9001 der mitgelieferten Normen-REC, ohne `mitgeliefert: template` — ein selbst geholter Stand bekommt die nächste freie Nummer unter 9001 (Katalog-Rechercheartefakte)")
+  }
+  # --- Rückzug ohne Folge-Versand (Lebenslauf-eines-Stands §Rückzug;
+  # Stufe HINWEIS, Schwere-Tabelle): Vermerk „zurückgezogen am …“ an
+  # einem Stand in output/ oder im Anschreiben eines Versandstands, ohne ein
+  # Anschreiben eines anderen Versandstands, das ihn nennt
+  for (f in rzf) if (rzf[f] + 0 == 0) hin("RUECKZUG-OHNE-FOLGE", f, "Zeile " rz[f] ": Rückzugs-Vermerk, aber kein Anschreiben unter outgoing/ nennt diesen Stand — Folge-Versand an alle Empfänger mit Verweis auf den alten Stand und die Entscheidung (Lebenslauf-eines-Stands §Rückzug)")
+  for (f in vsref) if (vsref[f] + 0 == 0) hin("RUECKZUG-OHNE-FOLGE", f, "Rückzugs-Vermerk im Anschreiben, aber kein anderes Anschreiben unter outgoing/ nennt diesen Versandstand-Ordner — Folge-Versand an alle Empfänger (Lebenslauf-eines-Stands §Rückzug, Outgoing.md §6a)")
+  # --- Geheimnis-Prüfung (MasterPrompt §6.3; Kettenpruefung §Lint-Anteil): Stufe HINWEIS
+  for (i = 1; i <= ngeh; i++) {
+    split(geh[i], g3, "\t")
+    hin("GEHEIMNIS", g3[1], "Zeile " g3[2] ": Muster von Zugangsdaten (`" g3[3] "…`) — Keine Panik: für Zugangsdaten hast du eigene Regeln (MasterPrompt §6.3); folge ihnen und besprich den Fund mit dem Anwender. Überstimmen kann diese Regeln nur der Anwender. Dauerhafter Fehlalarm: Ausnahme-Datei (Tools.md §Ausnahmen der Geheimnis-Prüfung)")
+  }
+  # --- Prozess-Prüfungen (Kettenpruefung §Lint-Anteil „Ein Prüfprogramm“):
+  # Prüf-Definitionen aus `pruefungen/`
+  # der aktiven Prozesse — je Zeile Code, Stufe, Prüfart, Parameter. Die
+  # Prüfart wählt die Mechanik hier, Stufe und Code kommen aus der Zeile
+  # (führender Ort: Prüf-Tabelle in `Vorgehen-<Prozess>.md`). Prüfart
+  # `waechter`: meldet der Agent zu seinen Anlässen, hier nur gezählt.
+  split("waechter wecker pflichtfelder feld-fehlt temp versandstand-feld pruefsumme geheimnis-ausnahme werkzeug umgebung-ohne-stand umgebung-ohne-netz stand-ohne-protokoll stand-aelter-journal frist-abgelaufen umgebung-abgebaut-depl abbau-paarung", oa, " ")
+  for (i in oa) ARTEN[oa[i]] = 1
+  for (i = 1; i <= npmx; i++) { split(pmx[i], x3, "\t"); err("PRUEF-MODUL", x3[2], x3[3] " (Prozess " x3[1] ")") }
+  npmok = 0; npmw = 0
+  for (i = 1; i <= npm; i++) {
+    split(pm[i], m7, "\t"); k = m7[1]; f = m7[2]; code = m7[3]; st = m7[4]; pmart = m7[5]; prm = m7[6]
+    kz = k; gsub(/-/, "", kz)
+    if (substr(code, 1, length(kz) + 1) != kz "-") { err("PRUEF-MODUL", f, "Code `" code "` trägt nicht die Prozess-Kennung `" kz "-` als Präfix (Kettenpruefung §Lint-Anteil)"); continue }
+    if (st != "FEHLER" && st != "HINWEIS") { err("PRUEF-MODUL", f, "Zeile `" code "`: Stufe `" st "` — erwartet FEHLER oder HINWEIS (Schwere-Tabelle, Kettenpruefung §Lint-Anteil)"); continue }
+    if (code in pmcode) { err("PRUEF-MODUL", f, "Code `" code "` mehrfach definiert (auch in " rel(pmcode[code]) ")"); continue }
+    pmcode[code] = f
+    if (!(pmart in ARTEN)) { hin("PRUEF-MODUL", f, "Zeile `" code "`: Prüfart `" pmart "` unbekannt — nicht geprüft (Prüfarten dieses Prüfprogramms: siehe Kopf)"); continue }
+    if (pmart == "waechter") { npmw++; continue }
+    npmok++
+    if (pmart == "geheimnis-ausnahme") continue
+    if (pmart == "werkzeug") {
+      for (j = 1; j <= nwz; j++) { split(wz[j], w4, "\t"); if (w4[2] != code) continue
+        if (w4[3] == "-") wznicht = wznicht (wznicht == "" ? "" : "; ") code ": " w4[4]
+        else if (w4[3] + 0 != 0) melde(st, code, f, "Werkzeug-Prüfung meldet Befunde (Rückgabewert " w4[3] ((w4[6] + 0 > 0) ? ", " w4[6] " Befundzeilen" : "") "): " ((w4[5] != "") ? "erster Befund: " w4[5] : w4[4]) " — alle Befunde: Aufruf " par(prm, "aufruf")) }
+      continue
+    }
+    typ = par(prm, "typ"); fld = par(prm, "feld"); stl = par(prm, "status")
+    if (pmart == "pflichtfelder") {
+      nf2 = split(par(prm, "felder"), farr, ",")
+      # `ab-knoten=<feld>:<typ>`: das Feld ist erst Pflicht, wenn ein Knoten
+      # des Typs besteht (etwa `case` am Eingangsdokument ab dem ersten
+      # Verfahren). Davor fehlt es ohne Befund. Besteht ein solcher Knoten,
+      # nennt ein gesammelter Hinweis je Lauf die Knoten ohne das Feld —
+      # ein Dokument, das zu keinem Verfahren gehört, bleibt ohne Feld
+      ak = par(prm, "ab-knoten"); akf = ak; sub(/:.*$/, "", akf); akt = ak; sub(/^[^:]*:/, "", akt); hatk = 0; nak = 0; ak1 = ""
+      if (ak != "") for (g1 in files) if ((g1 in ftype) && ftype[g1] == akt) { hatk = 1; break }
+      for (g0 in files) { if (!((g0 in ftype) && inlist(ftype[g0], typ))) continue
+        for (j = 1; j <= nf2; j++) { x = trim(farr[j]); if (x == "" || trim(fmget(g0, x)) != "") continue
+          if (ak != "" && x == akf) { if (hatk) { nak++; if (ak1 == "" || base(g0) < base(ak1)) ak1 = g0 } continue }
+          meldeb(st, code, g0, "Pflichtfeld `" x "` fehlt (Typ `" ftype[g0] "` bei aktivem Prozess " k (par(prm, "seit") != "" ? ", seit " par(prm, "seit") : "") " — Katalog-Eintrag des Typs, Präzisierungs-Block)" ((ftype[g0] in nwt) ? "; Nachtrag als neues Kopf-Feld ohne Änderung einer bestehenden Zeile, zusammen mit dem angehängten Vermerk „Feld `" x "` nachgetragen am <JJJJ-MM-TT>“ — der Nachweis wächst, kein NACHWEIS-GEAENDERT (Einfrieren-und-Abloesen §Nachweis)" : "")) } }
+      if (nak > 0) hin(code, ak1, nak " Knoten ohne Feld `" akf "`, im Projekt besteht ein `" akt "`-Knoten — das Feld ist ab Verfahrensbeginn Pflicht: gehört ein Dokument zum Verfahren, das Feld als neues Kopf-Feld nachtragen, zusammen mit dem angehängten Vermerk „Feld `" akf "` nachgetragen am <JJJJ-MM-TT>“ (der Nachweis wächst, Einfrieren-und-Abloesen §Nachweis); gehört es zu keinem Verfahren, bleibt es ohne Feld (Katalog-Eintrag des Typs, Präzisierungs-Block)")
+    } else if (pmart == "feld-fehlt") {
+      for (g0 in files) { if (!((g0 in ftype) && inlist(ftype[g0], typ))) continue
+        if (stl != "" && !inlist(fw(fmget(g0, "status")), stl)) continue
+        if (trim(fmget(g0, fld)) == "") melde(st, code, g0, "`" ftype[g0] "` mit Status `" fw(fmget(g0, "status")) "` ohne Feld `" fld "` — " m7[7]) }
+    } else if (pmart == "temp") {
+      sfl = par(prm, "statusfeld"); if (sfl == "") sfl = "status"; aus = par(prm, "ausser-status")
+      for (g0 in files) { if (!((g0 in ftype) && inlist(ftype[g0], typ))) continue
+        if (stl != "" && !inlist(fw(fmget(g0, sfl)), stl)) continue
+        if (aus != "" && inlist(fw(fmget(g0, "status")), aus)) continue
+        if (fw(fmget(g0, fld)) ~ /^temp-/) melde(st, code, g0, "`" fld ": " fw(fmget(g0, fld)) "` an einem `" ftype[g0] "` mit `" sfl ": " fw(fmget(g0, sfl)) "` — temp-Nummer an einer eingeführten Anlage; sperrt Tag und Versandstand (Katalog-Eintrag des Typs, `temp-`-Regel)") }
+      # Stände eines Typs (`stand=`, etwa der getaggte Schriftsatz in output/):
+      # `temp-` irgendwo im Text; Knoten mit Abschnitt (`abschnitt=<typ>/<Abschnitt>`,
+      # etwa das Anlagenverzeichnis `## Anlagen` des eingereichten Schriftsatzes)
+      sty = par(prm, "stand"); abs2 = par(prm, "abschnitt"); at = abs2; sub(/\/.*$/, "", at); an = abs2; sub(/^[^\/]*\//, "", an)
+      for (g0 in tpf) {
+        if (sty != "" && (g0 in stand) && inlist(stand[g0], sty)) melde(st, code, g0, "Zeile " tpf[g0] ": `temp-`-Kennung im Stand `" stand[g0] "` — temp-Nummer im getaggten Stand; Anlagen-Nummern werden vor dem Tag endgültig (Katalog-Eintrag des Typs, `temp-`-Regel)")
+        else if (abs2 != "" && (g0 in ftype) && inlist(ftype[g0], at) && ((g0, an) in tpx)) melde(st, code, g0, "Zeile " tpx[g0, an] ": `temp-`-Kennung im Abschnitt `## " an "` eines `" ftype[g0] "` — temp-Nummer im Verzeichnis; der Knoten entsteht erst mit der Einreichung, die Nummern sind dann endgültig (Katalog-Eintrag des Typs, `temp-`-Regel)")
+      }
+      for (g0 in vs) { x = vsfm[g0, "attachments"] "|" vsfm[g0, "anlagen"]; if (x ~ /(^|\|)[^|]*temp-/) melde(st, code, g0, "Versandstand mit `temp-`-Anlage in `attachments`/`anlagen` — Anlagen-Nummern werden vor dem Tag endgültig (Katalog-Anlagen `temp-`-Regel)") }
+    } else if (pmart == "versandstand-feld") {
+      nnw = split(tolower(par(prm, "nicht")), nwa, ","); for (j = 1; j <= nnw; j++) nwa[j] = trim(nwa[j])
+      for (g0 in vs) { x = tolower(trim(vsfm[g0, fld])); gsub(/^["\047]|["\047]$/, "", x)
+        if (x == "" || (g0 in vsnofm)) melde(st, code, g0, "Versandstand ohne gefülltes Feld `" fld ":` — " m7[7] " (Outgoing.md §3)")
+        else { for (j = 1; j <= nnw; j++) if (nwa[j] != "" && index(x, nwa[j]) == 1 && substr(x, length(nwa[j]) + 1, 1) !~ /[a-z0-9_]/) break
+          if (j <= nnw) melde(st, code, g0, "Versandstand mit `" fld ": " x "` — der Wert zählt bei diesem Prozess nicht als Eintrag (kein Verzicht auf die Prüfung): " m7[7] " (Outgoing.md §6b)") } }
+    } else if (pmart == "pruefsumme") {
+      for (g0 in vs) { if (!((g0, "pruefsumme") in vsfm)) continue
+        n = split(vsfm[g0, "pruefsumme"], parr, "|")
+        for (j = 1; j <= n; j++) { x = parr[j]; dn = trim(substr(x, 1, index(x, ":") - 1)); hw = x; sub(/^[^:]*:[ \t]*sha256:[ \t]*/, "", hw); hw = tolower(trim(hw))
+          if (dn == "") continue
+          hv2 = ((g0, dn) in vsh) ? vsh[g0, dn] : "?"
+          if (hv2 == "?") { wznicht = wznicht (wznicht == "" ? "" : "; ") code ": kein sha256sum/shasum"; break }
+          if (hv2 == "-") melde(st, code, g0, "`pruefsumme` nennt `" dn "`, die Datei liegt nicht im Versandstand-Ordner")
+          else if (hv2 != hw) melde(st, code, g0, "Prüfsumme von `" dn "` weicht ab (`pruefsumme` " substr(hw, 1, 12) "…, Datei " substr(hv2, 1, 12) "…) — Paketprüfung als Vorbedingung des Versandstands; nach dem Versand: Rückzug prüfen (Vorgehen des Prozesses, §Versand)") } }
+    } else if (pmart == "wecker") {
+      frt = par(prm, "frist"); if (frt == "") frt = "deadline"; ffl = par(prm, "fristfeld"); if (ffl == "") ffl = "case"; ende = par(prm, "ende"); if (ende == "") ende = "abgeschlossen"
+      ruh = par(prm, "ruhend"); if (ruh == "") ruh = "ruhend"; rfl = par(prm, "ruht_auf"); if (rfl == "") rfl = "ruht_auf"
+      for (g0 in files) { if (!((g0 in ftype) && inlist(ftype[g0], typ))) continue
+        sx = fw(fmget(g0, "status")); if (inlist(sx, ende)) continue
+        if (sx == ruh && trim(fmget(g0, rfl)) != "") continue
+        idx = trim(fmget(g0, "id")); if (idx == "") idx = base(g0); offen = 0
+        # Bezug der Frist auf den Fall: `id`, Dateiname oder `alias` des
+        # Falls (Wiki.md: eindeutiger Slug oder Anzeigename; Wikilink mit
+        # Anzeigetext oder Anker toleriert)
+        split("", wnm2); wnm2[idx] = 1; wnm2[base(g0)] = 1
+        m = vals(g0, "alias", harr); for (q = 1; q <= m; q++) wnm2[trim(harr[q])] = 1
+        nf2 = split(ffl, farr, ",")
+        for (j = 1; j <= nfr && !offen; j++) { if (fw(frfeld(j, "status")) != "offen") continue
+          for (q = 1; q <= nf2; q++) { x = frfeld(j, trim(farr[q])); gsub(/[][]/, "", x); sub(/[|#].*$/, "", x); gsub(/"/, "", x); x = trim(x); if (x != "" && (x in wnm2)) { offen = 1; break } } }
+        if (!offen) melde(st, code, g0, "Kein Wecker gestellt — aktiver Fall `" idx "` (Status `" sx "`) ohne offene Frist mit `" ffl ": " idx "`; nächste Frist anlegen, ohne fachlichen Anlass „Sachstand prüfen“ (Vorgehen des Prozesses, §Fristen)") }
+    } else if (pmart == "frist-abgelaufen") {
+      # (a) Verweis im Freigabe-Eintrag: Feldzeile `- **Frist:** [[…]]`
+      # (Entscheidungen Meta „Freigabe-Einträge“); Wikilink auf den
+      # Frist-Knoten (Dateiname, `id`, `alias`) oder auf den Inline-Eintrag
+      # `[[<Fassade>#<Überschrift>]]`. (b) sonst wie bisher die Frist selbst
+      # mit einem der Felder aus `feld=`. Eine Frist meldet einmal.
+      vfl = par(prm, "verweis"); if (vfl == "") vfl = "Frist"
+      frverweise(vfl)
+      nf2 = split(fld, farr, ",")
+      for (j = 1; j <= nfr; j++) { if (fw(frfeld(j, "status")) != "offen") continue
+        x = ""; for (q = 1; q <= nf2; q++) if (trim(frfeld(j, trim(farr[q]))) != "") x = trim(farr[q])
+        if (x == "" && !(j in frgm)) continue
+        due = trim(frfeld(j, "due")); if (due == "") due = trim(frfeld(j, "faellig"))
+        if (!(due ~ /^[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]/ && substr(due, 1, 10) < HEUTE)) continue
+        if (j in frgm) melde(st, code, frf[j], (frl[j] == "" ? "" : "Eintrag `" frl[j] "`: ") "Frist der Einschränkung im Freigabe-Eintrag `" frgm[j] "` (`" vfl ": [[" frgv[j] "]]`) ist am " substr(due, 1, 10) " abgelaufen und noch `offen` — die Einschränkung trägt die Freigabe nicht mehr (Prüfdatum " HEUTE ")")
+        else melde(st, code, frf[j], (frl[j] == "" ? "" : "Eintrag `" frl[j] "`: ") "Frist einer Einschränkung oder eines Aufschubs (`" x ": " frfeld(j, x) "`) ist am " substr(due, 1, 10) " abgelaufen und noch `offen` — die Einschränkung trägt die Freigabe nicht mehr (Prüfdatum " HEUTE ")") }
+    } else if (pmart ~ /^umgebung-|^stand-|^abbau-/) {
+      # Zielumgebungen (Inline-Einträge `### <Name>` mit Feldzeilen), Stände je
+      # Umgebung in output/ (geltender Deploy-Stand: jüngste Version nach
+      # `datum`, dann Version), Knoten je Typ
+      split("", zust); split("", dsf); split("", dsd); split("", baf)
+      for (e in env) { zust[e] = fw(envfeld(e, "zustand")) }
+      for (sf in stand) { u = umgvon(sf); if (u == "") continue; dd = trim(fmget(sf, "datum"))
+        if (stand[sf] == "deploy-stand") { if (!(u in dsf) || dd > dsd[u] || (dd == dsd[u] && vvnum(sf) > vvnum(dsf[u]))) { dsf[u] = sf; dsd[u] = dd } }
+        if (stand[sf] == "betriebs-anleitung" && (!(u in baf) || dd > trim(fmget(baf[u], "datum")) || (dd == trim(fmget(baf[u], "datum")) && vvnum(sf) > vvnum(baf[u])))) baf[u] = sf }
+      if (pmart == "umgebung-ohne-stand") {
+        for (e in env) { if (zust[e] != "aktiv") continue; ok = 0
+          for (sf in stand) if (stand[sf] == "betriebs-anleitung" && umgvon(sf) == e && (sf in freist)) ok = 1
+          if (!ok) melde(st, code, envf, "Zielumgebung `" e "` ist `aktiv` ohne freigegebene Betriebs-Anleitung — Inbetriebnahme-Tor (Vorgehen des Prozesses)") }
+      } else if (pmart == "umgebung-ohne-netz") {
+        # Ausnahme: eine offene Frist dieser Umgebung (`ausnahme-feld`, Vorgabe
+        # `umgebung`), die eine Einschränkung ist — Feld `kennzeichen` (Vorgabe
+        # `einschraenkung`) gefüllt oder von einem gültigen Freigabe-Eintrag in
+        # `- **Frist:** [[…]]` genannt (`verweis`, Vorgabe `Frist`); das Feld
+        # `umgebung:` allein (Prüfdatum, Zertifikatsablauf) genügt nicht
+        afl = par(prm, "ausnahme-feld"); if (afl == "") afl = "umgebung"
+        kzf = par(prm, "kennzeichen"); if (kzf == "") kzf = "einschraenkung"
+        vfl = par(prm, "verweis"); if (vfl == "") vfl = "Frist"
+        frverweise(vfl)
+        for (e in env) { if (zust[e] != "aktiv") continue
+          sx = fw(envfeld(e, "sicherung")); ux = fw(envfeld(e, "ueberwachung"))
+          if (sx != "" && sx != "keine" && ux != "" && ux != "keine") continue
+          ok = 0; for (j = 1; j <= nfr; j++) if (fw(frfeld(j, "status")) == "offen" && trim(frfeld(j, afl)) == e && (trim(frfeld(j, kzf)) != "" || (j in frgm))) ok = 1
+          if (!ok) melde(st, code, envf, "Zielumgebung `" e "` ist `aktiv` ohne " ((sx == "" || sx == "keine") ? "Sicherung" : "") (((sx == "" || sx == "keine") && (ux == "" || ux == "keine")) ? " und " : "") ((ux == "" || ux == "keine") ? "Überwachung" : "") " (`sicherung`/`ueberwachung`: DEPL-ID des Aspekts) und ohne offene Einschränkung mit Frist (Frist mit `" afl ": " e "`, die `" kzf ":` trägt oder die ein Freigabe-Eintrag mit `" vfl ":` nennt; `" afl ":` allein genügt nicht) — laufende Anlage ohne Netz (Schwere-Tabelle)") }
+      } else if (pmart == "stand-ohne-protokoll") {
+        pt = typ; if (pt == "") pt = "acceptance-protocol"
+        for (u in baf) { if (!(u in dsf)) continue; dk = kid(dsf[u]); ok = 0
+          for (g0 in files) { if (!((g0 in ftype) && ftype[g0] == pt) || trim(fmget(g0, "umgebung")) != u) continue
+            m = vals(g0, "herkunft", harr); for (j = 1; j <= m; j++) if (index(harr[j], dk) > 0 || index(harr[j], bn(dsf[u])) > 0) ok = 1 }
+          if (!ok) melde(st, code, baf[u], "Betriebs-Anleitung der Umgebung `" u "` ohne Abnahmeprotokoll (`" pt "` mit `umgebung: " u "` und `herkunft` auf `" dk "`) zum geltenden Deploy-Stand " rel(dsf[u]) " — Vorbedingung der Freigabe (Kettenpruefung §Code-Glieder)") }
+      } else if (pmart == "stand-aelter-journal") {
+        jt = typ; if (jt == "") jt = "operations-journal-entry"
+        for (u in dsf) { for (g0 in files) { if (!((g0 in ftype) && ftype[g0] == jt) || trim(fmget(g0, "umgebung")) != u || tolower(fw(fmget(g0, "abweichung"))) != "ja") continue
+            jd = trim(fmget(g0, "datum")); if (jd != "" && dsd[u] != "" && jd > dsd[u]) melde(st, code, dsf[u], "geltender Deploy-Stand der Umgebung `" u "` (" dsd[u] ") ist älter als der Journal-Eintrag `" trim(fmget(g0, "id")) "` vom " jd " mit `abweichung: ja` — der Stand beschreibt die Anlage nicht mehr (Betriebsjournal §Meta)") } }
+      } else if (pmart == "umgebung-abgebaut-depl") {
+        dt = typ; if (dt == "") dt = "deployment-description"
+        for (e in env) { if (zust[e] != "abgebaut") continue
+          for (g0 in files) { if (!((g0 in ftype) && ftype[g0] == dt) || trim(fmget(g0, "umgebung")) != e) continue
+            sx = fw(fmget(g0, "status")); if (sx == "abgeschlossen" || trim(fmget(g0, "superseded_by")) != "") continue
+            melde(st, code, g0, "Deployment-Eintrag `" trim(fmget(g0, "id")) "` (Status `" sx "`) zur abgebauten Zielumgebung `" e "` ist weder abgelöst noch abgeschlossen — Abschalt-Tor (Vorgehen des Prozesses)") } }
+      } else if (pmart == "abbau-paarung") {
+        # Gestalt „abgebaut“ am geltenden Deploy-Stand der Umgebung (jüngste
+        # Version nach `datum`): Kopf-Feld `kopf=` mit Wert `wert=`
+        kf = par(prm, "kopf"); if (kf == "") kf = "gestalt"; kw = par(prm, "wert"); if (kw == "") kw = "abgebaut"
+        for (e in env) { ab = ((e in dsf) && fw(fmget(dsf[e], kf)) == kw); abf = (e in dsf) ? dsf[e] : ""
+          if (ab && zust[e] != "abgebaut") melde(st, code, abf, "geltender Deploy-Stand der Umgebung `" e "` hat die Gestalt „abgebaut“ (`" kf ": " kw "`), die Zielumgebung den Zustand `" zust[e] "` — beides gehört zusammen (Katalog-Deploy-Stand, Katalog-Zielumgebungen)")
+          if (!ab && zust[e] == "abgebaut") melde(st, code, envf, "Zielumgebung `" e "` hat den Zustand `abgebaut`, aber der geltende Deploy-Stand dieser Umgebung hat nicht die Gestalt „abgebaut“ (`" kf ": " kw "` im Kopf)" ((e in dsf) ? " — " rel(dsf[e]) : " — kein Deploy-Stand in output/") " — beides gehört zusammen (Katalog-Deploy-Stand)") }
+      }
+    }
   }
   # --- Ausgabe
   cmd = "LC_ALL=C sort -t \"\t\" -k3,3 -k1,1"
@@ -3451,6 +4544,9 @@ END {
     printf "Freigabe-Einträge: %d   davon Pflicht-Freigaben: %d   Lieferungs-Zeilen: %d%s\n", nfrei, nfreip, nmkl, (ndfrei > 0 ? sprintf("   Freigaben im Nachtrag: %d%s", ndfrei, (ndfu < ndfrei ? sprintf(" (je Umgebung der jüngste: %d)", ndfu) : "")) : "")
   }
   printf "Glossar-Begriffe (vormals/nicht verwenden): %d   Fundstellen in neuen Knoten: %d\n", nterm, nvw
+  printf "Prüfdatum: %s   Teilaufsätze: %d   %s: %s   Prüf-Zeilen: %d (mechanisch %d, Wächter %d)%s\n", HEUTE, nteil, (MODE == "template-quelle" ? "Prüf-Module der Quelle" : "Aktive Prozesse"), (npa > 0 ? palist : "— (keine Prüf-Module)"), npm, npmok, npmw, (wznicht != "" ? "   nicht geprüft: " wznicht : "")
+  printf "Geheimnis-Prüfung: %d Dateien, %d Treffer   Ausnahme-Datei: %s   Prozess-Ausnahme: %s   Git-Nachweise: %s\n", gehn, ngeh, (gehdatei == "" ? "— (keine registriert)" : gehdatei), (gehaus == "" ? "—" : gehaus), (gitx != "" ? "nicht geprüft (" gitx ")" : (ngitm + 0) " geänderte Dateien gelesen, " (ngith + 0) " in der Historie")
+  for (j = 1; j <= nwz; j++) { split(wz[j], w4, "\t"); if (w4[3] != "-") printf "Werkzeug %s (%s): Rückgabewert %s — %s\n", w4[2], w4[1], w4[3], w4[4] }
   printf "FEHLER: %d   HINWEISE: %d\n", nerr, nhin
   exit (nerr > 0 ? 1 : 0)
 }
@@ -3459,13 +4555,26 @@ EOF
 NFD=$(printf '\314\210')
 awk -v ROOT="$ROOT" -v MODE="$MODE" -v STICHTAG="$STICHTAG" -v KENNT="$KENNT" \
     -v OHNE="$OHNE_HINWEISE" -v NFD="$NFD" -v OUTP="$OUTP" -v OWNARG="$OWNARG" \
-    -v STQ="$STQ" -v HVBAD="$HVBAD" -v TSVER="$TSVER" \
+    -v STQ="$STQ" -v HVBAD="$HVBAD" -v TSVER="$TSVER" -v HEUTE="$HEUTE" \
     -f "$AWK_CHECK" "$DATA"
 RC=$?
 
 cat <<'EOF'
 
 == Nicht geprüft (bewusst) ==
+- Prozess-Prüfungen der Prüfart `waechter` (Lesung des Agenten zu seinen
+  Anlässen, nur gezählt); „Pflicht ab“ mit Auslöser; „Entfällt
+  abgeleitet, wenn …“ mit „Register leer“, Zustand eines Eintrags oder
+  Marken-Art; Grund und DEC einer `entfallen`en Marke; ob der
+  Folge-Versand nach einem Rückzug alle Empfänger erreicht (gelesen wird
+  nur, ob ein anderes Anschreiben den Stand nennt); Geheimnis-Muster
+  außerhalb der Liste im Skript und in nicht verfolgten Dateien;
+  eingefrorene Nachweise ohne git oder in nicht verfolgten Dateien; in der
+  committeten Historie ein Commit, der nur Zeilen einfügt (auch mitten in
+  der Datei: gilt als Ergänzung), eine Umbenennung (der neue Pfad gilt als
+  neue Datei) und ein committet gelöschter Stand in output/ oder
+  Testbericht; ob der erste Commit einer Datei ihre Einfrierung ist (der
+  Lint nimmt es an).
 - Wertlisten und Formate von Instanz-Feldern außer Präfix-Muster,
   `erwartet`, `herkunft`-Format und `fuer_marke`-Format (status, ampel,
   art, document_type, Datumsformate), Kann-/Optional-Felder, Inhalte;
@@ -3662,8 +4771,9 @@ cat <<'EOF'
   P15 Betreiben, ohne Hinweis und ohne die Zuordnungstabelle zu lesen; ab
   dem Stichtag oder wenn weder Phase noch Tätigkeitsname passt: Hinweis,
   nicht gezählt. Die Phase der Freigabe ist immer die des Dokumenttyps im
-  Katalog, nie die Nummer im Eintrag. Tag der Implementierung nur als
-  „Stand <Tag> von Implementierung, freigegeben für P10 … zu Marke M“;
+  Katalog, nie die Nummer im Eintrag. Tag (Glied P9) nur als „Stand <Tag>
+  von <Dokumenttyp von P9>, freigegeben für P10 … zu Marke M“ (Dokumenttyp
+  aus dem Katalog des aktiven Prozesses, „Implementierung“ als Altform);
   ohne Marke nicht zugeordnet (Fehler ab Stichtag); Nachweise (Tests
   grün, Code-Review) werden nicht gelesen. Die Ordnung prüft nur
   Vorhandensein, nicht die zeitliche Reihenfolge der Einträge;

@@ -1,10 +1,22 @@
 # Wiki — lebender Sachstand
 
-**Bearbeitungsstand: 2026-10-25**
+**Bearbeitungsstand: 2026-11-11**
 
 Dieses Dokument beschreibt die vollständige Logik des
 `wiki/`-Layers und ist eine Teildatei des MasterPrompts.
 Es gilt zusammen mit den Regeln aus `MasterPrompt.md`.
+
+**Beispiele in diesem Dokument** stammen aus zwei
+Projektarten und nennen ihre Herkunft: ein
+**Verfahren** (Einspruch gegen einen
+Grundsteuerbescheid — „Beispiel aus einem Verfahren“)
+und ein **Software-Projekt** `shop` (ein
+Online-Shop — „Beispiel aus einem Software-Projekt“).
+Beide sind Anschauung: Sie zeigen, wie Knoten, Verweise
+und Register in einem Projekt aussehen, und verlinken
+nicht in die Prozess-Teil-Wikis; welche Typen ein
+Projekt tatsächlich hat, bestimmen Basis-Katalog und
+aktiver Prozess (§3).
 
 ## 1. Grundidee und Entkopplung
 
@@ -140,16 +152,28 @@ Pro `input/`-Datei:
    - Für **gewichtige** Ereignisse/Fristen (§2.4):
      zusätzlich ein `event`- bzw. `deadline`-Detail-
      Knoten wird als **Aktions-Entwurf** vorgelegt
-     (Vorschlagsblock am Ingest-Ende).
+     (Vorschlagsblock am Ingest-Ende). Ein Prozess
+     kann das verschärfen: Im Verfahrens-Prozess legt
+     der Agent eine laufende Frist sofort an und
+     meldet sie, ohne den Vorschlagsblock abzuwarten
+     (die Regel steht im Vorgehen dieses Prozesses).
 5. Aktualisiert `wiki/Eingangsdokumente.md`
    (Register-Eintrag pro neuem document-Knoten),
    `wiki/Aktenzeichen.md`, `wiki/Ansprechpartner.md`
    (soweit relevant) und `wiki/index.md` (§6).
 6. Schreibt einen Eintrag in `wiki/log.md` (§7).
-7. Erzeugt einen git-Commit mit passendem Präfix
-   (`Ingest:` für Wiki-Knoten, `Chronologie:` /
-   `Fristen:` / `Aktenzeichen:` / `Ansprechpartner:`
-   für die Fassaden — siehe MasterPrompt §6.2).
+7. Erzeugt **einen** git-Commit mit dem Präfix
+   `Ingest:` — der Ingest ist ein Zug, samt seinen
+   Einträgen in den Fassaden (MasterPrompt §6.1). Die
+   Fassaden-Präfixe (`Chronologie:`, `Fristen:`,
+   `Aktenzeichen:`, `Ansprechpartner:`) gelten für die
+   Pflege einer Fassade außerhalb eines Ingest
+   (MasterPrompt §6.2).
+
+Ist das Original in `raw/` schon eine Markdown-Datei,
+ist die Konvertierung eine unveränderte Kopie nach
+`input/raw/` unter demselben Namen; der Ingest läuft
+danach wie bei jedem anderen Original.
 
 **Do-first-mit-Veto:** Der Ingest ist eine
 Standardaufgabe nach MasterPrompt §5.1.2. Alle
@@ -242,7 +266,7 @@ indem er alle Knoten mit `ingest_status: failed`
 findet.
 
 Sobald ein besserer Ingest möglich ist (User liefert
-Passwort, bessere OCR, kleinere Fassung), wird der
+Passwort, bessere OCR, kleinere Datei), wird der
 Skelett-Knoten per Re-Ingest ersetzt und
 `ingest_status` entfernt.
 
@@ -255,8 +279,8 @@ das bei Sessionstart (Phase C3 des Sessionstart-
 Ablaufs) und bietet es dem User an.
 
 Der Re-Ingest ersetzt den bestehenden Wiki-Knoten
-(nicht versioniert; der git-Verlauf dokumentiert den
-technischen Verlauf).
+(kein Versionsteil im Dateinamen; der git-Verlauf
+dokumentiert den technischen Verlauf).
 
 ### 2.3 Pflege von Chronologie und Fristen beim Ingest
 
@@ -280,7 +304,8 @@ extrahiert und **in Kategorien** eingetragen
   `wiki/Fristen.md` unter `## Offen` ein.
 - Jeder Frist-Eintrag verweist per Wikilink auf den
   auslösenden `document`-Knoten und ggf. auf den
-  zugehörigen `case`-Knoten.
+  zugehörigen Fall-Knoten des Prozesses (etwa `case`
+  mit SP-2).
 - Zusätzlich wird in `wiki/Chronologie.md` ein knapper
   Vermerk "Frist gesetzt" mit Datum und Verweis
   angelegt — `wiki/Chronologie.md` bleibt das
@@ -300,7 +325,10 @@ bekommen bei Gewichtigkeit einen `person`-Knoten.
 **Für Aktenzeichen entfällt die
 Entscheidung** — Aktenzeichen haben keinen eigenen
 Detail-Knotentyp; ihr Kontext lebt im Metadatenblock
-der zugehörigen `case`- oder `document`-Knoten.
+des zugehörigen `document`-Knotens — jedes Eingangs-
+oder Ausgangsdokument trägt sein Aktenzeichen — und in
+Prozessen mit eigenem Fall-Typ auch in dessen Knoten
+(etwa `case` mit SP-2).
 **Gewichtige Zielmarken** dürfen einen
 `target-mark`-Detail-Knoten bekommen — sie
 entstehen nicht beim Ingest, sondern bei der
@@ -546,17 +574,18 @@ indexierende Sicht.
 
 ### 3.3 Domänen-Detail-Typen
 
-Der Basis-Katalog führt als Domänen-Bestand die
-Rechtsfall-Typen `case` und `argument` (bis zur
-Ausarbeitung des zugehörigen Prozesses in der Basis
-belassen, ohne indexierende Fassade).
-**Prozess-spezifische Typen** bringt der Prozess als
-eigene Katalog-Einträge (`Katalog-<Name>.md` in
-seinem Teil-Wiki) mit; sie kommen beim Merge als
-Dateien in den Katalog (§11.3) — z.B. `requirement`
-und `bug-report` mit SP-1, `user-story` und
-`use-case` mit RP-1; `decision` liegt bereits in der
-Basis (§3.2).
+**Prozesse bringen eigene Typen mit.** Der
+Basis-Katalog führt keine Domänen-Typen; Fachliches
+kommt mit dem Prozess. **Prozess-spezifische Typen**
+bringt der Prozess als eigene Katalog-Einträge
+(`Katalog-<Name>.md` in seinem Teil-Wiki) mit; sie
+kommen beim Merge als Dateien in den Katalog (§11.3)
+— z.B. `requirement` und `bug-report` mit SP-1,
+`user-story` und `use-case` mit RP-1, das Verfahren
+`case`, das Argument `argument` und die
+Beweismittel-Relation `evidence` mit SP-2 (Steckbrief
+`_template/referenzprozesse/SP-2-Recht-und-Verwaltung/Steckbrief.md`);
+`decision` liegt bereits in der Basis (§3.2).
 
 Details (Zweck, Pflichtfelder, Beispielnamen) stehen
 in den Katalog-Einträgen. Ein Projekt nutzt in der
@@ -659,6 +688,23 @@ Knotentyp:
   Kurzzusammenfassung.
 
 ## 3a. Fassaden-Knoten (Singleton-Typen)
+
+**Platzhalter-Grundsatz:** Jeder Knoten, auf den das
+Template — Basis und Prozesse — verweist (Links in
+Fassaden, MasterPrompt, Wiki.md), liegt im Template
+als **Rumpf** vor: fast leer, mit Frontmatter, Titel
+und dem Hinweis, was der Init einträgt. Kein Knoten,
+auf den das Template verweist, entsteht erst im Init;
+der Init **füllt** die Rümpfe aus den
+Bootstrap-Dateien (§11), das Upgrade legt einen Rumpf
+nur an, wo er fehlt, und schreibt keinen vorhandenen
+Knoten um. So gibt es in einer frischen Vorlage keine
+toten Links, und das Prüfprogramm braucht keine
+Sonderbehandlung für Init-Knoten. Beispiele sind
+[[Aktivierter-Prozess]], [[Commit-Sprache]],
+[[Schwester-Templates]] und die Root-Dateien
+`Offene Fragen.md` und `devstate_active.md`
+([[Standarddateien-Katalog]]).
 
 Fassaden sind Übersichts-Knoten mit **eigenem
 Typ pro Fassade**. Sie existieren höchstens einmal
@@ -782,6 +828,39 @@ Anzeige- und Anlage-Reihenfolge der Fassaden regeln
   Prozess-Merge und werden dort behandelt wie
   Basis-Fassaden (§3a-Regeln gelten). Konkrete
   Prozess-Fassaden siehe jeweiliger Prozess-Steckbrief.
+- **Fassaden nach Stufe (SP-2 Recht und
+  Verwaltung).** Mit SP-2, dem Prozess mit
+  Ausbaustufen, wird immer der volle Umfang
+  ausgeliefert: sein Steckbrief deklariert je Fassade
+  „Pflicht ab Stufe n“ ([[Katalog-process-brief]]);
+  Fassaden unterhalb der aktuellen Stufe liegen mit
+  `active: false` im Anwender-`wiki/` bereit, ihre
+  Glieder in der Kette entfallen abgeleitet
+  ([[Kettenpruefung]] §Fehlende und vertretene
+  Glieder); der Stufenwechsel ist eine Entscheidung
+  ([[Zuschnitt-aendern]]) und arbeitet die
+  Bootstrap-Datei der dann fälligen Fassade ab (wie
+  eine Reaktivierung, unten). Für andere Prozesse gilt
+  dieser Absatz nicht. In SP-2 sind die Fassaden
+  Verfahren, Beteiligte, Schriftsätze, Anlagen,
+  Einreichungen und Wegweiser ab Stufe 1 Pflicht,
+  Strategie, Sachverhalt und Argumente ab Stufe 2;
+  Kosten ist ab
+  Stufe 1 aktivierbar und mit einem Auslöser Pflicht;
+  Beweisangebote, Serien, Forderungskonto und
+  Flurstücke sind optional. Die Basis-Fassaden Fristen,
+  Eingangsdokumente, Aktenzeichen, Chronologie,
+  Organisationen, Ansprechpartner und Rechercheartefakte
+  werden mit SP-2 Pflicht ab Stufe 1 (SP-2-Präzisierung
+  im jeweiligen Katalog-Eintrag); Mitgliedschaften
+  bleibt `active: false` — der Agent schlägt das
+  Einschalten vor, wenn eine Zugehörigkeit über
+  Verfahren oder Zeit hinweg erheblich wird
+  ([[Katalog-Mitgliedschaften]]). Die Tabelle mit allen
+  Fassaden, Stufen und Einstufungen führt der
+  SP-2-Steckbrief (`§ Mitgebrachte Fassaden`,
+  `_template/referenzprozesse/SP-2-Recht-und-Verwaltung/Steckbrief.md`);
+  dieser Absatz ist nur die Übersicht.
 
 **MetaFassade:** [[Fassaden]] ist das Register der
 Fassaden — ihre „Detail-Elemente" sind andere
@@ -909,10 +988,10 @@ machen; sie landen aber nicht direkt in
 `wiki/Glossar.md`, sondern in
 `wiki/Glossar Review.md`.
 
-**Format eines Glossar-Eintrags** (Beispiel; der
-Eintrag benennt, definiert in ein bis zwei Sätzen und
-verweist auf den führenden Ort des Begriffs — er zählt
-keine Ausprägungen auf):
+**Format eines Glossar-Eintrags** (Beispiel aus einem
+Verfahren; der Eintrag benennt, definiert in ein bis
+zwei Sätzen und verweist auf den führenden Ort des
+Begriffs — er zählt keine Ausprägungen auf):
 
 ```markdown
 ### Grundsteuerwertbescheid
@@ -931,7 +1010,7 @@ neuem Recht.
 bis 2025-03)
 **Nicht verwenden:** Grundsteuerbescheid (das ist der
 Bescheid der Gemeinde über die Steuer selbst)
-**Verankert in:** [[2025-03-11 Grundsteuerwertbescheid Flst 136 Muehlgaessle]]
+**Verankert in:** [[2025-03-11 Grundsteuerwertbescheid Flst 273 Muehlgaessle]]
 **Siehe auch:** [[Grundsteuerwert]] — Sach-Wissen zum
 Begriff (Herleitung, Kontext, Anwendung)
 ```
@@ -970,6 +1049,12 @@ Begriff (Herleitung, Kontext, Anwendung)
 `wiki/Glossar.md` bleibt clean — nur inhaltliche
 Felder, keine Prozess-Felder.
 
+**Mitgelieferte Einträge** — die der Basis und die aus
+den Glossar-Anhängen der aktiven Prozesse (§11.3
+Schritt 2, „Glossar-Anhang“) — gelten als freigegeben
+mit dem Template-Stand und durchlaufen diesen Prozess
+nicht.
+
 **Glossar führt die Definition.** Existieren ein
 Glossar-Eintrag und ein `concept`-Knoten (§3.2) für
 denselben Begriff, steht die Definition **einmal**, im
@@ -998,8 +1083,8 @@ sind — kein reines Ingest-Nebenprodukt.
 
 1. **Nach Abschluss des sonstigen Setups** (Facts,
    Katalog, Fassaden-Auswahl, ggf. erste Ingest-
-   Runde) fragt der Agent **aktiv**, was ins Mission
-   Statement soll.
+   Runde) und **vor dem Konzept-Angebot** fragt der
+   Agent **aktiv**, was ins Mission Statement soll.
 2. Der Agent **schlägt ggf. gleich einen Entwurf
    vor** — basierend auf Projekt-Identifikation aus
    der Instruktionsdatei, Facts §Projekteinstieg
@@ -1137,8 +1222,9 @@ Feldregeln:
   einer Komponente — Format: [[Katalog-Zielmarken]].
 
 Weitere Felder sind je Knotentyp zulässig (z.B.
-`status` bei `case`, `case:`/`source:` bei `event`/
-`deadline`, `parent:` bei hierarchischen Beziehungen).
+`status` bei einem prozess-mitgebrachten Fall-Typ,
+`case:`/`source:` bei `event`/`deadline`, `parent:`
+bei hierarchischen Beziehungen).
 
 **Frontmatter-Verweise auf andere Wiki-Knoten:
 String-Notation Pflicht.** Alle Frontmatter-Felder, die
@@ -1221,9 +1307,9 @@ Konkrete Struktur-Konventionen je Typ stehen in der
     Entity").
   - `concept`: knappe Definition (1–2 Sätze).
   - `event`, `deadline`: knapper Kontext-Absatz.
-  - `case`, `argument` und weitere Typen: an
-    funktional gleichwertiger Stelle (Gegenstand,
-    Kernthese o.ä.).
+  - prozess-mitgebrachte Typen: an funktional
+    gleichwertiger Stelle (Gegenstand, Kernthese
+    o.ä.).
 - Kann: weitere Unterabschnitte, Anhänge
   (Originalzitate in Blockquotes).
 
@@ -1233,17 +1319,31 @@ Länge, Datumsformate) regelt `Styleguide-wiki.md`.
 
 ### 4.3 Metadaten-Block (document)
 
+Beispiel aus einem Verfahren:
+
 ```markdown
 - **Dokumenttyp:** Grundsteuermessbescheid
 - **Datum:** 11.03.2025
 - **Absender:** Finanzamt Mittelbach
 - **Empfänger:** Tina Reiherbach und Alexander Reiherbach
 - **Aktenzeichen (Mess):** 12/345/6/00078/0000/9
-- **Flurstück:** Flst 92, Amselweg 7, 62318 Mittelbach,
+- **Flurstück:** Flst 418, Amselweg 7, 62318 Mittelbach,
   Gemarkung Mittelbach
 - **Grundsteuermessbetrag:** 38,71 €
 - **Zurechnung:** Tina Reiherbach 1/2,
   Alexander Reiherbach 1/2
+```
+
+Beispiel aus einem Software-Projekt (`shop`):
+
+```markdown
+- **Dokumenttyp:** Angebot
+- **Datum:** 02.02.2026
+- **Absender:** Zahlungsdienst Nordlicht GmbH
+- **Empfänger:** shop-Projekt
+- **Referenz:** NL-2026-0417
+- **Gegenstand:** Anbindung des Bezahldienstes an den
+  Shop, Preismodell je Transaktion
 ```
 
 Felder, die nicht zutreffen, werden weggelassen
@@ -1251,7 +1351,9 @@ Felder, die nicht zutreffen, werden weggelassen
 
 ### 4.4 Kurzzusammenfassung
 
-4–8 Sätze in Fließtext, ohne eigene Überschrift. Soll
+4–8 Sätze in Fließtext, ohne eigene Überschrift (bei
+einem kurzen Dokument entsprechend weniger — nie
+länger als das Dokument selbst). Soll
 den wesentlichen Inhalt so wiedergeben, dass man das
 Dokument nicht öffnen muss, um zu verstehen, worum es
 geht und was verfügt oder mitgeteilt wird.
@@ -1265,7 +1367,7 @@ Leerzeichen**, z.B.:
 
 - `Finanzamt Mittelbach.md`
 - `Tina Reiherbach.md`
-- `Flst 92 Amselweg 7.md`
+- `Flst 418 Amselweg 7.md`
 
 Das ergibt lesbare Wikilinks wie
 `[[Finanzamt Mittelbach]]`.
@@ -1282,10 +1384,15 @@ Das ergibt lesbare Wikilinks wie
   nicht im Dateinamen — sie sind ohnehin über
   Entity-Knoten abrufbar.
 
-Beispiele:
+Beispiele aus einem Verfahren:
 
-- `2025-03-11 Grundsteuerwertbescheid Flst 136 Muehlgaessle.md`
+- `2025-03-11 Grundsteuerwertbescheid Flst 273 Muehlgaessle.md`
 - `2025-04-15 Einspruch Grundsteuer 2025.md`
+
+Beispiele aus einem Software-Projekt (`shop`):
+
+- `2026-02-02 Angebot Zahlungsdienst Nordlicht Anbindung.md`
+- `2026-03-10 Lastenheft Warenkorb und Kasse.md`
 
 ### 5.2a Massen-Ingest und Kollisionen
 
@@ -1326,11 +1433,39 @@ Wie im MasterPrompt §3.7 — ö → oe, ä → ae, ü → ue,
 Alle **Wiki-Knoten** liegen **flach in `wiki/`** —
 Instanzen der in §3 definierten Typen (Detail-Knoten
 und Fassaden). Keine Unterordner nach Knotentyp. Der
-Typ steht im Frontmatter. Einzige
-Unterordner-Ausnahme: `wiki/templates/` mit
-Kopiervorlagen für Root-Setup-Dateien (MasterPrompt
-§7.5 und [[Standarddateien-Katalog]] §2.7a/§2.13) —
-keine Wiki-Knoten, kein Frontmatter-Typ.
+Typ steht im Frontmatter. Zwei Unterordner-Ausnahmen:
+
+1. **`wiki/templates/`** mit Kopiervorlagen für
+   Root-Setup-Dateien (MasterPrompt §7.5 und
+   [[Standarddateien-Katalog]] §2.7a/§2.13) — keine
+   Wiki-Knoten, kein Frontmatter-Typ.
+2. **Unterseiten eines Knotens:** Eine Wiki-Seite darf
+   einen **gleichnamigen Unterordner** `wiki/<Knoten>/`
+   haben — nur neben der Seite gleichen Namens, **eine
+   Ebene** tief, keine weiteren Unterordner. Die
+   Dateien darin sind **Teilaufsätze** der
+   Übersichtsseite: ohne eigenen Typ, ohne Nummer; sie
+   teilen Herkunft (Template oder Projekt), Eigentümer
+   und Upgrade-Verhalten der Übersichtsseite (ersetzt
+   das Upgrade die Übersicht, ersetzt es die
+   Teilaufsätze mit). **Navigation:** die
+   Übersichtsseite listet alle Teilaufsätze; jeder
+   Teilaufsatz trägt einen Rücklink auf die Übersicht
+   und Vor/Zurück zu den Nachbarn; `wiki/index.md`
+   führt nur die Übersichtsseite (§6.1).
+   **Dateiname:** beginnt mit dem Knotennamen als
+   Präfix und einer laufenden Nummer
+   (`wiki/Wegweiser-VwGO/Wegweiser-VwGO-02-Zustellung.md`);
+   Dateinamen sind **über alle Ordner unter `wiki/`
+   eindeutig** (Obsidian-Verträglichkeit). Das
+   Prüfprogramm liest Unterordner mit und meldet einen
+   Unterordner ohne Seite gleichen Namens, einen
+   Teilaufsatz ohne Rücklink und doppelte Dateinamen
+   (§9). Gedacht für große Wissens-Knoten, die
+   lesbar bleiben sollen (etwa Wegweiser durch ein
+   Regelwerk, die ein Prozess mitbringt); Katalog-Einträge
+   nennen in der Zeile „Teilaufsätze“, ob ein Typ sie
+   vorsieht ([[Katalog]] §Typ-Konventionen).
 
 ### 5.5 Namensbeständigkeit
 
@@ -1365,12 +1500,18 @@ listet die **Detail-Knoten nach Typ**:
    `idea`, `decision`, `agent-report`,
    `research-artifact`, `internal-*`)
 2. **Relations-Typen** (`member` usw.)
-3. **Aktive Domänen- und Prozess-Detail-Typen**
-   (`case`, `argument`, prozess-mitgebrachte Typen
-   usw. — nur die im Projekt tatsächlich
-   verwendeten)
+3. **Aktive Prozess-Detail-Typen**
+   (prozess-mitgebrachte Typen, etwa `requirement`
+   mit SP-1 oder `case` mit SP-2 — nur die im Projekt
+   tatsächlich verwendeten)
 
-Nicht genutzte Detail-Typen erscheinen nicht.
+Nicht genutzte Detail-Typen erscheinen nicht. Die
+Platzhalter-Abschnitte des mitgelieferten Rumpfs
+(„wird beim ersten Ingest angelegt“) dürfen stehen
+bleiben, bis der erste Knoten des Typs da ist; sie
+sind kein Befund.
+**Teilaufsätze** eines Knotens (§5.4) erscheinen nicht;
+der Index führt nur die Übersichtsseite.
 **Prozess-Detail-Typen erscheinen im Index wie
 Basis-Typen**; die zugehörigen Prozess-Fassaden
 werden nach dem Merge in der Landkarte unter der
@@ -1399,12 +1540,12 @@ Datum vorn steht.
 ### 6.2 Eintragsformat
 
 Pro Knoten: Wikilink + One-Liner aus der
-Kurzzusammenfassung.
+Kurzzusammenfassung (Beispiel aus einem Verfahren):
 
 ```markdown
 ## document
 
-- **[[2025-03-11 Grundsteuerwertbescheid Flst 136 Muehlgaessle]]** —
+- **[[2025-03-11 Grundsteuerwertbescheid Flst 273 Muehlgaessle]]** —
   Erstbescheid mit festgestelltem Grundsteuerwert 123.400 €.
 - **[[2025-04-15 Einspruch Grundsteuer 2025]]** —
   Einspruch gegen den Grundsteuermessbescheid
@@ -1413,7 +1554,7 @@ Kurzzusammenfassung.
 ## person
 
 - **[[Tina Reiherbach]]** — Miteigentümerin
-  Flst 92 Amselweg 7.
+  Flst 418 Amselweg 7.
 
 ## organization
 
@@ -1432,11 +1573,11 @@ Kurzzusammenfassung.
 Append-only System-Log aller Ingest- und Re-Ingest-
 Operationen. Greppable.
 
-**Format:**
+**Format** (Beispiel aus einem Verfahren):
 
 ```markdown
 ## [2026-04-17] ingest
-- document: [[2025-03-11 Grundsteuerwertbescheid Flst 136 Muehlgaessle]]
+- document: [[2025-03-11 Grundsteuerwertbescheid Flst 273 Muehlgaessle]]
 - source: input/raw/scan_2025_03.md (pages 4-6)
 
 ## [2026-04-17] re-ingest
@@ -1464,12 +1605,20 @@ typischerweise auf eine Entity (`person`,
 ein anderes `document`. Zweck: Navigation,
 Graph-Ansicht in Obsidian, automatische Backlinks.
 
-Beispiel im Volltext eines `document`-Knotens:
+Beispiel im Volltext eines `document`-Knotens (aus
+einem Verfahren):
 
 > Das [[Finanzamt Mittelbach]] stellt mit diesem
 > Bescheid den Grundsteuerwert für
-> [[Flst 136 Muehlgaessle]] auf 123.400 € fest.
+> [[Flst 273 Muehlgaessle]] auf 123.400 € fest.
 > Empfänger ist [[Doris Vogelsang]].
+
+Beispiel aus einem Software-Projekt (`shop`):
+
+> Die [[Zahlungsdienst Nordlicht GmbH]] bietet die
+> Anbindung des Bezahldienstes an; die Anforderung
+> [[REQ-014 Bezahlen mit Kreditkarte]] verweist auf
+> dieses Angebot.
 
 ### 8.2 Format
 
@@ -1490,14 +1639,25 @@ Pro Knoten an folgenden Stellen:
    für explizite Beziehungen ("erwähnt in", "siehe
    auch", "gehört zu").
 
-Beispiel für den Bezüge-Abschnitt:
+Beispiel für den Bezüge-Abschnitt (aus einem
+Verfahren; „Case“ ist der Fall-Knoten des Prozesses):
 
 ```markdown
 ## Bezüge
 
-- Gehört zu Case: [[Einspruch Grundsteuer Flst 136 Muehlgaessle]]
+- Gehört zu Case: [[Einspruch Grundsteuer Flst 273 Muehlgaessle]]
 - Erwähnt Entity: [[Finanzamt Mittelbach]], [[Doris Vogelsang]]
 - Verweist auf Concept: [[Grundsteuerwert]], [[Bodenrichtwert]]
+```
+
+Beispiel aus einem Software-Projekt (`shop`):
+
+```markdown
+## Bezüge
+
+- Gehört zu Marke: [[Zielmarken]] 1.2 „Kasse“
+- Erwähnt Entity: [[Zahlungsdienst Nordlicht GmbH]]
+- Verweist auf Anforderung: [[REQ-014 Bezahlen mit Kreditkarte]]
 ```
 
 ### 8.4 Pflege
@@ -1621,6 +1781,15 @@ ins Projekt-`tools/`, Eintrag in `Tools.md` als
 - **Ablöse-Ketten-Konsistenz** — Element-Sackgassen und
   -Zyklen bei `replaces_type:` (§11.4); ein ersetzter
   Typ kommt im Projekt nicht vor.
+- **Unterseiten** (§5.4) — ein Unterordner unter
+  `wiki/` ohne Seite gleichen Namens (außer
+  `templates/`), ein Teilaufsatz ohne Rücklink auf die
+  Übersicht, ein Dateiname, der unter `wiki/` über alle
+  Ordner nicht eindeutig ist.
+- **Prozess-Prüfungen** — die Prüf-Definitionen der
+  aktiven Prozesse aus [[Aktivierter-Prozess]], mit
+  Codes `<Prozess>-…` und Stufe nach der
+  Schwere-Tabelle ([[Kettenpruefung]] §Lint-Anteil).
 - *Optional, später:* Widersprüche zwischen Knoten.
 
 ### 9.2 Ausnahmen
@@ -1668,13 +1837,14 @@ Immer **user-initiiert**.
 
 1. User benennt Ankerpunkt und Anlass. Varianten:
    - **Sub-Fall A** (Snapshot eines konkreten
-     Anlasses, Default): "Snapshot Einspruch
-     Grundsteuer Flst 136, Stand heute".
+     Anlasses, Default; Beispiel aus einem Verfahren):
+     "Snapshot Einspruch Grundsteuer Flst 273, Stand
+     heute".
    - **Sub-Fall B** (projektweiter Snapshot):
      "Snapshot Gesamtstand".
 2. KI ermittelt den Anker-Knoten (bei Sub-Fall A
-   meist `case`, `product`, `thesis` oder
-   vergleichbar). Sub-Fall B hat keinen einzelnen
+   meist der Fall-, Produkt- oder Thesen-Knoten des
+   Prozesses oder vergleichbar). Sub-Fall B hat keinen einzelnen
    Anker.
 3. KI sammelt transitiv alle verlinkten Knoten, die
    inhaltlich zum Anlass gehören.
@@ -1814,11 +1984,21 @@ Anbindungs-Modi unter `_template/referenzprozesse/`
   mitgebrachte `internal-*`-Knoten samt
   Einführungs-Anweisungen (Eintragung,
   Neuverdrahtung, Kollisions-Regel, Rückbau —
-  §11.3 Schritt 7). Die Deklarations-Sektionen
+  §11.3 Schritt 7); die KANN-Sektion
+  `§ Mitgebrachte Begriffe` deklariert den
+  Glossar-Anhang des Prozesses (§11.3 Schritt 2,
+  „Glossar-Anhang“). Die Deklarations-Sektionen
   stehen in fester Reihenfolge Fassaden → Ordner →
-  Präfixe → Mechanik (Ordner und Mechanik
-  entfallen, wenn keine mitgebracht werden, oder
-  stehen als ausdrückliche Leer-Deklaration).
+  Präfixe → Mechanik → Begriffe (Ordner, Mechanik
+  und Begriffe entfallen, wenn keine mitgebracht
+  werden, oder stehen als ausdrückliche
+  Leer-Deklaration).
+  Deklariert der Prozess **Ausbaustufen**, nennt der
+  Steckbrief je Fassade und Dokumenttyp das Feld
+  „Pflicht ab“ (Stufe oder Auslöser;
+  [[Katalog-process-brief]]); welche Typen er mitbringt
+  („Was ich mitbringe“), ist die Quelle für den Satz
+  „Prozesse bringen eigene Typen mit“ (§3.3).
 - **`index.md`** (Typ `process-mapping`) — Design-Wahrheit
   des Prozesses. Beginnt mit dem Verweissatz „Ich bin in
   [[Steckbrief]] beschrieben; konkret mache ich Folgendes:
@@ -1856,6 +2036,15 @@ Anbindungs-Modi unter `_template/referenzprozesse/`
     und werden beim Merge wie die übrigen Dateien des
     Teil-Wikis ins Anwender-`wiki/` kopiert (§11.3
     Schritt 1).
+  - **`Glossar-Anhang-<Prozess-Kennung>.md`** (KANN;
+    etwa `Glossar-Anhang-SP-2.md`) — der Glossar-Teil
+    des Prozesses: die Begriffe, die nur dieser
+    Prozess benutzt, im Eintragsformat des Glossars
+    (Typ `glossary-appendix`,
+    [[Katalog-glossary-appendix]]). Der Anhang wird
+    beim Merge **nicht kopiert**; seine Einträge
+    wandern in `wiki/Glossar.md` des Projekts (§11.3
+    Schritt 2).
 
 **Zugangs-Ebenen:**
 
@@ -1927,7 +2116,10 @@ Prozesses: `ausgearbeitet` (fertig, benutzbar) oder
 `geplant` (Platzhalter — der Steckbrief-Scan im Init
 bietet den Prozess nur mit Geplant-Ansage an; siehe
 MasterPrompt §5.3). Fehlt das Feld, gilt der Prozess
-als benutzbar.
+als benutzbar. Ein umbenannter Prozess trägt zusätzlich
+`vormals:` mit seiner früheren Kennung (z.B.
+`vormals: RP-3` im Steckbrief von RP-20); die alte
+Nummer bleibt gesperrt und wird nicht neu vergeben.
 
 **Regeln:**
 
@@ -2004,13 +2196,23 @@ die `referenzprozesse/…`-Pfade unten liegen darunter.
    Prozess-Skelette aus
    `referenzprozesse/<PROZESS>/wiki/` ins
    Anwender-`wiki/` — alle Dateien, einschließlich der
-   mitgebrachten Katalog-Einträge `Katalog-<Name>.md`.
+   mitgebrachten Katalog-Einträge `Katalog-<Name>.md`;
+   ausgenommen sind die Anhänge, deren Einträge
+   Schritt 2 einspielt: `Glossar-Anhang-*.md` und
+   `Konzept-Repositories-Anhang-*.md` werden **nicht**
+   kopiert (wer den Ordner im Ganzen kopiert, nimmt
+   sie danach wieder heraus; der Lint meldet einen
+   liegengebliebenen Anhang).
 2. **Katalog-Einträge verankern:** je mitgebrachtem
-   Eintrag eine Zeile in `wiki/Katalog.md` (Abschnitt
-   „Prozess-mitgebrachte Einträge“); die
-   Pflichtfeld-Zeile jedes Eintrags wird **wörtlich
-   übernommen** (eine logische Zeile je Typ, nicht
-   umformuliert — der Lint liest sie). Trägt ein Eintrag
+   Eintrag eine Link-Zeile in `wiki/Katalog.md`
+   (Abschnitt „Prozess-mitgebrachte Einträge“:
+   Wikilink und Link-Beschreibung, [[Katalog]] §Meta).
+   Die Pflichtfeld-Zeile jedes Typs **bleibt im
+   kopierten Eintrag `Katalog-<Name>.md` wörtlich
+   stehen** (eine logische Zeile je Typ, nicht
+   umformuliert — der Lint liest sie dort); nach
+   `wiki/Katalog.md` wird sie nicht abgeschrieben.
+   Trägt ein Eintrag
    eine Zeile `Replaces type`, betrifft das genau einen
    Basis-Eintrag und läuft nach §11.4. Ein Anspielen
    von Typ-Blöcken in eine gemeinsame Datei gibt es
@@ -2019,12 +2221,22 @@ die `referenzprozesse/…`-Pfade unten liegen darunter.
    eingespielt: seine Einträge wandern mit Geltung =
    Prozess in das Register
    `wiki/Konzept-Repositories.md`; dieser Anhang wird
-   nicht als Datei kopiert. Deklariert
+   nicht als Datei kopiert. Ebenso wird — **falls
+   vorhanden** — der **Glossar-Anhang**
+   `Glossar-Anhang-<Prozess-Kennung>.md` eingespielt
+   (Regeln im Absatz „Glossar-Anhang“ unter dieser
+   Sequenz); auch er wird nicht als Datei kopiert.
+   Deklariert
    der Steckbrief eine Sektion **„Mitgebrachte
    Ordner"**, werden diese Deklarationen als
    Freigabe-Buchung ins Entscheidungs-Register
    übernommen (Standardaufgabe; MasterPrompt §1.1) —
-   die Ordner selbst entstehen erst bei Bedarf. Beim
+   die Ordner selbst entstehen erst bei Bedarf. Der
+   Eintrag nennt die Steckbrief-Sektion als **Pfad**
+   (`_template/referenzprozesse/<Prozess>/Steckbrief.md`,
+   Sektion „Mitgebrachte Ordner“), nicht als Wikilink:
+   Steckbriefe liegen nicht im Projekt-`wiki/`, ein
+   Wikilink auf sie wäre tot. Beim
    Init geschieht diese Buchung erst in Turn 3,
    unmittelbar nachdem die erste Marke angelegt ist
    (jeder DEC-Eintrag trägt `zielmarke:`, und vor der
@@ -2091,6 +2303,62 @@ die `referenzprozesse/…`-Pfade unten liegen darunter.
 8. **Commit** mit Präfix `Prozess-Merge:` (MasterPrompt
    §6.2).
 
+**Glossar-Anhang** (führender Ort; gilt für jeden
+Prozess): Das mitgelieferte Glossar der Basis führt
+nur die Begriffe, die die Basis selbst benutzt. Die
+Begriffe, die nur ein Prozess benutzt, bringt dieser
+Prozess als `Glossar-Anhang-<Prozess-Kennung>.md` in
+seinem Teil-Wiki mit und deklariert ihn im Steckbrief
+(Sektion „Mitgebrachte Begriffe“).
+
+- **Form:** Frontmatter `type: glossary-appendix` und
+  `prozess:`; darunter `## Einträge` mit Einträgen im
+  Eintragsformat des Glossars ([[Glossar]] §Meta),
+  alphabetisch. Ein Anhang führt keinen Begriff, den
+  das Basis-Glossar oder der Anhang eines Prozesses
+  seiner `extends:`-Kette führt.
+- **Übernahme beim Aktivieren** (Schritt 2 — beim
+  Init, beim nachträglichen Merge und beim Join; je
+  Prozess der `extends:`-Kette, Basis zuerst): Der
+  Agent trägt die Einträge des Anhangs in
+  `wiki/Glossar.md` des Projekts ein, wörtlich und
+  alphabetisch einsortiert (Umlaute wie der
+  Grundbuchstabe, ohne Rücksicht auf Groß- und
+  Kleinschreibung). Sie gelten als **freigegeben mit
+  dem Template-Stand** wie die mitgelieferten
+  Einträge der Basis und durchlaufen den
+  Review-Prozess (§3a.1) nicht. Die Übernahme hängt
+  bei Merge und Join nicht davon ab, ob die Fassade
+  aktiv ist — die Datei liegt in jedem Projekt vor
+  (beim Baustein gilt der Punkt „Baustein“ unten). Die
+  Bearbeitungsstand-Zeile des Glossars nennt den
+  übernommenen Anhang mit Datum.
+- **Kollision:** Steht in `wiki/Glossar.md` oder in
+  [[Glossar Review]] schon ein Eintrag gleichen
+  Namens, überschreibt der Agent nichts; er legt
+  beide Einträge dem Anwender vor (eigenen Eintrag
+  behalten, den des Anhangs übernehmen oder beide zu
+  einem zusammenführen).
+  Bis zur Antwort bleibt der vorhandene Eintrag
+  stehen.
+- **Baustein:** Übernimmt ein Projekt nur eine
+  einzelne Fassade oder Dokumentbeschreibung eines
+  Prozesses ([[Init-Choreografie]] §Nachträglicher
+  Init-Merge), bietet der Agent die Einträge des
+  Anhangs an, die der Baustein benutzt; der
+  Anwender wählt.
+- **Update der Vorlage:** Der Delta-Nachzug
+  ([[Init-Choreografie]] §Phase A0) hält die Anhänge
+  der aktiven Prozesse gegen `wiki/Glossar.md`: neue
+  und geänderte Einträge eines Anhangs legt der
+  Agent wie jedes andere Delta als Übernahme vor;
+  ein Eintrag, den das Projekt geändert hat, bleibt
+  ohne Anwender-Wort, wie er ist.
+- **Deaktivierung des Prozesses:** Die übernommenen
+  Einträge bleiben im Glossar stehen (kein Rollback,
+  §11.5); gestrichen wird ein Eintrag nur auf
+  Anwender-Wort.
+
 **Disjunktheits-Regel** (führender Ort): Dateinamen
 sind disjunkt über Basis + alle Prozess-Wikis;
 Merge = Zusammenkopieren; `replaces_type:` regelt
@@ -2154,8 +2422,8 @@ Dateinamen neben dem Basis-Eintrag):
   `- **Replaces type:** `<alter Name>`` (genau eine
   Ersetzung je Typ; Grammatik im [[Katalog]]), der
   Eintrag den Kopf-Marker im Text; seine
-  Pflichtfeld-Zeile wird beim Merge wörtlich
-  übernommen (§11.3 Schritt 2). Ersetzende
+  Pflichtfeld-Zeile bleibt beim Merge im kopierten
+  Eintrag wörtlich stehen (§11.3 Schritt 2). Ersetzende
   Instanzen tragen `replaces_type: <alter Name>` im
   Frontmatter — die Katalog-Zeile führt, das
   Frontmatter spiegelt ([[Katalog]] §Typ-Konventionen

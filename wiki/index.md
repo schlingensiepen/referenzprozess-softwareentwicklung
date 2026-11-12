@@ -18,8 +18,8 @@ Wissen. Zwei Ebenen:
 - **Detail-Knoten** — atomare Wiki-Knoten pro
   Wissensobjekt (`document`, `person`, `place`,
   `organization`, `thing`, `concept`, `event`,
-  `deadline`, `idea`, `decision`, `case`,
-  `argument` etc.).
+  `deadline`, `idea`, `decision` und die vom Prozess
+  mitgebrachten Typen).
 
 **Progressive Disclosure:** wie Fassaden und
 Detail-Knoten zusammen gelesen werden und welche

@@ -69,8 +69,8 @@ entscheidet über Weiterarbeit (siehe
 `wiki/REP-NNN — ….md` (Detail-Typ
 `review-report`, erweitert `agent-report`; Fassade
 `wiki/Agent-Berichte.md`, Detail-Knoten-Konventionen;
-das Wiki ist flach, Unterordner kennt der Lint
-nicht). Der Prüfbericht trägt
+das Wiki ist flach bis auf die gleichnamigen
+Unterordner mit Teilaufsätzen). Der Prüfbericht trägt
 neben dem Prüf-Modell (`modell`) das Modell, das die
 geprüfte Änderung schrieb (`bau_modell`), die Runde
 und die Prüfberichte der vorigen Runde — so bleibt die
@@ -672,6 +672,56 @@ Beispiele:
 - **RP-1 P13 Ausliefern:** M2 Pflicht mit
   Erschöpfungs-Reifekriterium K=3 (Auslieferung
   nach außen).
+
+**SP-2-Erweiterung (gilt bei aktivem SP-2;** führender
+Ort `Vorgehen-SP-2.md` §4 Prüfen**):**
+
+- **Jedes ausgehende Dokument** wird vor dem Versand
+  inhaltlich geprüft; beim Marken-Schriftsatz sind die
+  Prüfrunden Vorbedingung des Tags (P9), sonst
+  Vorbedingung des Versandstands (`review`).
+  Pflicht-Eingaben jedes Prüfauftrags: der
+  Strategie-Stand mit Sperrliste und gebuchten Linien,
+  der Sachverhalts-Stand, die Rolle des Anwenders.
+- **Perspektiven-Katalog je Rolle** als M4-Lenses:
+  Gegenseite und andere Beteiligte; entscheidende oder
+  vermittelnde Stelle; öffentliche Stelle gegen ihre
+  eigenen Pflichten (ist der Anwender die Stelle: die
+  Perspektive „Adressat“); Faktenabgleich;
+  Vertraulichkeit gegenüber dem Empfänger;
+  unwidersprochener Vortrag. Untergrenze:
+  Faktenabgleich und Vertraulichkeit bei jedem
+  Dokument, unwidersprochener Vortrag bei jedem
+  Schriftsatz ab Stufe 2.
+- **Gegenperspektive als eigener Auftrag** (M3-Haltung,
+  Refutation-First) bei allem Strategischen — Leitfrage
+  „Was tut die Gegenseite als Nächstes, und wo trifft
+  sie uns?“; eigener Agent oder eigene Runde mit
+  Sachverhalt und bekannten Positionen der Gegenseite;
+  die Sperrliste zum Bewerten, nicht zum Befolgen.
+  **Ein Prüfbericht ohne offenen Befund ist
+  Vorbedingung** der Freigabe in P1, P5, P6, P7 und der
+  Strategie-Abschnitte von P11/P12.
+- **Formalia- und Versandprüfung** (P10, Prüfplan):
+  nach dem Tag das eingefrorene Paket — Anträge,
+  Unterschrift, Absender, Anlagen, Kanal, Grenzen der
+  Stelle, Vertraulichkeit; die maschinelle Paketprüfung
+  als Vorlauf; ein inhaltlicher Fehler führt zu neuer
+  Fassung mit neuem Tag.
+- **Prüfung jedes Begehrens** nach dem Raster des
+  Wegweisers „Prüfraster“ — wer will was und darf er
+  das, schon entschieden, erledigt, steht etwas
+  entgegen, Reaktionsfrist; Ergebnis als Befund mit
+  Vorschlag, der Anwender entscheidet.
+- **Primärquelle vor Zitat:** jede unverifizierte
+  Fundstelle ist ein Befund; Bundesrecht am Normen-REC
+  des verwendeten Stands.
+- **Runden-Obergrenze an das Zeitbudget der Frist
+  gebunden:** reicht das Budget nicht für eine weitere
+  Runde, geht der Konvergenz-Bericht sofort an den
+  Anwender, mit den fristwahrenden Optionen; der
+  Konvergenz-Bericht nennt das Zeitbudget. Die
+  Notfall-Freigabe bleibt Anwender-Entscheidung.
 
 Ohne prozess-eigene Präzisierung gilt der Basis-
 Vorschlag aus §4 (Agent empfiehlt, Anwender entscheidet).

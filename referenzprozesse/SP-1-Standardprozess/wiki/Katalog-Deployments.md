@@ -66,7 +66,14 @@ verankert.
   eine Patch-Marke gibt es nur bei einer Änderung an
   Produkt oder Spezifikation; Bestand ohne Feld:
   [[Zielmarken]] §Meta)
-- **Optional:** `supersedes` (Liste),
+- **Optional:** `aspekt` (einer der festen Werte
+  `installation`, `betrieb`,
+  `sicherung-wiederherstellung`, `ueberwachung`,
+  `zugang` — wofür der Eintrag gilt; Begriff und Grund
+  der festen Liste: `## Meta` von [[Deployments]]; in
+  SP-1 Kann-Feld, Bestand ohne Feld bleibt gültig; ein
+  Referenzprozess auf SP-1 kann es zur Pflicht machen),
+  `supersedes` (Liste),
   `superseded_by` (Liste), `ueberlagert` (Liste; nur
   an einem Element einer Sackgasse, [[Katalog]]
   §Typ-Konventionen), `alias` (Liste). Kein
@@ -78,3 +85,26 @@ verankert.
   `wiki/Deployments.md` (Wiki.md §1.1a).
 - **Struktur-Konventionen:** `## Meta` der Fassade
   [[Deployments]].
+- **RP-2-Präzisierung** (gilt bei aktivem RP-2): Das
+  Feld `aspekt` ist **Pflicht** — jeder
+  Deployment-Eintrag nennt einen der festen Werte
+  `installation`, `betrieb`,
+  `sicherung-wiederherstellung`, `ueberwachung`,
+  `zugang`. Der Deploy-Stand der Umgebung führt seine
+  Einträge je Aspekt, damit jedes Kapitel der
+  Betriebs-Anleitung eine Quelle hat; **fehlt ein
+  Aspekt, meldet das Inbetriebnahme-Tor** bei der
+  Freigabe der Betriebs-Anleitung
+  ([[Katalog-Betriebs-Anleitung]] RP-2-Präzisierung) —
+  die Aspekte Sicherung und Wiederherstellung,
+  Überwachung und Zugang (zweiter Zugang) sind dort
+  Bedingungen. Die Einträge der Aspekte `sicherung-
+  wiederherstellung` und `ueberwachung` sind zugleich,
+  worauf die Felder `sicherung` und `ueberwachung` der
+  Zielumgebung verweisen ([[Katalog-Zielumgebungen]]
+  RP-2-Präzisierung). Ein Lauf an der Anlage erzeugt
+  kein neues DEPL; er steht im `Betriebsjournal.md` (RP-2).
+  Beim Deploy-Stand „abgebaut“ gibt es keine Einträge;
+  offene DEPL einer abgebauten Umgebung meldet das
+  Prüfprogramm als FEHLER (`RP2-L7A`, `Vorgehen-RP-2.md`
+  §8).

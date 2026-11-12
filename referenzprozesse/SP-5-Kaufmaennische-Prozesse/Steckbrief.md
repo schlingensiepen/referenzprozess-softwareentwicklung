@@ -14,7 +14,7 @@ Version.
 **Was ich bin:** Eigenständiger Standardprozess für
 **kaufmännische Vorgänge** — Angebote, Ausschreibungen,
 Vergabe, Beauftragung, Rechnungslegung. Basis für die
-spezifischen Referenzprozesse RP-8 (Angebot) und RP-9
+spezifischen Referenzprozesse RP-50 (Angebot) und RP-51
 (Vergabe) — perspektivisch erweiterbar um weitere
 kaufmännische Vorgangsarten.
 

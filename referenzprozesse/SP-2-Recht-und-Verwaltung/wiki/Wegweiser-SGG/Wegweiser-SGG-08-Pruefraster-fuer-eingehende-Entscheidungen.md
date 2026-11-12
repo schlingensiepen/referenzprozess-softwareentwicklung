@@ -1,0 +1,29 @@
+# Wegweiser SGG — Sozialgerichtsverfahren — 8. Prüfraster für eingehende Entscheidungen
+
+[↑ Übersicht: Wegweiser SGG — Sozialgerichtsverfahren](../Wegweiser-SGG.md) · [← 7. Vertretung und Anwaltszwang](Wegweiser-SGG-07-Vertretung-und-Anwaltszwang.md)
+
+---
+
+Beim Einlesen eines Bescheids, Widerspruchsbescheids, Beschlusses oder Urteils der Reihe nach prüfen und das Ergebnis als Option festhalten.
+
+| # | Prüffrage | Woran prüfen | Norm |
+|---|---|---|---|
+| 1 | Art und Absender: Ausgangsbescheid, Widerspruchsbescheid, Gerichtsbescheid, Urteil, Beschluss? Richtige Widerspruchsstelle? | Rubrum, Rechtsbehelfsbelehrung; Widerspruchsbehörde nach § 85 Abs. 2 | [§ 85 Abs. 2](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgg.md#p85), [§ 105 SGG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgg.md#p105) |
+| 2 | Rechtsbehelfsbelehrung vollständig (Rechtsbehelf, Stelle, Sitz, Frist, schriftlich/elektronisch)? | sonst Jahresfrist statt Monatsfrist | [§ 66 SGG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgg.md#p66), [§ 85 Abs. 3 Satz 4 SGG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgg.md#p85) |
+| 3 | Bekanntgabe-/Zustellungsdatum und Fristende berechnet (Wochentag maschinell)? | Zustellungsnachweis; Tag nach Zustellung; Sonnabend/Sonntag/Feiertag | [§ 63](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgg.md#p63), [§ 64 SGG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgg.md#p64) |
+| 4 | Setzt sich die Entscheidung mit dem Vorbringen auseinander? | Begründungspflicht; Widerspruchsbescheid muss begründet sein; Prüfung von Rechtmäßigkeit und Zweckmäßigkeit | [§ 35 SGB X](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgb10.md#p35), [§ 85 Abs. 3](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgg.md#p85), [§ 78 Abs. 1 SGG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgg.md#p78) |
+| 5 | Richtiger Gegenstand? Wurde ein während des Verfahrens geänderter Bescheid einbezogen? | Vergleich der Bescheid-Daten mit § 86 / § 96 | [§ 86](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgg.md#p86), [§ 96 SGG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgg.md#p96) |
+| 6 | Begründung tragend? Heilbar? | Nachholung bis zur letzten Tatsacheninstanz möglich → Eventualplan „Begründung nachgeschoben“ ([Abschnitt 6](Wegweiser-SGG-06-Erledigung-und-Ruecknahme.md)) | [§ 41 Abs. 2 SGB X](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgb10.md#p41), [§ 42 SGB X](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgb10.md#p42) |
+| 7 | Anhörung vor belastendem Bescheid erfolgt? | fehlende Anhörung ist nicht über § 42 Satz 1 unbeachtlich | [§ 24](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgb10.md#p24), [§ 42 Satz 2 SGB X](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgb10.md#p42) |
+| 8 | Ermessen erkannt und ausgeübt? Gesichtspunkte in der Begründung? | Ermessensgrenzen, Zweck der Ermächtigung | [§ 35 Abs. 1 Satz 3 SGB X](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgb10.md#p35), [§ 54 Abs. 2 Satz 2 SGG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgg.md#p54) |
+| 9 | Aufschiebende Wirkung oder Sofortvollzug? Begründung des besonderen Vollzugsinteresses vorhanden? | Abs. 2 Nr. 1–5; schriftliche Begründung bei Nr. 5 | [§ 86a SGG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgg.md#p86a) |
+| 10 | Kostenentscheidung enthalten oder Kostenantrag nötig? | bei Beendigung ohne Urteil nur auf Antrag | [§ 193 SGG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgg.md#p193) |
+| 11 | Gerichtsentscheidung: Rechtsmittel statthaft? Zulassung erfolgt? Beschwerdewert? | Zulassungsgründe und Wertgrenzen | [§ 144](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgg.md#p144), [§ 160](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgg.md#p160), [§ 172 SGG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgg.md#p172) |
+| 12 | Gehörsverletzung ohne Rechtsmittel? | Anhörungsrüge binnen 2 Wochen ab Kenntnis | [§ 178a SGG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgg.md#p178a) |
+| 13 | Verfahrensfrist des Gerichts mit Folge (Ergänzung der Klage, Betreiben des Verfahrens, Äußerung)? | Ausschlussfrist nach § 92 Abs. 2; Rücknahmefiktion nach 3 Monaten | [§ 92](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgg.md#p92), [§ 102 Abs. 2](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgg.md#p102), [§ 104 SGG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgg.md#p104) |
+
+Ergebnisoptionen (nur als Prüfpfad, nicht als Rat): (a) Rechtsbehelf fristgerecht einlegen; (b) daneben Eilantrag nach § 86b; (c) bei fehlender Auseinandersetzung mit dem Vorbringen die Begründungslücke festhalten und die Kostenfolgen ([§ 192 Abs. 4](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgg.md#p192), [§ 193 SGG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20sgg.md#p193)) mitprüfen; (d) Eventualplan „Begründung nachgeschoben → Rücknahme/Erledigung mit Kostenantrag“ anlegen.
+
+---
+
+[↑ Übersicht: Wegweiser SGG — Sozialgerichtsverfahren](../Wegweiser-SGG.md) · [← 7. Vertretung und Anwaltszwang](Wegweiser-SGG-07-Vertretung-und-Anwaltszwang.md)

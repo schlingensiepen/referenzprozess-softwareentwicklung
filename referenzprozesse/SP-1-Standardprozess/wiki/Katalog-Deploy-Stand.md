@@ -141,3 +141,67 @@ Anwender-`wiki/` kopiert und in [[Katalog]] verankert.
   dem die Freigabe hängt — immer den Tag und den
   Testbericht der eigenen Marke, nie den der Vormarke
   (Eintragsformat: [[Einfrieren-und-Abloesen]] §Stand).
+- **Ausgeliefert an (Kann-Feld):** `ausgeliefert_an`
+  (Liste) nennt Empfänger oder Umgebungen **außerhalb
+  des Projekts**, an die dieser Stand ausgeliefert
+  wurde — Kunden, Betriebs-Projekte, fremde Rechner;
+  fehlt das Feld oder ist es leer, betrifft der Stand
+  nur eine projekt-eigene Umgebung. Das Feld ist die
+  Empfänger-Liste für den Rückzug eines fehlerhaft
+  verteilten Stands ([[Lebenslauf-eines-Stands]]
+  §Rückzug eines verteilten Stands, Schritt „Wer hat
+  es“); fehlt es, kennt der Agent die Empfänger nicht.
+- **Rückzug:** eines ausgelieferten Stands —
+  [[Lebenslauf-eines-Stands]] §Rückzug eines
+  verteilten Stands; lesen, sobald ein Fehler an einem
+  ausgelieferten Stand gemeldet wird.
+- **Nachweise:** der freigegebene Deploy-Stand ist
+  eingefroren; was zur ausgelieferten Fassung später
+  kommt — die Abnahmebestätigung des Empfängers, ein
+  Protokoll der Inbetriebnahme — ändert nichts am Stand
+  und kommt daneben: als angehängter, datierter Vermerk
+  oder als Datei im Unterordner `nachweis/` neben dem
+  Stand, in dem nur hinzugefügt wird
+  ([[Einfrieren-und-Abloesen]] §Nachweis).
+- **Überführungs-Frage:** beim **ersten** Deploy-Stand
+  einer Zielumgebung fragt der Agent, ob der Betrieb
+  dieser Umgebung in ein Infrastruktur-Projekt
+  überführt, mit Bausteinen aus RP-2 hier behalten
+  oder wie bisher behalten wird — [[Vorgehen-SP-1]] §2
+  Anmerkung P13; lesen, bevor der erste Deploy-Stand
+  einer Umgebung vorgelegt wird.
+- **RP-2-Präzisierung** (gilt bei aktivem RP-2): Der
+  Deploy-Stand führt seine Deployment-Einträge **je
+  Aspekt** (Installation, Betrieb, Sicherung und
+  Wiederherstellung, Überwachung, Zugang —
+  [[Katalog-Deployments]] RP-2-Präzisierung), damit
+  jedes Kapitel der Betriebs-Anleitung eine Quelle hat;
+  fehlt ein Aspekt, meldet das Inbetriebnahme-Tor bei
+  der Freigabe der Betriebs-Anleitung
+  ([[Katalog-Betriebs-Anleitung]] RP-2-Präzisierung).
+  Der Tag in `herkunft` ist der Tag des Rezepts. Nach
+  dem Ausrollen tritt das **Abnahmeprotokoll** als
+  Nachweis neben den Stand (`Abnahmeprotokolle.md` (RP-2),
+  Grundsatz nach dem Zeitpunkt: `Vorgehen-RP-2.md` §2
+  Anmerkung P10/P13); es ändert den Stand nicht. Bei der
+  Marken-Art **Abbauen** hat der Stand die Gestalt
+  **„abgebaut“**: je Umgebung ein Deploy-Stand mit Zweck
+  „für P13 Ausliefern“ — ausgeliefert wird der Abbau —,
+  der festhält, dass in der Umgebung nichts mehr gilt,
+  und **keine Deployment-Einträge** führt
+  (Quell-Register leer, im Kopf ausgewiesen mit dem
+  Feld `gestalt: abgebaut` — nur an dieser Gestalt,
+  dort Pflicht; das Prüfprogramm liest es am geltenden
+  Deploy-Stand der Umgebung); die
+  Zielumgebung bekommt zugleich den Zustand `abgebaut`
+  mit Datum ([[Katalog-Zielumgebungen]]
+  RP-2-Präzisierung), das Prüfprogramm meldet, wenn nur
+  eines von beiden gesetzt ist. Bedingung seiner
+  Freigabe ist das **Abschalt-Tor** (Verifikation,
+  Re-Inventur, Vorab-Sicherung — führender Ort
+  `Vorgehen-RP-2.md` §5; Ablauf des Abbaus
+  `Marken-RP-2.md` §4). Startet das RP-2-Projekt aus
+  einer Überführung, entsteht sein erster Deploy-Stand
+  für die übernommene Umgebung mit dem ersten getaggten
+  Rezept; Zielumgebung und Lieferbeziehung kommen aus
+  dem Startprompt (`Vorgehen-RP-2.md` §7).

@@ -57,6 +57,15 @@ Umgebungsvariablen, Ausführung).
   gilt unverändert aus SP-1 — führender Ort `## Meta`
   der SP-1-Fassade [[Systemtest-Setup]]; lesen, bevor
   ein Testlauf belegt wird.
+- **Testumgebung aus einem Betriebs-Projekt:** stellt
+  ein Infrastruktur-Projekt nach der Überführung des
+  Betriebs ([[Vorgehen-RP-1]] §2 Anmerkung P13/P14)
+  die Umgebung für die Integrationstests bereit, gilt
+  die SP-1-Regel (`## Meta` von [[Systemtest-Setup]],
+  Testumgebung aus einem Betriebs-Projekt): Dienstblatt
+  des Betriebs-Projekts, Solllage und Variablennamen
+  weiter hier, die `docker-compose.yml` bleibt für den
+  lokalen Lauf.
 - **Commit-Präfix:** Änderungen laufen unter dem
   SP-1-Präfix `Test-Setup:` weiter (kein eigener
   RP-1-Präfix).

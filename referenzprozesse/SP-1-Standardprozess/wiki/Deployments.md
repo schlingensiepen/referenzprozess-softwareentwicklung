@@ -42,6 +42,21 @@ Phase P13 „Ausliefern“.
   (Zwischen-Koordinator).
 - **Kategorie:** (a) Fassade + Detail-Knoten im wiki/ —
   siehe Wiki.md §Kategorisierung der Register.
+- **Aspekt:** ein Deployment-Eintrag gilt für einen
+  **Aspekt** aus einer festen Liste — **Installation**,
+  **Betrieb**, **Sicherung und Wiederherstellung**,
+  **Überwachung**, **Zugang**. Die Liste ist fest, weil
+  jedes Kapitel der Betriebs-Anleitung eine Quelle
+  braucht: der Deploy-Stand führt je Aspekt seine
+  DEPL, die Betriebs-Anleitung schreibt je Kapitel aus
+  dem Aspekt ([[Katalog-Betriebs-Anleitung]]). In SP-1
+  ist der Aspekt ein **Kann-Feld** (`aspekt:`,
+  [[Katalog-Deployments]]): ein DEPL ohne Feld bleibt
+  gültig, kein Nachtrag an Bestands-Einträgen;
+  empfohlen ist das Feld, sobald eine Umgebung mehr
+  als die Installation braucht. Ein Referenzprozess
+  auf SP-1 kann das Feld zur Pflicht machen
+  (Präzisierung im Katalog-Eintrag).
 - **Zwei Achsen:** die Architektur
   ([[Systemarchitektur]]) gilt je Marke
   umgebungsunabhängig; Deployments gibt es je
@@ -95,7 +110,8 @@ Phase P13 „Ausliefern“.
   `deployment-description`) spiegeln (Wiki.md §1.1a,
   [[Register-Grundmuster]]).
 - **Eintragsformat:** `### DEPL-NNN — <Kurzsatz>` mit
-  Feldern Umgebung / Komponente / Status +
+  Feldern Umgebung / Komponente / Aspekt (Kann; Wert
+  aus der festen Liste oben) / Status +
   status_date / Gestützt auf (ARC, SPEC, DEC) /
   Angelegt (Anlage-Datum `JJJJ-MM-TT`, Pflichtfeld
   seit 2.0 am Eintrag ohne Detail-Knoten, sonst

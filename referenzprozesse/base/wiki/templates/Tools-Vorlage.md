@@ -20,6 +20,22 @@ Werkzeug-Wahlen des Anwenders, auch die Wahl „ohne
 Werkzeug“ — Vorgehen.md §7b. Produktnamen in dieser
 Vorlage sind Beispiele.)_
 
+## Instruktionsdateien
+
+_(Je Harness, der in diesem Projekt arbeitet, die
+Datei, die er beim Sessionstart automatisch lädt —
+vom Agenten selbst festgestellt, nicht aus einer Liste
+übernommen: Standarddateien-Katalog §2.3. Jeder Agent
+trägt nur seinen Eintrag ein.)_
+
+### <Harness, z.B. Name des Kommandozeilen-Agenten>
+- **Datei:** <Pfad im Projekt>
+- **Festgestellt aus:** <Dokumentation des Harness |
+  Auskunft des Harness | vorhandene Datei | Annahme>
+- **Sicher:** ja | unsicher (<Grund>; geprüft in einer
+  zweiten Sitzung am ...)
+- **Angelegt am:** ...
+
 ## MCPs (agent-übergreifend)
 
 ### WebMCP
@@ -84,6 +100,7 @@ stehen nur hier, nicht in Regeln oder Anleitungen.)_
 
 ### Verfügbare Modelle mit Klassen
 - <Modell-Name> — Klassen: K-STRUKTUR, K-URTEIL, …
+  (Klassen und ihre Vergabe: `Reviewmuster.md` §5)
 
 ## UI-Entwurfs-Werkzeuge
 
@@ -119,6 +136,18 @@ transportiert werden; gewählt beim Start einer
 Teilaktivität — Vorgehen.md §3. Ohne Werkzeug: die
 Datei-Variante. Dazu, wie der Agent eine neue
 Nachricht bemerkt — MasterPrompt §5.4, Anlass T5.)_
+
+### Empfehlung
+- **Start:** `schlingensiepen/peeragent`
+- **Transport:** `schlingensiepen/simple-a2a` oder
+  `schlingensiepen/skill-a2a`
+- **Quellen (Links):** `wiki/MCP-Setup.md`
+  §Empfohlener Startkatalog
+- **Angeboten beim Init am:** ... — eingerichtet:
+  <welche> | keines
+- _(Die Empfehlung bietet der Agent beim Init mit dem
+  Startkatalog an; die Wahl unten fällt weiter beim
+  Start einer Teilaktivität.)_
 
 ### Start
 - **Gewählt am:** ...
@@ -162,6 +191,39 @@ ausgeführt.)_
 - **Kommando:** ...
 - **Zweck:** Stilprüfung pro Projekt
 
+## Kommunikationskanäle
+
+_(Welche Kanäle dieses Projekt für den Versand nutzt —
+vom Anwender beim Init gewählt aus der Kanal-Liste der
+Basis, `Outgoing.md` §3.2; der Agent schlägt beim
+Versand die gewählten vor, jeder andere Kanal der Liste
+bleibt auf Zuruf nutzbar. Eingehende Wege stehen in
+`wiki/Eingangsdokumente.md` §Eingangsorte.)_
+
+### Gewählte Kanäle
+- **Gewählt am:** ...
+- **Kanäle:** <z.B. `post`, `email`, `fax`, `bea`,
+  `elster`, `behoerdenportal`>
+- **Werkzeug je Kanal:** <WorkspaceManager für `post`,
+  `fax`, `email`; sonst manuell>
+
+## Ausnahmen der Geheimnis-Prüfung
+
+_(Nur gegen dauerhafte Fehlalarme der Geheimnis-Prüfung
+des Prüfprogramms — MasterPrompt §6.3, [[Kettenpruefung]]
+§Lint-Anteil. Hier wird die **Ausnahme-Datei**
+registriert, die der Anwender führt; in ihr steht je
+Ausnahme Pfad und Grund. Ohne registrierte Datei gibt es
+keine Ausnahme. Die Regel für Betriebs-Zugangsdaten hebt
+keine Ausnahme auf.)_
+
+### Ausnahme-Datei
+- **Pfad:** <z.B. `tools/geheimnis-ausnahmen.txt`;
+  je Zeile `<Pfad>  # <Grund>`>
+- **Eingerichtet am:** ...
+- **Grund der ersten Ausnahme:** <z.B. Beispiel-Schlüssel
+  ohne Gültigkeit in Test-Fixtures>
+
 ## Projekt-Skripte
 
 _(Skripte im Ordner `tools/` — MasterPrompt §1.9.
@@ -177,8 +239,11 @@ Registrier-Pflicht: jedes Skript ein Eintrag.)_
   Herkunfts-Vermerks in
   `wiki/Aktivierter-Prozess.md` ([[Init-Choreografie]]
   §Phase A0); `--stichtag YYYY-MM-DD` geht vor
-  (nötig nur, solange der Knoten fehlt, dann mit
-  `--kennt Aktivierter-Prozess,Commit-Sprache`).
+  (nötig nur, solange der Herkunfts-Vermerk noch
+  nicht gefüllt ist, [[Init-Choreografie]] §Phase A0
+  „Lint vor Turn 2“; `--kennt` braucht es dafür nicht
+  — die Rümpfe [[Aktivierter-Prozess]] und
+  [[Commit-Sprache]] liegen mit dem Basis-Wiki vor).
   Anlässe: Wiki.md §9. Hilfe mit `--help`
 - **Abhängigkeiten:** POSIX sh, awk; keine Kopie ins
   Projekt-`tools/`, Pflege nur im Template

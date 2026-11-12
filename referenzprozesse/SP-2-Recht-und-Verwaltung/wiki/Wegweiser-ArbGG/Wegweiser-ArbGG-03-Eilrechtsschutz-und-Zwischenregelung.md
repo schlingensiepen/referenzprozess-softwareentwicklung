@@ -1,0 +1,18 @@
+# Wegweiser ArbGG — Arbeitsgerichtliches Verfahren — 3. Eilrechtsschutz und Zwischenregelung
+
+[↑ Übersicht: Wegweiser ArbGG — Arbeitsgerichtliches Verfahren](../Wegweiser-ArbGG.md) · [← 2. Rechtsbehelfe und Fristen](Wegweiser-ArbGG-02-Rechtsbehelfe-und-Fristen.md) · [4. Begleitanträge (Checkliste) →](Wegweiser-ArbGG-04-Begleitantraege-Checkliste.md)
+
+---
+
+| Lage | Instrument | Norm |
+|---|---|---|
+| Sicherung oder Regelung (etwa Weiterbeschäftigung, Zeugnis, Freistellung, Betriebsratsrechte) | Arrest und einstweilige Verfügung nach dem Achten Buch der ZPO; in dringenden Fällen Entscheidung ohne mündliche Verhandlung (auch ablehnend); Schutzschrift im zentralen Register gilt auch bei allen Arbeitsgerichten | [§ 62 Abs. 2 ArbGG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20arbgg.md#p62), [§ 935 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p935), [§ 940 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p940), [§ 945a ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p945a) |
+| Einstweilige Verfügung im Beschlussverfahren | zulässig; Verfahren nach dem Achten Buch der ZPO; keine Rechtsbeschwerde | [§ 85 Abs. 2 ArbGG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20arbgg.md#p85), [§ 92 Abs. 1 ArbGG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20arbgg.md#p92) |
+| Vollstreckung aus erstinstanzlichem Urteil abwehren | Urteile, gegen die Einspruch oder Berufung zulässig ist, sind **ohne Sicherheitsleistung vorläufig vollstreckbar**; Ausschluss der vorläufigen Vollstreckbarkeit nur auf Antrag im Urteil bei glaubhaft gemachtem **nicht zu ersetzendem Nachteil**; Einstellung nach §§ 707, 719 ZPO nur unter derselben Voraussetzung, dann ohne Sicherheit, unanfechtbarer Beschluss | [§ 62 Abs. 1 ArbGG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20arbgg.md#p62), [§ 707 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p707), [§ 719 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p719) |
+| Beschlüsse im Beschlussverfahren | Vollstreckung aus rechtskräftigen Beschlüssen; in vermögensrechtlichen Streitigkeiten vorläufig vollstreckbar wie Urteile | [§ 85 Abs. 1 ArbGG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20arbgg.md#p85) |
+| Handlungstitel | auf Antrag Verurteilung zu einer Entschädigung für den Fall der Nichtvornahme binnen Frist; dann keine Vollstreckung nach §§ 887, 888 ZPO | [§ 61 Abs. 2 ArbGG](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20arbgg.md#p61) |
+| Sonstige Vollstreckungsabwehr (Erinnerung, Vollstreckungsabwehrklage, Vollstreckungsschutz) | ZPO-Achtes Buch über § 62 Abs. 2 ArbGG — Tabelle „Abwehrend“ im [Wegweiser-ZPO](../Wegweiser-ZPO/Wegweiser-ZPO-03-Eilrechtsschutz-und-Zwischenregelung.md) Abschnitt 3 | [§ 766 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p766), [§ 767 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p767), [§ 765a ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p765a) |
+
+---
+
+[↑ Übersicht: Wegweiser ArbGG — Arbeitsgerichtliches Verfahren](../Wegweiser-ArbGG.md) · [← 2. Rechtsbehelfe und Fristen](Wegweiser-ArbGG-02-Rechtsbehelfe-und-Fristen.md) · [4. Begleitanträge (Checkliste) →](Wegweiser-ArbGG-04-Begleitantraege-Checkliste.md)

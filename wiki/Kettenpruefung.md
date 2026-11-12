@@ -25,7 +25,34 @@ eines Pflicht-Stands.
   („für den Marken-Abschluss“, [[Zielmarken]]). Welche
   Dokumenttypen die Glieder sind und welche Register
   sie filtern, steht in den Dokumenttyp-Einträgen des
-  aktiven Prozesses.
+  aktiven Prozesses. Die Phasennummern sind in jedem
+  Prozess die der Basis; die Namen der Tätigkeiten und
+  Dokumenttypen nimmt der Agent aus der Phasentabelle
+  des aktiven Prozesses (Freigabe-Formel: Vorgehen.md
+  §4). **Beispiel aus einem Entwicklungsprozess:**
+  Konzept-Stand „für P4“, Anforderungs-Stand „für P4“,
+  Architektur-Stand „für P8/P9“, Tag der
+  Implementierung (P9), Testplan-Stand „für P13“,
+  Deploy-Stand „für P15“, Abschluss-Stand. **Beispiel
+  aus einem Verfahren** (Prozess Recht und
+  Verwaltung): Strategie-Stand „für P4“,
+  Sachverhalts-Stand „für P4“, Argumentations-Stand
+  „für P8/P9“, Verfahrens-Stand „für P6/P7“, Tag des
+  Schriftsatzes (P9), Prüfplan mit Prüfbericht als
+  Versandprüfung „für P13“, Einreichungs-Stand je
+  Empfänger „für den Marken-Abschluss“, Abschluss-Stand
+  — dieselben Nummern, andere Namen und Stände.
+- **Glieder ohne Phasennummer.** Neben dem
+  Abschluss-Stand darf ein Prozess weitere Glieder
+  **ohne Phasennummer** zwischen P13 und dem
+  Marken-Abschluss deklarieren, wenn seine Marke ein
+  Ergebnis hat, das nach der Einreichung entsteht —
+  etwa „Termin auswerten“ (Ergebnis eines Termins:
+  Bericht, geprüftes Protokoll, Fristen aus dem
+  Termin) im Verfahren. Ein solches Glied ist ein
+  Pflicht-Stand mit Zweck „für den Marken-Abschluss“,
+  es fügt keine Phase hinzu (Vorgehen.md §8), und ob es
+  verzichtbar ist, sagt sein Dokumenttyp-Eintrag.
 - **Der Tag der Implementierung ist Pflicht-Glied P9**
   dieser Ordnung; er trägt keinen Stand, sondern die
   Freigabe des **Produkts** der Marke (§Code-Glieder)
@@ -33,9 +60,14 @@ eines Pflicht-Stands.
   [[Glossar]] „Produkt“). Der Tag markiert das Produkt
   in dem Repo, das es trägt, in jedem Projekt, auch
   ohne Code und auch ohne Prozess (nächster Punkt).
-  „Implementierung“ ist der Name dieses
-  Glieds in jeder Domäne und steht in der
-  Tag-Freigabe-Formel fest (Vorgehen.md §4 „Freigabe
+  „Implementierung“ ist der SP-1-Fachname dieses
+  Glieds; in anderen Domänen trägt es den Namen des
+  Produkt-Dokumenttyps aus der Phasentabelle des
+  Prozesses, und so steht es in der
+  Tag-Freigabe-Formel („von Schriftsatz“ im Verfahren;
+  ohne Dokumenttyp zu P9 der Rückfall
+  „Implementierung“); „Implementierung“ bleibt in jedem
+  Prozess als Altform gültig (Vorgehen.md §4 „Freigabe
   per Tag“).
 - **Projekt ohne Prozess:** Auch ohne aktiven Prozess
   führt jedes Projekt Zielmarken ([[Marken]]; die
@@ -45,7 +77,7 @@ eines Pflicht-Stands.
   ([[Katalog-Abschluss-Stand]]); Phasen-Pflicht-Stände
   und eine Freigabe-Ordnung gibt es ohne Prozess
   nicht, das Glied P10 fehlt, und deshalb entfällt
-  die eigene Tag-Freigabe „für P10 Testen“ (Vorgehen.md
+  die eigene Tag-Freigabe „für P10“ (Vorgehen.md
   §4 „Freigabe per Tag“). Der Agent setzt den Tag nach
   dem OK des Anwenders, der Abschluss-Stand führt ihn,
   und mit der Freigabe des Abschluss-Stands ist er
@@ -720,8 +752,13 @@ Vollständigkeit der Abdeckung beurteilt der Reviewer:
   Zuordnungstabelle nicht gebraucht); ein Eintrag ab dem
   Stichtag nennt Nummer und Tätigkeitsname der aktuellen
   Zählung, eine falsche Nummer ist ein Hinweis —, den Tag
-  am ⟨Artefakt⟩ „Implementierung“ mit Zweck P10
-  (Vorgehen.md §4). Eine Abweichung vom Wortlaut
+  am Zweck P10, am Wert ohne Versions-Muster und am
+  ⟨Artefakt⟩, das der Dokumenttyp von P9 aus der
+  Phasentabelle des aktiven Prozesses ist („Schriftsatz“
+  im Verfahren; „Implementierung“ als SP-1-Fachname,
+  als Rückfall ohne Dokumenttyp zu P9 — Code, Rezept —
+  und als Altform in jedem Prozess; Vorgehen.md §4
+  „Freigabe per Tag“). Eine Abweichung vom Wortlaut
   meldet er als **Hinweis**; ein **Fehler** ist sie
   nur, wenn der Eintrag erkennbar eine Freigabe sein
   will (beginnt mit „Stand “ und enthält „freigegeben
@@ -777,7 +814,14 @@ Vollständigkeit der Abdeckung beurteilt der Reviewer:
   und Umgebung; Lint und Kettenprüfung zählen die
   Betriebs-Anleitung dieser Umgebung dann nicht als
   Pflicht-Stand; `phase: P15` ohne `umgebung:` ist kein
-  Verzicht, der Lint meldet einen Hinweis. `phase: P9` ist kein
+  Verzicht, der Lint meldet einen Hinweis. Eine
+  Umgebung mit `uebergeben_an:` (übergebener Betrieb)
+  braucht keinen Verzicht: Deploy-Stand, DEPL-Deckung
+  und Betriebs-Anleitung entfallen für sie abgeleitet
+  (§Fehlende und vertretene Glieder); nennt keine
+  angenommene Verzichts-DEC auf P15 diese Umgebung —
+  der Beleg der Übergabe-Entscheidung —, meldet der
+  Lint einen **Hinweis**, nicht sperrend. `phase: P9` ist kein
   zulässiger Verzicht (der Tag markiert das Produkt in
   jedem Projekt, §Kette); eine solche DEC meldet der
   Lint als **Fehler**. Ohne diese Felder gilt kein
@@ -815,6 +859,108 @@ ihrer Umgebung, ihre `marke` kommt aus ihm (fehlt er oder
 gehört er zu einer anderen Umgebung: Hinweis; weicht die
 Marke ab: Fehler). Die Präzisierung der Abdeckung in
 §Regel betrifft die Reviewer-Seite.
+
+### Ein Prüfprogramm, Prozess-Prüfungen und Schwere
+
+- **Ein gemeinsames Prüfprogramm.** `tools/lint.sh`
+  der Basis ist das Prüfprogramm jedes Projekts;
+  Prozesse bringen keine eigenen Skripte mit. Die
+  Struktur ist in jedem Projekt gleich, deshalb
+  benutzen alle Projekte dieselben Werkzeuge.
+- **Prozess-Prüfungen.** Jeder Prozess darf eigene
+  Prüfungen mitbringen — meldende (Wächter) in seiner
+  `Vorgehen-<Prozess>.md`, sperrende über seine
+  Dokumentbeschreibungen. Sie liegen als
+  **Prüf-Definitionen** beim Prozess (Unterordner
+  `pruefungen/` im Prozess-Ordner der Template-Quelle)
+  und werden vom gemeinsamen Prüfprogramm eingelesen,
+  **aktiv je Prozesskette aus [[Aktivierter-Prozess]]**:
+  das Prüfprogramm liest die aktiven Prozesse — nach
+  einem Merge auch die gemergten Einrichtungen, nach
+  einem Join beide Prozesse ([[Zuschnitt-aendern]]) —
+  und schaltet deren Prüfungen zu. Welche Prüfungen
+  ein Prozess mitbringt und mit welcher Stufe, steht
+  als Tabelle in seiner `Vorgehen-<Prozess>.md`
+  (führender Ort je Prozess).
+- **Befund-Codes** tragen die Prozess-Kennung als
+  Präfix (`SP2-…`, `RP2-…`); Basis-Codes bleiben ohne
+  Präfix. Meldungen sehen in allen Prozessen gleich
+  aus: Code, Stufe, Fundstelle, Text.
+- **Repo-Erkennung.** Das Prüfprogramm erkennt das
+  eigene Projekt am **Repo-Namen aus dem
+  Herkunfts-Vermerk** von [[Aktivierter-Prozess]]
+  (Zeile `Repo`, [[Init-Choreografie]] §Phase A0),
+  nicht am Ordnerpfad — in jedem Projekt; `--repo`
+  übersteuert. Eine Komponente ohne Repo
+  (`auftrag`, Repo „—“ in der Start-Tabelle,
+  Vorgehen.md §3) nimmt es von SPEC- und DEPL-Deckung
+  und vom Verweis-Abgleich aus.
+- **Schwere der Befunde — zwei Stufen.** **FEHLER**
+  sperrt die Freigabe des betroffenen Stands (nie die
+  Arbeit, [[Berichten-statt-Blockieren]]); **HINWEIS**
+  meldet. Das Prüfprogramm meldet einen Lauf nur dann
+  als **grün**, wenn er ohne FEHLER endete; Hinweise
+  nennt der Agent. Führender Ort der Stufen ist diese
+  Tabelle; Prozess-Prüfungen nennen ihre Stufe aus ihr,
+  eine Abweichung braucht ein Wort des Anwenders:
+
+  | Stufe | Befund |
+  |---|---|
+  | FEHLER | abgelaufene Frist einer Einschränkung oder eines Aufschubs (Verzicht mit Frist, befristete Ausnahme) |
+  | FEHLER | Anlage `aktiv` ohne Sicherung oder Überwachung und ohne befristete Ausnahme (Infrastruktur) |
+  | FEHLER | Anlage `abgebaut` mit offenen Deployment-Einträgen (Infrastruktur) |
+  | FEHLER | `temp-`-Kennung (Platzhalter) in einem getaggten oder versandten Stand |
+  | FEHLER | geänderte oder gelöschte Zeile in einem eingefrorenen Nachweis — Versandstand-Inhalt, Stand mit Freigabe, Nachweis-Knoten (jeder Dokumenttyp der Klasse Nachweis mit „Freeze ab: Anlage“, dessen Feld `status` im Katalog-Eintrag nicht mehrere Werte nennt: Testbericht, mit Infrastruktur Abnahmeprotokoll und Betriebsjournal, in der Basis Nachricht, Eingangsdokument, Berichte und Rechercheartefakt, im Steuerfall der Bescheid — nicht Einreichung und Schriftsatz-Knoten, deren `status` mehrere Werte durchläuft; sie werden nicht geprüft) ([[Einfrieren-und-Abloesen]] §Nachweis; kein Befund: neue Dateien unter `nachweis/`, der angehängte Rückzugs-Vermerk am `Anschreiben.md`, ein angehängter Vermerk und ein bisher fehlendes Kopf-Feld zusammen mit dem angehängten, datierten Vermerk „Feld … nachgetragen am …“ — der Nachweis wächst; ein Kopf-Nachtrag ohne diesen Vermerk ist derselbe FEHLER; das mitgelieferte Normen-Paket bleibt Hinweis) |
+  | HINWEIS | Muster von Zugangsdaten in verfolgten Dateien (Geheimnis-Prüfung, unten) |
+  | HINWEIS | Anlage ohne Betriebs-Anleitung; Anlage ohne Abnahme zum geltenden Deploy-Stand; Deploy-Stand älter als ein Journal-Eintrag mit Abweichung (Infrastruktur) |
+  | HINWEIS | aktiver Fall ohne offene Frist (Verfahren) |
+  | HINWEIS | übergebene Zielumgebung (`uebergeben_an`) ohne Verzichts-DEC auf P15, die sie nennt — der Beleg der Übergabe-Entscheidung, nicht sperrend (§Fehlende und vertretene Glieder, Zeile P15) |
+  | HINWEIS | zurückgezogener Stand ohne Folge-Versand an alle Empfänger ([[Lebenslauf-eines-Stands]] §Rückzug) |
+  | HINWEIS | Abbau-Paarung: Deploy-Stand „abgebaut“ ohne Zustand `abgebaut` an der Zielumgebung, oder umgekehrt (Infrastruktur) |
+  | HINWEIS | Posteingang: Datei ohne Eintrag, Eintrag ohne Status `eingelesen`, Abrufturnus überschritten (Wächter C9) |
+
+  **Faustregel:** FEHLER ist, was **unumkehrbar** ist
+  oder **nach außen** wirkt (Tag, Versand, laufende
+  Anlage ohne Netz).
+- **Geheimnis-Prüfung.** Das Prüfprogramm prüft
+  verfolgte Dateien auf Muster von Zugangsdaten
+  (Schlüssel, Tokens, Passwörter in Konfigurationsform)
+  und meldet Treffer als HINWEIS — in jedem Projekt.
+  Befund-Text sinngemäß: „Keine Panik — für Zugangsdaten
+  hast du eigene Regeln (MasterPrompt §6.3); folge ihnen
+  und besprich den Fund mit dem Anwender. Überstimmen
+  kann diese Regeln nur der Anwender.“ Der Text richtet
+  sich an den Agenten: kein eigenmächtiges Löschen,
+  Maskieren oder Umschreiben von Dateien. Eine
+  Ausnahme-Datei (Pfad und Grund, etwa Fixtures mit
+  Beispiel-Schlüsseln) gibt es nur gegen dauerhafte
+  Fehlalarme; sie ist in `Tools.md` §Ausnahmen der
+  Geheimnis-Prüfung registriert und wird nicht vom
+  Template mitgeliefert. Ein Prozess kann für seine
+  Eingangsdokumente (`raw/`, `input/raw/`) eine
+  Ausnahme festlegen, wenn seine Eingangsdokumente
+  Zugangsdaten als Akteninhalt tragen dürfen; die
+  Ausnahme steht in seiner Prüf-Tabelle.
+- **Weitere Basis-Prüfungen, die das Prüfprogramm
+  liest:** Pflichtfeld `richtung` an jeder Frist
+  ([[Katalog-Fristen]]); Zustand `entfallen` einer
+  Marke ohne Abschluss-Pflicht ([[Zielmarken]] §Meta);
+  „Pflicht ab Stufe n“ gegen die Zeile `Ausbaustufe`
+  ([[Katalog-process-brief]]); die Zeile „Entfällt
+  abgeleitet, wenn …“ ([[Katalog]] §Typ-Konventionen);
+  Unterordner eines Knotens, Rücklink und Eindeutigkeit
+  der Dateinamen (Wiki.md §5.4); Fachnamen in der
+  Freigabe-Formel über die Phasentabelle des aktiven
+  Prozesses, erkannt an der Nummer (Vorgehen.md §4);
+  keine Sonderbehandlung für Rumpf-Knoten (Wiki.md
+  §3a, Platzhalter-Grundsatz).
+- **Inbetriebnahme in Infrastruktur-Projekten:** Das
+  Tor zur Freigabe der Betriebs-Anleitung (Abnahme am
+  Ziel, Sicherung mit geprüftem Rückweg, Überwachung,
+  zweiter Zugang; Einschränkung mit Frist als Ausweg)
+  beschreibt der Infrastruktur-Prozess in seiner
+  Dokumentbeschreibung der Betriebs-Anleitung; die
+  Stufen seiner Prüfungen folgen der Tabelle oben.
 
 ## Reviewer-Anteil (Inhalt)
 
@@ -865,6 +1011,12 @@ selbst wird als DEC gebucht ([[Entscheidungen]], Meta
   (§Reviewer-Anteil); ein
   Verzicht auf das Code-Review ist nur als
   Anwender-Entscheidung mit benanntem Impact möglich.
+  Mit einem Infrastruktur-Prozess ist zusätzlich das
+  **Abnahmeprotokoll** zum geltenden Deploy-Stand
+  Vorbedingung der Freigabe der Betriebs-Anleitung
+  (P15) — ein zweiter Nachweis neben dem Testbericht,
+  beschrieben in der Dokumentbeschreibung des Prozesses
+  (§Lint-Anteil, Inbetriebnahme).
   Die Freigabe erfolgt per Tag im Repo, das das
   Produkt trägt (§Kette), und wird mit einem Prozess
   wie jede Freigabe als DEC gebucht (ohne Prozess:
@@ -956,7 +1108,29 @@ Fehlens:
   und [[Entscheidungen]] Meta „Verzichts-Einträge“).
 - **abgeleitet entfallen** — das Glied entfällt ohne
   eigene Entscheidung, weil ein Register-Inhalt es
-  ergibt (z.B. §Komponenten der Architektur-Fassade).
+  ergibt — in drei Fällen: (a) ein **Register ist
+  leer** (keine Schnittstellen → kein
+  Schnittstellen-Index; §Komponenten führt nur das
+  eigene Repo → kein P6); (b) ein **Eintrag hat einen
+  bestimmten Zustand** (eine Zielumgebung `abgebaut` →
+  keine Deployment-Pflicht mehr; eine Zielumgebung mit
+  `uebergeben_an:` → neue Deploy-Stände und
+  Betriebs-Anleitung führt das Betriebs-Projekt, unten
+  Zeile „P13, P15 je übergebener Umgebung“; eine Marke unterhalb
+  der Ausbaustufe, die der Katalog-Eintrag mit
+  „Pflicht ab Stufe n“ verlangt — [[Katalog-process-brief]]);
+  (c) eine **Fassade ist inaktiv** (`active: false`) →
+  die an sie geknüpften Glieder entfallen. Der
+  Katalog-Eintrag eines Dokumenttyps oder einer
+  Fassade trägt die Bedingung als Zeile **„Entfällt
+  abgeleitet, wenn …“** ([[Katalog]]
+  §Typ-Konventionen); das Prüfprogramm liest sie und
+  verlangt das Glied nicht, solange die Bedingung gilt.
+  Wo kein Zustand die Pflicht ableitet, bleibt es beim
+  Verzicht — der Verzicht ist Anwender-Entscheidung.
+  Produkt-Satz: **Stufen bilden eine Lage ab, die von
+  außen kommt. Wo der Anwender die Strenge selbst
+  wählt, gilt der Verzicht.**
 - **vertreten durch** — ein anderes Glied oder
   Artefakt tritt an seine Stelle; Regeln, die das
   fehlende Glied nennen, gelten für den Vertreter.
@@ -964,7 +1138,10 @@ Fehlens:
 | Glied | Wie es fehlt | Grundlage |
 |---|---|---|
 | jede Phase mit Pflicht-Stand, für eine Marke | **Verzicht:** Pflicht-Stand der Phase und seine Lint-Pflichten entfallen für diese Marke; die Freigabe-Ordnung geht über die Phase hinweg; spätere Glieder prüfen gegen die übrigen freigegebenen Vorgänger. Bei P8 bleibt der Verzicht dem Fall „baut, will aber keine SPEC“ vorbehalten (in kleinen Projekten darf P8 auch schmal bleiben). Bei den Doku-Gliedern P11 und P12 ist der Verzicht die Zeile „gar nicht (Verzicht)“ der Doku-Abfrage (§Kette). **Nicht verzichtbar ist der Tag (P9):** er markiert das Produkt in jedem Projekt (§Kette), und die Tag-Bedingung des Testplan-Stands gilt ohne Ausnahme (eine DEC mit `phase: P9` meldet der Lint, §Lint-Anteil) | Verzichts-DEC mit `decision_type: verzicht`, `zielmarke:` der Marke und `phase: Pn` (genau eine Phase) |
-| P15 je Umgebung (Betriebs-Anleitung) | **Verzicht je Umgebung:** die Betriebs-Anleitung dieser Umgebung entfällt für die Marke, die der übrigen Umgebungen bleibt Pflicht; die Zeile „gar nicht (Verzicht)“ der Doku-Abfrage für diese Umgebung (§Kette). Ohne `umgebung:` ist die DEC kein Verzicht (§Lint-Anteil) | Verzichts-DEC mit `decision_type: verzicht`, `zielmarke:`, `phase: P15` und `umgebung:` (Name aus der Entitäts-Fassade der Zielumgebungen), je Umgebung eine |
+| P15 je Umgebung (Betriebs-Anleitung) | **Verzicht je Umgebung:** die Betriebs-Anleitung dieser Umgebung entfällt für die Marke, die der übrigen Umgebungen bleibt Pflicht; die Zeile „gar nicht (Verzicht)“ der Doku-Abfrage für diese Umgebung (§Kette). Ohne `umgebung:` ist die DEC kein Verzicht (§Lint-Anteil). **Überführter Betrieb:** Gibt das Projekt den Betrieb dieser Umgebung an ein eigenes Betriebs-Projekt ab (Abspaltung, [[Zuschnitt-aendern]]), ist der Verzicht die Form für die Marke des Übergabe-Punkts — eine Verzichts-DEC mit dem Grund „übergeben an `<repo>`“ und Verweis auf das Betriebs-Projekt, der Beleg der Entscheidung (das Prüfprogramm verlangt sie nicht, das Feld wirkt unabhängig von der Marke; fehlt sie, ein Hinweis — §Lint-Anteil); die Betriebs-Anleitung führt dann jenes Projekt. Für alle weiteren Marken entfällt das Glied abgeleitet aus dem Feld `uebergeben_an` an der Zielumgebung (nächste Zeile) | Verzichts-DEC mit `decision_type: verzicht`, `zielmarke:`, `phase: P15` und `umgebung:` (Name aus der Entitäts-Fassade der Zielumgebungen), je Umgebung eine |
+| P13, P15 je übergebener Umgebung | **abgeleitet entfallen:** trägt der Eintrag einer Zielumgebung das Feld `uebergeben_an: <repo>` (übergebener Betrieb, Entitäts-Fassade der Zielumgebungen §Meta), führt das Betriebs-Projekt ihre neuen Deploy-Stände und ihre Betriebs-Anleitung; hier verlangt die Kette für diese Umgebung weder Deploy-Stand noch DEPL-Deckung noch Betriebs-Anleitung, der zuletzt freigegebene Deploy-Stand bleibt als Lieferung gültig. Sind alle Umgebungen übergeben, entfällt P13 für die Marke wie ohne Zielumgebung (unten) | Feld `uebergeben_an` am Eintrag der Zielumgebung (mit SP-1: Katalog-Eintrag der Zielumgebungen); Fall (b) „Eintrag hat einen bestimmten Zustand“ |
+| jede Fassade und jeder Dokumenttyp mit „Pflicht ab Stufe n“ | **abgeleitet entfallen,** solange die Zeile `Ausbaustufe` in [[Aktivierter-Prozess]] unter n liegt; mit dem Stufenwechsel ([[Zuschnitt-aendern]]) wird das Glied Pflicht, ohne Umschreiben. Ein Auslöser statt einer Stufe („Pflicht ab: <Ereignis>“) wird nicht vom Prüfprogramm gelesen; der Agent meldet ihn als Hinweis, wenn das Ereignis eintritt | Steckbrief des Prozesses, Feld „Pflicht ab“ ([[Katalog-process-brief]]); Zeile `Ausbaustufe` im Herkunfts-Vermerk |
+| Glieder einer inaktiven Fassade | **abgeleitet entfallen:** `active: false` in der Fassade nimmt die an sie geknüpften Glieder aus der Kette | FassadenLandkarte [[Fassaden]]; Zeile „Entfällt abgeleitet, wenn …“ im Katalog-Eintrag |
 | P11, P12, P15, für eine Marke | **Übernahme aus der Vormarke** — kein Fehlen: die Zeile „gar nicht (Übernahme)“ der Doku-Abfrage; der freigegebene Doku-Stand der Vormarke gilt weiter wie jeder übernommene Stand (§Kette, Übernahme aus der Vormarke) und steht im Abschluss-Stand mit „übernommen aus <Vormarke>“. Bei P15 nur, wenn die Marke keinen eigenen Tag hat — mit eigenem Tag ist die Betriebs-Anleitung der Vormarke für sie überholt, die Zeile hat die Wahl „gar nicht (Übernahme)“ nicht, es folgt die Folge-Version (§Kette, Folge-Marke mit eigenem Tag); bei P11 und P12 bleibt die Wahl auch mit eigenem Tag | Zeilen-DEC der Doku-Abfrage, die den übernommenen Stand nennt |
 | P2 | **kein Glied:** mit SP-1 hat P2 keinen Pflicht-Stand (SP-1 `index.md` §3.2; ob eine Phase ein Glied trägt, legt die Phasentabelle des aktiven Prozesses fest) — bei Koordinator, Komponente und Standalone gleich; es gibt nichts zu vertreten | Dokumenttyp-Einträge des aktiven Prozesses |
 | P14 | **kein Glied:** mit SP-1 hat P14 keinen Pflicht-Stand (wie P2) | Dokumenttyp-Einträge des aktiven Prozesses |
@@ -1065,20 +1242,44 @@ Komponente vertritt, hängt von der Übernahme-Art ab
 je Art: §Fehlende und vertretene Glieder):
 
 - **selbstständig:** Pflicht-Stände ab P3; die
-  Komponente legt eigene REQ an, je mit
-  `abgeleitet_von:` auf die FUNC des Koordinators
-  (`<koordinator>/FUNC-NNN`).
-- **Auftrag:** Pflicht-Stände ab P5.
+  Komponente legt die Elemente ihrer Phase P3 selbst
+  an, je mit `abgeleitet_von:` auf das Element des
+  Koordinators, das sie ausführt (in SP-1: eigene REQ
+  auf die FUNC des Koordinators,
+  `<koordinator>/FUNC-NNN`).
+- **Auftrag:** Pflicht-Stände ab P5. **Auftrag ohne
+  Repo:** eine Vertretung (Kanzlei, Steuerberater,
+  Dienstleister) startet als `auftrag` mit Repo „—“ in
+  der Start-Tabelle; Lieferweg ist das
+  Eingangsdokument (die Lieferung kommt als Eingang in
+  `raw/`, [[Eingangsdokumente]]); das Prüfprogramm
+  nimmt eine Komponente ohne Repo von der Deckung
+  durch die Dokumenttypen der Phasen P8 und P13 (in
+  SP-1: SPEC und DEPL) und vom Verweis-Abgleich aus
+  (§Lint-Anteil).
+- **Abspaltung:** das neue Projekt startet mit dem
+  Übergabe-Punkt ([[Zuschnitt-aendern]]) und führt
+  die Kette **seines eigenen Prozesses von Anfang
+  an**; kein Glied ist vertreten, und **bei der Mutter
+  entsteht kein Kettenglied** — ein abgegebener
+  Betrieb liefert nichts zu, er **meldet nur**
+  (Nachricht, etwa „Fehler in Marke 1.4, gefunden in
+  Produktion“); die Mutter bucht die Meldung als
+  Fehlermeldung oder Eingang. Die übrigen Absätze
+  dieses Abschnitts (Wurzel Übergabe-Stand, Ende der
+  Kette, Rücklauf) gelten für die Abspaltung nicht.
 
-In beiden Arten wird P5 Architektur nicht vom
-Übergabe-Stand vertreten: die Komponente führt den
-Architektur-Stand selbst (er darf dünn sein) oder
-verzichtet darauf wie auf jede Phase mit Pflicht-Stand
-per Verzichts-DEC je Marke (§Fehlende und vertretene
+In den Arten selbstständig und Auftrag wird der
+Pflicht-Stand der Phase P5 (in SP-1 der
+Architektur-Stand, im Verfahren der Verfahrens-Stand)
+nicht vom Übergabe-Stand vertreten: die Komponente
+führt ihn selbst (er darf dünn sein) oder verzichtet
+darauf wie auf jede Phase mit Pflicht-Stand per
+Verzichts-DEC je Marke (§Fehlende und vertretene
 Glieder) — etwa eine kleine Komponente ohne eigene
-Zerlegung. Wann eine FUNC des Koordinators durch die
-Übergabe als gedeckt gilt: §Lint-Anteil (Deckung durch
-Delegation).
+Zerlegung. Wann ein Element des Koordinators (in SP-1
+eine FUNC) durch die Übergabe als gedeckt gilt:
+§Lint-Anteil (Deckung durch Delegation).
 
 **Ende der Kette.** Die Komponente führt ihre Kette
 bis P11: Nach ihrem Tag (der Lieferung an den
@@ -1227,6 +1428,16 @@ Vorbedingung“ in [[Berichten-statt-Blockieren]]).
 - Mechanische Prüfungen stehen genau einmal im
   Lint-Kern; Wächter rufen sie zu ihren Anlässen auf
   und melden („Lint erkennt, Wächter melden“).
+- **Prozess-Wächter** (Anlässe, zu denen der Agent in
+  einem Prozess etwas meldet — etwa die Ist-Prüfung
+  einer laufenden Anlage bei Wiederaufnahme, die
+  Re-Inventur vor destruktiven Schritten, ein
+  umgesetztes Element mit offenem Folgeschritt, ein
+  Termin ohne Bericht) stehen als Tabelle in der
+  `Vorgehen-<Prozess>.md` des Prozesses; sie sind
+  Wächter wie C1–C9 der Basis (MasterPrompt §5.3),
+  keine Kettenprüfung und keine Lint-Prüfung
+  (§Lint-Anteil, Prozess-Prüfungen).
 
 ## Bezüge
 

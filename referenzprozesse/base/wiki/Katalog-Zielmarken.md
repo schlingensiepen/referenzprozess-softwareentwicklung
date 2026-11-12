@@ -33,8 +33,12 @@ Register-Eintrag: Fassade `target-mark-log`
   bleibt der Inline-Eintrag in der Fassade. Der
   Marken-Eintrag (inline oder Detail-Knoten) ist ein
   Element: eine künftige Marke ist frei änderbar,
-  eine abgeschlossene eingefroren; danach gibt es nur
-  Nachträge als Vermerk, nie eine Ablösung
+  eine abgeschlossene oder entfallene eingefroren;
+  danach gibt es nur Nachträge als Vermerk, nie eine
+  Ablösung. Zustände: `künftig`, `in-progress`,
+  `zurückgestellt`, `abgeschlossen`, `entfallen` (nur
+  per Entscheidung mit Grund; kein Abschluss-Stand) —
+  [[Zielmarken]] §Meta
 - **Klasse:** Element
 - **Freeze ab:** Abschluss
 - **Sammelzustand:** nein

@@ -140,6 +140,55 @@ ersten Durchlauf lesen.
    Vormarke); was nach dem Marken-Wechsel als Nachtrag
    möglich ist: [[Zielmarken]] §Meta „Nachtrag“.
 
+## Rückzug eines verteilten Stands
+
+Ein Stand, der verteilt wurde — ein Versandstand, ein
+ausgelieferter Deploy-Stand, ein freigegebenes
+Dokument an Dritte — und sich danach als fehlerhaft
+herausstellt, wird nicht geändert
+([[Einfrieren-und-Abloesen]] §Nachweis) und seine
+Freigabe nicht zurückgenommen (Schritt 8): Die Antwort
+ist ein neuer Stand, und wer den alten hat, muss es
+erfahren. Dieser Abschnitt ist der führende Ort des
+Ablaufs; `Outgoing.md` §6a sagt, wie er im
+Versandstand aussieht.
+
+1. **Fehler feststellen.** Der Befund wird festgehalten
+   — als Fehlermeldung (mit einem Prozess, der sie
+   führt) oder als Eingang, der ihn meldet.
+2. **Wer hat es.** Der Agent ermittelt die Empfänger:
+   die Versandstand-Ordner (`outgoing/`), das Feld
+   „ausgeliefert an“ eines Deploy-Stands (Prozesse mit
+   Auslieferung), Nachrichten im Verbund.
+3. **Anwender-Entscheidung** als Entscheidung (DEC) mit
+   einer von drei Antworten: **Rückzug** (ohne Ersatz),
+   **Berichtigung** (Hinweis an die Empfänger, der Stand
+   bleibt) oder **Ersatz** (neuer Stand — Folge-Version
+   derselben Ketten-ID oder neue Marke). Der Rückzug
+   wirkt nach außen und ist deshalb nie Do-first
+   ([[Do-first-mit-Veto]]).
+4. **Folge-Versand** an alle Empfänger mit Verweis auf
+   den alten Stand und die Entscheidung — je Empfänger
+   ein neuer Versandstand bzw. eine Nachricht.
+5. **Vermerk** „zurückgezogen am JJJJ-MM-TT
+   (<Entscheidung>)“ am alten Stand — angehängt, nie
+   eingearbeitet.
+6. **Erwartung „Bestätigung“** je Empfänger als Frist
+   mit `richtung: für-uns` ([[Katalog-Fristen]]),
+   erfüllt mit dem Eingang der Bestätigung.
+
+Das Prüfprogramm meldet einen Stand mit
+Rückzugs-Vermerk, zu dem kein Folge-Versand an die
+Empfänger vorliegt ([[Kettenpruefung]] §Lint-Anteil,
+Schwere-Tabelle). **Grenze:** Ein Prozess kann
+festlegen, dass bestimmte Handlungen nie über diesen
+Ablauf zurückgenommen werden (im Verfahren eine
+Prozesshandlung — Klage, Antrag, Rechtsmittel,
+Erklärung —, die nur über die Strategie und eine
+Anwender-Entscheidung zurückgenommen wird); dort gilt
+der Ablauf nur für fehlerhaft versandte Dokumente ohne
+solchen Charakter (falsche Anlage, falscher Adressat).
+
 ## Anhang — Arten der Abweichung
 
 Die Abweichungen je Dokumenttyp stehen in der

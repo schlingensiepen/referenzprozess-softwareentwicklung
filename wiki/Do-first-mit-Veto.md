@@ -35,6 +35,15 @@ Do-first):
   Hintergrund-Aufträge) laufen nie als Do-first;
   vorher legt der Agent eine **Auftragsliste zur
   Freigabe** vor.
+- **Zuschnitt ändern und Einrichtungen übernehmen:**
+  kein Abspalten, Umbauen (Stufenwechsel, Join) oder
+  Zusammenführen und keine Übernahme eines Bausteins,
+  eines Merge oder eines Join aus einem anderen
+  Template ohne Anwender-Wort — der Agent spricht den
+  Anlass an und legt eine Empfehlung vor
+  ([[Zuschnitt-aendern]] §Rückfrage-Pflicht); ebenso
+  der Rückzug eines verteilten Stands
+  ([[Lebenslauf-eines-Stands]] §Rückzug).
 
 ## Bezüge
 

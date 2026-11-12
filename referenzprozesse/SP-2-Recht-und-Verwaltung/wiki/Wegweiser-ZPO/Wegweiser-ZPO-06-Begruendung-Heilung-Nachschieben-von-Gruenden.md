@@ -1,0 +1,27 @@
+# Wegweiser ZPO — Zivilprozess — 6. Begründung, Heilung, Nachschieben von Gründen, Bindung an das Vorbringen
+
+[↑ Übersicht: Wegweiser ZPO — Zivilprozess](../Wegweiser-ZPO.md) · [← 5. Kosten und Kostenanträge](Wegweiser-ZPO-05-Kosten-und-Kostenantraege.md) · [7. Erledigung und Rücknahme →](Wegweiser-ZPO-07-Erledigung-und-Ruecknahme.md)
+
+---
+
+| Thema | Regel | Norm |
+|---|---|---|
+| Pflichtinhalt des Urteils | Parteien, Gericht, Schluss der Verhandlung, Formel, Tatbestand, Entscheidungsgründe (kurze Zusammenfassung der tatsächlichen und rechtlichen Erwägungen) | [§ 313 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p313) |
+| Urteil ohne Tatbestand/Gründe | zulässig, wenn Rechtsmittel unzweifelhaft unstatthaft oder bei Rechtsmittelverzicht; Versäumnis-, Anerkenntnis-, Verzichtsurteil stets ohne | [§ 313a ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p313a), [§ 313b ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p313b) |
+| Bindung an die Anträge | nichts zusprechen, was nicht beantragt ist; Kosten von Amts wegen | [§ 308 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p308) |
+| Bindung des Gerichts an das eigene Urteil | — | [§ 318 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p318) |
+| Beweiskraft des Tatbestands für das Parteivorbringen | nur durch Sitzungsprotokoll entkräftbar; Berichtigung fristgebunden | [§ 314 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p314), [§ 320 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p320) |
+| Hinweispflicht: Entscheidung nur auf Gesichtspunkte, die erörtert wurden; Hinweise aktenkundig | — | [§ 139 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p139) |
+| Heilung des Gehörsverstoßes | Wiedereröffnung der Verhandlung; Anhörungsrüge nach Abschluss | [§ 156 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p156), [§ 321a ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p321a) |
+| Heilung von Zustellungsmängeln | mit tatsächlichem Zugang | [§ 189 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p189) |
+| Nachschieben eigenen Vorbringens (Präklusion) | rechtzeitig vorbringen; verspätetes nur bei fehlender Verzögerung oder Entschuldigung; nach Schluss der mündlichen Verhandlung nicht mehr; in der Berufung nur unter engen Voraussetzungen | [§ 282 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p282), [§ 296 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p296), [§ 296a ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p296a), [§ 531 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p531), [§ 520 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p520) Abs. 3 |
+| Beschwerde: neue Angriffs- und Verteidigungsmittel zulässig | — | [§ 571 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p571) Abs. 2 |
+| Erklärung zum gegnerischen Vortrag | jede Partei hat sich über die vom Gegner behaupteten Tatsachen zu erklären; nicht ausdrücklich Bestrittenes gilt als zugestanden; Erklärung mit Nichtwissen nur über Tatsachen außerhalb eigener Handlung und Wahrnehmung | [§ 138 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p138) Abs. 2–4 |
+| Klageänderung | mit Einwilligung oder bei Sachdienlichkeit; Ergänzung, Erweiterung, Beschränkung ist keine Änderung | [§ 263 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p263), [§ 264 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p264), [§ 267 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p267) |
+| Begründungspflichten des Rechtsmittelgerichts | Zurückweisungsbeschluss nur nach Hinweis mit Gründen und Gelegenheit zur Stellungnahme; Beschluss zu begründen | [§ 522 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p522) Abs. 2; [§ 544 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p544) Abs. 6 |
+| Versäumnisurteil: tatsächliches Vorbringen des Klägers gilt als zugestanden; Entscheidung nur „soweit es den Klageantrag rechtfertigt“ | — | [§ 331 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p331) |
+| Einspruch versetzt den Prozess zurück; Prüfung von Statthaftigkeit, Form, Frist von Amts wegen | — | [§ 341 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p341), [§ 342 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p342), [§ 343 ZPO](../../research/REC-9001%20-%20Normen-Paket%20Stand%202026-11-05/2026-11-05%20zpo.md#p343) |
+
+---
+
+[↑ Übersicht: Wegweiser ZPO — Zivilprozess](../Wegweiser-ZPO.md) · [← 5. Kosten und Kostenanträge](Wegweiser-ZPO-05-Kosten-und-Kostenantraege.md) · [7. Erledigung und Rücknahme →](Wegweiser-ZPO-07-Erledigung-und-Ruecknahme.md)

@@ -32,9 +32,20 @@ Prozedur bündelt nur den Moment (Muster analog
    [[Berichten-statt-Blockieren]] — rot blockiert
    nicht). Doku-only-Commits laufen ohne Kadenz.
 
+Dazu die Auswahl der Dateien: `git add` nur mit
+ausdrücklichen Pfaden, lokale Einstellungs- und
+Cache-Dateien nie, kein `--no-verify` — [[Git-Hygiene]].
+
 Der Sessionstart-Wächter „Trigger-Hygiene"
 (MasterPrompt §5.3, C7) macht Abweichungen sichtbar;
 er blockiert nicht und schreibt keine Historie um.
+Einen Abschluss-Commit am Sitzungsende gibt es nicht:
+der Commit je Zug ist der Schutz, und was liegen
+bleibt, meldet die Sitzungsstart-Prüfung des
+Arbeitsbaums als vermutlich abgebrochenen Zug
+(MasterPrompt §5.3 Phase A, Start-Prüfung des
+Arbeitsbaums; der Anwender
+entscheidet über Committen oder Verwerfen).
 
 ## Basis-Präfix-Katalog
 

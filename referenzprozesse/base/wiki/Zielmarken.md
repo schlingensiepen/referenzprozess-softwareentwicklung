@@ -23,14 +23,20 @@ active: true   # kann nicht deaktiviert werden — Zielmarken ist Pflicht-Fassad
 - **Marken-Dreiklang (Eintragsformat):**
   `### <Bezeichnung> — <Benennung>` mit
   Beschreibung und Zustand. **Bezeichnung** = harte
-  Kennung (`1.1`, frei wählbar); **Benennung** =
+  Kennung **ohne Leerzeichen** (`1.1`,
+  `Einspruch-2024`; sonst frei wählbar — sie steht in
+  `zielmarke:` jedes Elements, und aus dem Feld
+  „Zielmarke“ eines Fassaden-Eintrags liest das
+  Prüfprogramm nur bis zum ersten Leerzeichen);
+  **Benennung** =
   Codename oder sprechender Name („Aurora", „Nach
   der Revision"); **Beschreibung** = präzisiert, was
   genau gemeint ist (z.B. welche Revision); **Zustand**
   = eine Zeile `- **Zustand:** künftig`,
   `- **Zustand:** in-progress`,
-  `- **Zustand:** zurückgestellt (für 2.0.1)` oder
-  `- **Zustand:** abgeschlossen` (das erste Wort zählt;
+  `- **Zustand:** zurückgestellt (für 2.0.1)`,
+  `- **Zustand:** abgeschlossen` oder
+  `- **Zustand:** entfallen (DEC-NNN)` (das erste Wort zählt;
   die Marke mit dem Zeiger `current` trägt dahinter
   `(current)`; bei `zurückgestellt` nennt die Klammer
   die Zwischenmarke, siehe „Zwischenmarke“ unten). Der
@@ -69,6 +75,35 @@ active: true   # kann nicht deaktiviert werden — Zielmarken ist Pflicht-Fassad
   Ablösung. Was später nachkommt, gehört zur nächsten
   Marke (z.B. einer Patch-Marke `2.0.1`; läuft schon
   eine Folge-Marke, als Zwischenmarke, unten).
+- **Marke kann entfallen.** Eine Zielmarke wechselt in
+  den Zustand **`entfallen`** — **nur per Entscheidung
+  (DEC) mit Grund**: die Marke erreicht ihr Ergebnis
+  nicht mehr (Frist versäumt, Verfahren anders
+  erledigt, Vorhaben aufgegeben). Die Zustand-Zeile
+  nennt die Entscheidung in Klammern. Eine entfallene
+  Marke hat **keinen Abschluss-Stand** und keinen Tag;
+  sie wird nicht `current`. Ihre offenen Elemente
+  behandelt der Marken-Wechsel wie beim Abschluss —
+  der Vollständigkeits-Scan (Wechsel-Prozedur Schritt 1)
+  legt sie vor: übernehmen, verschieben oder schließen;
+  Schritte 2 und 3 der Prozedur entfallen. Eine
+  entfallene Marke ist eingefroren wie eine
+  abgeschlossene (nur Vermerke). Das Prüfprogramm liest
+  den Zustand aus der Zustand-Zeile und verlangt bei
+  `entfallen` keinen Abschluss-Stand. Entfall einer
+  Marke ist etwas anderes als der Verzicht auf eine
+  Phase ([[Kettenpruefung]] §Fehlende und vertretene
+  Glieder) und als eine Frist: Frist und Marke sind
+  zwei verschiedene Dinge — eine versäumte Frist kann
+  der Grund sein, aus dem eine Marke entfällt.
+- **Eilsache als vorgezogene Marke.** Eine Eilsache
+  (Eilantrag, Hotfix mit Außenwirkung) darf als
+  **vorgezogene Marke** vor die laufende treten — wie
+  die Patch-Marke als Zwischenmarke (unten): eigene
+  Bezeichnung, eigener Tag oder Versand, eigener
+  Abschluss; die laufende Marke wird zurückgestellt und
+  kehrt nach dem Abschluss der Eilsache zurück. Kein
+  eigener Git-Zweig ist dafür nötig.
 - **Zwei Zeiger:** genau eine Marke trägt
   **`current`** (zuletzt abgeschlossene/geltende),
   genau eine **`in-progress`** (daran wird
@@ -80,7 +115,8 @@ active: true   # kann nicht deaktiviert werden — Zielmarken ist Pflicht-Fassad
   Marke abgeschlossen ist (erste Marke), trägt keine
   Marke `current`.
   Die Zeiger führt diese Fassade;
-  `devstate_active.md` (mit SP-1) referenziert die
+  `devstate_active.md` (Basis-Einstieg jedes Projekts,
+  [[Standarddateien-Katalog]] §2.15) referenziert die
   `in-progress`-Marke nur — und während einer
   Zwischenmarke die zurückgestellte Marke, zu der der
   Agent zurückkehrt; ruht das Projekt, den Ruhezustand.
@@ -1386,9 +1422,13 @@ active: true   # kann nicht deaktiviert werden — Zielmarken ist Pflicht-Fassad
   die neue Tag-Freigabe zu derselben Marke in der Formel
   der Freigabe per Tag (Vorgehen.md §4):
   `- **Vermerk <Datum>:** Tag korrigiert: <alt> → <neu>,
-  Inhalt unverändert — Stand <neu> von Implementierung,
-  freigegeben für P10 Testen zu Marke <M>, freigegeben
-  vom Anwender <Datum>`; der Nachtrag ist der Träger
+  Inhalt unverändert — Stand <neu> von
+  <Produkt-Dokumenttyp des Prozesses>, freigegeben für
+  P10 <Tätigkeit> zu Marke <M>, freigegeben vom Anwender
+  <Datum>` (in der Entwicklung „von Implementierung,
+  freigegeben für P10 Testen“, im Verfahren „von
+  Schriftsatz, freigegeben für P10 Prüfen vor
+  Versand“); der Nachtrag ist der Träger
   dieser Freigabe — einen eigenen Freigabe-Eintrag im
   Entscheidungs-Register gibt es nicht, und die alte
   Tag-Freigabe dort bleibt stehen und wird nicht
