@@ -328,7 +328,7 @@ Alt-Zustands → (b) Einbindung (mit Modus-Frage) →
    Kopie, vor dem Aufnahme-Commit, schreibst du in den
    Abschnitt `## Herkunft` von [[Aktivierter-Prozess]]
    (Format: [[Init-Choreografie]] §Phase A0):
-   `Template-Stand: 2.2 seit JJJJ-MM-TT` mit dem
+   `Template-Stand: 2.2.1 seit JJJJ-MM-TT` mit dem
    **Übernahme-Tag** — dem Tag des Aufnahme-Commits;
    er ist der Stichtag, den der Lint liest, und das
    Datum in der Bezeichnung der Übernahme-Marke
@@ -749,7 +749,7 @@ Anlage-Datum.
    Abschluss-Stand und Wechsel-Prozedur
    ([[Zielmarken]] §Meta).
 8. **Abschluss-Buchung:** Chronologie-Eintrag
-   „Migration abgeschlossen (Template-Stand 2.2 seit
+   „Migration abgeschlossen (Template-Stand 2.2.1 seit
    <Übernahme-Tag>, Quelle <Commit/Tag>, Modus A/B)“
    — Werte wie im Herkunfts-Vermerk. Eine
    vorgefundene README bleibt; schlage dem Anwender

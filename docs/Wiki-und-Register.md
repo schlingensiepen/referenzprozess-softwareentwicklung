@@ -15,6 +15,12 @@
 > nachgezogen (zuletzt am 2026-11-03); eigene Inhalte
 > bekommt es nicht — Änderungen gehören in die Quellen.
 
+> **Hinweis zum Stand:** Dieses Dokument beschreibt noch
+> den Stand 2.1; die Überarbeitung für 2.2.1 folgt.
+> Führend sind bis dahin `../README.md`, die Anleitungen
+> (`../INIT.md`, `../migration/MIGRATION.md`,
+> `../upgrade/UPGRADE.md`) und das `../wiki/`.
+
 Zurück zur [Einführung](Einfuehrung.md).
 
 ## Die Ordner und ihre Rollen

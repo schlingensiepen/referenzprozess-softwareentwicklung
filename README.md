@@ -1,10 +1,10 @@
 # referenzprozess-softwareentwicklung
 
-**Version 2.2** — die Versionsnummer ist der
+**Version 2.2.1** — die Versionsnummer ist der
 Template-Stand, den jedes Projekt aus diesem Starter
 in seinem Herkunfts-Vermerk trägt
 (frühere Stände: 1.0, 1.1, 2.0 und 2.1).
-**Bearbeitungsstand:** 2026-11-12
+**Bearbeitungsstand:** 2026-11-16
 (Tag der letzten Änderung dieser Datei).
 
 Ein Starter für Softwareprojekte, in denen ein Mensch

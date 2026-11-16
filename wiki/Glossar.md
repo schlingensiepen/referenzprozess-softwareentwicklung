@@ -67,10 +67,10 @@ type: glossary
 ---
 
 **Bearbeitungsstand:** Vorbelegt beim Starter-Bau —
-mitgelieferte Einträge: Template-Stand 2.2; übernommene
+mitgelieferte Einträge: Template-Stand 2.2.1; übernommene
 Glossar-Anhänge der aktiven Prozesse: SP-1 (5 Einträge),
-Stand 2.2. _(danach vom Agenten beim ersten freigegebenen
-Eintrag und laufend gepflegt)_
+Stand 2.2.1. _(danach vom Agenten beim ersten
+freigegebenen Eintrag und laufend gepflegt)_
 
 Vorschläge und Diskussion siehe [[Glossar Review]].
 

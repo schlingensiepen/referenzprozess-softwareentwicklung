@@ -68,7 +68,7 @@ type: glossary
 
 **Bearbeitungsstand:** _(vom Agenten beim ersten freigegebenen
 Eintrag und laufend gepflegt; mitgelieferte Einträge:
-Template-Stand 2.2)_
+Template-Stand 2.2.1)_
 
 Vorschläge und Diskussion siehe [[Glossar Review]].
 

@@ -270,7 +270,12 @@ Umsetzung verschränken sich über mehrere Turns:
    danach startet Turn 1.
 2. **Turn 1:** Erledigt-Block (Ordner angelegt, git-
    Status etc., **verfügbare Prüf-/Recherche-Werkzeuge**
-   — Liste oder Vermerk „keine verfügbar"; Quelle ist
+   — Liste oder Vermerk „keine verfügbar"; vorher
+   liest der Agent [[Werkzeuge]] und nennt die
+   Empfehlung je Zweck zuerst, etwa für das zweite
+   Modell, getrennt als „empfohlen, nicht
+   eingerichtet“ — als verfügbar zählt nur, was den
+   Zugriffstest bestanden hat; Quelle ist sonst
    die Umgebung des Agenten, denn `Tools.md` entsteht
    erst mit der ersten Werkzeug-Wahl oder Installation
    ([[Standarddateien-Katalog]] §2.9), spätestens im
@@ -534,7 +539,8 @@ als Frage-Block je Turn.
 6. **Ersatzweg für Prüfungen ohne zweites Modell** —
    nur, wenn der Erledigt-Block von Turn 1 kein
    Werkzeug nennt, über das ein zweites Modell prüfen
-   kann (Peer-Agent, externes Modell). Ein zweites
+   kann (Peer-Agent, externes Modell; Empfehlung:
+   [[Werkzeuge]] §Empfohlen). Ein zweites
    Modell ist ein **anderes Modell**, auch eines
    desselben Anbieters (`Reviewmuster.md` §2
    Schleife 2); als verfügbar gilt ein Werkzeug erst
@@ -556,7 +562,7 @@ als Frage-Block je Turn.
    `Tools.md` §Kommunikationskanäle.
 8. **Werkzeug-Angebot** (siehe unten, Baustein
    Werkzeug-Angebot) — der Startkatalog aus
-   [[MCP-Setup]], darunter die empfohlenen Werkzeuge
+   [[Werkzeuge]], darunter die empfohlenen Werkzeuge
    für Peer-Agenten. _Legt vorab fest:_ nichts; was
    der Anwender installieren lässt, steht in
    `Tools.md`.
@@ -843,8 +849,8 @@ des Prozesses noch einmal an.
 ## Baustein: Werkzeug-Angebot
 
 Der Agent stellt in Turn 1 den **Startkatalog** vor
-([[MCP-Setup]] §Empfohlener Startkatalog — dort
-stehen die Einträge; lesen vor dem Angebot) und fragt:
+([[Werkzeuge]] §Empfohlen — dort stehen die
+Einträge; lesen vor dem Angebot) und fragt:
 „Soll ich davon etwas einrichten?“ Voreinstellung:
 nichts einrichten. Installiert wird nur mit Zustimmung
 des Anwenders (MasterPrompt §7); jede Installation

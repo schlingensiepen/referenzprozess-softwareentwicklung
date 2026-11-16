@@ -36,34 +36,10 @@ laufende Arbeit ein fehlendes Werkzeug braucht.
 
 ## Empfohlener Startkatalog
 
-**Grundausstattung (alle Projekte):**
-
-| Fähigkeit | Beispiel-Implementierung |
-|---|---|
-| Mermaid-Diagramme | Claude Code: `mermaid-skill`; andere Agenten: native Fähigkeit oder agent-spezifisches Äquivalent |
-
-**Recherche-lastige Projekte:**
-
-| Name | Typ | Quelle |
-|---|---|---|
-| WebMCP | MCP | https://webmcp.dev/ |
-
-**Peer-Agenten (Zusammenarbeit mehrerer Agenten):**
-
-| Name | Wofür | Quelle |
-|---|---|---|
-| `schlingensiepen/peeragent` | Start eines Peer-Agenten in einem anderen Repo | https://github.com/schlingensiepen/peeragent |
-| `schlingensiepen/simple-a2a` | Transport von Nachrichten zwischen Agenten | https://github.com/schlingensiepen/simple-a2a |
-| `schlingensiepen/skill-a2a` | Transport von Nachrichten zwischen Agenten, als Erweiterung des Agenten | https://github.com/schlingensiepen/skill-a2a |
-
-Diese Werkzeuge sind eine **Empfehlung** — die Ausnahme zur
-werkzeug-agnostischen Werkzeug-Wahl (`Vorgehen.md`
-§7b). Der Agent bietet sie beim Init mit dem
-Startkatalog an; **gewählt** wird die Variante für
-Start und Transport weiter beim Start einer
-Teilaktivität, gleichwertig mit der Datei-Variante
-ohne Werkzeug (`Vorgehen.md` §3 — dort die Regel).
-Eingerichtetes steht in `Tools.md` §Peer-Agenten.
+Führend ist [[Werkzeuge]] §Empfohlen, nach Zweck —
+dort auch die mitgebrachten Werkzeuge. Beim Init
+bietet der Agent die Empfehlung zuerst an, vor
+gleichwertigen Werkzeugen seiner Umgebung.
 
 ## Bezüge
 
@@ -72,5 +48,6 @@ Eingerichtetes steht in `Tools.md` §Peer-Agenten.
 - Dokumentation jeder Installation: `Tools.md`
   (MasterPrompt §7.5; Kopiervorlage
   `wiki/templates/Tools-Vorlage.md`)
+- Katalog: [[Werkzeuge]]
 - Init-Vorstellung des Katalogs:
   [[Init-Choreografie]]

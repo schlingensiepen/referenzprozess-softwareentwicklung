@@ -3,8 +3,9 @@
 # referenzprozess-softwareentwicklung stammt, mechanisch auf den Stand
 # des Starters, aus dem dieses Skript stammt (Anleitung:
 # upgrade/UPGRADE.md Schritt 3; je Sprung eine Datei
-# upgrade/<alt>-nach-<neu>.md — aus 2.0: 2.0-nach-2.1.md, aus 1.x:
-# 1.x-nach-2.0.md und danach 2.0-nach-2.1.md).
+# upgrade/<alt>-nach-<neu>.md — aus 2.1: 2.1-nach-2.2.1.md, aus 2.0:
+# 2.0-nach-2.1.md und danach 2.1-nach-2.2.1.md, aus 1.x:
+# 1.x-nach-2.0.md, 2.0-nach-2.1.md und danach 2.1-nach-2.2.1.md).
 #
 # Aufruf aus dem Projektordner, nachdem _template/ den neuen Stand
 # trägt und der Tausch committet ist (UPGRADE.md Schritt 2):
@@ -82,6 +83,9 @@
 set -u
 
 STARTER=referenzprozess-softwareentwicklung
+# Zielversion der Vorlage, auf die dieses Skript hebt (Rückfall, wenn die
+# Vorbelegung des Herkunfts-Vermerks im neuen Stand sie nicht nennt)
+ZIELVERSION=2.2.1
 VORHER=""
 REF=""
 STICHTAG=""
@@ -229,9 +233,10 @@ if [ -z "$VORHER" ]; then
         esac
     fi
 fi
-# neue Version: aus dem neuen Stand (Vorbelegung des Herkunfts-Vermerks)
-NACH=$(grep -o '[0-9][0-9]*\.[0-9][0-9]* seit JJJJ-MM-TT' "$SRC/wiki/Aktivierter-Prozess.md" | head -n 1 | cut -d' ' -f1)
-[ -n "$NACH" ] || NACH=2.1
+# neue Version: aus dem neuen Stand (Vorbelegung des Herkunfts-Vermerks;
+# zwei- oder dreiteilig, etwa 2.2.1), sonst die Zielversion dieses Skripts
+NACH=$(grep -o '[0-9][0-9]*\(\.[0-9][0-9]*\)\{1,2\} seit JJJJ-MM-TT' "$SRC/wiki/Aktivierter-Prozess.md" | head -n 1 | cut -d' ' -f1)
+[ -n "$NACH" ] || NACH=$ZIELVERSION
 # Wiederholungslauf: Template-Stand nennt schon die Zielversion und eine
 # Zeile Vorher steht — der Herkunfts-Vermerk bleibt dann unverändert.
 SCHON=0
@@ -239,6 +244,11 @@ STAND_GLEICH=0
 if [ "$HV_FORM" = 2.0 ] && [ "$ALT_STAND" = "$NACH" ]; then
     if grep -q '^- \*\*Vorher:\*\*' "$AP"; then
         SCHON=1
+        # Die alte Version des vollzogenen Sprungs steht in der obersten
+        # Zeile Vorher — sie wählt Sprung-Dateien und Trefferliste wie im
+        # ersten Lauf (VORHER trüge sonst die Zielversion).
+        VORHER_ZEILE=$(sed -n 's/^- \*\*Vorher:\*\* *\([0-9][0-9]*\(\.[0-9][0-9]*\)*\).*/\1/p' "$AP" | head -n 1)
+        [ -z "$VORHER_ZEILE" ] || VORHER=$VORHER_ZEILE
     else
         # Template-Stand nennt die Zielversion, ohne Zeile Vorher: das
         # Projekt wurde auf diesem Stand angelegt (Init oder Migration) —
@@ -254,10 +264,12 @@ if [ -z "$VORHER" ] && [ "$SCHON" -eq 0 ] && [ "$STAND_GLEICH" -eq 0 ]; then
     VORHER="offen — --vorher <Version> angeben (UPGRADE.md Schritt 0)"
 fi
 # Sprung-Dateien des Wegs (UPGRADE.md Schritt 6): je Sprung eine, der
-# Reihe nach — aus 1.x beide, aus 2.0 nur die letzte
+# Reihe nach — aus 1.x alle, aus 2.0 die letzten beiden, aus 2.1 nur die
+# letzte
 case $VORHER in
-    1.*) SPRUNG="1.x-nach-2.0.md und 2.0-nach-2.1.md" ;;
-    2.0) SPRUNG="2.0-nach-2.1.md" ;;
+    1.*) SPRUNG="1.x-nach-2.0.md, 2.0-nach-2.1.md und 2.1-nach-2.2.1.md" ;;
+    2.0) SPRUNG="2.0-nach-2.1.md und 2.1-nach-2.2.1.md" ;;
+    2.1) SPRUNG="2.1-nach-2.2.1.md" ;;
     *)   SPRUNG="<alt>-nach-<neu>.md" ;;
 esac
 
@@ -463,7 +475,9 @@ printf 'Neue Dateien des neuen Stands%s\n' "$([ "$PRUEFEN" -eq 1 ] && printf ' (
 # Liste vorab, Schleife per Here-Dokument in dieser Shell: ein Fehler
 # von mkdir oder cp beendet so das Skript (nicht nur eine Unter-Shell).
 # referenzprozesse/, tools/, upgrade/, migration/, docs/, setup/ bleiben
-# in _template/ (Nur-Lese); devstate_active.md ist Projekt-Inhalt.
+# in _template/ (Nur-Lese); devstate_active.md und Offene Fragen.md sind
+# Projekt-Inhalt — ihr Rumpf wird nur angelegt, wo die Datei fehlt
+# (Schleife nach der Liste), und steht nie im Delta.
 NEULISTE=$(printf '%s\n' MasterPrompt.md Wiki.md Vorgehen.md Reviewmuster.md \
                          Outgoing.md Styleguide.md Styleguide-md.md Styleguide-wiki.md
            cd "$NEU" && find wiki -type f | sort)
@@ -512,6 +526,18 @@ while IFS= read -r rel; do
     fi
 done <<EOF
 $NEULISTE
+EOF
+# Rümpfe im Root (wiki/Standarddateien-Katalog.md §2.10 und §2.15): nur
+# anlegen, wo die Datei fehlt; eine vorhandene Datei bleibt, wie sie ist
+while IFS= read -r rel; do
+    [ -n "$rel" ] || continue
+    [ -e "$NEU/$rel" ] || continue
+    [ -e "$DST/$rel" ] && continue
+    if [ "$PRUEFEN" -eq 0 ]; then cp -- "$NEU/$rel" "$DST/$rel" || schreibfehler "Kopie von $rel fehlgeschlagen"; GEAENDERT=1; fi
+    NEUANG=$((NEUANG + 1)); printf '  + %s (Rumpf)\n' "$rel"
+done <<EOF
+Offene Fragen.md
+devstate_active.md
 EOF
 if [ ! -e "$DST/.gitignore" ] && [ -e "$NEU/.gitignore" ]; then
     if [ "$PRUEFEN" -eq 0 ]; then cp -- "$NEU/.gitignore" "$DST/.gitignore" || schreibfehler "Kopie von .gitignore fehlgeschlagen"; GEAENDERT=1; fi
@@ -753,18 +779,30 @@ treffer '^- \*\*Zustand:\*\* *current' 'Marken-Zeiger current der 1.x-Form — Z
 treffer 'Template-Herkunft' 'Herkunfts-Vermerk 1.x-Form — Zeilen Quelle, Prozess, Rolle füllen' wiki
 fi
 # Sprung 2.0 → 2.1 (2.0-nach-2.1.md Abschnitt 3): alte Phasennummern an
-# Verzichts-DECs (der Lint liest sie um, Hinweis) und an Freigaben und
-# Nachträgen (am Tätigkeitsnamen gelesen, nichts zu ändern); docs/
-treffer '^phase:[ 	]*P1[123][ 	]*$' 'Verzichts-DECs mit alter Phasennummer P11/P12/P13 — der Lint liest sie als P13/P14/P15, nichts umbuchen (2.0-nach-2.1.md Abschnitt 3)' wiki '^decision_type:[ 	]*verzicht'
+# Verzichts-DECs (der Lint las sie nur unter Template-Stand 2.1 um; ab
+# 2.2.1 ablösende DEC, 2.1-nach-2.2.1.md Abschnitt 4) und an Freigaben und
+# Nachträgen (am Tätigkeitsnamen gelesen, nichts zu ändern); docs/ —
+# nur, wenn das Projekt aus 2.0 oder älter kommt (oder die alte Version
+# nicht ablesbar ist): in einem 2.1-Projekt sind P11 bis P13 die neue
+# Zählung, Doku-Abfrage und Folge-Versionen sind dort regulärer Betrieb
+case $VORHER in 2.0|1.*) ALT20=1 ;; [0-9]*) ALT20=0 ;; *) ALT20=1 ;; esac
+if [ "$ALT20" -eq 1 ]; then
+treffer '^phase:[ 	]*P1[123][ 	]*$' 'Verzichts-DECs mit alter Phasennummer P11/P12/P13 — gemeint sind P13/P14/P15 (2.0-nach-2.1.md Abschnitt 3); nach dem Sprung auf 2.2.1 liest der Lint sie nicht mehr um: Heilweg ablösende DEC mit der neuen Nummer (2.1-nach-2.2.1.md Abschnitt 4)' wiki '^decision_type:[ 	]*verzicht'
 treffer 'für P11 Ausliefern|für P12 Produzieren|für P13 Betreiben' 'Freigaben und Nachträge mit alten Phasennummern — bleiben, der Lint liest den Zweck am Tätigkeitsnamen (2.0-nach-2.1.md Abschnitt 3); Regelwerks-Text in Fassaden-Köpfen kommt mit dem Delta-Nachzug (UPGRADE.md Schritt 5)' wiki
 [ -d "$DST/docs" ] && printf '  docs/ vorgefunden — bleibt als Nachweis liegen; der erste Doku-Stand entsteht über die Doku-Abfrage (2.0-nach-2.1.md Abschnitt 2 und 3)\n'
+elif grep -q -E '^- \*\*Vorher:\*\* *(2\.0|1\.)' "$AP"; then
+# 2.1-Projekt, das früher aus 2.0 oder 1.x gehoben wurde (Zeile Vorher):
+# Verzichts-DECs aus der Zeit vor dem Sprung auf 2.1 tragen alte
+# Nummern, die der Lint ab 2.2.1 nicht mehr umliest
+treffer '^phase:[ 	]*P1[123][ 	]*$' 'Verzichts-DECs mit phase P11/P12/P13 — das Projekt kam aus 2.0 oder älter (Zeile Vorher): an jeder, die vor dem Sprung auf 2.1 angelegt ist, meint die Nummer P13/P14/P15, und der Lint liest sie ab 2.2.1 nicht mehr um — Heilweg ablösende DEC mit der neuen Nummer (2.1-nach-2.2.1.md Abschnitt 4); seit 2.1 angelegte tragen die neue Zählung und bleiben' wiki '^decision_type:[ 	]*verzicht'
+fi
 [ "$IN_PROGRESS" -eq 1 ] || printf '  Zielmarken: Zustandszeile in-progress nicht gefunden — Zielmarken selbst lesen; fehlt eine laufende Marke, vom Anwender benennen lassen und anlegen (vor dem Lint, UPGRADE.md Schritt 4)\n'
 # Laufende Marke mit Tag (2.0-nach-2.1.md Abschnitt 2): Tag-Freigabe „Stand <Tag>
 # von Implementierung, freigegeben für P10 Testen zu Marke <M>“ zur Marke mit
 # Zustand in-progress — die Doku-Abfrage wird mit dem Upgrade nachgeholt, und
 # Testplan-Stand, Deploy-Stände und Betriebs-Anleitungen der Vormarke gelten
 # für sie nicht als übernommen (Folge-Version, eigene Freigaben P10/P13/P15)
-if [ "$IN_PROGRESS" -eq 1 ]; then
+if [ "$IN_PROGRESS" -eq 1 ] && [ "$ALT20" -eq 1 ]; then
     LAUFEND=$(awk '/^### /{m=$2} /^- \*\*Zustand:\*\* *in-progress/{print m; exit}' "$DST/wiki/Zielmarken.md" 2>/dev/null)
     if [ -n "$LAUFEND" ] && [ -f "$DST/wiki/Entscheidungen.md" ]; then
         if grep -q -E "von Implementierung, freigegeben für P10 [^,]*zu Marke $(printf '%s' "$LAUFEND" | sed 's/[.[\\*^$]/\\&/g')([^0-9.]|$)" "$DST/wiki/Entscheidungen.md"; then
@@ -773,6 +811,29 @@ if [ "$IN_PROGRESS" -eq 1 ]; then
             printf '  laufende Marke %s ohne Tag-Freigabe — die Doku-Abfrage kommt regulär mit dem Tag (2.0-nach-2.1.md Abschnitt 2)\n' "$LAUFEND"
         fi
     fi
+fi
+# Sprung 2.1 → 2.2.1 (2.1-nach-2.2.1.md Abschnitt 2): Zeile Repo im
+# Herkunfts-Vermerk, Eingangsordner in .gitignore, Richtung der Fristen,
+# Abschnitte von Tools.md, Sektion Eingangsorte — alles von Hand
+grep -q '^- \*\*Repo:\*\*' "$AP" || printf '  Herkunfts-Vermerk ohne Zeile Repo — nachtragen (UPGRADE.md Schritt 7; 2.1-nach-2.2.1.md Abschnitt 2)\n'
+if [ -f "$DST/.gitignore" ]; then
+    GIGN=$(grep -n -E '^[ 	]*/?(raw|input)(/|[ 	]*$)' "$DST/.gitignore" || true)
+    if [ -n "$GIGN" ]; then
+        printf '  .gitignore nimmt raw/ oder input/ aus — beide Ordner werden versioniert; Umstellung dem Anwender vorlegen (2.1-nach-2.2.1.md Abschnitt 2):\n'
+        printf '%s\n' "$GIGN" | sed 's/^/    - Zeile /'
+    fi
+fi
+treffer '^### [0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]' 'Fristen im Register — an jedem Eintrag ohne Feld Richtung `gegen-uns` nachtragen (2.1-nach-2.2.1.md Abschnitt 2; der Lint nennt die Einträge, FRIST-RICHTUNG)' wiki '^type:[ 	]*deadline-log'
+treffer '^type:[ 	]*deadline[ 	]*$' 'Fristen-Knoten — `richtung: gegen-uns` nachtragen, wo das Feld fehlt (2.1-nach-2.2.1.md Abschnitt 2)' wiki
+if [ -f "$DST/Tools.md" ]; then
+    TOOLS_FEHLT=""
+    grep -q '^## Kommunikationskanäle' "$DST/Tools.md" || TOOLS_FEHLT="${TOOLS_FEHLT} Kommunikationskanäle;"
+    grep -q '^## Ausnahmen der Geheimnis-Prüfung' "$DST/Tools.md" || TOOLS_FEHLT="${TOOLS_FEHLT} Ausnahmen der Geheimnis-Prüfung;"
+    grep -q '^## Instruktionsdateien' "$DST/Tools.md" || TOOLS_FEHLT="${TOOLS_FEHLT} Instruktionsdateien;"
+    [ -z "$TOOLS_FEHLT" ] || printf '  Tools.md ohne Abschnitt:%s aus wiki/templates/Tools-Vorlage.md nachziehen (2.1-nach-2.2.1.md Abschnitt 2)\n' "$TOOLS_FEHLT"
+fi
+if [ -f "$DST/wiki/Eingangsdokumente.md" ] && ! grep -q '^## Eingangsorte' "$DST/wiki/Eingangsdokumente.md"; then
+    printf '  wiki/Eingangsdokumente.md ohne Sektion Eingangsorte — mit dem Delta-Nachzug anlegen und füllen (2.1-nach-2.2.1.md Abschnitt 2)\n'
 fi
 printf '\n'
 

@@ -489,7 +489,7 @@ Register-Eintrag).
   füllst du mit.
 - **Herkunft** in [[Aktivierter-Prozess]]
   `## Herkunft` (Format: [[Init-Choreografie]]
-  §Phase A0): `Template-Stand: 2.2 seit JJJJ-MM-TT`
+  §Phase A0): `Template-Stand: 2.2.1 seit JJJJ-MM-TT`
   (Tag des Inits — der Stichtag, den der Lint liest),
   `Quelle` und `Anbindungs-Modus` aus Schritt 0,
   `Repo` (Repo-Name des Projekts — Name des Remotes,
@@ -575,7 +575,7 @@ Starter und bleibt in `_template/` lesbar.
   nach `wiki/templates/Index-Format-Vorlage.md`.
 - **Chronologie-Eintrag** „Projekt aus
   referenzprozess-softwareentwicklung angelegt
-  (Template-Stand 2.2 seit <Datum>, Quelle
+  (Template-Stand 2.2.1 seit <Datum>, Quelle
   <Commit/Tag>, Modus A/B)“ — Werte wie im
   Herkunfts-Vermerk.
 - `devstate_active.md` nachführen (Zielmarke,

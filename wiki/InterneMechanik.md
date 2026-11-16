@@ -211,6 +211,14 @@ wird beim Init gefüllt)_
   Werkzeug-Bedarf lesen (Grundsatz bleibt in
   MasterPrompt §7).
 
+### [[Werkzeuge]]
+
+- **Typ:** internal-rule
+- **Kurzform:** mitgebrachte und empfohlene Werkzeuge
+  nach Zweck (zweites Modell, Peer-Agenten,
+  Nachrichten, Diagramme, Recherche); zu Beginn des
+  Init und bei neuem Werkzeug-Bedarf lesen.
+
 ### [[Handoff-Prozedur]]
 
 - **Typ:** internal-rule
